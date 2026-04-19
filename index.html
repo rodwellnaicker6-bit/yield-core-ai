@@ -134,6 +134,98 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
 .wa-btn:disabled{opacity:.5;cursor:default}
 .wa-sent{color:#25d366;font-size:10px;font-weight:700;text-align:center;margin-top:4px}
 
+/* ── NEW PANELS ROW ── */
+.panels2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.panels3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px}
+
+/* SOLAR */
+.solar-farm-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.solar-card{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:12px 13px}
+.solar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.solar-name{font-size:11px;font-weight:800;color:var(--text)}
+.solar-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px}
+.s-opt{background:#22c55e18;color:#22c55e;border:1px solid #22c55e33}
+.s-deg{background:#facc1518;color:#facc15;border:1px solid #facc1533}
+.solar-kwh{font-size:20px;font-weight:900;color:#facc15}
+.solar-kwh-unit{font-size:10px;color:var(--sub);font-weight:600}
+.solar-meta{display:flex;gap:12px;margin-top:6px;font-size:10px;color:var(--sub)}
+.solar-bar-wrap{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:8px}
+.solar-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,#f59e0b,#facc15);transition:width .5s}
+.solar-totals{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px;background:var(--bg4);border-radius:10px;border:1px solid var(--border2)}
+.solar-total-item{text-align:center}
+.solar-total-val{font-size:16px;font-weight:900;color:#facc15}
+.solar-total-label{font-size:9px;color:var(--sub);margin-top:2px}
+
+/* IRRIGATION */
+.irrig-card{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:11px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.irrig-icon{font-size:20px;flex-shrink:0}
+.irrig-info{flex:1}
+.irrig-name{font-size:11px;font-weight:800;color:var(--text);margin-bottom:3px}
+.irrig-bar-wrap{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.irrig-bar{height:100%;border-radius:3px;transition:width .5s}
+.irrig-meta{font-size:10px;color:var(--sub)}
+.irrig-val{font-size:13px;font-weight:900;text-align:right;white-space:nowrap}
+.irrig-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px;background:var(--bg4);border-radius:10px;border:1px solid var(--border2);margin-top:8px}
+.irrig-sum-val{font-size:15px;font-weight:900;color:var(--blue)}
+.irrig-sum-label{font-size:9px;color:var(--sub);margin-top:2px}
+
+/* NDVI */
+.ndvi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
+.ndvi-cell{border-radius:8px;padding:10px 8px;text-align:center;border:1px solid transparent}
+.ndvi-val{font-size:14px;font-weight:900}
+.ndvi-label{font-size:9px;color:var(--sub);margin-top:2px}
+.ndvi-trend{font-size:9px;font-weight:700;margin-top:3px}
+.ndvi-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ndvi-leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--sub)}
+.ndvi-leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.ndvi-avg-bar{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin:10px 0 4px}
+.ndvi-avg-fill{height:100%;border-radius:4px;transition:width .6s}
+
+/* SENSORS - TEMP & HUMIDITY */
+.sensor-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px}
+.sensor-mini{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:10px 10px 8px;text-align:center}
+.sensor-mini-icon{font-size:18px;margin-bottom:4px}
+.sensor-mini-val{font-size:16px;font-weight:900}
+.sensor-mini-label{font-size:9px;color:var(--sub);margin-top:2px;line-height:1.3}
+.sensor-mini-trend{font-size:9px;font-weight:700;margin-top:3px}
+.sensor-gauge-wrap{display:flex;gap:10px;margin-top:10px}
+.sensor-gauge{flex:1;background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:10px 12px}
+.gauge-title{font-size:10px;font-weight:800;color:var(--sub);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.gauge-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px}
+.gauge-bar-w{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.gauge-bar{height:100%;border-radius:3px;transition:width .4s}
+.gauge-val{font-size:11px;font-weight:800;width:36px;text-align:right}
+
+/* PEST ID */
+.pest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.pest-card{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:12px 12px 10px;cursor:pointer;transition:all .18s}
+.pest-card:hover{border-color:var(--orange);transform:translateY(-2px)}
+.pest-card.alert-pest{border-color:#f8717155}
+.pest-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.pest-icon{font-size:22px}
+.pest-severity{font-size:9px;font-weight:900;padding:2px 7px;border-radius:99px}
+.sev-high{background:#f8717122;color:#f87171;border:1px solid #f8717144}
+.sev-med{background:#fb923c22;color:#fb923c;border:1px solid #fb923c44}
+.sev-low{background:#22c55e22;color:#22c55e;border:1px solid #22c55e44}
+.sev-none{background:#3a5a3d22;color:#3a5a3d;border:1px solid #3a5a3d44}
+.pest-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px}
+.pest-farm{font-size:10px;color:var(--sub)}
+.pest-conf{font-size:10px;color:var(--sub);margin-top:6px}
+.pest-conf-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:3px}
+.pest-conf-fill{height:100%;border-radius:2px;background:var(--orange);transition:width .4s}
+.pest-wa-btn{width:100%;margin-top:8px;padding:5px 8px;background:linear-gradient(135deg,#128c7e,#25d366);border:none;border-radius:7px;color:#fff;font-size:10px;font-weight:800;cursor:pointer;transition:opacity .2s}
+.pest-wa-btn:hover{opacity:.85}
+
+/* ENHANCED ALERTS */
+.alert-filter{display:flex;gap:6px;margin-bottom:12px}
+.af-btn{padding:5px 12px;border-radius:99px;font-size:10px;font-weight:700;border:none;cursor:pointer;transition:all .18s}
+.af-btn.active{background:var(--green);color:#000}
+.af-btn:not(.active){background:var(--bg4);color:var(--sub);border:1px solid var(--border2)}
+.alert-full{padding:10px 12px;border-radius:11px;margin-bottom:8px}
+.af-crit{background:#7f1d1d12;border:1px solid #7f1d1d44}
+.af-warn{background:#71401212;border:1px solid #71401244}
+.af-info{background:#1e3a5f12;border:1px solid #1e3a5f44}
+
 /* ── MODULES ROW ── */
 .modules-section{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
 .modules-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:10px}
@@ -311,6 +403,97 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
             <div class="sec-link">View all →</div>
           </div>
           <div id="alertsList"></div>
+        </div>
+
+      </div>
+
+      <!-- SOLAR & IRRIGATION -->
+      <div class="panels2 fade">
+
+        <!-- SOLAR -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">☀️ SOLAR MONITORING <span>7 farms active</span></div>
+            <div id="solarLiveTag" style="font-size:9px;color:#facc15;font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:#facc15;box-shadow:0 0 6px #facc15"></div>LIVE</div>
+          </div>
+          <div class="solar-farm-row" id="solarCards"></div>
+          <div class="solar-totals" id="solarTotals"></div>
+        </div>
+
+        <!-- IRRIGATION -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">💧 IRRIGATION CONTROL <span>Live sensor data</span></div>
+            <div style="font-size:9px;color:var(--blue);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>LIVE</div>
+          </div>
+          <div id="irrigCards"></div>
+          <div class="irrig-summary" id="irrigSummary"></div>
+        </div>
+
+      </div>
+
+      <!-- NDVI & SENSORS -->
+      <div class="panels2 fade">
+
+        <!-- NDVI -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">🛰️ NDVI — CROP VITALITY INDEX <span>Satellite data</span></div>
+            <div style="font-size:9px;color:#22c55e;font-weight:700">● Updated 2h ago</div>
+          </div>
+          <div class="ndvi-grid" id="ndviGrid"></div>
+          <div class="ndvi-avg-bar"><div class="ndvi-avg-fill" id="ndviAvgBar"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--sub)">
+            <span>Fleet NDVI Average</span><span id="ndviAvgVal" style="font-weight:800;color:#22c55e"></span>
+          </div>
+          <div class="ndvi-legend">
+            <div class="ndvi-leg-item"><div class="ndvi-leg-dot" style="background:#4ade80"></div>Excellent ≥0.8</div>
+            <div class="ndvi-leg-item"><div class="ndvi-leg-dot" style="background:#22c55e"></div>Good 0.6–0.8</div>
+            <div class="ndvi-leg-item"><div class="ndvi-leg-dot" style="background:#facc15"></div>Fair 0.4–0.6</div>
+            <div class="ndvi-leg-item"><div class="ndvi-leg-dot" style="background:#f87171"></div>Poor &lt;0.4</div>
+          </div>
+        </div>
+
+        <!-- TEMP & HUMIDITY SENSORS -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">🌡️ TEMP &amp; HUMIDITY SENSORS</div>
+            <div style="font-size:9px;color:var(--sub);font-weight:700" id="sensorTimestamp"></div>
+          </div>
+          <div class="sensor-row" id="sensorRow"></div>
+          <div class="sensor-gauge-wrap" id="sensorGauges"></div>
+        </div>
+
+      </div>
+
+      <!-- PEST ID & FULL ALERTS -->
+      <div class="panels2 fade">
+
+        <!-- PEST ID -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">🐛 PEST IDENTIFICATION <span>AI-powered</span></div>
+            <div style="font-size:9px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>4 detections</div>
+          </div>
+          <div class="pest-grid" id="pestGrid"></div>
+          <div style="font-size:11px;color:var(--sub);padding:8px 10px;background:var(--bg4);border-radius:8px;border:1px solid var(--border2)">
+            🤖 AI Pest ID uses drone imagery + spectral analysis. Tap any card to send a WhatsApp alert.
+          </div>
+        </div>
+
+        <!-- FULL ALERTS -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">🔔 ALL ALERTS <span id="alertCount"></span></div>
+            <div class="sec-link" onclick="sendAllWhatsApp()">📲 Send All →</div>
+          </div>
+          <div class="alert-filter">
+            <button class="af-btn active" onclick="filterAlerts('all',this)">All</button>
+            <button class="af-btn" onclick="filterAlerts('critical',this)">Critical</button>
+            <button class="af-btn" onclick="filterAlerts('warning',this)">Warning</button>
+            <button class="af-btn" onclick="filterAlerts('info',this)">Info</button>
+          </div>
+          <div id="fullAlertsList"></div>
         </div>
 
       </div>
@@ -610,6 +793,284 @@ function renderModules(){
   `).join('');
 }
 
+// ── SOLAR DATA ──
+const solarFarms=[
+  {name:'Groot Mielie',cap:36,pct:82,panels:96,status:'Optimal'},
+  {name:'Limpopo Citrus',cap:24,pct:91,panels:64,status:'Optimal'},
+  {name:'Boland Graanplaas',cap:18,pct:76,panels:48,status:'Optimal'},
+  {name:'Mpumalanga Avoc',cap:20,pct:88,panels:54,status:'Optimal'},
+  {name:'Hex River Druiwe',cap:15,pct:71,panels:40,status:'Optimal'},
+  {name:'Tzaneen Mac',cap:16,pct:68,panels:44,status:'Optimal'},
+  {name:'Karoo Kleinvee',cap:12,pct:44,panels:32,status:'Degraded'},
+];
+function rSolar(){
+  return solarFarms.map(f=>({
+    ...f,
+    kwh:Math.round(f.cap*f.pct/100*(8+Math.random()*2)),
+    pct:Math.min(100,Math.max(20,f.pct+(Math.random()-.5)*6))
+  }));
+}
+let solarLive=rSolar();
+
+function renderSolar(){
+  solarLive=rSolar();
+  const c=document.getElementById('solarCards');
+  c.innerHTML=solarLive.map(f=>`
+    <div class="solar-card">
+      <div class="solar-top">
+        <div class="solar-name">☀️ ${f.name}</div>
+        <span class="solar-status ${f.status==='Optimal'?'s-opt':'s-deg'}">${f.status}</span>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:4px">
+        <div class="solar-kwh">${f.kwh}</div>
+        <div class="solar-kwh-unit">kWh today</div>
+      </div>
+      <div class="solar-meta">
+        <span>${f.cap}kW capacity</span>
+        <span>•</span>
+        <span>${f.panels} panels</span>
+        <span>•</span>
+        <span style="color:${f.pct>70?'#22c55e':'#facc15'}">${Math.round(f.pct)}% eff</span>
+      </div>
+      <div class="solar-bar-wrap"><div class="solar-bar" style="width:${f.pct}%"></div></div>
+    </div>
+  `).join('');
+  const tot=solarLive.reduce((a,f)=>({kwh:a.kwh+f.kwh,cap:a.cap+f.cap,panels:a.panels+f.panels}),{kwh:0,cap:0,panels:0});
+  document.getElementById('solarTotals').innerHTML=`
+    <div class="solar-total-item"><div class="solar-total-val">${tot.kwh}</div><div class="solar-total-label">kWh Today</div></div>
+    <div class="solar-total-item"><div class="solar-total-val" style="color:#4ade80">R${(tot.kwh*2).toLocaleString()}</div><div class="solar-total-label">Savings (R2/kWh)</div></div>
+    <div class="solar-total-item"><div class="solar-total-val">${tot.cap}kW</div><div class="solar-total-label">Total Capacity</div></div>
+    <div class="solar-total-item"><div class="solar-total-val">${tot.panels}</div><div class="solar-total-label">Total Panels</div></div>
+  `;
+}
+
+// ── IRRIGATION DATA ──
+const irrigFarms=[
+  {name:'Free State Maize Hub',icon:'💧',moist:28,flow:3.2,target:60,status:'LOW',color:'#f87171'},
+  {name:'Groot Mielie Farm',icon:'💧',moist:67,flow:8.1,target:65,status:'OK',color:'#22c55e'},
+  {name:'KZN Suikersteen',icon:'💧',moist:72,flow:6.4,target:70,status:'OK',color:'#22c55e'},
+  {name:'Limpopo Citrus Estate',icon:'💧',moist:55,flow:7.2,target:65,status:'OK',color:'#22c55e'},
+  {name:'Mpumalanga Avocados',icon:'💧',moist:48,flow:4.9,target:60,status:'LOW',color:'#facc15'},
+];
+function renderIrrigation(){
+  const c=document.getElementById('irrigCards');
+  c.innerHTML=irrigFarms.map(f=>{
+    const moist=Math.min(100,Math.max(10,f.moist+(Math.random()-.5)*4));
+    const flow=Math.max(0,f.flow+(Math.random()-.5)*1);
+    const barColor=moist<40?'#f87171':moist<60?'#facc15':'#38bdf8';
+    return `<div class="irrig-card">
+      <div class="irrig-icon">${moist<40?'⚠️':'💧'}</div>
+      <div class="irrig-info">
+        <div class="irrig-name">${f.name}</div>
+        <div class="irrig-bar-wrap"><div class="irrig-bar" style="width:${moist}%;background:${barColor}"></div></div>
+        <div class="irrig-meta">Soil moisture ${Math.round(moist)}% &nbsp;•&nbsp; Flow ${flow.toFixed(1)} L/s &nbsp;•&nbsp; Target ${f.target}%</div>
+      </div>
+      <div class="irrig-val" style="color:${barColor}">${Math.round(moist)}%</div>
+    </div>`;
+  }).join('');
+  const totalFlow=irrigFarms.reduce((a,f)=>a+f.flow,0);
+  document.getElementById('irrigSummary').innerHTML=`
+    <div><div class="irrig-sum-val">${totalFlow.toFixed(0)} L/s</div><div class="irrig-sum-label">Total Flow Rate</div></div>
+    <div><div class="irrig-sum-val" style="color:#f87171">2</div><div class="irrig-sum-label">Low Moisture Alerts</div></div>
+    <div><div class="irrig-sum-val" style="color:#22c55e">3</div><div class="irrig-sum-label">Systems Optimal</div></div>
+  `;
+}
+
+// ── NDVI DATA ──
+const ndviFields=[
+  {name:'Groot Mielie',ndvi:.84,trend:'+0.03',crop:'🌽'},
+  {name:'Stellenbosch',ndvi:.79,trend:'+0.01',crop:'🍇'},
+  {name:'Limpopo Citrus',ndvi:.73,trend:'-0.02',crop:'🍊'},
+  {name:'KZN Sugarcane',ndvi:.68,trend:'+0.04',crop:'🌿'},
+  {name:'Mpumalanga',ndvi:.71,trend:'+0.02',crop:'🥑'},
+  {name:'Hex River',ndvi:.82,trend:'+0.05',crop:'🍇'},
+  {name:'Tzaneen Mac',ndvi:.76,trend:'-0.01',crop:'🥜'},
+  {name:'Karoo',ndvi:.38,trend:'-0.06',crop:'🐑'},
+  {name:'Vaal Katoen',ndvi:.42,trend:'-0.03',crop:'🌱'},
+  {name:'Bethlehem',ndvi:.65,trend:'+0.02',crop:'🌾'},
+];
+function ndviColor(v){
+  if(v>=.8)return{bg:'#4ade8022',border:'#4ade8044',text:'#4ade80'};
+  if(v>=.6)return{bg:'#22c55e22',border:'#22c55e44',text:'#22c55e'};
+  if(v>=.4)return{bg:'#facc1522',border:'#facc1544',text:'#facc15'};
+  return{bg:'#f8717122',border:'#f8717144',text:'#f87171'};
+}
+function renderNDVI(){
+  const c=document.getElementById('ndviGrid');
+  c.innerHTML=ndviFields.map(f=>{
+    const col=ndviColor(f.ndvi);
+    const up=f.trend.startsWith('+');
+    return `<div class="ndvi-cell" style="background:${col.bg};border-color:${col.border}">
+      <div style="font-size:14px">${f.crop}</div>
+      <div class="ndvi-val" style="color:${col.text}">${f.ndvi.toFixed(2)}</div>
+      <div class="ndvi-label">${f.name}</div>
+      <div class="ndvi-trend" style="color:${up?'#22c55e':'#f87171'}">${f.trend}</div>
+    </div>`;
+  }).join('');
+  const avg=ndviFields.reduce((a,f)=>a+f.ndvi,0)/ndviFields.length;
+  document.getElementById('ndviAvgBar').style.width=(avg*100)+'%';
+  document.getElementById('ndviAvgBar').style.background=ndviColor(avg).text;
+  document.getElementById('ndviAvgVal').textContent=avg.toFixed(2)+' ('+Math.round(avg*100)+'%)';
+}
+
+// ── SENSOR DATA ──
+const sensorLocations=[
+  {name:'Free State',icon:'🌡️',lat:'Bloemfontein'},
+  {name:'Limpopo',icon:'🌡️',lat:'Tzaneen'},
+  {name:'KZN',icon:'🌡️',lat:'Eshowe'},
+  {name:'W. Cape',icon:'🌡️',lat:'Stellenbosch'},
+  {name:'Mpumalanga',icon:'🌡️',lat:'Hazyview'},
+];
+function renderSensors(){
+  const now=new Date();
+  document.getElementById('sensorTimestamp').textContent='Updated '+now.toLocaleTimeString('en-ZA');
+  const readings=sensorLocations.map(s=>({
+    ...s,
+    temp:Math.round(14+Math.random()*22),
+    hum:Math.round(35+Math.random()*50),
+    soil:Math.round(25+Math.random()*55),
+  }));
+  document.getElementById('sensorRow').innerHTML=readings.map(r=>{
+    const hot=r.temp>32,humid=r.hum>80;
+    return `<div class="sensor-mini">
+      <div class="sensor-mini-icon">${hot?'🔥':'🌡️'}</div>
+      <div class="sensor-mini-val" style="color:${hot?'#f87171':'#38bdf8'}">${r.temp}°C</div>
+      <div class="sensor-mini-label">${r.name}<br/>${r.lat}</div>
+      <div class="sensor-mini-trend" style="color:${humid?'#f87171':'#22c55e'}">${r.hum}% RH</div>
+    </div>`;
+  }).join('');
+  const avgTemp=(readings.reduce((a,r)=>a+r.temp,0)/readings.length).toFixed(1);
+  const avgHum=Math.round(readings.reduce((a,r)=>a+r.hum,0)/readings.length);
+  const avgSoil=Math.round(readings.reduce((a,r)=>a+r.soil,0)/readings.length);
+  document.getElementById('sensorGauges').innerHTML=`
+    <div class="sensor-gauge">
+      <div class="gauge-title">🌡️ Temperature by Farm</div>
+      ${readings.map(r=>`<div class="gauge-item">
+        <span style="font-size:10px;width:70px;flex-shrink:0;color:var(--sub)">${r.name}</span>
+        <div class="gauge-bar-w"><div class="gauge-bar" style="width:${r.temp/50*100}%;background:${r.temp>32?'#f87171':'#38bdf8'}"></div></div>
+        <span class="gauge-val" style="color:${r.temp>32?'#f87171':'var(--text)'}">${r.temp}°C</span>
+      </div>`).join('')}
+    </div>
+    <div class="sensor-gauge">
+      <div class="gauge-title">💧 Soil Moisture by Farm</div>
+      ${readings.map(r=>`<div class="gauge-item">
+        <span style="font-size:10px;width:70px;flex-shrink:0;color:var(--sub)">${r.name}</span>
+        <div class="gauge-bar-w"><div class="gauge-bar" style="width:${r.soil}%;background:${r.soil<35?'#f87171':r.soil<55?'#facc15':'#22c55e'}"></div></div>
+        <span class="gauge-val" style="color:${r.soil<35?'#f87171':'var(--text)'}">${r.soil}%</span>
+      </div>`).join('')}
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border2);display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center">
+        <div><div style="font-size:13px;font-weight:900;color:#38bdf8">${avgTemp}°C</div><div style="font-size:9px;color:var(--sub)">Avg Temp</div></div>
+        <div><div style="font-size:13px;font-weight:900;color:#a78bfa">${avgHum}%</div><div style="font-size:9px;color:var(--sub)">Avg Humidity</div></div>
+        <div><div style="font-size:13px;font-weight:900;color:#22c55e">${avgSoil}%</div><div style="font-size:9px;color:var(--sub)">Avg Soil</div></div>
+      </div>
+    </div>
+  `;
+}
+
+// ── PEST DATA ──
+const pestData=[
+  {icon:'🦗',name:'Fall Armyworm',farm:'Free State Maize Hub',severity:'HIGH',confidence:94,detected:'2h ago',field:'Block C, D'},
+  {icon:'🐛',name:'Nut Borer',farm:'Mpumalanga Macadamia',severity:'HIGH',confidence:88,detected:'5h ago',field:'Sector B4'},
+  {icon:'🪲',name:'Citrus Psyllid',farm:'Limpopo Citrus Estate',severity:'MED',confidence:76,detected:'1d ago',field:'Block A2'},
+  {icon:'🍄',name:'Botrytis (Fungal)',farm:'Stellenbosch Vineyards',severity:'MED',confidence:82,detected:'1d ago',field:'Row 14–18'},
+  {icon:'🐌',name:'Stem Borer',farm:'KZN Suikersteen',severity:'LOW',confidence:61,detected:'2d ago',field:'Section 3'},
+  {icon:'🦟',name:'Aphids',farm:'Hex River Druiwe',severity:'LOW',confidence:71,detected:'3d ago',field:'Block F'},
+  {icon:'🐞',name:'Thrips',farm:'Groot Mielie Farm',severity:'LOW',confidence:58,detected:'3d ago',field:'Field 2'},
+  {icon:'✅',name:'No Pest Detected',farm:'Oranjezicht City Farm',severity:'NONE',confidence:99,detected:'Today',field:'All zones'},
+];
+function renderPests(){
+  const c=document.getElementById('pestGrid');
+  c.innerHTML=pestData.map((p,i)=>`
+    <div class="pest-card ${p.severity==='HIGH'?'alert-pest':''}">
+      <div class="pest-header">
+        <div class="pest-icon">${p.icon}</div>
+        <span class="pest-severity sev-${p.severity.toLowerCase()}">${p.severity}</span>
+      </div>
+      <div class="pest-name">${p.name}</div>
+      <div class="pest-farm">${p.farm}</div>
+      <div style="font-size:9px;color:var(--sub);margin-top:3px">${p.field} · ${p.detected}</div>
+      <div class="pest-conf">AI Confidence: ${p.confidence}%
+        <div class="pest-conf-bar"><div class="pest-conf-fill" style="width:${p.confidence}%;background:${p.severity==='HIGH'?'#f87171':p.severity==='MED'?'#fb923c':'#22c55e'}"></div></div>
+      </div>
+      ${p.severity!=='NONE'?`<button class="pest-wa-btn" onclick="sendPestAlert(${i})">📲 Alert via WhatsApp</button>`:''}
+    </div>
+  `).join('');
+}
+window.sendPestAlert=async function(i){
+  const p=pestData[i];
+  const msg=`🐛 YieldCore AI — Pest Detection\n\n*${p.severity} SEVERITY*\n*${p.name}* detected at *${p.farm}*\nField: ${p.field}\nAI Confidence: ${p.confidence}%\nDetected: ${p.detected}\n\n⚡ Immediate inspection recommended.`;
+  try{
+    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await res.json();
+    if(d.success)alert('✅ Pest alert sent via WhatsApp!');
+    else alert('Error: '+d.error);
+  }catch(e){alert('Network error: '+e.message);}
+};
+
+// ── FULL ALERTS DATA ──
+const fullAlerts=[
+  {type:'critical',icon:'💧',farm:'Free State Maize Hub',msg:'Soil moisture at 28%, pump activated',time:'12m ago'},
+  {type:'critical',icon:'🌡️',farm:'Frost Warning — Free State',msg:'Friday night temperature forecast < 2°C',time:'5h ago'},
+  {type:'critical',icon:'🐛',farm:'Mpumalanga Macadamia',msg:'Fall armyworm detected in Block C & D',time:'2h ago'},
+  {type:'warning',icon:'🐛',farm:'Mpumalanga Macadamia',msg:'Drone detected nut borer in sector B4',time:'5h ago'},
+  {type:'warning',icon:'💧',farm:'Mpumalanga Avocados',msg:'Drip irrigation pressure low — check filters',time:'7h ago'},
+  {type:'warning',icon:'📡',farm:'Karoo Kleinvee',msg:'Wind sensor offline in Camp 4 — battery dead',time:'2h ago'},
+  {type:'warning',icon:'🌡️',farm:'KZN Suikersteen',msg:'Temperature spike 39°C in processing shed',time:'3h ago'},
+  {type:'info',icon:'🌾',farm:'Bethlehem Koring',msg:'Wheat harvest window opens in 9 days',time:'1d ago'},
+  {type:'info',icon:'🌧️',farm:'Limpopo Citrus Estate',msg:'Rain forecast 60% — adjust irrigation schedule',time:'1d ago'},
+  {type:'info',icon:'☀️',farm:'Groot Mielie Farm',msg:'Solar output 12% above monthly average',time:'2d ago'},
+];
+let alertFilter='all';
+function filterAlerts(f,btn){
+  alertFilter=f;
+  document.querySelectorAll('.af-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFullAlerts();
+}
+window.filterAlerts=filterAlerts;
+function renderFullAlerts(){
+  const list=fullAlerts.filter(a=>alertFilter==='all'||a.type===alertFilter);
+  document.getElementById('alertCount').textContent=list.length+' alerts';
+  document.getElementById('fullAlertsList').innerHTML=list.map((a,i)=>`
+    <div class="alert-full af-${a.type}">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="font-size:16px">${a.icon}</span>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+            <span class="${a.type==='critical'?'alert-badge-crit':a.type==='warning'?'alert-badge-warn':''}${a.type==='info'?'alert-badge-info':''}" style="${a.type==='info'?'font-size:9px;font-weight:900;color:#38bdf8;background:#38bdf822;padding:1px 6px;border-radius:4px':''}">
+              ${a.type.toUpperCase()}
+            </span>
+            <span style="font-size:11px;font-weight:700;color:var(--sub)">${a.farm}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text);line-height:1.4">${a.msg}</div>
+        </div>
+        <div style="font-size:10px;color:var(--sub);white-space:nowrap">${a.time}</div>
+      </div>
+      ${a.type!=='info'?`<button class="wa-btn" style="margin-top:6px" onclick="sendFullAlert(${fullAlerts.indexOf(a)})">📲 Send WhatsApp</button>`:''}
+    </div>
+  `).join('');
+}
+window.sendFullAlert=async function(i){
+  const a=fullAlerts[i];
+  const msg=`🚨 YieldCore AI Alert\n\n*${a.type.toUpperCase()}* — ${a.farm}\n${a.msg}\n\n_${a.time}_`;
+  try{
+    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await res.json();
+    if(d.success)alert('✅ Alert sent via WhatsApp!');
+    else alert('Error: '+d.error);
+  }catch(e){alert('Network error: '+e.message);}
+};
+window.sendAllWhatsApp=async function(){
+  const criticals=fullAlerts.filter(a=>a.type==='critical');
+  const msg=`🚨 YieldCore AI — CRITICAL ALERTS SUMMARY\n\n${criticals.map((a,i)=>`${i+1}. *${a.farm}*\n   ${a.msg} (${a.time})`).join('\n\n')}\n\n_${criticals.length} critical alerts require immediate attention._`;
+  try{
+    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await res.json();
+    if(d.success)alert('✅ All critical alerts sent!');
+    else alert('Error: '+d.error);
+  }catch(e){alert('Network error: '+e.message);}
+};
+
 // ── INIT ──
 function init(){
   renderWeather();
@@ -618,9 +1079,16 @@ function init(){
   renderMap();
   renderMarket();
   renderAlerts();
+  renderSolar();
+  renderIrrigation();
+  renderNDVI();
+  renderSensors();
+  renderPests();
+  renderFullAlerts();
   renderModules();
   fetchWeather();
   setInterval(fetchWeather, 10*60*1000);
+  setInterval(()=>{renderSolar();renderIrrigation();renderSensors();}, 5000);
 }
 window.setNav=setNav;
 </script>
