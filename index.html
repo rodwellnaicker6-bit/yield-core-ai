@@ -226,6 +226,92 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
 .af-warn{background:#71401212;border:1px solid #71401244}
 .af-info{background:#1e3a5f12;border:1px solid #1e3a5f44}
 
+/* ── NUTRIENTS ── */
+.npk-farm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.npk-card{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:12px 13px}
+.npk-farm-name{font-size:11px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.npk-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.npk-label{font-size:10px;font-weight:800;width:14px;text-align:center;flex-shrink:0}
+.npk-bar-wrap{flex:1;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;position:relative}
+.npk-bar{height:100%;border-radius:4px;transition:width .5s}
+.npk-range-line{position:absolute;top:0;bottom:0;width:2px;background:#fff;opacity:.4}
+.npk-val{font-size:11px;font-weight:800;width:44px;text-align:right}
+.npk-status{font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px}
+.npk-ok{background:#22c55e18;color:#22c55e;border:1px solid #22c55e33}
+.npk-low{background:#f8717118;color:#f87171;border:1px solid #f8717133}
+.npk-high{background:#fb923c18;color:#fb923c;border:1px solid #fb923c33}
+.npk-legend{display:flex;gap:14px;font-size:10px;color:var(--sub);flex-wrap:wrap}
+.npk-leg{display:flex;align-items:center;gap:4px}
+.npk-dot{width:10px;height:10px;border-radius:3px}
+.npk-range-info{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:10px 12px;margin-top:8px}
+.npk-range-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;margin-top:8px}
+.npk-range-item{padding:8px;background:var(--bg3);border-radius:8px}
+.npk-range-title{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1px}
+.npk-range-vals{font-size:10px;color:var(--text);margin-top:4px;font-weight:700}
+
+/* ── YIELD & PROFIT ── */
+.yield-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.yield-card{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:12px 13px}
+.yield-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.yield-farm{font-size:11px;font-weight:800;color:var(--text)}
+.yield-crop{font-size:10px;color:var(--sub)}
+.yield-season{font-size:9px;color:var(--green);background:#22c55e18;padding:2px 7px;border-radius:4px;font-weight:700}
+.yield-vals{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
+.yield-val-item{text-align:center;background:var(--bg3);border-radius:7px;padding:6px 4px}
+.yield-val-num{font-size:13px;font-weight:900}
+.yield-val-label{font-size:8px;color:var(--sub);margin-top:2px}
+.yield-profit-bar{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.yield-profit-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#22c55e,#4ade80);transition:width .5s}
+.yield-profit-row{display:flex;justify-content:space-between;font-size:10px;color:var(--sub)}
+.yield-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px;background:var(--bg4);border-radius:10px;border:1px solid var(--border2);text-align:center}
+.yield-sum-val{font-size:15px;font-weight:900;color:#22c55e}
+.yield-sum-label{font-size:9px;color:var(--sub);margin-top:2px}
+
+/* ── AI ADVISOR ── */
+.ai-chat-wrap{display:flex;flex-direction:column;height:420px}
+.ai-messages{flex:1;overflow-y:auto;padding:4px 0;display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.ai-msg{max-width:88%;padding:10px 13px;border-radius:13px;font-size:13px;line-height:1.6}
+.ai-msg-user{background:linear-gradient(135deg,var(--green2),var(--green));color:#000;margin-left:auto;font-weight:600}
+.ai-msg-ai{background:var(--bg4);border:1px solid var(--border2);color:var(--text)}
+.ai-msg-system{background:var(--bg3);border:1px solid var(--border2);color:var(--sub);font-size:11px;text-align:center;margin:auto;max-width:100%}
+.ai-thinking{display:flex;gap:5px;align-items:center;padding:10px 13px;background:var(--bg4);border:1px solid var(--border2);border-radius:13px;max-width:100px}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1s infinite}
+.ai-dot:nth-child(2){animation-delay:.2s}
+.ai-dot:nth-child(3){animation-delay:.4s}
+.ai-input-row{display:flex;gap:8px}
+.ai-inp{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--text);font-size:13px;font-family:inherit;resize:none}
+.ai-inp:focus{outline:none;border-color:var(--green)}
+.ai-send{padding:10px 18px;background:linear-gradient(135deg,var(--green2),var(--green));border:none;border-radius:10px;color:#000;font-size:13px;font-weight:900;cursor:pointer;flex-shrink:0}
+.ai-send:disabled{opacity:.5;cursor:default}
+.ai-quick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.ai-quick-btn{padding:5px 11px;background:var(--bg4);border:1px solid var(--border2);border-radius:99px;font-size:10px;font-weight:700;color:var(--sub);cursor:pointer;transition:all .18s}
+.ai-quick-btn:hover{border-color:var(--green);color:var(--green)}
+
+/* ── COMMUNITY GRAIN VENDING ── */
+.vend-map-row{display:flex;gap:12px;margin-bottom:12px}
+.vend-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.vend-stat{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:10px 12px;text-align:center}
+.vend-stat-val{font-size:18px;font-weight:900}
+.vend-stat-label{font-size:9px;color:var(--sub);margin-top:2px}
+.vend-list{display:flex;flex-direction:column;gap:8px}
+.vend-item{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:11px 13px}
+.vend-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.vend-name{font-size:12px;font-weight:800;color:var(--text)}
+.vend-loc{font-size:10px;color:var(--sub)}
+.vend-online{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px}
+.vend-on{background:#22c55e18;color:#22c55e;border:1px solid #22c55e33}
+.vend-off{background:#f8717118;color:#f87171;border:1px solid #f8717133}
+.vend-stocks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vend-stock{background:var(--bg3);border-radius:7px;padding:6px 8px;text-align:center}
+.vend-stock-icon{font-size:14px}
+.vend-stock-name{font-size:9px;color:var(--sub);margin:2px 0}
+.vend-stock-val{font-size:11px;font-weight:900}
+.vend-stock-price{font-size:9px;color:var(--green);font-weight:700}
+.vend-stock-bar{height:3px;background:var(--bg);border-radius:2px;overflow:hidden;margin-top:4px}
+.vend-stock-fill{height:100%;border-radius:2px;transition:width .4s}
+.vend-dispense-btn{width:100%;margin-top:8px;padding:7px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:800;cursor:pointer;transition:opacity .2s}
+.vend-dispense-btn:hover{opacity:.85}
+
 /* ── MODULES ROW ── */
 .modules-section{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
 .modules-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:10px}
@@ -494,6 +580,71 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
             <button class="af-btn" onclick="filterAlerts('info',this)">Info</button>
           </div>
           <div id="fullAlertsList"></div>
+        </div>
+
+      </div>
+
+      <!-- NUTRIENTS & YIELD -->
+      <div class="panels2 fade">
+
+        <!-- NUTRIENTS -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">💊 NUTRIENT MONITORING <span>NPK + Micronutrients</span></div>
+            <div style="font-size:9px;color:var(--purple);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--purple);box-shadow:0 0 6px var(--purple)"></div>LIVE</div>
+          </div>
+          <div class="npk-farm-grid" id="npkGrid"></div>
+          <div class="npk-range-info">
+            <div style="font-size:11px;font-weight:800;margin-bottom:2px">📋 Optimal Ranges by Crop Type</div>
+            <div class="npk-range-grid" id="npkRangeGrid"></div>
+          </div>
+          <div class="npk-legend" style="margin-top:10px">
+            <div class="npk-leg"><div class="npk-dot" style="background:#22c55e"></div>N — Nitrogen</div>
+            <div class="npk-leg"><div class="npk-dot" style="background:#f59e0b"></div>P — Phosphorus</div>
+            <div class="npk-leg"><div class="npk-dot" style="background:#a78bfa"></div>K — Potassium</div>
+            <div class="npk-leg"><div class="npk-dot" style="background:#38bdf8"></div>Ca — Calcium</div>
+          </div>
+        </div>
+
+        <!-- YIELD & PROFIT -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">📈 YIELD PROJECTION &amp; PROFIT</div>
+            <div style="font-size:9px;color:#22c55e;font-weight:700">2024/25 Season</div>
+          </div>
+          <div class="yield-grid" id="yieldGrid"></div>
+          <div class="yield-summary" id="yieldSummary"></div>
+        </div>
+
+      </div>
+
+      <!-- AI ADVISOR & VENDING MACHINE -->
+      <div class="panels2 fade">
+
+        <!-- AI ADVISOR -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">🤖 AI CROP ADVISOR <span>GPT-4o powered</span></div>
+            <div id="aiStatusBadge" style="font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33">● Online</div>
+          </div>
+          <div class="ai-chat-wrap">
+            <div class="ai-quick" id="aiQuick"></div>
+            <div class="ai-messages" id="aiMessages"></div>
+            <div class="ai-input-row">
+              <textarea class="ai-inp" id="aiInput" rows="1" placeholder="Ask about crops, pests, nutrients, irrigation…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}"></textarea>
+              <button class="ai-send" id="aiSendBtn" onclick="sendAI()">Send →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMUNITY GRAIN VENDING -->
+        <div class="panel">
+          <div class="sec-hdr">
+            <div class="sec-title">🏧 COMMUNITY GRAIN VENDING</div>
+            <div style="font-size:9px;color:var(--purple);font-weight:700;background:#a78bfa18;border:1px solid #a78bfa33;padding:2px 10px;border-radius:99px">YieldCore Social Impact</div>
+          </div>
+          <div class="vend-stats" id="vendStats"></div>
+          <div class="vend-list" id="vendList"></div>
         </div>
 
       </div>
@@ -1071,6 +1222,275 @@ window.sendAllWhatsApp=async function(){
   }catch(e){alert('Network error: '+e.message);}
 };
 
+// ── NUTRIENTS DATA ──
+const npkFarms=[
+  {name:'Free State Maize Hub',crop:'🌽 Maize',
+    N:{val:68,min:80,max:120,unit:'kg/ha'},P:{val:22,min:20,max:40,unit:'kg/ha'},K:{val:95,min:80,max:150,unit:'kg/ha'},Ca:{val:310,min:200,max:400,unit:'mg/kg'}},
+  {name:'Limpopo Citrus Estate',crop:'🍊 Citrus',
+    N:{val:112,min:100,max:160,unit:'kg/ha'},P:{val:35,min:25,max:50,unit:'kg/ha'},K:{val:180,min:150,max:250,unit:'kg/ha'},Ca:{val:420,min:300,max:600,unit:'mg/kg'}},
+  {name:'Groot Mielie Farm',crop:'🌽 Maize',
+    N:{val:88,min:80,max:120,unit:'kg/ha'},P:{val:28,min:20,max:40,unit:'kg/ha'},K:{val:105,min:80,max:150,unit:'kg/ha'},Ca:{val:280,min:200,max:400,unit:'mg/kg'}},
+  {name:'KZN Suikersteen',crop:'🌿 Sugarcane',
+    N:{val:145,min:120,max:180,unit:'kg/ha'},P:{val:18,min:15,max:35,unit:'kg/ha'},K:{val:220,min:180,max:300,unit:'kg/ha'},Ca:{val:380,min:250,max:500,unit:'mg/kg'}},
+  {name:'Stellenbosch Vineyards',crop:'🍇 Grapes',
+    N:{val:55,min:40,max:80,unit:'kg/ha'},P:{val:12,min:10,max:25,unit:'kg/ha'},K:{val:130,min:100,max:180,unit:'kg/ha'},Ca:{val:510,min:400,max:700,unit:'mg/kg'}},
+  {name:'Mpumalanga Avocados',crop:'🥑 Avocado',
+    N:{val:92,min:80,max:130,unit:'kg/ha'},P:{val:30,min:20,max:45,unit:'kg/ha'},K:{val:165,min:140,max:220,unit:'kg/ha'},Ca:{val:460,min:350,max:600,unit:'mg/kg'}},
+];
+const npkRanges=[
+  {crop:'🌽 Maize',N:'80–120',P:'20–40',K:'80–150'},
+  {crop:'🍊 Citrus',N:'100–160',P:'25–50',K:'150–250'},
+  {crop:'🌿 Sugarcane',N:'120–180',P:'15–35',K:'180–300'},
+  {crop:'🍇 Grapes',N:'40–80',P:'10–25',K:'100–180'},
+  {crop:'🥑 Avocado',N:'80–130',P:'20–45',K:'140–220'},
+  {crop:'🌾 Wheat',N:'60–100',P:'15–30',K:'60–120'},
+];
+function npkStatus(val,min,max){
+  if(val<min)return{cls:'npk-low',txt:'LOW'};
+  if(val>max)return{cls:'npk-high',txt:'HIGH'};
+  return{cls:'npk-ok',txt:'OK'};
+}
+function npkBarPct(val,min,max){return Math.min(100,Math.round(val/(max*1.3)*100));}
+function npkMinPct(min,max){return Math.round(min/(max*1.3)*100);}
+function npkMaxPct(min,max){return Math.round(max/(max*1.3)*100);}
+function renderNutrients(){
+  const c=document.getElementById('npkGrid');
+  c.innerHTML=npkFarms.map(f=>{
+    const nutrients=[
+      {k:'N',color:'#22c55e',label:'N'},
+      {k:'P',color:'#f59e0b',label:'P'},
+      {k:'K',color:'#a78bfa',label:'K'},
+      {k:'Ca',color:'#38bdf8',label:'Ca'},
+    ];
+    const overallStatus=nutrients.every(n=>npkStatus(f[n.k].val,f[n.k].min,f[n.k].max).txt==='OK')?'npk-ok':'npk-low';
+    return `<div class="npk-card">
+      <div class="npk-farm-name">
+        <span>${f.crop} &nbsp;${f.name}</span>
+        <span class="npk-status ${overallStatus}">${overallStatus==='npk-ok'?'✓ Balanced':'⚠ Fix Needed'}</span>
+      </div>
+      ${nutrients.map(n=>{
+        const d=f[n.k];
+        const st=npkStatus(d.val,d.min,d.max);
+        const pct=npkBarPct(d.val,d.min,d.max);
+        const minP=npkMinPct(d.min,d.max);
+        const maxP=npkMaxPct(d.min,d.max);
+        return `<div class="npk-row">
+          <span class="npk-label" style="color:${n.color}">${n.label}</span>
+          <div class="npk-bar-wrap">
+            <div class="npk-bar" style="width:${pct}%;background:${n.color}"></div>
+            <div class="npk-range-line" style="left:${minP}%"></div>
+            <div class="npk-range-line" style="left:${maxP}%"></div>
+          </div>
+          <span class="npk-val" style="color:${n.color}">${d.val}</span>
+          <span class="npk-status ${st.cls}">${st.txt}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('npkRangeGrid').innerHTML=npkRanges.map(r=>`
+    <div class="npk-range-item">
+      <div class="npk-range-title">${r.crop}</div>
+      <div class="npk-range-vals">N:${r.N}<br/>P:${r.P}<br/>K:${r.K}</div>
+    </div>
+  `).join('');
+}
+
+// ── YIELD & PROFIT DATA ──
+const yieldFarms=[
+  {farm:'Groot Mielie',crop:'Maize',ha:890,yieldT:6.8,priceR:4850,costHa:8200,season:'On Track'},
+  {farm:'Limpopo Citrus',crop:'Citrus',ha:180,yieldT:28.4,priceR:5200,costHa:22000,season:'On Track'},
+  {farm:'Stellenbosch',crop:'Wine Grapes',ha:140,yieldT:14.2,priceR:6800,costHa:35000,season:'Ahead'},
+  {farm:'KZN Sugarcane',crop:'Sugarcane',ha:240,yieldT:72.5,priceR:980,costHa:14000,season:'On Track'},
+  {farm:'Mpumalanga Avoc',crop:'Avocado',ha:95,yieldT:12.8,priceR:18500,costHa:42000,season:'Ahead'},
+  {farm:'Bethlehem Koring',crop:'Wheat',ha:560,yieldT:4.2,priceR:7200,costHa:6800,season:'Delayed'},
+];
+function renderYield(){
+  const c=document.getElementById('yieldGrid');
+  c.innerHTML=yieldFarms.map(f=>{
+    const revenue=Math.round(f.yieldT*f.ha*f.priceR/1000);
+    const cost=Math.round(f.costHa*f.ha/1000);
+    const profit=revenue-cost;
+    const margin=Math.round((profit/revenue)*100);
+    const profitPct=Math.min(100,Math.max(0,margin));
+    const seasonColor=f.season==='Ahead'?'#22c55e':f.season==='Delayed'?'#f87171':'#facc15';
+    return `<div class="yield-card">
+      <div class="yield-header">
+        <div><div class="yield-farm">${f.farm}</div><div class="yield-crop">${f.crop} · ${f.ha}ha</div></div>
+        <span class="yield-season" style="color:${seasonColor};background:${seasonColor}18;border:1px solid ${seasonColor}33">${f.season}</span>
+      </div>
+      <div class="yield-vals">
+        <div class="yield-val-item">
+          <div class="yield-val-num" style="color:#22c55e">R${(revenue/1000).toFixed(0)}k</div>
+          <div class="yield-val-label">Revenue</div>
+        </div>
+        <div class="yield-val-item">
+          <div class="yield-val-num" style="color:#f87171">R${(cost/1000).toFixed(0)}k</div>
+          <div class="yield-val-label">Costs</div>
+        </div>
+        <div class="yield-val-item">
+          <div class="yield-val-num" style="color:${profit>0?'#4ade80':'#f87171'}">R${(profit/1000).toFixed(0)}k</div>
+          <div class="yield-val-label">Profit</div>
+        </div>
+      </div>
+      <div class="yield-profit-bar"><div class="yield-profit-fill" style="width:${profitPct}%;background:${profit>0?'linear-gradient(90deg,#22c55e,#4ade80)':'#f87171'}"></div></div>
+      <div class="yield-profit-row"><span>${f.yieldT}t/ha projected</span><span style="color:${profit>0?'#22c55e':'#f87171'};font-weight:800">${margin}% margin</span></div>
+    </div>`;
+  }).join('');
+  const totRev=yieldFarms.reduce((a,f)=>a+Math.round(f.yieldT*f.ha*f.priceR/1000),0);
+  const totCost=yieldFarms.reduce((a,f)=>a+Math.round(f.costHa*f.ha/1000),0);
+  const totProfit=totRev-totCost;
+  const totMargin=Math.round((totProfit/totRev)*100);
+  document.getElementById('yieldSummary').innerHTML=`
+    <div class="yield-val-item">
+      <div class="yield-sum-val">R${(totRev/1000).toFixed(0)}k</div>
+      <div class="yield-sum-label">Total Revenue</div>
+    </div>
+    <div class="yield-val-item">
+      <div class="yield-sum-val" style="color:#f87171">R${(totCost/1000).toFixed(0)}k</div>
+      <div class="yield-sum-label">Total Costs</div>
+    </div>
+    <div class="yield-val-item">
+      <div class="yield-sum-val" style="color:#4ade80">R${(totProfit/1000).toFixed(0)}k</div>
+      <div class="yield-sum-label">Net Profit</div>
+    </div>
+    <div class="yield-val-item">
+      <div class="yield-sum-val">${totMargin}%</div>
+      <div class="yield-sum-label">Avg Margin</div>
+    </div>
+  `;
+}
+
+// ── AI ADVISOR ──
+let aiMessages=[];
+const aiQuickPrompts=[
+  'Best fertiliser for maize low N?',
+  'Armyworm treatment options?',
+  'Irrigation schedule for citrus?',
+  'Frost protection for Free State?',
+  'SAFEX maize price outlook?',
+];
+function initAI(){
+  document.getElementById('aiQuick').innerHTML=aiQuickPrompts.map(q=>`
+    <button class="ai-quick-btn" onclick="setAIQuestion('${q}')">${q}</button>
+  `).join('');
+  addAIMessage('system','👋 Hi Rodwell! I\'m your YieldCore AI Advisor. Ask me anything about your crops, nutrients, irrigation, pests, or market prices.');
+}
+function addAIMessage(role,text){
+  const wrap=document.getElementById('aiMessages');
+  const div=document.createElement('div');
+  div.className=`ai-msg ai-msg-${role==='user'?'user':role==='system'?'system':'ai'}`;
+  div.textContent=text;
+  wrap.appendChild(div);
+  wrap.scrollTop=wrap.scrollHeight;
+}
+function setAIQuestion(q){
+  document.getElementById('aiInput').value=q;
+  sendAI();
+}
+window.setAIQuestion=setAIQuestion;
+async function sendAI(){
+  const inp=document.getElementById('aiInput');
+  const btn=document.getElementById('aiSendBtn');
+  const text=inp.value.trim();
+  if(!text)return;
+  inp.value='';
+  btn.disabled=true;
+  addAIMessage('user',text);
+  aiMessages.push({role:'user',content:text});
+  const wrap=document.getElementById('aiMessages');
+  const thinking=document.createElement('div');
+  thinking.className='ai-thinking';
+  thinking.innerHTML='<div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>';
+  wrap.appendChild(thinking);
+  wrap.scrollTop=wrap.scrollHeight;
+  try{
+    const res=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:aiMessages})});
+    const data=await res.json();
+    thinking.remove();
+    if(data.reply){
+      aiMessages.push({role:'assistant',content:data.reply});
+      addAIMessage('ai',data.reply);
+    } else {
+      addAIMessage('system','⚠️ '+( data.error||'No response'));
+    }
+  }catch(e){
+    thinking.remove();
+    addAIMessage('system','⚠️ Network error. Please try again.');
+  }
+  btn.disabled=false;
+}
+window.sendAI=sendAI;
+
+// ── COMMUNITY GRAIN VENDING ──
+const vendingMachines=[
+  {name:'Botshabelo Hub VM-01',loc:'Botshabelo, Free State',online:true,
+    stocks:[
+      {icon:'🌽',name:'White Maize',qty:450,max:500,price:'R8.50/kg',pct:90},
+      {icon:'🌾',name:'Wheat Flour',qty:120,max:200,price:'R12/kg',pct:60},
+      {icon:'🫘',name:'Soya Mince',qty:80,max:150,price:'R15/kg',pct:53},
+    ]},
+  {name:'Khayelitsha VM-02',loc:'Khayelitsha, Western Cape',online:true,
+    stocks:[
+      {icon:'🌽',name:'White Maize',qty:310,max:500,price:'R8.50/kg',pct:62},
+      {icon:'🌾',name:'Wheat Flour',qty:190,max:200,price:'R12/kg',pct:95},
+      {icon:'🫘',name:'Yellow Split Peas',qty:40,max:100,price:'R10/kg',pct:40},
+    ]},
+  {name:'Soweto VM-03',loc:'Meadowlands, Gauteng',online:false,
+    stocks:[
+      {icon:'🌽',name:'White Maize',qty:0,max:500,price:'R8.50/kg',pct:0},
+      {icon:'🌾',name:'Wheat Flour',qty:0,max:200,price:'R12/kg',pct:0},
+      {icon:'🫘',name:'Soya Mince',qty:0,max:150,price:'R15/kg',pct:0},
+    ]},
+  {name:'Motherwell VM-04',loc:'Motherwell, Eastern Cape',online:true,
+    stocks:[
+      {icon:'🌽',name:'White Maize',qty:200,max:500,price:'R8.50/kg',pct:40},
+      {icon:'🌾',name:'Wheat Flour',qty:55,max:200,price:'R12/kg',pct:28},
+      {icon:'🫘',name:'Lentils',qty:90,max:120,price:'R11/kg',pct:75},
+    ]},
+];
+function renderVending(){
+  const online=vendingMachines.filter(v=>v.online).length;
+  const totalDispensed=12840;
+  const familiesServed=3210;
+  document.getElementById('vendStats').innerHTML=`
+    <div class="vend-stat"><div class="vend-stat-val" style="color:#22c55e">${online}/${vendingMachines.length}</div><div class="vend-stat-label">Machines Online</div></div>
+    <div class="vend-stat"><div class="vend-stat-val" style="color:#a78bfa">${totalDispensed.toLocaleString()}kg</div><div class="vend-stat-label">Grain Dispensed</div></div>
+    <div class="vend-stat"><div class="vend-stat-val" style="color:#facc15">${familiesServed.toLocaleString()}</div><div class="vend-stat-label">Families Served</div></div>
+  `;
+  document.getElementById('vendList').innerHTML=vendingMachines.map((v,vi)=>`
+    <div class="vend-item">
+      <div class="vend-item-top">
+        <div>
+          <div class="vend-name">${v.name}</div>
+          <div class="vend-loc">📍 ${v.loc}</div>
+        </div>
+        <span class="vend-online ${v.online?'vend-on':'vend-off'}">${v.online?'● Online':'○ Offline'}</span>
+      </div>
+      <div class="vend-stocks">
+        ${v.stocks.map(s=>`<div class="vend-stock">
+          <div class="vend-stock-icon">${s.icon}</div>
+          <div class="vend-stock-name">${s.name}</div>
+          <div class="vend-stock-val" style="color:${s.pct<30?'#f87171':s.pct<60?'#facc15':'#22c55e'}">${s.qty}kg</div>
+          <div class="vend-stock-price">${s.price}</div>
+          <div class="vend-stock-bar"><div class="vend-stock-fill" style="width:${s.pct}%;background:${s.pct<30?'#f87171':s.pct<60?'#facc15':'#22c55e'}"></div></div>
+        </div>`).join('')}
+      </div>
+      ${v.online?`<button class="vend-dispense-btn" onclick="vendDispense(${vi})">🏧 Dispense / Restock Alert via WhatsApp</button>`:'<div style="text-align:center;font-size:11px;color:#f87171;margin-top:8px;padding:6px;background:#f8717110;border-radius:7px">⚠️ Machine offline — technician dispatched</div>'}
+    </div>
+  `).join('');
+}
+window.vendDispense=async function(i){
+  const v=vendingMachines[i];
+  const low=v.stocks.filter(s=>s.pct<40);
+  const msg=`🏧 YieldCore — Community Vending Alert\n\n*${v.name}*\n📍 ${v.loc}\n\n${low.length>0?`⚠️ LOW STOCK:\n${low.map(s=>`• ${s.icon} ${s.name}: ${s.qty}kg remaining (${s.pct}%)`).join('\n')}\n\n🚚 Please arrange restock within 24h.`:'✅ Stock levels are adequate. Dispense approved.'}\n\n_Sent by YieldCore AI Platform_`;
+  try{
+    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await res.json();
+    if(d.success)alert('✅ Vending machine alert sent via WhatsApp!');
+    else alert('Error: '+d.error);
+  }catch(e){alert('Network error: '+e.message);}
+};
+
 // ── INIT ──
 function init(){
   renderWeather();
@@ -1085,6 +1505,10 @@ function init(){
   renderSensors();
   renderPests();
   renderFullAlerts();
+  renderNutrients();
+  renderYield();
+  initAI();
+  renderVending();
   renderModules();
   fetchWeather();
   setInterval(fetchWeather, 10*60*1000);
