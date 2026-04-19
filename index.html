@@ -357,13 +357,58 @@ function setNav(el,page){
 }
 
 // ── DATA ──
-const weatherData=[
-  {city:'Stellenbosch',temp:22,icon:'☀️',hum:62,wind:12},
-  {city:'Limpopo',temp:32,icon:'⛅',hum:45,wind:18},
-  {city:'KZN',temp:26,icon:'🌥️',hum:78,wind:15},
-  {city:'Free State',temp:16,icon:'🌧️',hum:28,wind:22},
-  {city:'Mpumalanga',temp:24,icon:'⛅',hum:58,wind:14},
+const weatherLocations=[
+  {city:'Stellenbosch', lat:-33.93, lon:18.86},
+  {city:'Limpopo',      lat:-23.83, lon:30.16},
+  {city:'KZN',          lat:-29.85, lon:31.02},
+  {city:'Free State',   lat:-29.12, lon:26.21},
+  {city:'Mpumalanga',   lat:-25.47, lon:30.97},
 ];
+let weatherData=weatherLocations.map(l=>({...l,temp:'--',icon:'🌡️',hum:'--',wind:'--',live:false}));
+
+function wmoIcon(code){
+  if(code===0)return'☀️';
+  if(code<=2)return'🌤️';
+  if(code===3)return'☁️';
+  if(code<=48)return'🌫️';
+  if(code<=57)return'🌦️';
+  if(code<=67)return'🌧️';
+  if(code<=77)return'🌨️';
+  if(code<=82)return'🌦️';
+  if(code<=86)return'🌨️';
+  if(code<=99)return'⛈️';
+  return'🌡️';
+}
+
+async function fetchWeather(){
+  const c=document.getElementById('weatherCards');
+  const promises=weatherLocations.map(async(loc,i)=>{
+    try{
+      const url=`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=auto`;
+      const res=await fetch(url);
+      const json=await res.json();
+      const cur=json.current;
+      weatherData[i]={
+        ...loc,
+        temp:Math.round(cur.temperature_2m),
+        icon:wmoIcon(cur.weather_code),
+        hum:cur.relative_humidity_2m,
+        wind:Math.round(cur.wind_speed_10m),
+        live:true
+      };
+    }catch(e){
+      weatherData[i]={...loc,temp:'--',icon:'🌡️',hum:'--',wind:'--',live:false};
+    }
+    renderWeatherCards();
+  });
+  await Promise.allSettled(promises);
+  updateTopTemp();
+}
+
+function updateTopTemp(){
+  const first=weatherData.find(w=>w.live);
+  if(first&&first.temp!=='--') document.getElementById('liveTemp').textContent=first.temp+'°C';
+}
 
 const farmHealth=[
   {name:'Free State Maize Hub',grade:'D',score:45,color:'#f87171'},
@@ -403,18 +448,22 @@ const modules=[
 ];
 
 // ── RENDER WEATHER ──
-function renderWeather(){
+function renderWeatherCards(){
   const c=document.getElementById('weatherCards');
-  c.innerHTML='';
-  weatherData.forEach(w=>{
-    c.innerHTML+=`<div class="weather-card">
-      <div class="weather-city">${w.city}</div>
+  const more=`<div class="weather-more">+5 More<br>Farms</div>`;
+  c.innerHTML=weatherData.map(w=>`
+    <div class="weather-card" style="position:relative">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="weather-city">${w.city}</div>
+        ${w.live?`<span style="font-size:8px;color:#22c55e;font-weight:700">● LIVE</span>`:`<span style="font-size:8px;color:#facc15;font-weight:700">⏳</span>`}
+      </div>
       <div class="weather-temp"><span class="weather-icon">${w.icon}</span>${w.temp}<sup style="font-size:14px;font-weight:700">°C</sup></div>
       <div class="weather-meta"><span>${w.hum}%</span><span>•</span><span>${w.wind} km/h</span></div>
-    </div>`;
-  });
-  c.innerHTML+=`<div class="weather-more">+5 More<br>Farms</div>`;
+    </div>
+  `).join('')+more;
 }
+
+function renderWeather(){ renderWeatherCards(); }
 
 // ── RENDER STATS ──
 function renderStats(){
@@ -570,6 +619,8 @@ function init(){
   renderMarket();
   renderAlerts();
   renderModules();
+  fetchWeather();
+  setInterval(fetchWeather, 10*60*1000);
 }
 window.setNav=setNav;
 </script>
