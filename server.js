@@ -64,7 +64,11 @@ Respond concisely, practically, and in a friendly tone. Use South African contex
     res.json({ reply: completion.choices[0].message.content });
   } catch (err) {
     console.error('OpenAI error:', err.message);
-    res.status(500).json({ error: err.message });
+    const status = err.status || 500;
+    let friendly = err.message;
+    if (status === 429) friendly = 'Your OpenAI account has no credits. Please add billing at platform.openai.com/settings/billing → Add payment method, then top up with $5–$10.';
+    if (status === 401) friendly = 'Invalid OpenAI API key. Please check your OPENAI_API_KEY secret.';
+    res.status(status === 429 ? 402 : 500).json({ error: friendly, code: status });
   }
 });
 
