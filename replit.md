@@ -33,7 +33,8 @@ A full-featured desktop precision agriculture dashboard for South African farmin
 9. **Yield Projection & Profit Calculator** — 6 farms, revenue/cost/profit/margin
 10. **AI Crop Advisor** — GPT-4o chat, quick prompts, system context for SA farming
 11. **Community Grain Vending Machine** — 4 locations (Botshabelo, Khayelitsha, Soweto, Motherwell), stock levels, WhatsApp restock alerts
-12. **Modules Grid** — 9 quick-access module cards
+12. **Investor Pitch Module** — Series A pitch with 5-year revenue chart, revenue mix, use of funds, ESG impact, roadmap, investment ask, WhatsApp share, print/PDF, and investor email copy
+13. **Modules Grid** — 9 quick-access module cards
 
 ## Architecture
 - `server.js` — Express server, static file serving, /api/whatsapp/alert, /api/ai, /api/status

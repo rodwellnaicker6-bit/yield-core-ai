@@ -312,6 +312,71 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
 .vend-dispense-btn{width:100%;margin-top:8px;padding:7px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:800;cursor:pointer;transition:opacity .2s}
 .vend-dispense-btn:hover{opacity:.85}
 
+/* ── INVESTOR PITCH ── */
+.inv-hero{background:linear-gradient(135deg,#030d04 0%,#051808 40%,#0a2410 100%);border:1px solid #22c55e33;border-radius:16px;padding:24px 28px;margin-bottom:14px;position:relative;overflow:hidden}
+.inv-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,#22c55e12,transparent 70%);pointer-events:none}
+.inv-hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.inv-logo-wrap{display:flex;align-items:center;gap:12px}
+.inv-logo-icon{width:48px;height:48px;background:linear-gradient(135deg,#16a34a,#22c55e);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.inv-logo-text{font-size:22px;font-weight:900;color:var(--text);letter-spacing:-.5px}
+.inv-logo-sub{font-size:11px;color:var(--sub);margin-top:2px}
+.inv-series{padding:5px 14px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:99px;font-size:11px;font-weight:900;color:#fff;letter-spacing:.5px}
+.inv-tagline{font-size:15px;color:var(--sub);margin-bottom:20px;line-height:1.5;max-width:600px}
+.inv-tagline strong{color:var(--green)}
+.inv-hero-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.inv-metric{background:#ffffff08;border:1px solid #ffffff10;border-radius:12px;padding:14px 10px;text-align:center}
+.inv-metric-val{font-size:20px;font-weight:900;color:var(--green);letter-spacing:-.5px}
+.inv-metric-label{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;margin-top:4px;line-height:1.4}
+
+.inv-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+.inv-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.inv-card{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:18px 20px}
+.inv-card-title{font-size:11px;font-weight:900;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+
+.inv-chart-wrap{position:relative;height:120px;margin-bottom:6px}
+.inv-chart-bar{position:absolute;bottom:0;border-radius:5px 5px 0 0;transition:all .4s}
+.inv-chart-label{position:absolute;bottom:-18px;font-size:9px;font-weight:700;color:var(--sub);text-align:center;transform:translateX(-50%)}
+.inv-chart-val{position:absolute;font-size:9px;font-weight:900;color:var(--green);text-align:center;transform:translateX(-50%)}
+
+.inv-revenue-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.inv-rev-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+.inv-rev-name{font-size:11px;font-weight:700;color:var(--text);flex:1}
+.inv-rev-bar-wrap{width:120px;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;flex-shrink:0}
+.inv-rev-bar{height:100%;border-radius:4px}
+.inv-rev-val{font-size:11px;font-weight:900;color:var(--green);width:50px;text-align:right;flex-shrink:0}
+
+.inv-fund-item{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.inv-fund-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.inv-fund-label{flex:1;font-size:11px;font-weight:700;color:var(--text)}
+.inv-fund-sub{font-size:10px;color:var(--sub);margin-top:1px}
+.inv-fund-pct{font-size:16px;font-weight:900}
+
+.inv-esg-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.inv-esg-item{background:var(--bg3);border-radius:10px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.inv-esg-icon{font-size:20px;flex-shrink:0}
+.inv-esg-val{font-size:14px;font-weight:900}
+.inv-esg-label{font-size:9px;color:var(--sub);margin-top:2px}
+
+.inv-milestone-list{display:flex;flex-direction:column;gap:9px}
+.inv-milestone{display:flex;gap:12px;align-items:flex-start}
+.inv-ms-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.inv-ms-period{font-size:10px;font-weight:900;color:var(--sub);width:52px;flex-shrink:0}
+.inv-ms-text{font-size:11px;color:var(--text);line-height:1.5}
+
+.inv-ask-box{background:linear-gradient(135deg,#0d2f10,#142e17);border:1px solid #22c55e44;border-radius:14px;padding:20px 22px;text-align:center;margin-bottom:14px}
+.inv-ask-val{font-size:36px;font-weight:900;color:var(--green);letter-spacing:-1px;margin-bottom:4px}
+.inv-ask-label{font-size:13px;color:var(--sub);margin-bottom:12px}
+.inv-ask-terms{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.inv-ask-term{font-size:11px;color:var(--sub)}
+.inv-ask-term strong{color:var(--text);font-weight:800}
+
+.inv-cta-row{display:flex;gap:10px;margin-top:2px}
+.inv-cta{flex:1;padding:13px;border-radius:11px;font-size:13px;font-weight:900;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.inv-cta-primary{background:linear-gradient(135deg,var(--green2),var(--green));color:#000}
+.inv-cta-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+.inv-cta-primary:hover{opacity:.9}
+.inv-cta-secondary:hover{border-color:var(--green);color:var(--green)}
+
 /* ── MODULES ROW ── */
 .modules-section{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
 .modules-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:10px}
@@ -645,6 +710,77 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
           </div>
           <div class="vend-stats" id="vendStats"></div>
           <div class="vend-list" id="vendList"></div>
+        </div>
+
+      </div>
+
+      <!-- INVESTOR PITCH -->
+      <div class="panel fade" id="investorSection" style="padding:0;background:transparent;border:none">
+
+        <!-- HERO BANNER -->
+        <div class="inv-hero">
+          <div class="inv-hero-top">
+            <div class="inv-logo-wrap">
+              <div class="inv-logo-icon">🌿</div>
+              <div>
+                <div class="inv-logo-text">YieldCore AI</div>
+                <div class="inv-logo-sub">Smart Farming · Precision Agriculture · South Africa</div>
+              </div>
+            </div>
+            <div class="inv-series">SERIES A — CONFIDENTIAL</div>
+          </div>
+          <div class="inv-tagline">Africa's leading <strong>AI-powered precision agriculture platform</strong> — connecting 5,419 ha of farmland across 5 SA provinces with real-time intelligence, community food security, and carbon-positive outcomes.</div>
+          <div class="inv-hero-metrics" id="invHeroMetrics"></div>
+        </div>
+
+        <!-- ROW 1: Revenue Projection + Revenue Mix + Use of Funds -->
+        <div class="inv-grid3">
+          <div class="inv-card">
+            <div class="inv-card-title">📊 5-Year Revenue Projection</div>
+            <div class="inv-chart-wrap" id="invRevenueChart"></div>
+            <div style="height:22px"></div>
+            <div style="font-size:10px;color:var(--sub);margin-top:8px">*Projections based on 35% YoY farm-base growth + SaaS licensing</div>
+          </div>
+          <div class="inv-card">
+            <div class="inv-card-title">💰 Revenue Mix (Y3 Target)</div>
+            <div id="invRevMix"></div>
+          </div>
+          <div class="inv-card">
+            <div class="inv-card-title">🎯 Use of Funds</div>
+            <div id="invUseFunds"></div>
+          </div>
+        </div>
+
+        <!-- ROW 2: ESG Impact + Milestones -->
+        <div class="inv-grid2">
+          <div class="inv-card">
+            <div class="inv-card-title">🌍 ESG &amp; Social Impact</div>
+            <div class="inv-esg-grid" id="invEsg"></div>
+          </div>
+          <div class="inv-card">
+            <div class="inv-card-title">🗓️ Road Map &amp; Milestones</div>
+            <div class="inv-milestone-list" id="invMilestones"></div>
+          </div>
+        </div>
+
+        <!-- INVESTMENT ASK + CTA -->
+        <div class="inv-ask-box">
+          <div style="font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">Series A Investment Ask</div>
+          <div class="inv-ask-val">R 25,000,000</div>
+          <div class="inv-ask-label">Targeting a R420M valuation — 8× projected Y3 ARR of R54.2M</div>
+          <div class="inv-ask-terms">
+            <div class="inv-ask-term"><strong>Equity Offered:</strong> 6%</div>
+            <div class="inv-ask-term"><strong>Lead Investor:</strong> Open</div>
+            <div class="inv-ask-term"><strong>Min Ticket:</strong> R2.5M</div>
+            <div class="inv-ask-term"><strong>Close Date:</strong> Q3 2025</div>
+            <div class="inv-ask-term"><strong>Structure:</strong> Priced Round (SAFE + Equity)</div>
+          </div>
+        </div>
+
+        <div class="inv-cta-row">
+          <button class="inv-cta inv-cta-primary" onclick="shareInvestorPitch()">📲 Share Pitch via WhatsApp</button>
+          <button class="inv-cta inv-cta-secondary" onclick="window.print()">🖨️ Print / Export PDF</button>
+          <button class="inv-cta inv-cta-secondary" onclick="copyInvestorEmail()">📧 Copy Investor Email</button>
         </div>
 
       </div>
@@ -1491,6 +1627,132 @@ window.vendDispense=async function(i){
   }catch(e){alert('Network error: '+e.message);}
 };
 
+// ── INVESTOR PITCH ──
+const invProjection=[
+  {year:'Y1\n2023',rev:12.4,color:'#22c55e'},
+  {year:'Y2\n2024',rev:28.6,color:'#22c55e'},
+  {year:'Y3\n2025',rev:54.2,color:'#4ade80'},
+  {year:'Y4\n2026',rev:91.8,color:'#86efac'},
+  {year:'Y5\n2027',rev:148,color:'#bbf7d0'},
+];
+const invRevMix=[
+  {icon:'🌾',name:'SaaS Platform Licences',val:'R22.4M',pct:100,color:'#22c55e'},
+  {icon:'📡',name:'IoT Sensor Subscriptions',val:'R12.8M',pct:57,color:'#38bdf8'},
+  {icon:'🤖',name:'AI Advisory Services',val:'R8.6M',pct:38,color:'#a78bfa'},
+  {icon:'🏧',name:'Grain Vending Margin',val:'R5.2M',pct:23,color:'#f59e0b'},
+  {icon:'🌍',name:'Carbon Credit Trading',val:'R3.8M',pct:17,color:'#4ade80'},
+  {icon:'📊',name:'Data & Market Intelligence',val:'R1.4M',pct:6,color:'#fb923c'},
+];
+const invUseFunds=[
+  {icon:'💻',color:'#22c55e22',iconColor:'#22c55e',label:'Technology & AI Infrastructure',sub:'Platform scaling, model training, IoT network',pct:45},
+  {icon:'🌾',color:'#38bdf822',iconColor:'#38bdf8',label:'Farm Expansion & Onboarding',sub:'100 new farms across SA, Zambia & Zimbabwe',pct:30},
+  {icon:'🏧',color:'#a78bfa22',iconColor:'#a78bfa',label:'Community Vending Network',sub:'50 new grain vending machines in food-insecure areas',pct:15},
+  {icon:'📣',color:'#f59e0b22',iconColor:'#f59e0b',label:'Sales, Marketing & Brand',sub:'Enterprise deals, government contracts & PR',pct:10},
+];
+const invEsg=[
+  {icon:'💧',val:'42%',label:'Water saving\nvs traditional irrigation',color:'#38bdf8'},
+  {icon:'🌿',val:'8,200t',label:'CO₂ sequestered\nthis season',color:'#22c55e'},
+  {icon:'🏧',val:'3,210',label:'Families fed via\ncommunity vending',color:'#a78bfa'},
+  {icon:'⚡',val:'2,847',label:'MWh solar generated\nacross 7 farms',color:'#facc15'},
+  {icon:'🌱',val:'5,419ha',label:'Precision-managed\nfarmland (SA)',color:'#4ade80'},
+  {icon:'👩‍🌾',val:'R4.2M',label:'Smallholder farmer\nincome uplift 2024',color:'#fb923c'},
+];
+const invMilestones=[
+  {period:'Q2 2023',text:'Founded · MVP built · First 3 farms onboarded',color:'#22c55e',done:true},
+  {period:'Q4 2023',text:'10 farms · Live IoT sensors · R12.4M ARR',color:'#22c55e',done:true},
+  {period:'Q2 2024',text:'WhatsApp alerts · Solar monitoring · Vending pilot (2 sites)',color:'#22c55e',done:true},
+  {period:'Q4 2024',text:'AI Advisor (GPT-4o) · NDVI satellite · R28.6M ARR',color:'#22c55e',done:true},
+  {period:'Q2 2025',text:'Series A close · 40 new farms · Carbon credit API',color:'#facc15',done:false},
+  {period:'Q4 2025',text:'50 vending machines · Zambia pilot · R54.2M ARR',color:'#facc15',done:false},
+  {period:'Q2 2026',text:'JSE listing preparation · Pan-Africa expansion',color:'#7a9e82',done:false},
+];
+
+function renderInvestor(){
+  // Hero metrics
+  document.getElementById('invHeroMetrics').innerHTML=[
+    {val:'R28.6M',label:'Current ARR',color:'#22c55e'},
+    {val:'10',label:'Active Farms\nSA Provinces',color:'#22c55e'},
+    {val:'5,419ha',label:'Farmland Under\nManagement',color:'#4ade80'},
+    {val:'R420M',label:'Target Valuation\n(Series A)',color:'#a78bfa'},
+    {val:'92%',label:'Platform\nUptime SLA',color:'#38bdf8'},
+  ].map(m=>`<div class="inv-metric">
+    <div class="inv-metric-val" style="color:${m.color}">${m.val}</div>
+    <div class="inv-metric-label">${m.label.replace('\n','<br>')}</div>
+  </div>`).join('');
+
+  // Revenue chart bars
+  const maxRev=Math.max(...invProjection.map(p=>p.rev));
+  const chartW=document.getElementById('invRevenueChart').offsetWidth||360;
+  const barW=Math.floor((chartW-40)/invProjection.length)-8;
+  document.getElementById('invRevenueChart').innerHTML=invProjection.map((p,i)=>{
+    const h=Math.round((p.rev/maxRev)*110);
+    const x=20+i*(barW+8)+(barW/2);
+    const left=20+i*(barW+8);
+    return `<div class="inv-chart-bar" style="left:${left}px;width:${barW}px;height:${h}px;background:linear-gradient(180deg,${p.color}cc,${p.color}44)">
+    </div>
+    <div class="inv-chart-val" style="left:${x}px;bottom:${h+4}px">R${p.rev}M</div>
+    <div class="inv-chart-label" style="left:${x}px">${p.year.replace('\n','<br>')}</div>`;
+  }).join('');
+
+  // Revenue mix
+  const maxRevMix=invRevMix[0].pct;
+  document.getElementById('invRevMix').innerHTML=invRevMix.map(r=>`
+    <div class="inv-revenue-row">
+      <span class="inv-rev-icon">${r.icon}</span>
+      <span class="inv-rev-name">${r.name}</span>
+      <div class="inv-rev-bar-wrap"><div class="inv-rev-bar" style="width:${r.pct}%;background:${r.color}"></div></div>
+      <span class="inv-rev-val">${r.val}</span>
+    </div>
+  `).join('');
+
+  // Use of funds
+  document.getElementById('invUseFunds').innerHTML=invUseFunds.map(f=>`
+    <div class="inv-fund-item">
+      <div class="inv-fund-icon" style="background:${f.color}"><span>${f.icon}</span></div>
+      <div class="inv-fund-label">
+        <div>${f.label}</div>
+        <div class="inv-fund-sub">${f.sub}</div>
+      </div>
+      <div class="inv-fund-pct" style="color:${f.iconColor}">${f.pct}%</div>
+    </div>
+  `).join('');
+
+  // ESG
+  document.getElementById('invEsg').innerHTML=invEsg.map(e=>`
+    <div class="inv-esg-item">
+      <div class="inv-esg-icon">${e.icon}</div>
+      <div>
+        <div class="inv-esg-val" style="color:${e.color}">${e.val}</div>
+        <div class="inv-esg-label">${e.label.replace('\n','<br>')}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Milestones
+  document.getElementById('invMilestones').innerHTML=invMilestones.map(m=>`
+    <div class="inv-milestone">
+      <div class="inv-ms-dot" style="background:${m.color};${m.done?'':'opacity:.5'}"></div>
+      <div class="inv-ms-period" style="color:${m.color}">${m.period}</div>
+      <div class="inv-ms-text" style="${m.done?'':'color:var(--sub)'}">${m.done?'✅ ':'⏳ '}${m.text}</div>
+    </div>
+  `).join('');
+}
+
+window.shareInvestorPitch=async function(){
+  const msg=`🌿 *YieldCore AI — Series A Investment Opportunity*\n\n📍 South African AgriTech · Precision Farming Platform\n\n💰 *Investment Ask:* R25,000,000\n📈 *Valuation:* R420M\n📊 *Current ARR:* R28.6M → R148M by Y5\n🌾 *5,419 ha* under AI management across 5 provinces\n🏧 *3,210 families* served via community grain vending\n🌿 *8,200t* CO₂ sequestered this season\n\n*Revenue Streams:*\n• SaaS licences · IoT sensors · AI advisory\n• Grain vending margin · Carbon credits · Data intelligence\n\n*Contact:* rodwell@yieldcore.ai\n_YieldCore AI — Growing Africa's Future_`;
+  try{
+    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await res.json();
+    if(d.success)alert('✅ Investor pitch sent via WhatsApp!');
+    else alert('WhatsApp error: '+d.error);
+  }catch(e){alert('Network error: '+e.message);}
+};
+
+window.copyInvestorEmail=function(){
+  const email=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising a R25M Series A at a R420M valuation.\n\nWe are South Africa's leading AI-powered precision agriculture platform managing 5,419 ha across 5 provinces. Our platform combines real-time IoT sensor data, satellite NDVI, AI crop advisory (GPT-4o), and a community grain vending network that has served 3,210 food-insecure families.\n\nKey Metrics:\n• ARR: R28.6M (growing to R148M by Y5 at 35% YoY)\n• Gross Margin: 68%\n• Farms: 10 active, 40+ in pipeline\n• NPS: 72 (farmers)\n\nWe are offering 6% equity to the right strategic partner.\n\nPlease reach out to schedule a demo:\nrodwell@yieldcore.ai\n\nBest regards,\nRodwell Sibanda\nFounder & CEO, YieldCore AI`;
+  navigator.clipboard.writeText(email).then(()=>alert('✅ Investor email copied to clipboard!')).catch(()=>alert('Could not copy — please use the WhatsApp button instead.'));
+};
+
 // ── INIT ──
 function init(){
   renderWeather();
@@ -1509,6 +1771,7 @@ function init(){
   renderYield();
   initAI();
   renderVending();
+  renderInvestor();
   renderModules();
   fetchWeather();
   setInterval(fetchWeather, 10*60*1000);
