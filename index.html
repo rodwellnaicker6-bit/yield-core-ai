@@ -590,6 +590,9 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .login-yield-hdr{font-size:8px;color:#facc15;letter-spacing:1.5px;font-weight:800;margin-bottom:5px}
 .login-caps{display:flex;flex-wrap:wrap;gap:3px;justify-content:center}
 .login-caps span{font-size:8.5px;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.22);padding:2px 6px;border-radius:99px;font-weight:600;white-space:nowrap}
+/* black-screen → image fade-in */
+#bgFade{position:absolute;inset:0;background:#000;z-index:5;pointer-events:none;animation:blackOut 2.6s 1.2s ease forwards}
+@keyframes blackOut{from{opacity:1}to{opacity:0}}
 /* hero-first cinematic reveal */
 #loginOverlay .hero-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;text-align:center;pointer-events:none;
   opacity:0;animation:heroIn 1.6s .5s ease forwards,heroOut 1.2s 6.5s ease forwards}
@@ -631,6 +634,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 <!-- LOGIN -->
 <div id="loginOverlay">
+  <div id="bgFade"></div>
   <div class="scan"></div>
   <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
   <div class="live-tag"><span class="lt-dot"></span> LIVE FROM ORBIT · 10 FARMS · 5,419 HA</div>
