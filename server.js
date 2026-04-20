@@ -78,7 +78,15 @@ app.get('/api/status', (req, res) => {
     status: 'ok',
     twilio: !!(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN),
     openai: !!process.env.OPENAI_API_KEY,
+    mapbox: !!process.env.MAPBOX_TOKEN,
     from: process.env.TWILIO_WHATSAPP_FROM || null
+  });
+});
+
+// ── PUBLIC CONFIG (mapbox token is a public pk.* key) ──
+app.get('/api/config', (req, res) => {
+  res.json({
+    mapboxToken: process.env.MAPBOX_TOKEN || null
   });
 });
 
