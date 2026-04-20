@@ -592,7 +592,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .login-caps span{font-size:8.5px;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.22);padding:2px 6px;border-radius:99px;font-weight:600;white-space:nowrap}
 /* hero-first cinematic reveal */
 #loginOverlay .hero-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;text-align:center;pointer-events:none;
-  opacity:0;animation:heroIn 1.2s .3s ease forwards,heroOut .8s 2.4s ease forwards}
+  opacity:0;animation:heroIn 1.4s .4s ease forwards,heroOut 1s 4.0s ease forwards}
 #loginOverlay .hero-tag .ht-name{font-family:'Sora',sans-serif;font-size:54px;font-weight:900;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.03em;text-shadow:0 4px 30px rgba(0,0,0,.6);filter:drop-shadow(0 8px 30px rgba(74,222,128,.35))}
 #loginOverlay .hero-tag .ht-sub{font-size:13px;color:#d4e8d8;letter-spacing:6px;text-transform:uppercase;margin-top:6px;font-weight:700;text-shadow:0 2px 10px #000}
 #loginOverlay .hero-tag .ht-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;margin:0 8px;vertical-align:middle;box-shadow:0 0 12px #4ade80;animation:blink 1.2s infinite}
@@ -1142,7 +1142,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
     const h=document.getElementById('heroTag'); if(h) h.style.display='none';
     const b=document.getElementById('loginBox'); if(b) b.classList.add('show');
-  },2700);
+  },4400);
 });
 
 // ── CLOCK ──
