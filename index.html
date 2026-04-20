@@ -592,7 +592,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .login-caps span{font-size:8.5px;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.22);padding:2px 6px;border-radius:99px;font-weight:600;white-space:nowrap}
 /* hero-first cinematic reveal */
 #loginOverlay .hero-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;text-align:center;pointer-events:none;
-  opacity:0;animation:heroIn 1.4s .4s ease forwards,heroOut 1s 4.0s ease forwards}
+  opacity:0;animation:heroIn 1.6s .5s ease forwards,heroOut 1.2s 6.5s ease forwards}
 #loginOverlay .hero-tag .ht-name{font-family:'Sora',sans-serif;font-size:54px;font-weight:900;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.03em;text-shadow:0 4px 30px rgba(0,0,0,.6);filter:drop-shadow(0 8px 30px rgba(74,222,128,.35))}
 #loginOverlay .hero-tag .ht-sub{font-size:13px;color:#d4e8d8;letter-spacing:6px;text-transform:uppercase;margin-top:6px;font-weight:700;text-shadow:0 2px 10px #000}
 #loginOverlay .hero-tag .ht-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;margin:0 8px;vertical-align:middle;box-shadow:0 0 12px #4ade80;animation:blink 1.2s infinite}
@@ -600,7 +600,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 @keyframes heroOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-54%) scale(.96)}}
 #loginOverlay .scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#4ade80,transparent);opacity:.6;z-index:1;animation:scanMove 5s linear infinite;pointer-events:none}
 @keyframes scanMove{0%{transform:translateY(0)}100%{transform:translateY(100vh)}}
-#loginOverlay .corner{position:absolute;width:60px;height:60px;border:2px solid rgba(74,222,128,.45);z-index:1;pointer-events:none;opacity:0;animation:cornerIn .8s 2.6s forwards}
+#loginOverlay .corner{position:absolute;width:60px;height:60px;border:2px solid rgba(74,222,128,.45);z-index:1;pointer-events:none;opacity:0;animation:cornerIn 1s 1.2s forwards}
 #loginOverlay .corner.tl{top:24px;left:24px;border-right:none;border-bottom:none}
 #loginOverlay .corner.tr{top:24px;right:24px;border-left:none;border-bottom:none}
 #loginOverlay .corner.bl{bottom:24px;left:24px;border-right:none;border-top:none}
@@ -608,6 +608,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 @keyframes cornerIn{to{opacity:1}}
 #loginOverlay .live-tag{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:2;background:rgba(8,18,12,.7);border:1px solid rgba(74,222,128,.4);border-radius:99px;padding:6px 14px;font-size:10px;font-weight:800;letter-spacing:2px;color:#d4e8d8;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);opacity:0;animation:cornerIn .8s 2.6s forwards}
 #loginOverlay .live-tag .lt-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;animation:blink 1.2s infinite}
+#loginOverlay .live-tag{animation:cornerIn 1s 1.2s forwards}
 .lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;display:block;margin-top:12px}
 .inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-size:14px;font-family:inherit}
 .inp:focus{outline:none;border-color:var(--green)}
@@ -1142,7 +1143,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
     const h=document.getElementById('heroTag'); if(h) h.style.display='none';
     const b=document.getElementById('loginBox'); if(b) b.classList.add('show');
-  },4400);
+  },7200);
 });
 
 // ── CLOCK ──
