@@ -66,6 +66,11 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 /* ── TOPBAR ── */
 .tb-welcome{font-size:20px;font-weight:900;color:var(--text)}
+.yield-ribbon{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.yr-pill{font-size:10.5px;font-weight:700;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.25);padding:3px 9px;border-radius:99px;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
+.yr-pill b{color:#4ade80;font-weight:900;margin-right:3px}
+.yr-pill.green{background:linear-gradient(135deg,rgba(34,197,94,.22),rgba(250,204,21,.16));border-color:rgba(250,204,21,.35)}
+.yr-pill.green b{color:#facc15}
 .tb-sub{font-size:12px;color:var(--sub);margin-top:1px}
 .tb-right{display:flex;align-items:center;gap:12px}
 .tb-pill{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:6px 13px;font-size:12px;font-weight:700}
@@ -566,12 +571,20 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 #loginOverlay::before{content:'';position:absolute;inset:0;background:
   radial-gradient(ellipse at center, rgba(2,8,4,.15) 0%, rgba(2,8,4,.55) 60%, rgba(2,8,4,.85) 100%);pointer-events:none}
 #loginOverlay::after{content:'';position:absolute;inset:0;backdrop-filter:blur(1px);pointer-events:none}
-.login-box{position:relative;z-index:2;background:rgba(8,18,12,.78);border:1px solid rgba(74,222,128,.35);border-radius:22px;padding:36px 32px;width:380px;backdrop-filter:blur(14px) saturate(140%);
-  box-shadow:0 25px 80px rgba(0,0,0,.65),0 0 0 1px rgba(250,204,21,.12),inset 0 1px 0 rgba(255,255,255,.06)}
-.login-logo{text-align:center;margin-bottom:24px}
-.login-logo-icon{font-size:54px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(250,204,21,.4))}
-.login-logo-name{font-size:30px;font-weight:900;background:linear-gradient(135deg,#facc15 0%,#4ade80 50%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;font-family:'Sora',sans-serif}
-.login-logo-sub{font-size:11px;color:#d4e8d8;margin-top:4px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+.login-box{position:relative;z-index:2;background:rgba(8,18,12,.82);border:1px solid rgba(74,222,128,.4);border-radius:18px;padding:22px 22px;width:300px;backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(250,204,21,.15),inset 0 1px 0 rgba(255,255,255,.07)}
+.login-logo{text-align:center;margin-bottom:14px}
+.login-logo-icon{font-size:34px;margin-bottom:4px;filter:drop-shadow(0 3px 10px rgba(250,204,21,.45))}
+.login-logo-name{font-size:22px;font-weight:900;background:linear-gradient(135deg,#facc15 0%,#4ade80 50%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;font-family:'Sora',sans-serif;line-height:1}
+.login-logo-sub{font-size:9px;color:#d4e8d8;margin-top:3px;letter-spacing:1.8px;text-transform:uppercase;font-weight:700}
+.login-box .lbl{font-size:9px;margin-top:8px;margin-bottom:3px}
+.login-box .inp{padding:8px 11px;font-size:13px;border-radius:8px}
+.login-box .btn-login{padding:10px;font-size:13px;margin-top:12px;border-radius:9px}
+.login-box .login-demo{padding:7px 10px;margin-top:9px;border-radius:8px}
+.login-yield{margin-top:10px;padding:8px 10px;background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(250,204,21,.10));border:1px solid rgba(74,222,128,.30);border-radius:8px;text-align:center}
+.login-yield-hdr{font-size:8.5px;color:#facc15;letter-spacing:1.5px;font-weight:800;margin-bottom:3px}
+.login-yield-txt{font-size:10px;color:#d4e8d8;line-height:1.4;font-weight:500}
+.login-yield-txt b{color:#4ade80;font-weight:800}
 .lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;display:block;margin-top:12px}
 .inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-size:14px;font-family:inherit}
 .inp:focus{outline:none;border-color:var(--green)}
@@ -599,7 +612,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <div class="login-logo-icon">🌿</div>
       <div class="login-logo-name">YieldCore AI</div>
       <div class="login-logo-sub">Agriculture Intelligence</div>
-      <div style="font-size:9.5px;color:#7a9e82;margin-top:6px;letter-spacing:.5px">🛰️ Satellites · 🚁 Drones · 🌾 Crop Health · 📊 Data · 🤖 AI · 💧 Irrigation</div>
+    </div>
+    <div class="login-yield">
+      <div class="login-yield-hdr">📈 PROJECTED YIELD UPLIFT</div>
+      <div class="login-yield-txt"><b>+18%</b> avg yield · <b>−32%</b> water · <b>−40%</b> chemicals · <b>+R3,200/ha</b> profit when you switch to YieldCore</div>
     </div>
     <label class="lbl">Email Address</label>
     <input class="inp" id="loginEmail" type="email" placeholder="you@farm.co.za" value="rodwell@yieldcore.ai"/>
@@ -663,6 +679,13 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <div>
         <div class="tb-welcome">Welcome back, Rodwell 🌿</div>
         <div class="tb-sub">10 Farms &nbsp;•&nbsp; 5,419 Hectares &nbsp;•&nbsp; Live Intelligence</div>
+        <div class="yield-ribbon">
+          <span class="yr-pill"><b>+18%</b> yield uplift</span>
+          <span class="yr-pill"><b>−32%</b> water</span>
+          <span class="yr-pill"><b>−40%</b> chemicals</span>
+          <span class="yr-pill"><b>+R3,200/ha</b> profit</span>
+          <span class="yr-pill green"><b>R 17.2M</b> projected fleet uplift / yr</span>
+        </div>
       </div>
       <div class="tb-right">
         <div class="tb-pill"><div class="tb-live-dot"></div> LIVE</div>
@@ -1073,7 +1096,8 @@ function doLogin(){
   if((e==='rodwell@yieldcore.ai'&&p==='yield2025')||p==='yield2025'){
     document.getElementById('loginOverlay').style.display='none';
     document.getElementById('shell').style.display='flex';
-    init();
+    // Defer init so layout settles before Mapbox measures the container
+    requestAnimationFrame(()=>requestAnimationFrame(()=>init()));
   } else {
     document.getElementById('loginErr').style.display='block';
   }
@@ -1308,7 +1332,11 @@ async function renderMap(){
     }
     farmHealth.forEach(f=>addFarmMarker(f));
     updateMapCount();
+    // Force a resize once the map is fully loaded — fixes black-screen when container was hidden during init
+    setTimeout(()=>mapboxMap && mapboxMap.resize(), 100);
+    setTimeout(()=>mapboxMap && mapboxMap.resize(), 600);
   });
+  mapboxMap.on('error',e=>console.error('Mapbox error:',e&&e.error));
 }
 
 const farmMarkers=[];
