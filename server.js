@@ -374,7 +374,7 @@ h2{font-size:14px;letter-spacing:2px;color:#facc15;margin:18px 0 10px;font-weigh
 .cta-2{display:block;width:100%;padding:12px;background:rgba(8,18,12,.6);color:#d4e8d8;font-weight:700;font-size:13px;text-align:center;border-radius:12px;margin-top:10px;text-decoration:none;border:1px solid rgba(74,222,128,.25)}
 .foot{text-align:center;font-size:11px;color:#7a9e82;margin-top:18px;letter-spacing:.5px}
 </style></head><body><div class="card">
-<div class="banner"><img src="/public/yieldcore-hero.png" alt="YieldCore AI"/></div>
+<div class="banner"><img src="/public/yieldcore-hero.jpg" alt="YieldCore AI"/></div>
 <div class="body">
 <div class="logo">🌿</div>
 <div class="brand">YieldCore AI</div>
