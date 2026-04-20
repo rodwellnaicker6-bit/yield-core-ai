@@ -571,20 +571,43 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 #loginOverlay::before{content:'';position:absolute;inset:0;background:
   radial-gradient(ellipse at center, rgba(2,8,4,.15) 0%, rgba(2,8,4,.55) 60%, rgba(2,8,4,.85) 100%);pointer-events:none}
 #loginOverlay::after{content:'';position:absolute;inset:0;backdrop-filter:blur(1px);pointer-events:none}
-.login-box{position:relative;z-index:2;background:rgba(8,18,12,.82);border:1px solid rgba(74,222,128,.4);border-radius:18px;padding:22px 22px;width:300px;backdrop-filter:blur(16px) saturate(140%);
-  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(250,204,21,.15),inset 0 1px 0 rgba(255,255,255,.07)}
-.login-logo{text-align:center;margin-bottom:14px}
-.login-logo-icon{font-size:34px;margin-bottom:4px;filter:drop-shadow(0 3px 10px rgba(250,204,21,.45))}
-.login-logo-name{font-size:22px;font-weight:900;background:linear-gradient(135deg,#facc15 0%,#4ade80 50%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;font-family:'Sora',sans-serif;line-height:1}
-.login-logo-sub{font-size:9px;color:#d4e8d8;margin-top:3px;letter-spacing:1.8px;text-transform:uppercase;font-weight:700}
-.login-box .lbl{font-size:9px;margin-top:8px;margin-bottom:3px}
-.login-box .inp{padding:8px 11px;font-size:13px;border-radius:8px}
-.login-box .btn-login{padding:10px;font-size:13px;margin-top:12px;border-radius:9px}
-.login-box .login-demo{padding:7px 10px;margin-top:9px;border-radius:8px}
-.login-yield{margin-top:10px;padding:8px 10px;background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(250,204,21,.10));border:1px solid rgba(74,222,128,.30);border-radius:8px;text-align:center}
-.login-yield-hdr{font-size:8.5px;color:#facc15;letter-spacing:1.5px;font-weight:800;margin-bottom:3px}
-.login-yield-txt{font-size:10px;color:#d4e8d8;line-height:1.4;font-weight:500}
-.login-yield-txt b{color:#4ade80;font-weight:800}
+.login-box{position:relative;z-index:2;background:rgba(8,18,12,.82);border:1px solid rgba(74,222,128,.4);border-radius:16px;padding:18px 18px;width:270px;backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(250,204,21,.15),inset 0 1px 0 rgba(255,255,255,.07);
+  opacity:0;transform:translateY(14px) scale(.97);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.login-box.show{opacity:1;transform:translateY(0) scale(1)}
+.login-logo{text-align:center;margin-bottom:10px}
+.login-logo-icon{font-size:28px;margin-bottom:2px;filter:drop-shadow(0 3px 10px rgba(250,204,21,.45));animation:leafSway 4s ease-in-out infinite}
+@keyframes leafSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.login-logo-name{font-size:19px;font-weight:900;background:linear-gradient(135deg,#facc15 0%,#4ade80 50%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;font-family:'Sora',sans-serif;line-height:1}
+.login-logo-sub{font-size:8px;color:#d4e8d8;margin-top:3px;letter-spacing:1.8px;text-transform:uppercase;font-weight:700}
+.login-box .lbl{font-size:8.5px;margin-top:6px;margin-bottom:3px}
+.login-box .inp{padding:7px 10px;font-size:12px;border-radius:7px}
+.login-box .btn-login{padding:9px;font-size:12.5px;margin-top:10px;border-radius:9px;background-size:200% 200%;animation:btnShine 5s ease infinite}
+@keyframes btnShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.login-box .login-demo{padding:6px 9px;margin-top:7px;border-radius:7px}
+.login-box .login-demo-label,.login-box .login-demo-creds{font-size:9px}
+.login-yield{margin-top:9px;padding:7px 9px;background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(250,204,21,.10));border:1px solid rgba(74,222,128,.30);border-radius:8px;text-align:center}
+.login-yield-hdr{font-size:8px;color:#facc15;letter-spacing:1.5px;font-weight:800;margin-bottom:5px}
+.login-caps{display:flex;flex-wrap:wrap;gap:3px;justify-content:center}
+.login-caps span{font-size:8.5px;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.22);padding:2px 6px;border-radius:99px;font-weight:600;white-space:nowrap}
+/* hero-first cinematic reveal */
+#loginOverlay .hero-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;text-align:center;pointer-events:none;
+  opacity:0;animation:heroIn 1.2s .3s ease forwards,heroOut .8s 2.4s ease forwards}
+#loginOverlay .hero-tag .ht-name{font-family:'Sora',sans-serif;font-size:54px;font-weight:900;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.03em;text-shadow:0 4px 30px rgba(0,0,0,.6);filter:drop-shadow(0 8px 30px rgba(74,222,128,.35))}
+#loginOverlay .hero-tag .ht-sub{font-size:13px;color:#d4e8d8;letter-spacing:6px;text-transform:uppercase;margin-top:6px;font-weight:700;text-shadow:0 2px 10px #000}
+#loginOverlay .hero-tag .ht-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;margin:0 8px;vertical-align:middle;box-shadow:0 0 12px #4ade80;animation:blink 1.2s infinite}
+@keyframes heroIn{from{opacity:0;transform:translate(-50%,-46%) scale(.94);filter:blur(8px)}to{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0)}}
+@keyframes heroOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-54%) scale(.96)}}
+#loginOverlay .scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#4ade80,transparent);opacity:.6;z-index:1;animation:scanMove 5s linear infinite;pointer-events:none}
+@keyframes scanMove{0%{transform:translateY(0)}100%{transform:translateY(100vh)}}
+#loginOverlay .corner{position:absolute;width:60px;height:60px;border:2px solid rgba(74,222,128,.45);z-index:1;pointer-events:none;opacity:0;animation:cornerIn .8s 2.6s forwards}
+#loginOverlay .corner.tl{top:24px;left:24px;border-right:none;border-bottom:none}
+#loginOverlay .corner.tr{top:24px;right:24px;border-left:none;border-bottom:none}
+#loginOverlay .corner.bl{bottom:24px;left:24px;border-right:none;border-top:none}
+#loginOverlay .corner.br{bottom:24px;right:24px;border-left:none;border-top:none}
+@keyframes cornerIn{to{opacity:1}}
+#loginOverlay .live-tag{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:2;background:rgba(8,18,12,.7);border:1px solid rgba(74,222,128,.4);border-radius:99px;padding:6px 14px;font-size:10px;font-weight:800;letter-spacing:2px;color:#d4e8d8;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);opacity:0;animation:cornerIn .8s 2.6s forwards}
+#loginOverlay .live-tag .lt-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;animation:blink 1.2s infinite}
 .lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;display:block;margin-top:12px}
 .inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-size:14px;font-family:inherit}
 .inp:focus{outline:none;border-color:var(--green)}
@@ -607,15 +630,26 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 <!-- LOGIN -->
 <div id="loginOverlay">
-  <div class="login-box fade">
+  <div class="scan"></div>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+  <div class="live-tag"><span class="lt-dot"></span> LIVE FROM ORBIT · 10 FARMS · 5,419 HA</div>
+  <div class="hero-tag" id="heroTag">
+    <div class="ht-name">YieldCore AI</div>
+    <div class="ht-sub">Satellites <span class="ht-dot"></span> Drones <span class="ht-dot"></span> Intelligence</div>
+  </div>
+  <div class="login-box fade" id="loginBox">
     <div class="login-logo">
       <div class="login-logo-icon">🌿</div>
       <div class="login-logo-name">YieldCore AI</div>
       <div class="login-logo-sub">Agriculture Intelligence</div>
     </div>
     <div class="login-yield">
-      <div class="login-yield-hdr">📈 PROJECTED YIELD UPLIFT</div>
-      <div class="login-yield-txt"><b>+18%</b> avg yield · <b>−32%</b> water · <b>−40%</b> chemicals · <b>+R3,200/ha</b> profit when you switch to YieldCore</div>
+      <div class="login-yield-hdr">⚡ WHAT WE DO</div>
+      <div class="login-caps">
+        <span>🛰️ Satellites</span><span>🚁 Drones</span><span>💧 Irrigation</span>
+        <span>📡 Sensors</span><span>🤖 AI Advisor</span><span>☀️ Solar</span>
+        <span>🥬 Bio-Inputs</span><span>🏪 Vending</span>
+      </div>
     </div>
     <label class="lbl">Email Address</label>
     <input class="inp" id="loginEmail" type="email" placeholder="you@farm.co.za" value="rodwell@yieldcore.ai"/>
@@ -1102,6 +1136,14 @@ function doLogin(){
     document.getElementById('loginErr').style.display='block';
   }
 }
+
+// ── HERO REVEAL: show hero image with title for ~2.5s, then fade in login ──
+window.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const h=document.getElementById('heroTag'); if(h) h.style.display='none';
+    const b=document.getElementById('loginBox'); if(b) b.classList.add('show');
+  },2700);
+});
 
 // ── CLOCK ──
 function updateClock(){
