@@ -159,6 +159,34 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .rev-vlbl{font-size:8.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
 .rev-vval{font-size:11.5px;font-weight:800;color:var(--text);margin-top:2px;font-family:'Sora',sans-serif}
 
+/* PRICING / DRONES / IRRIGATION */
+.cap-ribbon{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;padding:10px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);border-radius:10px}
+.cap-pill{font-size:11px;font-weight:700;color:var(--text);background:var(--bg4);border:1px solid var(--border2);padding:5px 10px;border-radius:99px;font-family:'Sora',sans-serif}
+.price-card{background:var(--bg4);border:1px solid var(--border2);border-radius:14px;padding:16px 14px;display:flex;flex-direction:column;gap:8px;position:relative;transition:transform .15s,border-color .15s}
+.price-card:hover{transform:translateY(-3px);border-color:var(--green2)}
+.price-card.featured{border:2px solid var(--green3);background:linear-gradient(180deg,rgba(34,197,94,.10),var(--bg4))}
+.price-badge{position:absolute;top:-9px;right:12px;background:var(--green3);color:#03130a;font-size:9px;font-weight:900;padding:3px 9px;border-radius:99px;letter-spacing:1.2px;font-family:'Sora',sans-serif}
+.price-tier{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;font-weight:800}
+.price-name{font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.01em}
+.price-range{font-size:11px;color:var(--sub);font-weight:600}
+.price-amt{font-family:'Sora',sans-serif;font-size:26px;font-weight:900;color:var(--green3);letter-spacing:-.02em;margin-top:2px}
+.price-amt small{font-size:11px;color:var(--sub);font-weight:600;margin-left:3px}
+.price-feat{display:flex;flex-direction:column;gap:4px;padding-top:8px;border-top:1px solid var(--border2);margin-top:4px}
+.price-feat span{font-size:11px;color:var(--text);line-height:1.4}
+.price-feat span::before{content:'✓ ';color:var(--green3);font-weight:900;margin-right:2px}
+.price-calc{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:14px 16px}
+.price-calc-hdr{font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px}
+.price-calc-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.price-calc-row label{font-size:12px;color:var(--sub);font-weight:600}
+.price-calc-row input{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px;text-align:right}
+.price-calc-row input:focus{outline:none;border-color:var(--green3)}
+.price-calc-out{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.pcout{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:8px 10px}
+.pcout-lbl{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
+.pcout-val{font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-top:3px}
+.pcout-val.green{color:var(--green3)}
+.pcout-val.gold{color:#facc15}
+
 /* FARM HEALTH */
 .health-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
 .health-item:last-child{border-bottom:none}
@@ -605,6 +633,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <div class="nav-item" onclick="navTo(this,'sec-alerts')"><div class="ni">🔔</div><span>Alerts</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-bio')"><div class="ni">🧪</div><span>Bio-Inputs</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-revenue')"><div class="ni">💸</div><span>Per-Farm ROI</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-pricing')"><div class="ni">🚁</div><span>Pricing &amp; Drones</span></div>
     </div>
     <div class="sb-footer">
       <div class="sb-role">
@@ -980,6 +1009,43 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <div id="revGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px"></div>
       </div>
 
+      <!-- PRICING + DRONES + IRRIGATION -->
+      <div class="panel fade" id="sec-pricing">
+        <div class="sec-hdr">
+          <div class="sec-title">🚁 PRICING · DRONES · IRRIGATION · SENSORS</div>
+          <div class="sec-badge">Per-hectare · transparent</div>
+        </div>
+        <div style="font-size:12px;color:var(--sub);margin-bottom:14px;line-height:1.55">
+          YieldCore AI is a complete farm intelligence stack — <strong style="color:var(--green3)">dashboard, drone fly-overs, smart irrigation control, IoT soil & weather sensors, AI advisor and WhatsApp alerts</strong>. We price per hectare, the bigger your farm, the lower the rate, and once you cross 500 ha we fly the team to your gate, install the drones and sensors, and train your staff on-site.
+        </div>
+
+        <!-- capability ribbon -->
+        <div class="cap-ribbon">
+          <div class="cap-pill">🛰️ Satellite NDVI</div>
+          <div class="cap-pill">🚁 Drone Fly-overs</div>
+          <div class="cap-pill">💧 Smart Irrigation</div>
+          <div class="cap-pill">📡 Soil &amp; Weather IoT</div>
+          <div class="cap-pill">🤖 AI Crop Advisor</div>
+          <div class="cap-pill">📲 WhatsApp Alerts</div>
+          <div class="cap-pill">☀️ Solar-on-Roof</div>
+          <div class="cap-pill">🏧 Vending Network</div>
+        </div>
+
+        <!-- pricing tiers -->
+        <div id="priceGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:16px"></div>
+
+        <!-- live calculator -->
+        <div class="price-calc">
+          <div class="price-calc-hdr">📐 Live price calculator</div>
+          <div class="price-calc-row">
+            <label>Your farm size (hectares)</label>
+            <input type="number" id="priceHa" min="1" step="1" value="120" oninput="calcPrice()">
+          </div>
+          <div class="price-calc-out" id="priceOut"></div>
+          <button class="bio-buy" style="width:100%;margin-top:10px;padding:10px" onclick="quotePrice()">📲 Send me a quote on WhatsApp</button>
+        </div>
+      </div>
+
       <!-- MODULES -->
       <div class="modules-section fade">
         <div class="sec-hdr">
@@ -1128,6 +1194,7 @@ const modules=[
   {icon:'🔔',name:'ALERTS',   desc:'Alerts & notifications\n(WhatsApp + SMS)',          section:'sec-alerts'},
   {icon:'🧪',name:'BIO-INPUTS', desc:'Microbial fungicides &\norganic crop boosters',     section:'sec-bio'},
   {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nvending projections',            section:'sec-revenue'},
+  {icon:'🚁',name:'PRICING',  desc:'Drones · sensors · irrigation\nfrom R200/ha',          section:'sec-pricing'},
 ];
 
 // ── RENDER WEATHER ──
@@ -2275,6 +2342,67 @@ function renderRevenue(){
   }).join('');
 }
 
+// ── PRICING TIERS · DRONES · IRRIGATION · SENSORS ──
+const priceTiers=[
+  {tier:'STARTER',  name:'Smallholder', range:'1 – 50 ha',     rate:200, featured:false, badge:null,
+   feats:['Full dashboard access','Satellite NDVI weekly','AI crop advisor (GPT-4o)','WhatsApp alerts','Weather + market prices','Self-install soil probe (1)']},
+  {tier:'GROWER',   name:'Commercial',  range:'51 – 200 ha',   rate:175, featured:false, badge:null,
+   feats:['Everything in Starter','3 IoT soil + weather stations','Monthly drone fly-over (regional pilot)','Smart irrigation control','Bio-input ordering','Vending-network access']},
+  {tier:'ESTATE',   name:'Estate',      range:'201 – 500 ha',  rate:150, featured:true,  badge:'MOST POPULAR',
+   feats:['Everything in Grower','8 IoT stations + LoRa gateway','Bi-weekly drone NDVI + thermal','Dedicated agronomist (remote)','Solar-on-roof feasibility','Quarterly on-site review']},
+  {tier:'ENTERPRISE',name:'Enterprise', range:'501 – 2,000 ha',rate:120, featured:false, badge:'WE FLY OUT',
+   feats:['🚁 Team flies to your farm','✈️ On-site drone + sensor install','📡 Full LoRa mesh + 15 stations','👨‍🌾 Resident agronomist (3-day setup)','🎓 Staff training & certification','24/7 priority WhatsApp line']},
+  {tier:'PAN-AFRICA',name:'Mega-Farm',  range:'2,000+ ha',     rate:95,  featured:false, badge:'CUSTOM',
+   feats:['Custom drone fleet (DJI Agras)','Variable-rate prescriptions','Carbon-credit certification','Direct vending offtake','API + data warehouse','SLA + dedicated success team']},
+];
+function renderPricing(){
+  const c=document.getElementById('priceGrid'); if(!c) return;
+  c.innerHTML=priceTiers.map(p=>`
+    <div class="price-card${p.featured?' featured':''}">
+      ${p.badge?`<div class="price-badge">${esc(p.badge)}</div>`:''}
+      <div class="price-tier">${esc(p.tier)}</div>
+      <div class="price-name">${esc(p.name)}</div>
+      <div class="price-range">${esc(p.range)}</div>
+      <div class="price-amt">R${p.rate}<small>/ ha / month</small></div>
+      <div class="price-feat">${p.feats.map(f=>`<span>${esc(f)}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+function pickRate(ha){
+  if(ha>=2000) return {rate:95, tier:'PAN-AFRICA'};
+  if(ha>=501)  return {rate:120,tier:'ENTERPRISE'};
+  if(ha>=201)  return {rate:150,tier:'ESTATE'};
+  if(ha>=51)   return {rate:175,tier:'GROWER'};
+  return         {rate:200,tier:'STARTER'};
+}
+window.calcPrice=function(){
+  const out=document.getElementById('priceOut'); if(!out) return;
+  const ha=Math.max(1, parseInt(document.getElementById('priceHa').value,10)||0);
+  const {rate,tier}=pickRate(ha);
+  const monthly=ha*rate;
+  const yearly=monthly*12;
+  const flyOut=ha>=501;
+  out.innerHTML=`
+    <div class="pcout"><div class="pcout-lbl">Tier</div><div class="pcout-val">${tier}</div></div>
+    <div class="pcout"><div class="pcout-lbl">Rate</div><div class="pcout-val">R${rate} / ha / mo</div></div>
+    <div class="pcout"><div class="pcout-lbl">Monthly</div><div class="pcout-val green">R ${monthly.toLocaleString()}</div></div>
+    <div class="pcout"><div class="pcout-lbl">Annual</div><div class="pcout-val gold">R ${yearly.toLocaleString()}</div></div>
+    <div class="pcout" style="grid-column:1/-1;background:${flyOut?'rgba(34,197,94,.10)':'var(--bg3)'};border-color:${flyOut?'var(--green3)':'var(--border2)'}">
+      <div class="pcout-lbl">${flyOut?'🚁 ON-SITE INSTALL INCLUDED':'📦 Self-install kit shipped'}</div>
+      <div class="pcout-val" style="font-size:12px;color:${flyOut?'var(--green3)':'var(--text)'}">${flyOut?'YieldCore team flies to your farm to install drones, IoT mesh & train staff':'We courier the soil probe + setup guide. Live WhatsApp support during install.'}</div>
+    </div>`;
+};
+window.quotePrice=function(){
+  const ha=Math.max(1, parseInt(document.getElementById('priceHa').value,10)||0);
+  const {rate,tier}=pickRate(ha);
+  const monthly=ha*rate;
+  const flyOut=ha>=501;
+  const msg=`🚁 *YieldCore AI Quote Request*\n\nFarm size: ${ha.toLocaleString()} ha\nTier: ${tier}\nRate: R${rate} / ha / month\nMonthly: R ${monthly.toLocaleString()}\nAnnual: R ${(monthly*12).toLocaleString()}\n\n${flyOut?'✅ Includes on-site drone + sensor install + staff training':'📦 Self-install kit + remote support'}\n\nPlease send full proposal & contract.`;
+  fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})
+    .then(r=>r.json()).then(d=>alert(d.success?'✅ Quote request sent via WhatsApp — we will call you back within 24 hrs':'WhatsApp error: '+d.error))
+    .catch(e=>alert('Network error: '+e.message));
+};
+
 // ── INIT ──
 function init(){
   renderWeather();
@@ -2297,6 +2425,8 @@ function init(){
   renderCarbon();
   renderBio();
   renderRevenue();
+  renderPricing();
+  calcPrice();
   renderModules();
   fetchWeather();
   setInterval(fetchWeather, 10*60*1000);
