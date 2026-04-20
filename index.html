@@ -66,6 +66,29 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 /* ── TOPBAR ── */
 .tb-welcome{font-size:20px;font-weight:900;color:var(--text)}
+.tb-share{padding:9px 16px;background:linear-gradient(135deg,#22c55e,#4ade80);color:#000;font-weight:900;font-size:12px;border:none;border-radius:99px;cursor:pointer;letter-spacing:.3px;box-shadow:0 6px 18px rgba(74,222,128,.35);transition:transform .2s}
+.tb-share:hover{transform:translateY(-2px) scale(1.04)}
+.share-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:99999;align-items:center;justify-content:center;padding:20px;animation:fadeIn .3s}
+.share-modal.show{display:flex}
+.share-card{max-width:480px;width:100%;background:linear-gradient(135deg,#0a1410,#1a2e1d);border:1px solid rgba(74,222,128,.4);border-radius:22px;padding:28px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.share-close{position:absolute;top:12px;right:18px;font-size:28px;color:#7a9e82;cursor:pointer;font-weight:300}
+.share-close:hover{color:#facc15}
+.share-icon{font-size:42px;text-align:center;margin-bottom:6px;filter:drop-shadow(0 4px 12px rgba(74,222,128,.4))}
+.share-title{font-size:22px;font-weight:900;text-align:center;background:linear-gradient(135deg,#facc15,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Sora',sans-serif;margin-bottom:6px}
+.share-sub{text-align:center;font-size:12px;color:#d4e8d8;margin-bottom:20px;line-height:1.4}
+.share-link-box{background:rgba(8,18,12,.6);border:1px solid rgba(74,222,128,.25);border-radius:12px;padding:12px;margin-bottom:14px}
+.share-link-label{font-size:9px;letter-spacing:2px;color:#facc15;font-weight:800;margin-bottom:6px}
+.share-link-row{display:flex;gap:8px}
+.share-link-row input{flex:1;background:#000;color:#4ade80;border:1px solid rgba(74,222,128,.3);border-radius:8px;padding:10px 12px;font-size:13px;font-family:'SF Mono',Menlo,monospace}
+.share-link-row button{background:linear-gradient(135deg,#facc15,#fbbf24);color:#000;font-weight:900;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:12px}
+.share-actions{display:grid;gap:8px;margin-bottom:18px}
+.share-btn{display:block;text-align:center;padding:13px;border-radius:12px;font-weight:900;font-size:14px;text-decoration:none;letter-spacing:.3px}
+.share-btn-wa{background:linear-gradient(135deg,#22c55e,#4ade80);color:#000;box-shadow:0 6px 18px rgba(74,222,128,.3)}
+.share-btn-alt{background:rgba(8,18,12,.7);color:#d4e8d8;border:1px solid rgba(74,222,128,.3)}
+.share-steps{background:rgba(8,18,12,.5);border:1px solid rgba(74,222,128,.18);border-radius:12px;padding:14px}
+.share-step{font-size:12.5px;color:#d4e8d8;margin-top:6px;line-height:1.5}
+.share-step:first-child{margin-top:0;color:#facc15;font-weight:800;font-size:11px;letter-spacing:1.5px}
+.share-step code{background:#000;color:#4ade80;padding:2px 7px;border-radius:5px;font-family:'SF Mono',Menlo,monospace;font-size:11.5px;border:1px solid rgba(74,222,128,.3)}
 .yield-ribbon{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .yr-pill{font-size:10.5px;font-weight:700;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.25);padding:3px 9px;border-radius:99px;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
 .yr-pill b{color:#4ade80;font-weight:900;margin-right:3px}
@@ -734,6 +757,34 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
           <div class="tb-date" id="clockDate">--</div>
         </div>
         <div class="tb-bell">🔔<div class="tb-badge">4</div></div>
+        <button class="tb-share" onclick="openShare()">📲 Share with friends</button>
+      </div>
+    </div>
+
+    <!-- SHARE MODAL -->
+    <div id="shareModal" class="share-modal">
+      <div class="share-card">
+        <div class="share-close" onclick="closeShare()">×</div>
+        <div class="share-icon">🌿</div>
+        <div class="share-title">Invite anyone to YieldCore</div>
+        <div class="share-sub">Each person gets their own command center — works on WhatsApp & full dashboard</div>
+        <div class="share-link-box">
+          <div class="share-link-label">YOUR SHARE LINK</div>
+          <div class="share-link-row">
+            <input id="shareLink" readonly value="" />
+            <button onclick="copyShare(this)">Copy</button>
+          </div>
+        </div>
+        <div class="share-actions">
+          <a id="shareWa" target="_blank" class="share-btn share-btn-wa">💬 Share on WhatsApp</a>
+          <a id="shareInvite" target="_blank" class="share-btn share-btn-alt">🌐 Open Invite Page</a>
+        </div>
+        <div class="share-steps">
+          <div class="share-step"><b>Friends do this:</b></div>
+          <div class="share-step">1️⃣ Tap your link above</div>
+          <div class="share-step">2️⃣ Send <code id="shareJoinCode">join …</code> to <code id="shareNumber">+1 415 523 8886</code></div>
+          <div class="share-step">3️⃣ Send a 📍 location pin → instant farm intelligence</div>
+        </div>
       </div>
     </div>
 
@@ -1141,6 +1192,30 @@ function doLogin(){
     document.getElementById('loginErr').style.display='block';
   }
 }
+
+// ── SHARE WITH FRIENDS ──
+let SHARE_CFG = {liveUrl:'', sandboxCode:'', sandboxNumber:'+14155238886'};
+fetch('/api/config').then(r=>r.json()).then(c=>{ SHARE_CFG=Object.assign(SHARE_CFG,c); }).catch(()=>{});
+function openShare(){
+  const url = SHARE_CFG.liveUrl || (location.origin + '/invite');
+  const inviteUrl = (SHARE_CFG.liveUrl||location.origin) + '/invite';
+  const code = SHARE_CFG.sandboxCode || 'your-code';
+  const num = SHARE_CFG.sandboxNumber || '+14155238886';
+  document.getElementById('shareLink').value = inviteUrl;
+  document.getElementById('shareJoinCode').textContent = 'join '+code;
+  document.getElementById('shareNumber').textContent = num;
+  const msg = `🌿 Try YieldCore AI — your free farm intelligence on WhatsApp\n\n📍 Send a location pin, get live weather, irrigation plan, alerts & crop tips.\n\n+18% yield · −32% water · +R3,200/ha profit\n\n👉 ${inviteUrl}`;
+  document.getElementById('shareWa').href = 'https://wa.me/?text='+encodeURIComponent(msg);
+  document.getElementById('shareInvite').href = inviteUrl;
+  document.getElementById('shareModal').classList.add('show');
+}
+function closeShare(){ document.getElementById('shareModal').classList.remove('show'); }
+function copyShare(btn){
+  const inp = document.getElementById('shareLink');
+  inp.select(); document.execCommand('copy');
+  const old=btn.textContent; btn.textContent='Copied ✓'; setTimeout(()=>btn.textContent=old,1500);
+}
+document.addEventListener('click',e=>{ if(e.target.id==='shareModal') closeShare(); });
 
 // ── HERO REVEAL: show hero image with title for ~2.5s, then fade in login ──
 window.addEventListener('DOMContentLoaded',()=>{

@@ -34,6 +34,12 @@ app.post('/api/whatsapp/alert', async (req, res) => {
   }
 });
 
+// ── SHARE CONFIG ──
+const LIVE_URL = process.env.LIVE_URL || 'https://yieldcore.replit.app';
+const SANDBOX_CODE = process.env.SANDBOX_JOIN_CODE || 'your-join-code';
+const SANDBOX_NUMBER = '+14155238886';
+const FOOTER = `\n\n━━━━━━━━━━━━━━\n🌐 Open your live command center:\n${LIVE_URL}\n\n👥 Invite a farmer friend → reply *SHARE*`;
+
 // ── WEATHER (Open-Meteo, no key needed) ──
 async function getWeather(lat, lng) {
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}` +
@@ -128,7 +134,7 @@ function botRouter(text) {
   const t = (text||'').trim().toLowerCase();
   if (!t) return null;
   if (/^(hi|hello|hey|start|menu|help|hola|sawubona|molo)\b/.test(t))
-    return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — pricing tiers\n• *DRONE* — drone services\n• *DEMO* — book a free demo\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
+    return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — pricing tiers\n• *DRONE* — drone services\n• *ABOUT* — what YieldCore does\n• *DEMO* — book a free demo\n• *SHARE* — invite a farmer friend\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
   if (/(price|pricing|cost|tier|plan)/.test(t))
     return `💰 *YieldCore Pricing (per hectare)*\n\n• Starter (1–49 ha): R200/ha\n• Growth (50–199 ha): R165/ha\n• Pro (200–499 ha): R130/ha\n• Enterprise (500+ ha): R110/ha 🎁 *FREE on-site install*\n• Co-op (1000+ ha): R95/ha\n\nReply *DEMO* for free trial.`;
   if (/(drone|spray)/.test(t))
@@ -140,8 +146,12 @@ function botRouter(text) {
   if (/(alert|warning|risk)/.test(t))
     return `⚠️ Share your 📍 location and I'll scan for: storm, frost, heat-wave, wind, hail, drought & disease risk on your farm.`;
   if (/(demo|trial|book)/.test(t))
-    return `🎯 *Book a free YieldCore demo*\n\n📞 Call/WhatsApp: 082 517 2688\n📧 hello@yieldcore.ai\n🌐 yieldcore.replit.app\n\nWe'll set up a 30-min onboarding for your farm. No card required.`;
-  return `🤖 I didn't catch that. Reply *MENU* for options, or simply send a 📍 location pin to get live farm intelligence.`;
+    return `🎯 *Book a free YieldCore demo*\n\n📞 Call/WhatsApp: 082 517 2688\n📧 hello@yieldcore.ai\n\nWe'll set up a 30-min onboarding for your farm. No card required.`;
+  if (/(share|invite|friend|refer)/.test(t))
+    return `🤝 *Invite a farmer friend to YieldCore*\n\nForward them this message:\n\n━━━━━━━━━━━━━━\n🌿 *Try YieldCore AI — free farm intelligence on WhatsApp*\n\nStep 1: Save this number 📲 ${SANDBOX_NUMBER}\nStep 2: Send 'join ${SANDBOX_CODE}' to that number\nStep 3: Send your 📍 location and get live weather, irrigation plan, alerts & crop tips\n\n🌐 Full dashboard: ${LIVE_URL}\n━━━━━━━━━━━━━━\n\n✅ Each person gets their own command center. No card required.`;
+  if (/(about|who|what is|company)/.test(t))
+    return `🌿 *About YieldCore AI*\n\nWe combine satellites, drones, IoT sensors, AI & solar to give South African farmers a full digital command center.\n\n📊 +18% yield · −32% water · −40% chemicals · +R3,200/ha profit\n🛰️ Real-time satellite + drone imagery\n💧 Precision irrigation & solar pumps\n🤖 AI advisor + WhatsApp alerts\n🥬 Bio-input catalog + vending machines\n\nFrom 2 ha to 10,000 ha — we scale with you.\n\n🌐 ${LIVE_URL}`;
+  return `🤖 I didn't catch that. Reply *MENU* for options, send 📍 a location pin for live farm intelligence, or *SHARE* to invite a friend.`;
 }
 
 // Twilio inbound webhook
@@ -159,6 +169,7 @@ app.post('/api/whatsapp/inbound', async (req, res) => {
       reply = botRouter(msgBody);
     }
     if (!reply) reply = `Send 📍 a location or *MENU* for help.`;
+    if (!reply.includes(LIVE_URL)) reply += FOOTER;
 
     res.set('Content-Type', 'text/xml');
     res.send(`<?xml version="1.0" encoding="UTF-8"?><Response><Message>${reply.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</Message></Response>`);
@@ -188,9 +199,9 @@ I'm your 24/7 farm intelligence assistant. Right now I can:
    • Soil & crop advice for the season
    • Live R-savings calculator
 
-💬 *Or text me:* MENU · PRICE · DRONE · DEMO
+💬 *Or text me:* MENU · PRICE · DRONE · ABOUT · SHARE · DEMO
 
-Try it now → tap 📎 → Location → Send Current Location 📍` });
+Try it now → tap 📎 → Location → Send Current Location 📍` + FOOTER });
     res.json({ success:true, sid: msg.sid });
   } catch (e) {
     console.error('Activate error:', e.message);
@@ -267,8 +278,49 @@ app.get('/api/status', (req, res) => {
 // ── PUBLIC CONFIG (mapbox token is a public pk.* key) ──
 app.get('/api/config', (req, res) => {
   res.json({
-    mapboxToken: process.env.MAPBOX_TOKEN || null
+    mapboxToken: process.env.MAPBOX_TOKEN || null,
+    liveUrl: LIVE_URL,
+    sandboxCode: SANDBOX_CODE,
+    sandboxNumber: SANDBOX_NUMBER
   });
+});
+
+// ── PUBLIC INVITE LANDING (clean shareable page) ──
+app.get('/invite', (req, res) => {
+  res.send(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Join YieldCore AI on WhatsApp</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 50%,#2d4a2f 100%);color:#e8f5e9;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{max-width:480px;background:rgba(8,18,12,.85);border:1px solid rgba(74,222,128,.4);border-radius:24px;padding:36px 28px;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.logo{font-size:48px;text-align:center;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(74,222,128,.4))}
+.brand{font-size:32px;font-weight:900;text-align:center;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;margin-bottom:6px}
+.tag{text-align:center;font-size:12px;letter-spacing:3px;color:#d4e8d8;text-transform:uppercase;margin-bottom:24px;font-weight:700}
+.pitch{text-align:center;font-size:15px;line-height:1.5;color:#d4e8d8;margin-bottom:24px;background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(250,204,21,.08));border:1px solid rgba(74,222,128,.25);border-radius:14px;padding:14px}
+.pitch b{color:#4ade80}
+h2{font-size:14px;letter-spacing:2px;color:#facc15;margin:18px 0 10px;font-weight:800}
+.step{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;padding:12px;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.18);border-radius:12px}
+.step-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#22c55e);color:#000;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px}
+.step-text{font-size:13.5px;line-height:1.4;color:#e8f5e9}
+.step-text b{color:#facc15}
+.code{display:inline-block;background:#000;color:#4ade80;padding:2px 8px;border-radius:6px;font-family:'SF Mono',Menlo,monospace;font-size:13px;font-weight:700;border:1px solid rgba(74,222,128,.3)}
+.cta{display:block;width:100%;padding:14px;background:linear-gradient(135deg,#22c55e,#4ade80);color:#000;font-weight:900;font-size:15px;text-align:center;border-radius:14px;margin-top:18px;text-decoration:none;letter-spacing:.5px;box-shadow:0 8px 24px rgba(74,222,128,.3)}
+.cta-2{display:block;width:100%;padding:12px;background:rgba(8,18,12,.6);color:#d4e8d8;font-weight:700;font-size:13px;text-align:center;border-radius:12px;margin-top:10px;text-decoration:none;border:1px solid rgba(74,222,128,.25)}
+.foot{text-align:center;font-size:11px;color:#7a9e82;margin-top:18px;letter-spacing:.5px}
+</style></head><body><div class="card">
+<div class="logo">🌿</div>
+<div class="brand">YieldCore AI</div>
+<div class="tag">Smart Farming · WhatsApp</div>
+<div class="pitch">Get <b>live weather</b>, <b>irrigation plans</b>, <b>storm/frost alerts</b> & <b>crop tips</b> for your farm — straight on WhatsApp. <br><br><b>+18% yield · −32% water · +R3,200/ha profit</b></div>
+
+<h2>📲 GET STARTED IN 30 SECONDS</h2>
+<div class="step"><div class="step-num">1</div><div class="step-text">Save WhatsApp number <span class="code">${SANDBOX_NUMBER}</span> as <b>"YieldCore AI"</b> in your contacts</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text">Open WhatsApp → message that contact → send <span class="code">join ${SANDBOX_CODE}</span></div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text">Reply <b>MENU</b> or share your 📍 <b>location pin</b> — bot replies with full live farm intelligence</div></div>
+
+<a class="cta" href="https://wa.me/${SANDBOX_NUMBER.replace('+','')}?text=${encodeURIComponent('join '+SANDBOX_CODE)}">💬 Open WhatsApp & Join</a>
+<a class="cta-2" href="${LIVE_URL}">🌐 See the Full Dashboard</a>
+<div class="foot">Powered by satellites · drones · IoT · AI · solar 🛰️🚁☀️</div>
+</div></body></html>`);
 });
 
 const PORT = 5000;
