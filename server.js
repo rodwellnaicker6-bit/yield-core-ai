@@ -18,14 +18,14 @@ const openai = process.env.OPENAI_API_KEY
 // ── WHATSAPP ALERT ──
 app.post('/api/whatsapp/alert', async (req, res) => {
   const { message, to } = req.body;
-  const recipient = to || process.env.TWILIO_WHATSAPP_TO;
+  // Hardcoded recipient (Rodwell's WhatsApp) — overrides any misconfigured secret
+  const recipient = to || 'whatsapp:+27825172688';
   if (!message) return res.status(400).json({ error: 'message required' });
   try {
-    const msg = await twilioClient.messages.create({
-      from: process.env.TWILIO_WHATSAPP_FROM,
-      to: recipient,
-      body: message
-    });
+    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';
+    const from = fromRaw.startsWith('whatsapp:') ? fromRaw : `whatsapp:${fromRaw}`;
+    const toFinal = recipient.startsWith('whatsapp:') ? recipient : `whatsapp:${recipient}`;
+    const msg = await twilioClient.messages.create({ from, to: toFinal, body: message });
     res.json({ success: true, sid: msg.sid });
   } catch (err) {
     console.error('WhatsApp error:', err.message);
