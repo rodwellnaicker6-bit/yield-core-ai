@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>YieldCore AI · Smart Farming SA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet"/>
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
 <style>
@@ -19,7 +19,9 @@
   --red:#f87171;--yellow:#facc15;--orange:#fb923c;--blue:#38bdf8;--purple:#a78bfa;
   --sidebar:220px;
 }
-html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;font-feature-settings:'cv11','ss01','ss03';-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+.sec-title,.sb-logo-text,.stat-val,.weather-temp,.login-logo-name,h1,h2,h3,.tb-welcome,.btn-login,.inv-headline{font-family:'Sora','Inter',sans-serif;letter-spacing:-.02em}
+.mono,code,.stat-num,.health-score{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum','zero'}
 #main{position:relative}
 #main::before{
   content:'';position:fixed;inset:0;left:var(--sidebar);
@@ -118,6 +120,44 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
 .solar-roof-card .srlbl{font-size:9px;color:var(--sub);padding-left:5px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
 .solar-roof-card .srrow{display:flex;justify-content:space-between;font-size:10px;color:var(--sub);padding-left:5px;margin-top:4px}
 .solar-roof-card .srrow b{color:var(--green3);font-weight:700}
+
+/* BIO-INPUTS */
+.bio-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:13px 14px;display:flex;flex-direction:column;gap:6px;transition:transform .15s,border-color .15s}
+.bio-card:hover{transform:translateY(-2px);border-color:var(--green)}
+.bio-name{font-size:13px;font-weight:800;color:var(--text);font-family:'Sora',sans-serif;letter-spacing:-.01em}
+.bio-cat{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-top:1px}
+.bio-desc{font-size:11px;color:var(--sub);line-height:1.45;margin-top:2px}
+.bio-meta{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);padding:6px 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);margin-top:4px;font-weight:600}
+.bio-uplift{font-size:11px;font-weight:700;padding:2px 0}
+.bio-price-row{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.bio-price{font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:var(--text)}
+.bio-buy{background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border:none;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Sora',sans-serif;transition:transform .1s}
+.bio-buy:hover{transform:scale(1.04)}
+
+/* PER-FARM REVENUE CARDS */
+.rev-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;gap:10px;transition:transform .15s,border-color .15s}
+.rev-card:hover{transform:translateY(-2px);border-color:var(--green2)}
+.rev-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.rev-name{font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.01em}
+.rev-sub{font-size:10px;color:var(--sub);margin-top:2px;font-weight:500}
+.rev-grade{font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;border:1px solid;white-space:nowrap;font-family:'Sora',sans-serif}
+.rev-bars{padding-top:6px;border-top:1px solid var(--border2)}
+.rev-bar-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:4px}
+.rev-lbl{color:var(--sub);font-weight:500}
+.rev-cur{color:var(--text);font-weight:700;font-size:12px}
+.rev-new{color:var(--green3);font-weight:800;font-size:13px}
+.rev-bar-wrap{position:relative;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin:6px 0 4px}
+.rev-bar-base{position:absolute;inset:0;background:var(--bg3)}
+.rev-bar-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.rev-gain{font-size:12px;font-weight:800;color:var(--green3);font-family:'Sora',sans-serif}
+.rev-roi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:9px}
+.rev-mini-lbl{font-size:8.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
+.rev-mini-val{font-size:13px;font-weight:800;margin-top:2px;font-family:'Sora',sans-serif}
+.rev-vending{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.22);border-radius:9px;padding:9px 11px}
+.rev-vending-hdr{font-size:9px;font-weight:800;color:#a78bfa;letter-spacing:1.5px;margin-bottom:6px}
+.rev-vending-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.rev-vlbl{font-size:8.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
+.rev-vval{font-size:11.5px;font-weight:800;color:var(--text);margin-top:2px;font-family:'Sora',sans-serif}
 
 /* FARM HEALTH */
 .health-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
@@ -476,7 +516,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
 
 /* ── MODULES ROW ── */
 .modules-section{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
-.modules-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:10px}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px}
 .module-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .18s}
 .module-card:hover{border-color:var(--green);background:var(--bg3);transform:translateY(-2px)}
 .module-icon{font-size:22px;margin-bottom:6px}
@@ -563,7 +603,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
       <div class="nav-item" onclick="navTo(this,'sec-yield')"><div class="ni">💰</div><span>Costs</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-ai')"><div class="ni">🤖</div><span>AI Advisor</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-alerts')"><div class="ni">🔔</div><span>Alerts</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-investor')"><div class="ni">📈</div><span>Investor</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-bio')"><div class="ni">🧪</div><span>Bio-Inputs</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-revenue')"><div class="ni">💸</div><span>Per-Farm ROI</span></div>
     </div>
     <div class="sb-footer">
       <div class="sb-role">
@@ -919,75 +960,24 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
         </div>
       </div>
 
-      <!-- INVESTOR PITCH -->
-      <div class="panel fade" id="sec-investor" style="padding:0;background:transparent;border:none">
-
-        <!-- HERO BANNER -->
-        <div class="inv-hero">
-          <div class="inv-hero-top">
-            <div class="inv-logo-wrap">
-              <div class="inv-logo-icon">🌿</div>
-              <div>
-                <div class="inv-logo-text">YieldCore AI</div>
-                <div class="inv-logo-sub">Smart Farming · Precision Agriculture · South Africa</div>
-              </div>
-            </div>
-            <div class="inv-series">SERIES A — CONFIDENTIAL</div>
-          </div>
-          <div class="inv-tagline">Africa's leading <strong>AI-powered precision agriculture platform</strong> — connecting 5,419 ha of farmland across 5 SA provinces with real-time intelligence, community food security, and carbon-positive outcomes.</div>
-          <div class="inv-hero-metrics" id="invHeroMetrics"></div>
+      <!-- YIELDCORE BIO-INPUTS (our own products) -->
+      <div class="panel fade" id="sec-bio">
+        <div class="sec-hdr">
+          <div class="sec-title">🧪 YIELDCORE BIO-INPUTS · OUR OWN GREEN PRODUCTS</div>
+          <div class="sec-badge">Microbial · Organic · SA-Made</div>
         </div>
+        <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.5">Living-microbe formulations and biostimulants designed to fight disease, suppress pests, and boost yield without chemical residue. Every product is registered, traceable, and proudly South African.</div>
+        <div id="bioGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px"></div>
+      </div>
 
-        <!-- ROW 1: Revenue Projection + Revenue Mix + Use of Funds -->
-        <div class="inv-grid3">
-          <div class="inv-card">
-            <div class="inv-card-title">📊 5-Year Revenue Projection</div>
-            <div class="inv-chart-wrap" id="invRevenueChart"></div>
-            <div style="height:22px"></div>
-            <div style="font-size:10px;color:var(--sub);margin-top:8px">*Projections based on 35% YoY farm-base growth + SaaS licensing</div>
-          </div>
-          <div class="inv-card">
-            <div class="inv-card-title">💰 Revenue Mix (Y3 Target)</div>
-            <div id="invRevMix"></div>
-          </div>
-          <div class="inv-card">
-            <div class="inv-card-title">🎯 Use of Funds</div>
-            <div id="invUseFunds"></div>
-          </div>
+      <!-- PER-FARM ROI / REVENUE UPLIFT (each of 10 farms on its own) -->
+      <div class="panel fade" id="sec-revenue">
+        <div class="sec-hdr">
+          <div class="sec-title">💸 PER-FARM REVENUE UPLIFT &amp; VENDING PROJECTION</div>
+          <div class="sec-badge">Live model · 10 farms</div>
         </div>
-
-        <!-- ROW 2: ESG Impact + Milestones -->
-        <div class="inv-grid2">
-          <div class="inv-card">
-            <div class="inv-card-title">🌍 ESG &amp; Social Impact</div>
-            <div class="inv-esg-grid" id="invEsg"></div>
-          </div>
-          <div class="inv-card">
-            <div class="inv-card-title">🗓️ Road Map &amp; Milestones</div>
-            <div class="inv-milestone-list" id="invMilestones"></div>
-          </div>
-        </div>
-
-        <!-- INVESTMENT ASK + CTA -->
-        <div class="inv-ask-box">
-          <div style="font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">Series A Investment Ask</div>
-          <div class="inv-ask-val">R 25,000,000</div>
-          <div class="inv-ask-label">Targeting a R420M valuation — 8× projected Y3 ARR of R54.2M</div>
-          <div class="inv-ask-terms">
-            <div class="inv-ask-term"><strong>Equity Offered:</strong> 6%</div>
-            <div class="inv-ask-term"><strong>Lead Investor:</strong> Open</div>
-            <div class="inv-ask-term"><strong>Min Ticket:</strong> R2.5M</div>
-            <div class="inv-ask-term"><strong>Close Date:</strong> Q3 2025</div>
-            <div class="inv-ask-term"><strong>Structure:</strong> Priced Round (SAFE + Equity)</div>
-          </div>
-        </div>
-
-        <div class="inv-cta-row">
-          <button class="inv-cta inv-cta-primary" onclick="shareInvestorPitch()">📲 Share Pitch via WhatsApp</button>
-          <button class="inv-cta inv-cta-secondary" onclick="window.print()">🖨️ Print / Export PDF</button>
-          <button class="inv-cta inv-cta-secondary" onclick="copyInvestorEmail()">📧 Copy Investor Email</button>
-        </div>
-
+        <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.5">Each farm's projected revenue with our bio-inputs applied, plus the volume of harvest they could feed into our community vending network — turning every hectare into both income and food security.</div>
+        <div id="revGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px"></div>
       </div>
 
       <!-- MODULES -->
@@ -1136,7 +1126,8 @@ const modules=[
   {icon:'💰',name:'COSTS',    desc:'Cost optimizer &\nsavings calculator',              section:'sec-yield'},
   {icon:'🤖',name:'AI ADVISOR',desc:'OpenAI crop advisor\n(Live + Local fallback)',     section:'sec-ai'},
   {icon:'🔔',name:'ALERTS',   desc:'Alerts & notifications\n(WhatsApp + SMS)',          section:'sec-alerts'},
-  {icon:'📈',name:'INVESTOR', desc:'Investor pitch &\nrevenue calculator',              section:'sec-investor'},
+  {icon:'🧪',name:'BIO-INPUTS', desc:'Microbial fungicides &\norganic crop boosters',     section:'sec-bio'},
+  {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nvending projections',            section:'sec-revenue'},
 ];
 
 // ── RENDER WEATHER ──
@@ -2183,91 +2174,106 @@ const invMilestones=[
   {period:'Q2 2026',text:'JSE listing preparation · Pan-Africa expansion',color:'#7a9e82',done:false},
 ];
 
-function renderInvestor(){
-  // Hero metrics
-  document.getElementById('invHeroMetrics').innerHTML=[
-    {val:'R28.6M',label:'Current ARR',color:'#22c55e'},
-    {val:'10',label:'Active Farms\nSA Provinces',color:'#22c55e'},
-    {val:'5,419ha',label:'Farmland Under\nManagement',color:'#4ade80'},
-    {val:'R420M',label:'Target Valuation\n(Series A)',color:'#a78bfa'},
-    {val:'92%',label:'Platform\nUptime SLA',color:'#38bdf8'},
-  ].map(m=>`<div class="inv-metric">
-    <div class="inv-metric-val" style="color:${m.color}">${m.val}</div>
-    <div class="inv-metric-label">${m.label.replace('\n','<br>')}</div>
-  </div>`).join('');
-
-  // Revenue chart bars
-  const maxRev=Math.max(...invProjection.map(p=>p.rev));
-  const chartW=document.getElementById('invRevenueChart').offsetWidth||360;
-  const barW=Math.floor((chartW-40)/invProjection.length)-8;
-  document.getElementById('invRevenueChart').innerHTML=invProjection.map((p,i)=>{
-    const h=Math.round((p.rev/maxRev)*110);
-    const x=20+i*(barW+8)+(barW/2);
-    const left=20+i*(barW+8);
-    return `<div class="inv-chart-bar" style="left:${left}px;width:${barW}px;height:${h}px;background:linear-gradient(180deg,${p.color}cc,${p.color}44)">
-    </div>
-    <div class="inv-chart-val" style="left:${x}px;bottom:${h+4}px">R${p.rev}M</div>
-    <div class="inv-chart-label" style="left:${x}px">${p.year.replace('\n','<br>')}</div>`;
-  }).join('');
-
-  // Revenue mix
-  const maxRevMix=invRevMix[0].pct;
-  document.getElementById('invRevMix').innerHTML=invRevMix.map(r=>`
-    <div class="inv-revenue-row">
-      <span class="inv-rev-icon">${r.icon}</span>
-      <span class="inv-rev-name">${r.name}</span>
-      <div class="inv-rev-bar-wrap"><div class="inv-rev-bar" style="width:${r.pct}%;background:${r.color}"></div></div>
-      <span class="inv-rev-val">${r.val}</span>
-    </div>
-  `).join('');
-
-  // Use of funds
-  document.getElementById('invUseFunds').innerHTML=invUseFunds.map(f=>`
-    <div class="inv-fund-item">
-      <div class="inv-fund-icon" style="background:${f.color}"><span>${f.icon}</span></div>
-      <div class="inv-fund-label">
-        <div>${f.label}</div>
-        <div class="inv-fund-sub">${f.sub}</div>
+// ── YIELDCORE BIO-INPUTS (our own products) ──
+const bioProducts=[
+  {icon:'🦠',name:'BioShield-7',cat:'Microbial Fungicide',desc:'Trichoderma harzianum + Bacillus subtilis. Stops Fusarium, Phytophthora root-rot & damping-off. Foliar or soil drench.',price:'R 280 / L',rate:'2 L / ha',target:'Fungal disease',color:'#22c55e',uplift:'+14% yield · saves R420/ha vs synthetic'},
+  {icon:'🌱',name:'N-Fix Pro',cat:'Nitrogen Biostimulant',desc:'Rhizobium + Azospirillum nitrogen-fixing consortium. Cuts urea use 40%, builds soil organic N.',price:'R 320 / kg',rate:'5 kg / ha',target:'Maize · Legumes',color:'#4ade80',uplift:'+18% yield · −R900/ha urea cost'},
+  {icon:'🐛',name:'PestGuard-Bio',cat:'Biopesticide (Entomo)',desc:'Beauveria bassiana spores. Targets aphids, whitefly, thrips, fall army-worm. Zero chemical residue.',price:'R 450 / L',rate:'1.5 L / ha',target:'Sap-suckers · Lepidoptera',color:'#fb923c',uplift:'+9% marketable yield · organic-cert'},
+  {icon:'🍄',name:'Soil Reviv',cat:'Mycorrhizal Inoculant',desc:'Endo-mycorrhizal fungi (Glomus spp.). Boosts root mass +25%, drought tolerance, P & Zn uptake.',price:'R 380 / kg',rate:'3 kg / ha at planting',target:'All crops',color:'#a78bfa',uplift:'+15% drought yield · −30% P fertiliser'},
+  {icon:'🌊',name:'LeafBoost',cat:'Foliar Biostimulant',desc:'Cold-pressed Ecklonia maxima seaweed + amino acids. Triggers cytokinins, +12% photosynthesis.',price:'R 190 / L',rate:'2 L / ha · 3 sprays',target:'Vegetables · Fruit',color:'#38bdf8',uplift:'+11% yield · improves Brix & shelf-life'},
+  {icon:'🦴',name:'CalMag-Plus',cat:'Liquid Calcium-Mg',desc:'Chelated Ca + Mg. Prevents blossom-end rot, bitter pit, tip-burn. Compatible with all bio-inputs.',price:'R 220 / L',rate:'1 L / ha foliar',target:'Tomato · Apple · Lettuce',color:'#facc15',uplift:'+22% Grade-A pack-out'},
+  {icon:'🪲',name:'NemaStop',cat:'Bio-Nematicide',desc:'Purpureocillium lilacinum. Parasitises root-knot nematode eggs. Replaces fenamiphos at 60% cost.',price:'R 510 / kg',rate:'4 kg / ha',target:'Root-knot · Cyst nematode',color:'#f87171',uplift:'+19% root-veg yield · zero MRL'},
+  {icon:'☀️',name:'Photo-K',cat:'Potassium-Silica Tonic',desc:'Soluble K₂SiO₃. Strengthens cell walls vs powdery mildew, hail, heat stress. Harvest-day safe.',price:'R 240 / L',rate:'2 L / ha',target:'Vine · Cereal · Cucurbit',color:'#86efac',uplift:'+13% yield · −40% mildew sprays'},
+];
+function renderBio(){
+  const c=document.getElementById('bioGrid'); if(!c) return;
+  c.innerHTML=bioProducts.map(p=>`
+    <div class="bio-card" style="border-left:3px solid ${p.color}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <div style="font-size:22px">${p.icon}</div>
+        <div style="flex:1;min-width:0">
+          <div class="bio-name">${esc(p.name)}</div>
+          <div class="bio-cat">${esc(p.cat)}</div>
+        </div>
       </div>
-      <div class="inv-fund-pct" style="color:${f.iconColor}">${f.pct}%</div>
-    </div>
-  `).join('');
-
-  // ESG
-  document.getElementById('invEsg').innerHTML=invEsg.map(e=>`
-    <div class="inv-esg-item">
-      <div class="inv-esg-icon">${e.icon}</div>
-      <div>
-        <div class="inv-esg-val" style="color:${e.color}">${e.val}</div>
-        <div class="inv-esg-label">${e.label.replace('\n','<br>')}</div>
-      </div>
-    </div>
-  `).join('');
-
-  // Milestones
-  document.getElementById('invMilestones').innerHTML=invMilestones.map(m=>`
-    <div class="inv-milestone">
-      <div class="inv-ms-dot" style="background:${m.color};${m.done?'':'opacity:.5'}"></div>
-      <div class="inv-ms-period" style="color:${m.color}">${m.period}</div>
-      <div class="inv-ms-text" style="${m.done?'':'color:var(--sub)'}">${m.done?'✅ ':'⏳ '}${m.text}</div>
+      <div class="bio-desc">${esc(p.desc)}</div>
+      <div class="bio-meta"><span>🎯 ${esc(p.target)}</span><span>${esc(p.rate)}</span></div>
+      <div class="bio-uplift" style="color:${p.color}">📈 ${esc(p.uplift)}</div>
+      <div class="bio-price-row"><span class="bio-price">${esc(p.price)}</span><button class="bio-buy" onclick="orderBio('${esc(p.name)}')">Order →</button></div>
     </div>
   `).join('');
 }
-
-window.shareInvestorPitch=async function(){
-  const msg=`🌿 *YieldCore AI — Series A Investment Opportunity*\n\n📍 South African AgriTech · Precision Farming Platform\n\n💰 *Investment Ask:* R25,000,000\n📈 *Valuation:* R420M\n📊 *Current ARR:* R28.6M → R148M by Y5\n🌾 *5,419 ha* under AI management across 5 provinces\n🏧 *3,210 families* served via community grain vending\n🌿 *8,200t* CO₂ sequestered this season\n\n*Revenue Streams:*\n• SaaS licences · IoT sensors · AI advisory\n• Grain vending margin · Carbon credits · Data intelligence\n\n*Contact:* rodwell@yieldcore.ai\n_YieldCore AI — Growing Africa's Future_`;
-  try{
-    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
-    const d=await res.json();
-    if(d.success)alert('✅ Investor pitch sent via WhatsApp!');
-    else alert('WhatsApp error: '+d.error);
-  }catch(e){alert('Network error: '+e.message);}
+window.orderBio=function(name){
+  const f=(typeof farmHealth!=='undefined'&&farmHealth[0])||{name:'YieldCore Demo Farm',province:'Western Cape',ha:120};
+  const qty=Math.max(10,Math.round(f.ha*0.4));
+  const msg=`🧪 YieldCore Bio-Input Order Request\n\nProduct: ${name}\nFarm: ${f.name}\nLocation: ${f.province}\nFarm size: ${f.ha} ha\nSuggested qty: ${qty} units\n\nPlease confirm pricing & ETA.`;
+  fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})
+    .then(r=>r.json()).then(d=>alert(d.success?`✅ Order request for ${name} sent via WhatsApp`:'WhatsApp error: '+d.error))
+    .catch(e=>alert('Network error: '+e.message));
 };
 
-window.copyInvestorEmail=function(){
-  const email=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising a R25M Series A at a R420M valuation.\n\nWe are South Africa's leading AI-powered precision agriculture platform managing 5,419 ha across 5 provinces. Our platform combines real-time IoT sensor data, satellite NDVI, AI crop advisory (GPT-4o), and a community grain vending network that has served 3,210 food-insecure families.\n\nKey Metrics:\n• ARR: R28.6M (growing to R148M by Y5 at 35% YoY)\n• Gross Margin: 68%\n• Farms: 10 active, 40+ in pipeline\n• NPS: 72 (farmers)\n\nWe are offering 6% equity to the right strategic partner.\n\nPlease reach out to schedule a demo:\nrodwell@yieldcore.ai\n\nBest regards,\nRodwell Sibanda\nFounder & CEO, YieldCore AI`;
-  navigator.clipboard.writeText(email).then(()=>alert('✅ Investor email copied to clipboard!')).catch(()=>alert('Could not copy — please use the WhatsApp button instead.'));
+// ── PER-FARM REVENUE UPLIFT + VENDING PROJECTION ──
+// crop yield (t/ha) × SAFEX price (R/t) baseline; uplift % from our bio-stack.
+const cropYieldPrice={
+  'Mixed Vegetables':       {yt:25,  rt:18000, u:0.18, vend:'Mixed veg packs', vendKgPerHa:8500},
+  'Mixed Grain & Livestock':{yt:5.2, rt:4850,  u:0.16, vend:'White Maize',     vendKgPerHa:5200},
+  'Venue & Boutique Produce':{yt:18, rt:22000, u:0.20, vend:'Salad greens',    vendKgPerHa:6200},
+  'Game & Game Products':   {yt:0.4, rt:78000, u:0.10, vend:'Biltong & jerky', vendKgPerHa:120},
+  'Horticulture':           {yt:30,  rt:14000, u:0.22, vend:'Tomato · Pepper', vendKgPerHa:9000},
+  'Roses & Coffee':         {yt:1.8, rt:120000,u:0.14, vend:'Specialty coffee',vendKgPerHa:600},
+  'Mixed Estate':           {yt:6.5, rt:8200,  u:0.17, vend:'Wheat Flour',     vendKgPerHa:3800},
+  'Sunrise Crops':          {yt:5.8, rt:6800,  u:0.19, vend:'Sunflower oil',   vendKgPerHa:2400},
+  'Agri Development':       {yt:4.5, rt:5400,  u:0.21, vend:'Maize meal',      vendKgPerHa:3100},
+  'Karoo Livestock':        {yt:0.18,rt:65000, u:0.09, vend:'Lamb & wool',     vendKgPerHa:65},
 };
+function renderRevenue(){
+  const c=document.getElementById('revGrid'); if(!c) return;
+  c.innerHTML=farmHealth.map(f=>{
+    const y=cropYieldPrice[f.crop]||{yt:5,rt:6000,u:0.15,vend:'Mixed',vendKgPerHa:2000};
+    const baseRev=Math.round(f.ha*y.yt*y.rt);
+    const upliftRev=Math.round(baseRev*(1+y.u));
+    const gain=upliftRev-baseRev;
+    const stackCost=Math.round(f.ha*1850); // avg R1850/ha for full bio stack
+    const netGain=gain-stackCost;
+    const roi=Math.round((netGain/stackCost)*100);
+    const vendKgYr=Math.round(f.ha*y.vendKgPerHa*0.15); // 15% of harvest into vending
+    const vendRevYr=Math.round(vendKgYr*9.5); // avg R9.50/kg vending margin
+    return `<div class="rev-card" style="border-top:3px solid ${f.color}">
+      <div class="rev-head">
+        <div>
+          <div class="rev-name">${esc(f.name)}</div>
+          <div class="rev-sub">${esc(f.province)} · ${f.ha.toLocaleString()} ha · ${esc(f.crop)}</div>
+        </div>
+        <div class="rev-grade" style="background:${f.color}22;color:${f.color};border-color:${f.color}66">${esc(f.grade)} · ${f.score}</div>
+      </div>
+      <div class="rev-bars">
+        <div class="rev-bar-row">
+          <span class="rev-lbl">Current revenue</span>
+          <span class="rev-cur mono">R ${baseRev.toLocaleString()}</span>
+        </div>
+        <div class="rev-bar-row">
+          <span class="rev-lbl">With YieldCore bio-stack</span>
+          <span class="rev-new mono">R ${upliftRev.toLocaleString()}</span>
+        </div>
+        <div class="rev-bar-wrap"><div class="rev-bar-base"></div><div class="rev-bar-fill" style="width:${Math.min(100,y.u*500)}%;background:linear-gradient(90deg,${f.color},#4ade80)"></div></div>
+        <div class="rev-gain">+R ${gain.toLocaleString()} <span style="color:var(--sub);font-weight:500">extra/yr (+${Math.round(y.u*100)}%)</span></div>
+      </div>
+      <div class="rev-roi-grid">
+        <div><div class="rev-mini-lbl">Bio-stack cost</div><div class="rev-mini-val mono" style="color:#fb923c">R ${stackCost.toLocaleString()}</div></div>
+        <div><div class="rev-mini-lbl">Net profit gain</div><div class="rev-mini-val mono" style="color:#22c55e">R ${netGain.toLocaleString()}</div></div>
+        <div><div class="rev-mini-lbl">ROI</div><div class="rev-mini-val mono" style="color:#facc15">${roi}%</div></div>
+      </div>
+      <div class="rev-vending">
+        <div class="rev-vending-hdr">🏧 VENDING MACHINE PROJECTION</div>
+        <div class="rev-vending-row">
+          <div><div class="rev-vlbl">Stock supplied</div><div class="rev-vval mono">${vendKgYr.toLocaleString()} kg/yr</div></div>
+          <div><div class="rev-vlbl">Product</div><div class="rev-vval">${esc(y.vend)}</div></div>
+          <div><div class="rev-vlbl">Vending revenue</div><div class="rev-vval mono" style="color:#a78bfa">R ${vendRevYr.toLocaleString()}/yr</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
 
 // ── INIT ──
 function init(){
@@ -2289,7 +2295,8 @@ function init(){
   initAI();
   renderVending();
   renderCarbon();
-  renderInvestor();
+  renderBio();
+  renderRevenue();
   renderModules();
   fetchWeather();
   setInterval(fetchWeather, 10*60*1000);
