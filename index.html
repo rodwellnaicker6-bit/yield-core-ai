@@ -528,7 +528,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
     <div class="sb-nav">
       <div class="nav-item active" onclick="navTo(this,'top')"><div class="ni">🏠</div><span>Dashboard</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">🌾</div><span>Farms</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-health')"><div class="ni">❤️</div><span>Health</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">❤️</div><span>Health</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-solar')"><div class="ni">☀️</div><span>Solar</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-ndvi')"><div class="ni">🗺️</div><span>Zones</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-nutrients')"><div class="ni">💊</div><span>Nutrients</span></div>
@@ -949,6 +949,17 @@ function setNav(el,page){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
 }
+function navTo(el,sectionId){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  if(sectionId==='top'){window.scrollTo({top:0,behavior:'smooth'});return;}
+  const target=document.getElementById(sectionId);
+  if(target){
+    const y=target.getBoundingClientRect().top+window.scrollY-80;
+    window.scrollTo({top:y,behavior:'smooth'});
+  }
+}
+window.navTo=navTo;
 
 // ── DATA ──
 const weatherLocations=[
@@ -1037,7 +1048,7 @@ const alertsData=[
 
 const modules=[
   {icon:'🌾',name:'FARMS',    desc:'Manage all 10 farms\nDatabase & details',          section:'sec-farms'},
-  {icon:'❤️',name:'HEALTH',   desc:'Health scoring &\ncomponent breakdown',             section:'sec-health'},
+  {icon:'❤️',name:'HEALTH',   desc:'Health scoring &\ncomponent breakdown',             section:'sec-farms'},
   {icon:'☀️',name:'SOLAR',    desc:'Solar systems &\nirrigation simulation',            section:'sec-solar'},
   {icon:'🗺️',name:'ZONES',    desc:'Geo-zones & precision\nirrigation savings',         section:'sec-ndvi'},
   {icon:'💊',name:'NUTRIENTS',desc:'NPK management &\ncrop recommendations',            section:'sec-nutrients'},
@@ -1268,11 +1279,11 @@ function renderSolar(){
 
 // ── IRRIGATION DATA ──
 const irrigFarms=[
-  {name:'Free State Maize Hub',icon:'💧',moist:28,flow:3.2,target:60,status:'LOW',color:'#f87171'},
-  {name:'Groot Mielie Farm',icon:'💧',moist:67,flow:8.1,target:65,status:'OK',color:'#22c55e'},
-  {name:'KZN Suikersteen',icon:'💧',moist:72,flow:6.4,target:70,status:'OK',color:'#22c55e'},
-  {name:'Limpopo Citrus Estate',icon:'💧',moist:55,flow:7.2,target:65,status:'OK',color:'#22c55e'},
-  {name:'Mpumalanga Avocados',icon:'💧',moist:48,flow:4.9,target:60,status:'LOW',color:'#facc15'},
+  {name:'Karoo House',          icon:'💧',moist:28,flow:3.2,target:60,status:'LOW',color:'#f87171'},
+  {name:'Rodwell Boland Farm',  icon:'💧',moist:67,flow:8.1,target:65,status:'OK', color:'#22c55e'},
+  {name:'Oranjezicht City Farm',icon:'💧',moist:72,flow:6.4,target:70,status:'OK', color:'#22c55e'},
+  {name:'Green Fields Farm',    icon:'💧',moist:55,flow:7.2,target:65,status:'OK', color:'#22c55e'},
+  {name:'Sun Rise Farm',        icon:'💧',moist:48,flow:4.9,target:60,status:'LOW',color:'#facc15'},
 ];
 function renderIrrigation(){
   const c=document.getElementById('irrigCards');
@@ -1300,16 +1311,16 @@ function renderIrrigation(){
 
 // ── NDVI DATA ──
 const ndviFields=[
-  {name:'Groot Mielie',ndvi:.84,trend:'+0.03',crop:'🌽'},
-  {name:'Stellenbosch',ndvi:.79,trend:'+0.01',crop:'🍇'},
-  {name:'Limpopo Citrus',ndvi:.73,trend:'-0.02',crop:'🍊'},
-  {name:'KZN Sugarcane',ndvi:.68,trend:'+0.04',crop:'🌿'},
-  {name:'Mpumalanga',ndvi:.71,trend:'+0.02',crop:'🥑'},
-  {name:'Hex River',ndvi:.82,trend:'+0.05',crop:'🍇'},
-  {name:'Tzaneen Mac',ndvi:.76,trend:'-0.01',crop:'🥜'},
-  {name:'Karoo',ndvi:.38,trend:'-0.06',crop:'🐑'},
-  {name:'Vaal Katoen',ndvi:.42,trend:'-0.03',crop:'🌱'},
-  {name:'Bethlehem',ndvi:.65,trend:'+0.02',crop:'🌾'},
+  {name:'Rodwell Boland',  ndvi:.84,trend:'+0.03',crop:'🌽'},
+  {name:'Imhoff Farm',     ndvi:.79,trend:'+0.01',crop:'🍇'},
+  {name:'Chart Farm',      ndvi:.73,trend:'-0.02',crop:'🌹'},
+  {name:'Oranjezicht',     ndvi:.88,trend:'+0.04',crop:'🥬'},
+  {name:'Meuse Farm',      ndvi:.71,trend:'+0.02',crop:'🥑'},
+  {name:'Opal Game',       ndvi:.82,trend:'+0.05',crop:'🦌'},
+  {name:'Winnchoulas',     ndvi:.66,trend:'-0.01',crop:'🥜'},
+  {name:'Karoo House',     ndvi:.38,trend:'-0.06',crop:'🐑'},
+  {name:'Sun Rise',        ndvi:.62,trend:'-0.03',crop:'🌻'},
+  {name:'Green Fields',    ndvi:.58,trend:'+0.02',crop:'🌾'},
 ];
 function ndviColor(v){
   if(v>=.8)return{bg:'#4ade8022',border:'#4ade8044',text:'#4ade80'};
@@ -1337,11 +1348,11 @@ function renderNDVI(){
 
 // ── SENSOR DATA ──
 const sensorLocations=[
-  {name:'Free State',icon:'🌡️',lat:'Bloemfontein'},
-  {name:'Limpopo',icon:'🌡️',lat:'Tzaneen'},
-  {name:'KZN',icon:'🌡️',lat:'Eshowe'},
-  {name:'W. Cape',icon:'🌡️',lat:'Stellenbosch'},
-  {name:'Mpumalanga',icon:'🌡️',lat:'Hazyview'},
+  {name:'Rodwell Boland',icon:'🌡️',lat:'W. Cape'},
+  {name:'Imhoff Farm',   icon:'🌡️',lat:'Kommetjie'},
+  {name:'Karoo House',   icon:'🌡️',lat:'Karoo'},
+  {name:'Green Fields',  icon:'🌡️',lat:'Limpopo'},
+  {name:'Sun Rise',      icon:'🌡️',lat:'Mpumalanga'},
 ];
 function renderSensors(){
   const now=new Date();
@@ -1391,14 +1402,14 @@ function renderSensors(){
 
 // ── PEST DATA ──
 const pestData=[
-  {icon:'🦗',name:'Fall Armyworm',farm:'Free State Maize Hub',severity:'HIGH',confidence:94,detected:'2h ago',field:'Block C, D'},
-  {icon:'🐛',name:'Nut Borer',farm:'Mpumalanga Macadamia',severity:'HIGH',confidence:88,detected:'5h ago',field:'Sector B4'},
-  {icon:'🪲',name:'Citrus Psyllid',farm:'Limpopo Citrus Estate',severity:'MED',confidence:76,detected:'1d ago',field:'Block A2'},
-  {icon:'🍄',name:'Botrytis (Fungal)',farm:'Stellenbosch Vineyards',severity:'MED',confidence:82,detected:'1d ago',field:'Row 14–18'},
-  {icon:'🐌',name:'Stem Borer',farm:'KZN Suikersteen',severity:'LOW',confidence:61,detected:'2d ago',field:'Section 3'},
-  {icon:'🦟',name:'Aphids',farm:'Hex River Druiwe',severity:'LOW',confidence:71,detected:'3d ago',field:'Block F'},
-  {icon:'🐞',name:'Thrips',farm:'Groot Mielie Farm',severity:'LOW',confidence:58,detected:'3d ago',field:'Field 2'},
-  {icon:'✅',name:'No Pest Detected',farm:'Oranjezicht City Farm',severity:'NONE',confidence:99,detected:'Today',field:'All zones'},
+  {icon:'🦗',name:'Fall Armyworm',     farm:'Green Fields Farm',  severity:'HIGH',confidence:94,detected:'2h ago',field:'Block C, D'},
+  {icon:'🐛',name:'Nut Borer',         farm:'Winnchoulas Estate', severity:'HIGH',confidence:88,detected:'5h ago',field:'Sector B4'},
+  {icon:'🪲',name:'Aphid Outbreak',    farm:'Sun Rise Farm',      severity:'MED', confidence:76,detected:'1d ago',field:'Block A2'},
+  {icon:'🍄',name:'Botrytis (Fungal)', farm:'Chart Farm',         severity:'MED', confidence:82,detected:'1d ago',field:'Rose rows 14–18'},
+  {icon:'🐌',name:'Snail Damage',      farm:'Meuse Farm',         severity:'LOW', confidence:61,detected:'2d ago',field:'Section 3'},
+  {icon:'🦟',name:'Whitefly',          farm:'Imhoff Farm',        severity:'LOW', confidence:71,detected:'3d ago',field:'Greenhouse F'},
+  {icon:'🐞',name:'Thrips',            farm:'Rodwell Boland Farm',severity:'LOW', confidence:58,detected:'3d ago',field:'Field 2'},
+  {icon:'✅',name:'No Pest Detected',  farm:'Oranjezicht City Farm',severity:'NONE',confidence:99,detected:'Today',field:'All zones'},
 ];
 function renderPests(){
   const c=document.getElementById('pestGrid');
@@ -1431,16 +1442,17 @@ window.sendPestAlert=async function(i){
 
 // ── FULL ALERTS DATA ──
 const fullAlerts=[
-  {type:'critical',icon:'💧',farm:'Free State Maize Hub',msg:'Soil moisture at 28%, pump activated',time:'12m ago'},
-  {type:'critical',icon:'🌡️',farm:'Frost Warning — Free State',msg:'Friday night temperature forecast < 2°C',time:'5h ago'},
-  {type:'critical',icon:'🐛',farm:'Mpumalanga Macadamia',msg:'Fall armyworm detected in Block C & D',time:'2h ago'},
-  {type:'warning',icon:'🐛',farm:'Mpumalanga Macadamia',msg:'Drone detected nut borer in sector B4',time:'5h ago'},
-  {type:'warning',icon:'💧',farm:'Mpumalanga Avocados',msg:'Drip irrigation pressure low — check filters',time:'7h ago'},
-  {type:'warning',icon:'📡',farm:'Karoo Kleinvee',msg:'Wind sensor offline in Camp 4 — battery dead',time:'2h ago'},
-  {type:'warning',icon:'🌡️',farm:'KZN Suikersteen',msg:'Temperature spike 39°C in processing shed',time:'3h ago'},
-  {type:'info',icon:'🌾',farm:'Bethlehem Koring',msg:'Wheat harvest window opens in 9 days',time:'1d ago'},
-  {type:'info',icon:'🌧️',farm:'Limpopo Citrus Estate',msg:'Rain forecast 60% — adjust irrigation schedule',time:'1d ago'},
-  {type:'info',icon:'☀️',farm:'Groot Mielie Farm',msg:'Solar output 12% above monthly average',time:'2d ago'},
+  {type:'critical',icon:'💧',farm:'Karoo House',          msg:'Soil moisture at 28%, pump activated — Pieter van der Ww',time:'12m ago'},
+  {type:'critical',icon:'🌡️',farm:'Frost Warning — Sun Rise Farm',msg:'Friday night temperature forecast < 2°C in Mpumalanga',time:'5h ago'},
+  {type:'critical',icon:'🐛',farm:'Green Fields Farm',     msg:'Fall armyworm detected in Block C & D — Thabo Nkosi 072 345 6789',time:'2h ago'},
+  {type:'warning', icon:'🐛',farm:'Winnchoulas Estate',    msg:'Nut borer detected in sector B4 — Andre Botha 083 789 0123',time:'5h ago'},
+  {type:'warning', icon:'💧',farm:'Sun Rise Farm',         msg:'Drip irrigation pressure low — check filters',time:'7h ago'},
+  {type:'warning', icon:'📡',farm:'Opal Game Growers',     msg:'Wind sensor offline in Camp 4 — battery dead, Sipho Dlamini',time:'2h ago'},
+  {type:'warning', icon:'🌡️',farm:'Chart Farm',            msg:'Temperature spike 39°C in greenhouse — roses at risk',time:'3h ago'},
+  {type:'info',    icon:'🌾',farm:'Rodwell Boland Farm',   msg:'Maize harvest window opens in 9 days',time:'1d ago'},
+  {type:'info',    icon:'🌧️',farm:'Imhoff Farm',           msg:'Rain forecast 60% in Kommetjie — adjust irrigation schedule',time:'1d ago'},
+  {type:'info',    icon:'☀️',farm:'Oranjezicht City Farm', msg:'Solar output 12% above monthly average',time:'2d ago'},
+  {type:'info',    icon:'🥬',farm:'Meuse Farm',            msg:'Hout Bay vegetable beds ready for spring planting',time:'2d ago'},
 ];
 let alertFilter='all';
 function filterAlerts(f,btn){
@@ -1495,17 +1507,17 @@ window.sendAllWhatsApp=async function(){
 
 // ── NUTRIENTS DATA ──
 const npkFarms=[
-  {name:'Free State Maize Hub',crop:'🌽 Maize',
+  {name:'Karoo House',crop:'🐑 Karoo Pasture',
     N:{val:68,min:80,max:120,unit:'kg/ha'},P:{val:22,min:20,max:40,unit:'kg/ha'},K:{val:95,min:80,max:150,unit:'kg/ha'},Ca:{val:310,min:200,max:400,unit:'mg/kg'}},
-  {name:'Limpopo Citrus Estate',crop:'🍊 Citrus',
+  {name:'Green Fields Farm',crop:'🌾 Mixed Grain',
     N:{val:112,min:100,max:160,unit:'kg/ha'},P:{val:35,min:25,max:50,unit:'kg/ha'},K:{val:180,min:150,max:250,unit:'kg/ha'},Ca:{val:420,min:300,max:600,unit:'mg/kg'}},
-  {name:'Groot Mielie Farm',crop:'🌽 Maize',
+  {name:'Rodwell Boland Farm',crop:'🌽 Maize',
     N:{val:88,min:80,max:120,unit:'kg/ha'},P:{val:28,min:20,max:40,unit:'kg/ha'},K:{val:105,min:80,max:150,unit:'kg/ha'},Ca:{val:280,min:200,max:400,unit:'mg/kg'}},
-  {name:'KZN Suikersteen',crop:'🌿 Sugarcane',
+  {name:'Sun Rise Farm',crop:'🌻 Sunflower',
     N:{val:145,min:120,max:180,unit:'kg/ha'},P:{val:18,min:15,max:35,unit:'kg/ha'},K:{val:220,min:180,max:300,unit:'kg/ha'},Ca:{val:380,min:250,max:500,unit:'mg/kg'}},
-  {name:'Stellenbosch Vineyards',crop:'🍇 Grapes',
+  {name:'Chart Farm',crop:'🌹 Roses & Coffee',
     N:{val:55,min:40,max:80,unit:'kg/ha'},P:{val:12,min:10,max:25,unit:'kg/ha'},K:{val:130,min:100,max:180,unit:'kg/ha'},Ca:{val:510,min:400,max:700,unit:'mg/kg'}},
-  {name:'Mpumalanga Avocados',crop:'🥑 Avocado',
+  {name:'Oranjezicht City Farm',crop:'🥬 Mixed Vegetables',
     N:{val:92,min:80,max:130,unit:'kg/ha'},P:{val:30,min:20,max:45,unit:'kg/ha'},K:{val:165,min:140,max:220,unit:'kg/ha'},Ca:{val:460,min:350,max:600,unit:'mg/kg'}},
 ];
 const npkRanges=[
@@ -1568,12 +1580,12 @@ function renderNutrients(){
 
 // ── YIELD & PROFIT DATA ──
 const yieldFarms=[
-  {farm:'Groot Mielie',crop:'Maize',ha:890,yieldT:6.8,priceR:4850,costHa:8200,season:'On Track'},
-  {farm:'Limpopo Citrus',crop:'Citrus',ha:180,yieldT:28.4,priceR:5200,costHa:22000,season:'On Track'},
-  {farm:'Stellenbosch',crop:'Wine Grapes',ha:140,yieldT:14.2,priceR:6800,costHa:35000,season:'Ahead'},
-  {farm:'KZN Sugarcane',crop:'Sugarcane',ha:240,yieldT:72.5,priceR:980,costHa:14000,season:'On Track'},
-  {farm:'Mpumalanga Avoc',crop:'Avocado',ha:95,yieldT:12.8,priceR:18500,costHa:42000,season:'Ahead'},
-  {farm:'Bethlehem Koring',crop:'Wheat',ha:560,yieldT:4.2,priceR:7200,costHa:6800,season:'Delayed'},
+  {farm:'Rodwell Boland',  crop:'Maize',       ha:890,yieldT:6.8, priceR:4850, costHa:8200, season:'On Track'},
+  {farm:'Green Fields',    crop:'Mixed Grain', ha:1200,yieldT:5.4,priceR:5200, costHa:7400, season:'On Track'},
+  {farm:'Chart Farm',      crop:'Roses & Coffee',ha:25,yieldT:14.2,priceR:6800,costHa:35000,season:'Ahead'},
+  {farm:'Sun Rise Farm',   crop:'Sunflower',   ha:540,yieldT:2.4, priceR:9400, costHa:6200, season:'On Track'},
+  {farm:'Oranjezicht',     crop:'Vegetables',  ha:8,  yieldT:38.5,priceR:12500,costHa:22000,season:'Ahead'},
+  {farm:'Karoo House',     crop:'Karoo Lamb',  ha:2400,yieldT:0.4,priceR:85000,costHa:1200, season:'Delayed'},
 ];
 function renderYield(){
   const c=document.getElementById('yieldGrid');
@@ -1764,14 +1776,14 @@ window.vendDispense=async function(i){
 
 // ── CARBON CREDIT TRACKER ──
 const carbonFarms=[
-  {name:'Groot Mielie Farm',     crop:'🌽 Maize',    ha:890,  rate:2.8, verified:1820, pending:372, status:'verified', standard:'VCS',         certNo:'VCS-YC-2024-0041'},
-  {name:'Stellenbosch Vineyards',crop:'🍇 Grapes',   ha:140,  rate:4.2, verified:428,  pending:160, status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0018'},
-  {name:'Limpopo Citrus Estate', crop:'🍊 Citrus',   ha:180,  rate:3.6, verified:496,  pending:152, status:'verified', standard:'VCS',         certNo:'VCS-YC-2024-0055'},
-  {name:'KZN Suikersteen',       crop:'🌿 Sugarcane',ha:240,  rate:5.1, verified:890,  pending:342, status:'pending',  standard:'VCS',         certNo:'VCS-YC-2024-0063'},
-  {name:'Mpumalanga Avocados',   crop:'🥑 Avocado',  ha:95,   rate:3.9, verified:282,  pending:88,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0022'},
-  {name:'Hex River Druiwe',      crop:'🍇 Grapes',   ha:110,  rate:4.0, verified:320,  pending:120, status:'pending',  standard:'VCS',         certNo:'VCS-YC-2024-0071'},
-  {name:'Tzaneen Macadamia',     crop:'🥜 Macadamia',ha:130,  rate:3.2, verified:312,  pending:104, status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0029'},
-  {name:'Bethlehem Koring',      crop:'🌾 Wheat',    ha:560,  rate:1.8, verified:0,    pending:0,   status:'none',     standard:'—',           certNo:'—'},
+  {name:'Rodwell Boland Farm',  crop:'🌽 Maize',         ha:890, rate:2.8, verified:1820, pending:372, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0041'},
+  {name:'Chart Farm',           crop:'🌹 Roses & Coffee',ha:25,  rate:4.2, verified:88,   pending:32,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0018'},
+  {name:'Green Fields Farm',    crop:'🌾 Mixed Grain',   ha:1200,rate:3.6, verified:1496, pending:452, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0055'},
+  {name:'Opal Game Growers',    crop:'🦌 Game Reserve',  ha:1850,rate:5.1, verified:890,  pending:342, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0063'},
+  {name:'Oranjezicht City Farm',crop:'🥬 Vegetables',    ha:8,   rate:3.9, verified:36,   pending:12,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0022'},
+  {name:'Imhoff Farm',          crop:'🍇 Boutique',      ha:110, rate:4.0, verified:320,  pending:120, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0071'},
+  {name:'Winnchoulas Estate',   crop:'🥜 Mixed Estate',  ha:130, rate:3.2, verified:312,  pending:104, status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0029'},
+  {name:'Karoo House',          crop:'🐑 Karoo Pasture', ha:2400,rate:0.6, verified:0,    pending:0,   status:'none',     standard:'—',            certNo:'—'},
 ];
 const carbonVCMHistory=[12.1,13.4,14.2,13.8,15.6,16.2,15.9,17.1,16.8,18.0,17.8,18.4];
 let carbonVCMPrice=18.40;
