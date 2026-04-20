@@ -36,3 +36,8 @@ externalPort = 80
 [deployment]
 deploymentTarget = "autoscale"
 run = ["node", "server.js"]
+
+[userenv]
+
+[userenv.shared]
+ADMIN_TOKEN = "yc_djo0ljzj8pci3vto0fq2"

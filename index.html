@@ -1263,14 +1263,14 @@ function doLogin(){
 let SHARE_CFG = {liveUrl:'', sandboxCode:'', sandboxNumber:'+14155238886'};
 fetch('/api/config').then(r=>r.json()).then(c=>{ SHARE_CFG=Object.assign(SHARE_CFG,c); }).catch(()=>{});
 function openShare(){
-  const url = SHARE_CFG.liveUrl || (location.origin + '/invite');
-  const inviteUrl = (SHARE_CFG.liveUrl||location.origin) + '/invite';
+  const base = SHARE_CFG.liveUrl || location.origin;
+  const inviteUrl = base + '/register?ref=rodwell';
   const code = SHARE_CFG.sandboxCode || 'your-code';
   const num = SHARE_CFG.sandboxNumber || '+14155238886';
   document.getElementById('shareLink').value = inviteUrl;
   document.getElementById('shareJoinCode').textContent = 'join '+code;
   document.getElementById('shareNumber').textContent = num;
-  const msg = `🌿 Try YieldCore AI — your free farm intelligence on WhatsApp\n\n📍 Send a location pin, get live weather, irrigation plan, alerts & crop tips.\n\n+18% yield · −32% water · +R3,200/ha profit\n\n👉 ${inviteUrl}`;
+  const msg = `🌿 Join YieldCore AI — South Africa's smart-farming network on WhatsApp\n\n👉 Register your farm in 30 seconds: ${inviteUrl}\n\nYou'll get LIVE weather, irrigation plans, frost/storm alerts & crop tips — pinned to your exact GPS location.\n\n+18% yield · −32% water · +R3,200/ha profit`;
   document.getElementById('shareWa').href = 'https://wa.me/?text='+encodeURIComponent(msg);
   document.getElementById('shareInvite').href = inviteUrl;
   document.getElementById('shareModal').classList.add('show');
