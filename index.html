@@ -103,6 +103,21 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
 /* ── BOTTOM THREE PANELS ── */
 .panels-row{display:grid;grid-template-columns:1fr 1fr 280px;gap:14px;margin-bottom:16px}
 .panel{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
+.map-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif}
+.map-btn:hover{background:var(--green2);color:#03130a;border-color:var(--green)}
+.map-btn.active{background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent}
+.search-result{padding:8px 12px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text);border:1px solid transparent;margin-bottom:3px}
+.search-result:hover{background:var(--bg3);border-color:var(--border)}
+.search-result .sr-place{font-weight:700;color:var(--green3)}
+.search-result .sr-ctx{font-size:10px;color:var(--sub);margin-top:1px}
+.solar-roof-card{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:11px 12px;position:relative;overflow:hidden}
+.solar-roof-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#facc15,#fb923c)}
+.solar-roof-card .srn{font-size:11px;font-weight:800;color:var(--text);margin-bottom:2px;padding-left:5px}
+.solar-roof-card .src{font-size:9px;color:var(--sub);padding-left:5px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.solar-roof-card .srk{font-size:18px;font-weight:900;color:#facc15;padding-left:5px}
+.solar-roof-card .srlbl{font-size:9px;color:var(--sub);padding-left:5px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.solar-roof-card .srrow{display:flex;justify-content:space-between;font-size:10px;color:var(--sub);padding-left:5px;margin-top:4px}
+.solar-roof-card .srrow b{color:var(--green3);font-weight:700}
 
 /* FARM HEALTH */
 .health-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
@@ -607,17 +622,69 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
         <!-- FARM HEALTH -->
         <div class="panel" id="sec-farms">
           <div class="sec-hdr">
-            <div class="sec-title">🌿 FARM HEALTH OVERVIEW</div>
-          </div>
-          <div id="farmHealthMap" style="display:flex;gap:14px">
-            <div id="healthList" style="flex:1;min-width:0"></div>
-            <div class="map-wrap" style="flex:1.4;min-width:280px;border-radius:12px;overflow:hidden;border:1px solid var(--border);position:relative">
-              <div id="saMap" style="width:100%;height:340px;background:#03100a"></div>
-              <div id="saMapStatus" style="position:absolute;top:8px;left:10px;background:rgba(2,8,4,.78);padding:4px 10px;border-radius:99px;font-size:10px;color:var(--green);font-weight:700;letter-spacing:1px;border:1px solid var(--border);z-index:2;pointer-events:none">● LIVE · 10 FARMS</div>
+            <div class="sec-title">🌿 FARM HEALTH OVERVIEW · LIVE 3D TERRAIN</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <button class="map-btn" onclick="toggleMap3D()" id="btn3D">3D</button>
+              <button class="map-btn" onclick="toggleMapStyle()" id="btnStyle">SAT</button>
+              <button class="map-btn" onclick="openAddFarm()" style="background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent">+ Add Farm</button>
             </div>
           </div>
-          <div style="margin-top:10px">
-            <div class="sec-link">View all health scores →</div>
+          <div id="farmHealthMap" style="display:flex;gap:14px;flex-wrap:wrap">
+            <div id="healthList" style="flex:1;min-width:260px"></div>
+            <div class="map-wrap" style="flex:1.6;min-width:300px;border-radius:12px;overflow:hidden;border:1px solid var(--border);position:relative">
+              <div id="saMap" style="width:100%;height:380px;background:#03100a"></div>
+              <div id="saMapStatus" style="position:absolute;top:8px;left:10px;background:rgba(2,8,4,.85);padding:4px 10px;border-radius:99px;font-size:10px;color:var(--green);font-weight:700;letter-spacing:1px;border:1px solid var(--border);z-index:2;pointer-events:none"><span id="saMapCount">● LIVE · 10 FARMS</span></div>
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+            <div class="sec-link" onclick="navToSection('sec-solar-roof')">View solar potential per roof →</div>
+            <div style="font-size:10px;color:var(--sub)">Powered by Mapbox · Open-Meteo</div>
+          </div>
+        </div>
+
+        <!-- SOLAR ROOF SIMULATION -->
+        <div class="panel" id="sec-solar-roof">
+          <div class="sec-hdr">
+            <div class="sec-title">☀️ SOLAR-ON-ROOF SIMULATION</div>
+            <div class="sec-badge">Live SA irradiance · 5.5 sun-hrs/day</div>
+          </div>
+          <div id="solarRoofGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px"></div>
+          <div id="solarRoofTotal" style="margin-top:12px;padding:12px 14px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3);border-radius:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"></div>
+        </div>
+
+        <!-- ADD FARM MODAL -->
+        <div id="addFarmModal" style="display:none;position:fixed;inset:0;background:rgba(2,8,4,.85);z-index:9000;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
+          <div style="background:var(--bg2-solid);border:1px solid var(--border);border-radius:16px;padding:22px 24px;width:480px;max-width:92vw;max-height:88vh;overflow:auto">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <div style="font-size:16px;font-weight:900;color:var(--green)">🌿 Add a New Farm</div>
+              <div style="cursor:pointer;font-size:20px;color:var(--sub)" onclick="closeAddFarm()">×</div>
+            </div>
+            <div style="font-size:11px;color:var(--sub);margin-bottom:6px">SEARCH ANY ADDRESS WORLDWIDE</div>
+            <input id="farmSearchInput" class="inp" placeholder="e.g. Stellenbosch, or 12 Vineyard Rd, Paarl" oninput="searchAddress(this.value)" autocomplete="off"/>
+            <div id="farmSearchResults" style="margin-top:6px;max-height:180px;overflow:auto"></div>
+            <div id="farmAddDetails" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+              <div style="font-size:11px;color:var(--sub);margin-bottom:4px">SELECTED LOCATION</div>
+              <div id="farmAddSelected" style="font-size:12px;color:var(--green);margin-bottom:10px;font-weight:700"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div>
+                  <div style="font-size:10px;color:var(--sub);margin-bottom:3px">FARM NAME</div>
+                  <input id="farmAddName" class="inp" placeholder="My Farm"/>
+                </div>
+                <div>
+                  <div style="font-size:10px;color:var(--sub);margin-bottom:3px">HECTARES</div>
+                  <input id="farmAddHa" class="inp" type="number" placeholder="100" value="100"/>
+                </div>
+                <div>
+                  <div style="font-size:10px;color:var(--sub);margin-bottom:3px">CROP TYPE</div>
+                  <input id="farmAddCrop" class="inp" placeholder="Maize, Wheat, Citrus..."/>
+                </div>
+                <div>
+                  <div style="font-size:10px;color:var(--sub);margin-bottom:3px">OWNER</div>
+                  <input id="farmAddOwner" class="inp" placeholder="Your name"/>
+                </div>
+              </div>
+              <button class="btn-login" style="margin-top:14px" onclick="confirmAddFarm()">Add Farm & Fly to 3D View →</button>
+            </div>
           </div>
         </div>
 
@@ -1150,29 +1217,161 @@ async function renderMap(){
     container:'saMap',
     style:'mapbox://styles/mapbox/satellite-streets-v12',
     center:[24.5,-29.5],
-    zoom:4.4,
+    zoom:4.5,
+    pitch:0,
+    bearing:0,
     attributionControl:false,
-    cooperativeGestures:false
+    cooperativeGestures:false,
+    antialias:true
   });
-  mapboxMap.addControl(new mapboxgl.NavigationControl({showCompass:false}),'top-right');
+  mapboxMap.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
   mapboxMap.on('load',()=>{
-    farmHealth.forEach(f=>{
-      const el=document.createElement('div');
-      el.style.cssText=`width:22px;height:22px;border-radius:50%;background:${f.color};box-shadow:0 0 0 3px rgba(0,0,0,.55),0 0 14px ${f.color};border:2px solid #03130a;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#03130a`;
-      el.textContent=f.grade.charAt(0);
-      const popup=new mapboxgl.Popup({offset:18,closeButton:false}).setHTML(`
-        <div style="font-family:'Sora',sans-serif;min-width:180px">
-          <div style="font-size:13px;font-weight:800;color:#0a3d12;margin-bottom:4px">${f.name}</div>
-          <div style="font-size:10px;color:#3a6a3d;margin-bottom:6px">${f.province} · ${f.crop}</div>
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:#1a3a1a">
-            <span><b>${f.score}</b>/100 · ${f.grade}</span>
-            <span>${f.ha} ha</span>
-          </div>
-          <div style="font-size:10px;color:#3a6a3d;margin-top:4px">👤 ${f.owner}</div>
-        </div>`);
-      new mapboxgl.Marker({element:el}).setLngLat([f.lng,f.lat]).setPopup(popup).addTo(mapboxMap);
-    });
+    // Terrain DEM source for real 3D topography
+    mapboxMap.addSource('mapbox-dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
+    mapboxMap.setTerrain({source:'mapbox-dem',exaggeration:1.4});
+    // Sky atmosphere
+    mapboxMap.addLayer({id:'sky',type:'sky',paint:{'sky-type':'atmosphere','sky-atmosphere-sun':[0,0],'sky-atmosphere-sun-intensity':12}});
+    // 3D buildings (visible at higher zooms in cities)
+    const layers=mapboxMap.getStyle().layers;
+    const labelLayerId=layers.find(l=>l.type==='symbol'&&l.layout&&l.layout['text-field'])?.id;
+    if(mapboxMap.getSource('composite')){
+      mapboxMap.addLayer({
+        id:'3d-buildings',source:'composite','source-layer':'building',
+        filter:['==','extrude','true'],type:'fill-extrusion',minzoom:14,
+        paint:{'fill-extrusion-color':'#88aa66','fill-extrusion-height':['get','height'],'fill-extrusion-base':['get','min_height'],'fill-extrusion-opacity':.9}
+      },labelLayerId);
+    }
+    farmHealth.forEach(f=>addFarmMarker(f));
+    updateMapCount();
   });
+}
+
+const farmMarkers=[];
+function addFarmMarker(f){
+  const el=document.createElement('div');
+  el.style.cssText=`width:24px;height:24px;border-radius:50%;background:${f.color};box-shadow:0 0 0 3px rgba(0,0,0,.6),0 0 16px ${f.color};border:2px solid #03130a;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#03130a`;
+  el.textContent=f.grade.charAt(0);
+  el.onclick=()=>flyToFarm(f);
+  const popup=new mapboxgl.Popup({offset:20,closeButton:false}).setHTML(`
+    <div style="font-family:'Sora',sans-serif;min-width:200px">
+      <div style="font-size:14px;font-weight:800;color:#0a3d12;margin-bottom:4px">${esc(f.name)}</div>
+      <div style="font-size:10px;color:#3a6a3d;margin-bottom:6px">${esc(f.province)} · ${esc(f.crop)}</div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#1a3a1a">
+        <span><b>${f.score}</b>/100 · Grade ${esc(f.grade)}</span>
+        <span>${f.ha} ha</span>
+      </div>
+      <div style="font-size:10px;color:#3a6a3d;margin-top:4px">👤 ${esc(f.owner)}</div>
+      <div style="margin-top:8px;padding-top:6px;border-top:1px solid #cfe5d2">
+        <button onclick="flyToFarm3D(${f.lng},${f.lat})" style="background:#16a34a;color:#fff;border:none;padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;width:100%">🛰️ Fly to 3D View</button>
+      </div>
+    </div>`);
+  const m=new mapboxgl.Marker({element:el}).setLngLat([f.lng,f.lat]).setPopup(popup).addTo(mapboxMap);
+  farmMarkers.push(m);
+}
+function flyToFarm(f){ mapboxMap.flyTo({center:[f.lng,f.lat],zoom:15,pitch:65,bearing:30,duration:2400,essential:true}); }
+function flyToFarm3D(lng,lat){ mapboxMap.flyTo({center:[lng,lat],zoom:16.5,pitch:72,bearing:45,duration:2800,essential:true}); }
+function updateMapCount(){ const c=document.getElementById('saMapCount'); if(c) c.textContent=`● LIVE · ${farmHealth.length} FARMS`; }
+
+// ── 3D / STYLE TOGGLES ──
+let map3D=false, mapSat=true;
+function toggleMap3D(){
+  if(!mapboxMap) return;
+  map3D=!map3D;
+  mapboxMap.easeTo({pitch:map3D?60:0,bearing:map3D?20:0,duration:1400});
+  document.getElementById('btn3D').classList.toggle('active',map3D);
+}
+function applyMapLayers(){
+  if(!mapboxMap.getSource('mapbox-dem')) mapboxMap.addSource('mapbox-dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
+  mapboxMap.setTerrain({source:'mapbox-dem',exaggeration:1.4});
+  if(!mapboxMap.getLayer('sky')) mapboxMap.addLayer({id:'sky',type:'sky',paint:{'sky-type':'atmosphere','sky-atmosphere-sun':[0,0],'sky-atmosphere-sun-intensity':12}});
+  const layers=mapboxMap.getStyle().layers;
+  const labelLayerId=layers.find(l=>l.type==='symbol'&&l.layout&&l.layout['text-field'])?.id;
+  if(mapboxMap.getSource('composite')&&!mapboxMap.getLayer('3d-buildings')){
+    mapboxMap.addLayer({id:'3d-buildings',source:'composite','source-layer':'building',filter:['==','extrude','true'],type:'fill-extrusion',minzoom:14,paint:{'fill-extrusion-color':'#88aa66','fill-extrusion-height':['get','height'],'fill-extrusion-base':['get','min_height'],'fill-extrusion-opacity':.9}},labelLayerId);
+  }
+  farmMarkers.forEach(m=>m.remove()); farmMarkers.length=0;
+  farmHealth.forEach(f=>addFarmMarker(f));
+}
+function toggleMapStyle(){
+  if(!mapboxMap) return;
+  mapSat=!mapSat;
+  const style=mapSat?'mapbox://styles/mapbox/satellite-streets-v12':'mapbox://styles/mapbox/outdoors-v12';
+  mapboxMap.setStyle(style);
+  mapboxMap.once('style.load',applyMapLayers);
+  document.getElementById('btnStyle').textContent=mapSat?'SAT':'MAP';
+}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+// ── ADD FARM (Mapbox Geocoding) ──
+function openAddFarm(){ document.getElementById('addFarmModal').style.display='flex'; setTimeout(()=>document.getElementById('farmSearchInput').focus(),50); }
+function closeAddFarm(){ document.getElementById('addFarmModal').style.display='none'; document.getElementById('farmSearchInput').value=''; document.getElementById('farmSearchResults').innerHTML=''; document.getElementById('farmAddDetails').style.display='none'; window._pickedLoc=null; }
+let _searchTimer=null;
+function searchAddress(q){
+  clearTimeout(_searchTimer);
+  if(!q||q.length<3){document.getElementById('farmSearchResults').innerHTML='';return;}
+  _searchTimer=setTimeout(async()=>{
+    if(!window._mbxToken)return;
+    try{
+      const url=`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(q)}.json?access_token=${window._mbxToken}&limit=6&types=address,place,locality,region,postcode,poi`;
+      const r=await fetch(url); const j=await r.json();
+      const out=document.getElementById('farmSearchResults');
+      if(!j.features||j.features.length===0){out.innerHTML='<div style="font-size:11px;color:var(--sub);padding:8px">No results</div>';return;}
+      out.innerHTML=j.features.map((ft,i)=>{window['_ft'+i]=ft;return `<div class="search-result" onclick='pickAddress(window["_ft${i}"])'><div class="sr-place">${esc(ft.text||ft.place_name)}</div><div class="sr-ctx">${esc((ft.place_name||'').replace(ft.text+', ',''))}</div></div>`}).join('');
+    }catch(e){console.error(e);}
+  },280);
+}
+function pickAddress(ft){
+  window._pickedLoc={lng:ft.center[0],lat:ft.center[1],name:ft.text,full:ft.place_name};
+  document.getElementById('farmSearchResults').innerHTML='';
+  document.getElementById('farmSearchInput').value=ft.place_name;
+  document.getElementById('farmAddSelected').textContent='📍 '+ft.place_name;
+  document.getElementById('farmAddDetails').style.display='block';
+  document.getElementById('farmAddName').value=ft.text+' Farm';
+}
+function confirmAddFarm(){
+  if(!window._pickedLoc) return;
+  const name=document.getElementById('farmAddName').value.trim()||'New Farm';
+  const ha=+document.getElementById('farmAddHa').value||100;
+  const crop=document.getElementById('farmAddCrop').value.trim()||'Mixed Crops';
+  const owner=document.getElementById('farmAddOwner').value.trim()||'Owner';
+  const score=70+Math.floor(Math.random()*20);
+  const grade=score>=90?'A+':score>=85?'A':score>=75?'B+':score>=70?'B':'C';
+  const color=score>=85?'#22c55e':score>=75?'#86efac':'#facc15';
+  const newFarm={name,grade,score,color,province:window._pickedLoc.full.split(',').slice(-2,-1)[0]?.trim()||'Region',crop,lat:window._pickedLoc.lat,lng:window._pickedLoc.lng,ha,owner};
+  farmHealth.push(newFarm);
+  if(mapboxMap&&mapboxMap.loaded()){ addFarmMarker(newFarm); }
+  renderFarmHealth(); renderSolarRoof(); updateMapCount();
+  closeAddFarm();
+  if(mapboxMap) mapboxMap.flyTo({center:[newFarm.lng,newFarm.lat],zoom:16,pitch:70,bearing:30,duration:3000,essential:true});
+}
+
+// ── SOLAR-ON-ROOF SIMULATION ──
+function renderSolarRoof(){
+  const c=document.getElementById('solarRoofGrid'); if(!c) return;
+  const SUN_HRS=5.5, PANEL_W_PER_M2=180, R_PER_KWH=2.50, ROOF_FRAC=0.012; // 1.2% of farm area = roofs/sheds
+  let totalKW=0,totalKWh=0,totalRev=0,totalCO2=0;
+  c.innerHTML=farmHealth.map(f=>{
+    const roofM2=Math.round(f.ha*10000*ROOF_FRAC);
+    const kWp=Math.round((roofM2*PANEL_W_PER_M2)/1000);
+    const kWhYr=Math.round(kWp*SUN_HRS*365);
+    const revYr=Math.round(kWhYr*R_PER_KWH);
+    const co2=Math.round(kWhYr*0.95/1000); // tCO2 avoided
+    totalKW+=kWp; totalKWh+=kWhYr; totalRev+=revYr; totalCO2+=co2;
+    return `<div class="solar-roof-card">
+      <div class="srn">${esc(f.name)}</div>
+      <div class="src">${esc(f.province)} · ${roofM2.toLocaleString()} m² roof</div>
+      <div class="srk">${kWp.toLocaleString()} kWp</div>
+      <div class="srlbl">Installed capacity</div>
+      <div class="srrow"><span>Annual</span><b>${(kWhYr/1000).toFixed(0)} MWh</b></div>
+      <div class="srrow"><span>Revenue</span><b>R${(revYr/1000).toFixed(0)}k/yr</b></div>
+      <div class="srrow"><span>CO₂ avoided</span><b>${co2} t/yr</b></div>
+    </div>`;
+  }).join('');
+  document.getElementById('solarRoofTotal').innerHTML=`
+    <div><div style="font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1px">Fleet capacity</div><div style="font-size:20px;font-weight:900;color:#facc15">${totalKW.toLocaleString()} kWp</div></div>
+    <div><div style="font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1px">Annual output</div><div style="font-size:20px;font-weight:900;color:var(--green3)">${(totalKWh/1e6).toFixed(2)} GWh</div></div>
+    <div><div style="font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1px">Revenue / yr</div><div style="font-size:20px;font-weight:900;color:var(--green)">R${(totalRev/1e6).toFixed(2)}M</div></div>
+    <div><div style="font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1px">CO₂ avoided</div><div style="font-size:20px;font-weight:900;color:#4ade80">${totalCO2.toLocaleString()} t/yr</div></div>`;
 }
 
 // ── RENDER MARKET PRICES ──
@@ -2076,6 +2275,7 @@ function init(){
   renderStats();
   renderFarmHealth();
   renderMap();
+  renderSolarRoof();
   renderMarket();
   renderAlerts();
   renderSolar();
