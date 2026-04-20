@@ -10,20 +10,31 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --green:#22c55e;--green2:#16a34a;--green3:#4ade80;
-  --bg:#060f07;--bg2:#0a1a0c;--bg3:#0d2010;--bg4:#111f13;
+  --bg:#060f07;--bg2:rgba(10,26,12,.72);--bg3:rgba(13,32,16,.78);--bg4:rgba(17,31,19,.62);
+  --bg2-solid:#0a1a0c;
   --border:#1a3a1d;--border2:#132a16;
   --text:#e2f0e6;--sub:#7a9e82;--dim:#3a5a3d;
   --red:#f87171;--yellow:#facc15;--orange:#fb923c;--blue:#38bdf8;--purple:#a78bfa;
   --sidebar:220px;
 }
 html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+#main{position:relative}
+#main::before{
+  content:'';position:fixed;inset:0;left:var(--sidebar);
+  background-image:url('/public/farm-bg.png');
+  background-size:cover;background-position:center right;
+  opacity:.28;pointer-events:none;z-index:0;
+}
+#topbar,#content{position:relative;z-index:2}
+#topbar{background:linear-gradient(180deg,rgba(6,15,7,.94),rgba(6,15,7,.82))!important;backdrop-filter:blur(8px)}
+#content{background:transparent!important}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 
 /* ── LAYOUT ── */
 #shell{display:flex;min-height:100vh}
-#sidebar{width:var(--sidebar);min-width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border2);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto}
+#sidebar{width:var(--sidebar);min-width:var(--sidebar);background:var(--bg2-solid);border-right:1px solid var(--border2);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto}
 #main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
 #topbar{background:var(--bg);border-bottom:1px solid var(--border2);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
 #content{flex:1;padding:22px 26px;overflow-y:auto;background:var(--bg)}
@@ -518,7 +529,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Sora',system-ui,sa
   <div id="sidebar">
     <div class="sb-logo">
       <div class="sb-logo-mark">
-        <div class="sb-logo-icon">🌍</div>
+        <div class="sb-logo-icon">🌿</div>
         <div>
           <div class="sb-logo-text">YIELDCORE AI</div>
           <div class="sb-logo-sub">Agricultural Intelligence</div>
@@ -934,6 +945,7 @@ function doLogin(){
     document.getElementById('loginErr').style.display='block';
   }
 }
+if(location.hash==='#auto')window.addEventListener('DOMContentLoaded',()=>setTimeout(doLogin,50));
 
 // ── CLOCK ──
 function updateClock(){
