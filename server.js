@@ -134,7 +134,18 @@ function botRouter(text) {
   const t = (text||'').trim().toLowerCase();
   if (!t) return null;
   if (/^(hi|hello|hey|start|menu|help|hola|sawubona|molo)\b/.test(t))
-    return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — pricing tiers\n• *DRONE* — drone services\n• *ABOUT* — what YieldCore does\n• *DEMO* — book a free demo\n• *SHARE* — invite a farmer friend\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
+    return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — pricing tiers\n• *DRONE* — drone services\n• *ABOUT* — what YieldCore does\n• *DEMO* — book a free demo\n• *PAY* — pricing & payment page\n• *SHARE* — invite a farmer friend\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
+  if (/(pay|checkout|order|subscribe|sign up|signup|activate)/.test(t))
+    return `💳 *Pay & Activate YieldCore*\n\nOpen our secure payment page to:\n• Pick your tier (R95–R200/ha)\n• Auto-calc your monthly + annual price\n• Pay via WhatsApp / EFT / Card\n• Get 10% off when paying annually\n\n👉 ${LIVE_URL}/pay\n\nOr reply with your *farm hectares* (e.g. "120 ha") and I'll send a custom quote here.`;
+  const haMatch = t.match(/(\d{1,5})\s*(ha|hectare|hectares|hect)/);
+  if (haMatch) {
+    const ha = Math.max(1, parseInt(haMatch[1]));
+    const tier = autoTier(ha);
+    const monthly = ha * tier.pricePerHa;
+    const annual = monthly * 12;
+    const annualNet = annual - Math.round(annual*0.10);
+    return `💰 *Quote for ${ha} ha*\n\nTier: *${tier.name}* (${tier.range})\nRate: R${tier.pricePerHa}/ha\n\n💵 Monthly: *R ${monthly.toLocaleString('en-ZA')}*\n📅 Annual NET (10% off): *R ${annualNet.toLocaleString('en-ZA')}*\n${tier.perks?'\n'+tier.perks+'\n':''}\n👉 Activate now: ${LIVE_URL}/pay\nOr reply *PAY* for payment options.`;
+  }
   if (/(price|pricing|cost|tier|plan)/.test(t))
     return `💰 *YieldCore Pricing (per hectare)*\n\n• Starter (1–49 ha): R200/ha\n• Growth (50–199 ha): R165/ha\n• Pro (200–499 ha): R130/ha\n• Enterprise (500+ ha): R110/ha 🎁 *FREE on-site install*\n• Co-op (1000+ ha): R95/ha\n\nReply *DEMO* for free trial.`;
   if (/(drone|spray)/.test(t))
@@ -283,6 +294,58 @@ app.get('/api/config', (req, res) => {
     sandboxCode: SANDBOX_CODE,
     sandboxNumber: SANDBOX_NUMBER
   });
+});
+
+// ── PRICING TIERS ──
+const TIERS = {
+  starter:    { name:'Starter',    range:'1–49 ha',     pricePerHa:200, min:1,    max:49,   color:'#4ade80' },
+  growth:     { name:'Growth',     range:'50–199 ha',   pricePerHa:165, min:50,   max:199,  color:'#22c55e' },
+  pro:        { name:'Pro',        range:'200–499 ha',  pricePerHa:130, min:200,  max:499,  color:'#facc15' },
+  enterprise: { name:'Enterprise', range:'500–999 ha',  pricePerHa:110, min:500,  max:999,  color:'#fb923c', perks:'🎁 FREE on-site install' },
+  coop:       { name:'Co-op',      range:'1000+ ha',    pricePerHa:95,  min:1000, max:99999,color:'#f472b6', perks:'🤝 Dedicated success manager' }
+};
+
+function autoTier(ha){ for(const k in TIERS){ const t=TIERS[k]; if(ha>=t.min && ha<=t.max) return {key:k, ...t}; } return {key:'starter',...TIERS.starter}; }
+
+// ── PAYMENT QUOTE API ──
+app.post('/api/quote', (req, res) => {
+  const ha = Math.max(1, parseInt(req.body.hectares)||1);
+  const farm = (req.body.farmName||'').toString().slice(0,80);
+  const name = (req.body.name||'').toString().slice(0,80);
+  const email = (req.body.email||'').toString().slice(0,120);
+  const tier = autoTier(ha);
+  const monthly = ha * tier.pricePerHa;
+  const annual = monthly * 12;
+  const annualDiscount = Math.round(annual * 0.10);
+  const annualNet = annual - annualDiscount;
+  const ref = 'YC-' + Date.now().toString(36).toUpperCase();
+  const lines = [
+    `🌿 *YieldCore AI — Order Request*`,
+    ``,
+    `Ref: *${ref}*`,
+    name?`Name: ${name}`:null,
+    farm?`Farm: ${farm}`:null,
+    email?`Email: ${email}`:null,
+    `Hectares: *${ha} ha*`,
+    `Tier: *${tier.name}* (${tier.range})`,
+    `Rate: R${tier.pricePerHa}/ha`,
+    ``,
+    `💵 Monthly: *R ${monthly.toLocaleString('en-ZA')}*`,
+    `📅 Annual: R ${annual.toLocaleString('en-ZA')}`,
+    `🎁 Annual saving (10%): −R ${annualDiscount.toLocaleString('en-ZA')}`,
+    `✅ Annual NET: *R ${annualNet.toLocaleString('en-ZA')}*`,
+    tier.perks ? `\n${tier.perks}` : null,
+    ``,
+    `Please confirm and I'll send the EFT details / card link to activate.`
+  ].filter(Boolean);
+  const waText = lines.join('\n');
+  const waLink = `https://wa.me/27825172688?text=${encodeURIComponent(waText)}`;
+  res.json({ ok:true, ref, ha, tier, monthly, annual, annualDiscount, annualNet, waLink, waText });
+});
+
+// ── PAYMENT PAGE ──
+app.get('/pay', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pay.html'));
 });
 
 // ── PUBLIC INVITE LANDING (clean shareable page) ──

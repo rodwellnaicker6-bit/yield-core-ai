@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pricing & Payment · YieldCore AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,sans-serif}
+body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 40%,#2d4a2f 100%);color:#e8f5e9;padding:24px 16px 60px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;font-family:'Sora',sans-serif;font-weight:900;font-size:22px;background:linear-gradient(135deg,#facc15,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.logo-leaf{font-size:28px;-webkit-text-fill-color:initial;filter:drop-shadow(0 4px 10px rgba(74,222,128,.4))}
+.back{padding:8px 16px;background:rgba(8,18,12,.6);border:1px solid rgba(74,222,128,.25);color:#d4e8d8;border-radius:99px;font-size:12px;font-weight:700;text-decoration:none}
+.hero{text-align:center;margin-bottom:36px}
+.hero h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:900;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;margin-bottom:10px;line-height:1.1}
+.hero p{color:#d4e8d8;font-size:15px;max-width:600px;margin:0 auto}
+.hero .stats{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hero .stats span{font-size:11px;font-weight:700;background:rgba(8,18,12,.6);border:1px solid rgba(74,222,128,.25);padding:5px 12px;border-radius:99px;color:#d4e8d8}
+.hero .stats b{color:#4ade80}
+
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:14px;margin-bottom:34px}
+.tier{background:rgba(8,18,12,.7);border:1.5px solid rgba(74,222,128,.18);border-radius:18px;padding:18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.tier:hover{transform:translateY(-4px);border-color:rgba(74,222,128,.5);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.tier.active{border-color:var(--c,#4ade80);box-shadow:0 0 0 2px var(--c,#4ade80),0 14px 36px rgba(0,0,0,.5);background:linear-gradient(135deg,rgba(74,222,128,.08),rgba(8,18,12,.8))}
+.tier-name{font-family:'Sora',sans-serif;font-weight:900;font-size:18px;color:var(--c,#4ade80);margin-bottom:2px}
+.tier-range{font-size:11px;color:#9bb5a3;font-weight:600;margin-bottom:14px;letter-spacing:.5px}
+.tier-price{font-family:'Sora',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1}
+.tier-price small{font-size:11px;font-weight:600;color:#9bb5a3;display:block;margin-top:4px}
+.tier-perk{margin-top:10px;font-size:11px;color:#facc15;font-weight:700;background:rgba(250,204,21,.08);padding:5px 8px;border-radius:8px;border:1px solid rgba(250,204,21,.2)}
+
+.calc{background:rgba(8,18,12,.75);border:1px solid rgba(74,222,128,.3);border-radius:22px;padding:28px;backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(0,0,0,.5);margin-bottom:30px}
+.calc h2{font-family:'Sora',sans-serif;font-size:22px;font-weight:900;color:#facc15;margin-bottom:6px;letter-spacing:-.01em}
+.calc .sub{font-size:13px;color:#d4e8d8;margin-bottom:22px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.row.single{grid-template-columns:1fr}
+.field label{display:block;font-size:11px;letter-spacing:1.5px;color:#facc15;font-weight:800;margin-bottom:6px}
+.field input{width:100%;background:#000;color:#e8f5e9;border:1px solid rgba(74,222,128,.25);border-radius:12px;padding:13px 14px;font-size:14px;font-weight:600;font-family:inherit;transition:border-color .2s}
+.field input:focus{outline:none;border-color:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.15)}
+.haRow{display:flex;align-items:center;gap:14px}
+.haRow input[type=range]{flex:1;accent-color:#4ade80}
+.haRow input[type=number]{width:110px}
+
+.summary{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(250,204,21,.08));border:1px solid rgba(74,222,128,.35);border-radius:16px;padding:18px;margin-top:18px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13.5px;color:#d4e8d8}
+.sum-row.big{font-size:18px;font-weight:900;color:#fff;border-top:1px solid rgba(74,222,128,.25);margin-top:6px;padding-top:14px}
+.sum-row.big b{font-family:'Sora',sans-serif;font-size:22px;color:#4ade80}
+.sum-row.disc b{color:#facc15}
+
+.pay-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+@media(max-width:560px){.pay-btns{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+.pay-btn{padding:16px;font-weight:900;font-size:14.5px;text-align:center;text-decoration:none;border-radius:14px;cursor:pointer;border:none;transition:transform .2s;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit}
+.pay-btn:hover{transform:translateY(-2px)}
+.pay-wa{background:linear-gradient(135deg,#22c55e,#4ade80);color:#000;box-shadow:0 8px 22px rgba(74,222,128,.35)}
+.pay-eft{background:rgba(8,18,12,.7);color:#facc15;border:1.5px solid rgba(250,204,21,.4)}
+
+.methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:30px}
+.method{background:rgba(8,18,12,.6);border:1px solid rgba(74,222,128,.18);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px}
+.method-ic{font-size:26px;flex-shrink:0;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:rgba(74,222,128,.1);border-radius:12px}
+.method-t{font-weight:900;font-size:13px;color:#e8f5e9;margin-bottom:2px}
+.method-d{font-size:11px;color:#9bb5a3}
+
+.eft-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(10px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.eft-modal.show{display:flex}
+.eft-card{max-width:440px;width:100%;background:linear-gradient(135deg,#0a1410,#1a2e1d);border:1px solid rgba(74,222,128,.4);border-radius:22px;padding:28px;position:relative}
+.eft-close{position:absolute;top:12px;right:18px;font-size:28px;color:#7a9e82;cursor:pointer;font-weight:300}
+.eft-card h3{font-family:'Sora',sans-serif;font-size:22px;color:#facc15;margin-bottom:16px}
+.eft-row{display:flex;justify-content:space-between;padding:10px 12px;background:rgba(0,0,0,.4);border:1px solid rgba(74,222,128,.18);border-radius:10px;margin-bottom:8px;font-size:13.5px}
+.eft-row span:first-child{color:#9bb5a3}
+.eft-row span:last-child{color:#4ade80;font-weight:800;font-family:'SF Mono',Menlo,monospace}
+.eft-note{font-size:12px;color:#d4e8d8;margin-top:14px;padding:12px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);border-radius:10px}
+.eft-note b{color:#facc15}
+.eft-cta{display:block;text-align:center;padding:14px;background:linear-gradient(135deg,#22c55e,#4ade80);color:#000;font-weight:900;border-radius:12px;text-decoration:none;margin-top:14px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#facc15;color:#000;padding:12px 22px;border-radius:99px;font-weight:900;font-size:13px;box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:99999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/" class="logo"><span class="logo-leaf">🌿</span> YieldCore AI</a>
+    <a href="/" class="back">← Back to Dashboard</a>
+  </div>
+
+  <div class="hero">
+    <h1>Transparent Pricing.<br>Pay per hectare.</h1>
+    <p>Choose your tier, enter your hectares, and confirm via WhatsApp or EFT. Activation in under 24 hours.</p>
+    <div class="stats"><span><b>+18%</b> yield</span><span><b>−32%</b> water</span><span><b>−40%</b> chemicals</span><span><b>+R3,200/ha</b> profit</span></div>
+  </div>
+
+  <div class="tiers" id="tiers"></div>
+
+  <div class="calc">
+    <h2>📊 Calculate your price</h2>
+    <div class="sub">We'll auto-pick the best tier for your farm size.</div>
+
+    <div class="row">
+      <div class="field"><label>YOUR NAME</label><input id="fName" placeholder="Rodwell M." /></div>
+      <div class="field"><label>FARM NAME</label><input id="fFarm" placeholder="Greenfields Estate" /></div>
+    </div>
+    <div class="row single">
+      <div class="field"><label>EMAIL (optional)</label><input id="fEmail" type="email" placeholder="you@farm.co.za" /></div>
+    </div>
+    <div class="row single">
+      <div class="field"><label>FARM SIZE (HECTARES)</label>
+        <div class="haRow">
+          <input id="fHaRange" type="range" min="1" max="2000" value="120" />
+          <input id="fHa" type="number" min="1" value="120" />
+        </div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="sum-row"><span>Selected tier</span><span id="sumTier">Growth (50–199 ha)</span></div>
+      <div class="sum-row"><span>Rate</span><span id="sumRate">R165/ha</span></div>
+      <div class="sum-row"><span>Hectares</span><span id="sumHa">120 ha</span></div>
+      <div class="sum-row big"><span>Monthly subscription</span><span><b id="sumMonthly">R 19,800</b></span></div>
+      <div class="sum-row disc"><span>Annual saving (10%)</span><b id="sumDisc">−R 23,760</b></div>
+      <div class="sum-row big"><span>Annual NET</span><span><b id="sumAnnual">R 213,840</b></span></div>
+    </div>
+
+    <div class="pay-btns">
+      <button class="pay-btn pay-wa" onclick="payWhatsApp()">💬 Pay via WhatsApp</button>
+      <button class="pay-btn pay-eft" onclick="showEft()">🏦 Pay via EFT</button>
+    </div>
+  </div>
+
+  <div class="methods">
+    <div class="method"><div class="method-ic">💬</div><div><div class="method-t">WhatsApp Order</div><div class="method-d">Confirm in 30s, pay any way</div></div></div>
+    <div class="method"><div class="method-ic">🏦</div><div><div class="method-t">EFT / Bank Transfer</div><div class="method-d">SA banks · Instant proof</div></div></div>
+    <div class="method"><div class="method-ic">💳</div><div><div class="method-t">Card Payment</div><div class="method-d">Coming soon · Stripe</div></div></div>
+    <div class="method"><div class="method-ic">📜</div><div><div class="method-t">Invoice / PO</div><div class="method-d">Enterprise & co-ops</div></div></div>
+  </div>
+</div>
+
+<div id="eftModal" class="eft-modal">
+  <div class="eft-card">
+    <div class="eft-close" onclick="hideEft()">×</div>
+    <h3>🏦 EFT Payment Details</h3>
+    <div class="eft-row"><span>Bank</span><span>Standard Bank ZA</span></div>
+    <div class="eft-row"><span>Account name</span><span>YieldCore AI (Pty) Ltd</span></div>
+    <div class="eft-row"><span>Account no.</span><span>123 456 7890</span></div>
+    <div class="eft-row"><span>Branch code</span><span>051001</span></div>
+    <div class="eft-row"><span>Reference</span><span id="eftRef">YC-XXXX</span></div>
+    <div class="eft-row"><span>Amount due</span><span id="eftAmt">R 0</span></div>
+    <div class="eft-note"><b>📲 After payment:</b> Send proof to WhatsApp <b>+27 82 517 2688</b> with your reference. Activation within 24h.</div>
+    <a class="eft-cta" id="eftWa" target="_blank">💬 Send Proof on WhatsApp</a>
+  </div>
+</div>
+
+<div id="toast" class="toast">Saved ✓</div>
+
+<script>
+const TIERS = [
+  {key:'starter',    name:'Starter',    range:'1–49 ha',     rate:200, c:'#4ade80'},
+  {key:'growth',     name:'Growth',     range:'50–199 ha',   rate:165, c:'#22c55e'},
+  {key:'pro',        name:'Pro',        range:'200–499 ha',  rate:130, c:'#facc15'},
+  {key:'enterprise', name:'Enterprise', range:'500–999 ha',  rate:110, c:'#fb923c', perk:'🎁 FREE on-site install'},
+  {key:'coop',       name:'Co-op',      range:'1000+ ha',    rate:95,  c:'#f472b6', perk:'🤝 Dedicated success manager'},
+];
+const tiersEl = document.getElementById('tiers');
+TIERS.forEach(t=>{
+  const el = document.createElement('div');
+  el.className='tier'; el.dataset.k=t.key; el.style.setProperty('--c',t.c);
+  el.innerHTML=`<div class="tier-name">${t.name}</div><div class="tier-range">${t.range}</div><div class="tier-price">R${t.rate}<small>per hectare / month</small></div>${t.perk?`<div class="tier-perk">${t.perk}</div>`:''}`;
+  el.onclick=()=>{ const mid = Math.min(2000, Math.round((Math.max(1,t.key==='coop'?1200:0) + parseInt(t.range)) || 100)); /* nudge */ };
+  tiersEl.appendChild(el);
+});
+
+function tierFor(ha){
+  if(ha<50) return TIERS[0];
+  if(ha<200) return TIERS[1];
+  if(ha<500) return TIERS[2];
+  if(ha<1000) return TIERS[3];
+  return TIERS[4];
+}
+function fmt(n){ return 'R '+Math.round(n).toLocaleString('en-ZA'); }
+
+const haInput = document.getElementById('fHa');
+const haRange = document.getElementById('fHaRange');
+let lastQuote = null;
+
+function recalc(){
+  let ha = Math.max(1, parseInt(haInput.value)||1);
+  if(ha>10000) ha=10000;
+  haRange.value = Math.min(2000, ha);
+  const t = tierFor(ha);
+  document.querySelectorAll('.tier').forEach(el=>el.classList.toggle('active', el.dataset.k===t.key));
+  const monthly = ha*t.rate;
+  const annual = monthly*12;
+  const disc = Math.round(annual*0.10);
+  const net = annual-disc;
+  document.getElementById('sumTier').textContent = `${t.name} (${t.range})`;
+  document.getElementById('sumRate').textContent = `R${t.rate}/ha`;
+  document.getElementById('sumHa').textContent = `${ha} ha`;
+  document.getElementById('sumMonthly').textContent = fmt(monthly);
+  document.getElementById('sumDisc').textContent = '−'+fmt(disc);
+  document.getElementById('sumAnnual').textContent = fmt(net);
+}
+haInput.addEventListener('input', recalc);
+haRange.addEventListener('input', ()=>{ haInput.value=haRange.value; recalc(); });
+recalc();
+
+async function getQuote(){
+  const body = {
+    hectares: parseInt(haInput.value)||1,
+    name: document.getElementById('fName').value,
+    farmName: document.getElementById('fFarm').value,
+    email: document.getElementById('fEmail').value
+  };
+  const r = await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  lastQuote = await r.json();
+  return lastQuote;
+}
+async function payWhatsApp(){
+  const q = await getQuote();
+  window.open(q.waLink, '_blank');
+  toast('Opening WhatsApp…');
+}
+async function showEft(){
+  const q = await getQuote();
+  document.getElementById('eftRef').textContent = q.ref;
+  document.getElementById('eftAmt').textContent = fmt(q.monthly) + ' /month';
+  const proofMsg = `🏦 Hi, I made an EFT for YieldCore AI.\n\nRef: ${q.ref}\nAmount: ${fmt(q.monthly)}\nHectares: ${q.ha}\nTier: ${q.tier.name}\n\nProof attached.`;
+  document.getElementById('eftWa').href = 'https://wa.me/27825172688?text='+encodeURIComponent(proofMsg);
+  document.getElementById('eftModal').classList.add('show');
+}
+function hideEft(){ document.getElementById('eftModal').classList.remove('show'); }
+document.addEventListener('click',e=>{ if(e.target.id==='eftModal') hideEft(); });
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),1800); }
+</script>
+</body>
+</html>

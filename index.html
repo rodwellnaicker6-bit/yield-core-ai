@@ -66,6 +66,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 /* ── TOPBAR ── */
 .tb-welcome{font-size:20px;font-weight:900;color:var(--text)}
+.tb-pay{padding:9px 16px;background:linear-gradient(135deg,#facc15,#fbbf24);color:#000;font-weight:900;font-size:12px;border:none;border-radius:99px;cursor:pointer;letter-spacing:.3px;box-shadow:0 6px 18px rgba(250,204,21,.35);transition:transform .2s;text-decoration:none;display:inline-block}
+.tb-pay:hover{transform:translateY(-2px) scale(1.04)}
 .tb-share{padding:9px 16px;background:linear-gradient(135deg,#22c55e,#4ade80);color:#000;font-weight:900;font-size:12px;border:none;border-radius:99px;cursor:pointer;letter-spacing:.3px;box-shadow:0 6px 18px rgba(74,222,128,.35);transition:transform .2s}
 .tb-share:hover{transform:translateY(-2px) scale(1.04)}
 .share-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:99999;align-items:center;justify-content:center;padding:20px;animation:fadeIn .3s}
@@ -757,6 +759,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
           <div class="tb-date" id="clockDate">--</div>
         </div>
         <div class="tb-bell">🔔<div class="tb-badge">4</div></div>
+        <a href="/pay" class="tb-pay">💳 Pricing & Pay</a>
         <button class="tb-share" onclick="openShare()">📲 Share with friends</button>
       </div>
     </div>
