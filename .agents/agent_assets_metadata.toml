@@ -1,8 +1,25 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "gvt4QsLPdmzldBMseyDl2"
 uri = "file://attached_assets/generated_images/generated_image.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "oqgkCRW8Uf0LFK-RAsUP5"
+uri = "file://public/yieldcore-profile-640.png"
+type = "image"
+title = "generated_image"
+
+[[outputs]]
+id = "sPe_MrjiZUKU5P_qUuqFc"
+uri = "file://public/yieldcore-profile-640-final.png"
+type = "image"
+title = "YieldCore AI — WhatsApp Profile Picture (640×640, ready to upload)"
+
+[[outputs]]
+id = "tfUT4JKTLm7Re3_VN-c5p"
+uri = "file://public/yieldcore-profile-640.png"
+type = "image"
+title = "YieldCore AI — High-res Master (1024×1024, for future use)"
