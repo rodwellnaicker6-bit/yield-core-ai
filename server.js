@@ -354,7 +354,11 @@ app.get('/invite', (req, res) => {
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 50%,#2d4a2f 100%);color:#e8f5e9;display:flex;align-items:center;justify-content:center;padding:20px}
-.card{max-width:480px;background:rgba(8,18,12,.85);border:1px solid rgba(74,222,128,.4);border-radius:24px;padding:36px 28px;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.card{max-width:480px;background:rgba(8,18,12,.85);border:1px solid rgba(74,222,128,.4);border-radius:24px;padding:0 0 30px;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
+.banner{position:relative;width:100%;height:170px;overflow:hidden;border-bottom:1px solid rgba(74,222,128,.3)}
+.banner img{width:100%;height:100%;object-fit:cover;display:block}
+.banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(8,18,12,.85) 100%)}
+.body{padding:20px 28px 0}
 .logo{font-size:48px;text-align:center;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(74,222,128,.4))}
 .brand{font-size:32px;font-weight:900;text-align:center;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;margin-bottom:6px}
 .tag{text-align:center;font-size:12px;letter-spacing:3px;color:#d4e8d8;text-transform:uppercase;margin-bottom:24px;font-weight:700}
@@ -370,6 +374,8 @@ h2{font-size:14px;letter-spacing:2px;color:#facc15;margin:18px 0 10px;font-weigh
 .cta-2{display:block;width:100%;padding:12px;background:rgba(8,18,12,.6);color:#d4e8d8;font-weight:700;font-size:13px;text-align:center;border-radius:12px;margin-top:10px;text-decoration:none;border:1px solid rgba(74,222,128,.25)}
 .foot{text-align:center;font-size:11px;color:#7a9e82;margin-top:18px;letter-spacing:.5px}
 </style></head><body><div class="card">
+<div class="banner"><img src="/public/yieldcore-hero.png" alt="YieldCore AI"/></div>
+<div class="body">
 <div class="logo">🌿</div>
 <div class="brand">YieldCore AI</div>
 <div class="tag">Smart Farming · WhatsApp</div>
@@ -383,7 +389,7 @@ h2{font-size:14px;letter-spacing:2px;color:#facc15;margin:18px 0 10px;font-weigh
 <a class="cta" href="https://wa.me/${SANDBOX_NUMBER.replace('+','')}?text=${encodeURIComponent('join '+SANDBOX_CODE)}">💬 Open WhatsApp & Join</a>
 <a class="cta-2" href="${LIVE_URL}">🌐 See the Full Dashboard</a>
 <div class="foot">Powered by satellites · drones · IoT · AI · solar 🛰️🚁☀️</div>
-</div></body></html>`);
+</div></div></body></html>`);
 });
 
 const PORT = 5000;

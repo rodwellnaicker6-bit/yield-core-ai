@@ -590,13 +590,15 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── LOGIN ── */
-#loginOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
-  background:#020804 url('/public/landing-bg.jpg') center/cover no-repeat;
+#loginOverlay{position:fixed;inset:0;display:flex;align-items:flex-end;justify-content:center;z-index:9999;padding-bottom:36px;
+  background:#020804 url('/public/yieldcore-hero.png') center center / cover no-repeat;
 }
+#loginOverlay .bg-zoom{position:absolute;inset:0;background:inherit;background-image:url('/public/yieldcore-hero.png');background-size:cover;background-position:center;animation:bgZoom 22s ease-in-out infinite alternate;z-index:0}
+@keyframes bgZoom{from{transform:scale(1.02)}to{transform:scale(1.10)}}
 #loginOverlay::before{content:'';position:absolute;inset:0;background:
-  radial-gradient(ellipse at center, rgba(2,8,4,.15) 0%, rgba(2,8,4,.55) 60%, rgba(2,8,4,.85) 100%);pointer-events:none}
-#loginOverlay::after{content:'';position:absolute;inset:0;backdrop-filter:blur(1px);pointer-events:none}
-.login-box{position:relative;z-index:2;background:rgba(8,18,12,.82);border:1px solid rgba(74,222,128,.4);border-radius:16px;padding:18px 18px;width:270px;backdrop-filter:blur(16px) saturate(140%);
+  linear-gradient(180deg, rgba(2,8,4,0) 0%, rgba(2,8,4,0) 45%, rgba(2,8,4,.55) 80%, rgba(2,8,4,.92) 100%);pointer-events:none;z-index:1}
+#loginOverlay::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center 38%, transparent 0%, transparent 40%, rgba(2,8,4,.35) 100%);pointer-events:none;z-index:1}
+.login-box{position:relative;z-index:3;background:rgba(8,18,12,.78);border:1px solid rgba(74,222,128,.45);border-radius:18px;padding:18px 18px;width:300px;backdrop-filter:blur(20px) saturate(150%);
   box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(250,204,21,.15),inset 0 1px 0 rgba(255,255,255,.07);
   opacity:0;transform:translateY(14px) scale(.97);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
 .login-box.show{opacity:1;transform:translateY(0) scale(1)}
@@ -616,7 +618,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .login-caps{display:flex;flex-wrap:wrap;gap:3px;justify-content:center}
 .login-caps span{font-size:8.5px;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.22);padding:2px 6px;border-radius:99px;font-weight:600;white-space:nowrap}
 /* black-screen → image fade-in */
-#bgFade{position:absolute;inset:0;background:#000;z-index:5;pointer-events:none;animation:blackOut 2.6s 1.2s ease forwards}
+#bgFade{position:absolute;inset:0;background:#000;z-index:5;pointer-events:none;animation:blackOut 1.4s .3s ease forwards}
 @keyframes blackOut{from{opacity:1}to{opacity:0}}
 /* hero-first cinematic reveal */
 #loginOverlay .hero-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;text-align:center;pointer-events:none;
@@ -663,10 +665,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   <div class="scan"></div>
   <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
   <div class="live-tag"><span class="lt-dot"></span> LIVE FROM ORBIT · 10 FARMS · 5,419 HA</div>
-  <div class="hero-tag" id="heroTag">
-    <div class="ht-name">YieldCore AI</div>
-    <div class="ht-sub">Satellites <span class="ht-dot"></span> Drones <span class="ht-dot"></span> Intelligence</div>
-  </div>
+  <!-- hero title baked into the artwork -->
+  <div class="hero-tag" id="heroTag" style="display:none"></div>
   <div class="login-box fade" id="loginBox">
     <div class="login-logo">
       <div class="login-logo-icon">🌿</div>
@@ -1223,9 +1223,8 @@ document.addEventListener('click',e=>{ if(e.target.id==='shareModal') closeShare
 // ── HERO REVEAL: show hero image with title for ~2.5s, then fade in login ──
 window.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
-    const h=document.getElementById('heroTag'); if(h) h.style.display='none';
     const b=document.getElementById('loginBox'); if(b) b.classList.add('show');
-  },7200);
+  },3200);
 });
 
 // ── CLOCK ──

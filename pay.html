@@ -15,6 +15,9 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 40%,#
 .logo{display:flex;align-items:center;gap:12px;font-family:'Sora',sans-serif;font-weight:900;font-size:22px;background:linear-gradient(135deg,#facc15,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
 .logo-leaf{font-size:28px;-webkit-text-fill-color:initial;filter:drop-shadow(0 4px 10px rgba(74,222,128,.4))}
 .back{padding:8px 16px;background:rgba(8,18,12,.6);border:1px solid rgba(74,222,128,.25);color:#d4e8d8;border-radius:99px;font-size:12px;font-weight:700;text-decoration:none}
+.hero-banner{position:relative;border-radius:22px;overflow:hidden;margin-bottom:24px;border:1px solid rgba(74,222,128,.3);box-shadow:0 24px 60px rgba(0,0,0,.5);max-height:300px}
+.hero-banner img{width:100%;height:auto;display:block;object-fit:cover}
+.hero-banner-grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,20,16,.85) 100%);pointer-events:none}
 .hero{text-align:center;margin-bottom:36px}
 .hero h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:900;background:linear-gradient(135deg,#facc15,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;margin-bottom:10px;line-height:1.1}
 .hero p{color:#d4e8d8;font-size:15px;max-width:600px;margin:0 auto}
@@ -84,6 +87,8 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 40%,#
     <a href="/" class="logo"><span class="logo-leaf">🌿</span> YieldCore AI</a>
     <a href="/" class="back">← Back to Dashboard</a>
   </div>
+
+  <div class="hero-banner"><img src="/public/yieldcore-hero.png" alt="YieldCore AI" /><div class="hero-banner-grad"></div></div>
 
   <div class="hero">
     <h1>Transparent Pricing.<br>Pay per hectare.</h1>
