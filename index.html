@@ -560,12 +560,18 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── LOGIN ── */
-#loginOverlay{position:fixed;inset:0;background:rgba(2,8,4,.97);display:flex;align-items:center;justify-content:center;z-index:9999}
-.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:36px 32px;width:360px}
+#loginOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
+  background:#020804 url('/public/landing-bg.jpg') center/cover no-repeat;
+}
+#loginOverlay::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse at center, rgba(2,8,4,.15) 0%, rgba(2,8,4,.55) 60%, rgba(2,8,4,.85) 100%);pointer-events:none}
+#loginOverlay::after{content:'';position:absolute;inset:0;backdrop-filter:blur(1px);pointer-events:none}
+.login-box{position:relative;z-index:2;background:rgba(8,18,12,.78);border:1px solid rgba(74,222,128,.35);border-radius:22px;padding:36px 32px;width:380px;backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:0 25px 80px rgba(0,0,0,.65),0 0 0 1px rgba(250,204,21,.12),inset 0 1px 0 rgba(255,255,255,.06)}
 .login-logo{text-align:center;margin-bottom:24px}
-.login-logo-icon{font-size:44px;margin-bottom:8px}
-.login-logo-name{font-size:26px;font-weight:900;background:linear-gradient(135deg,var(--green2),var(--green3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.login-logo-sub{font-size:11px;color:var(--sub);margin-top:2px}
+.login-logo-icon{font-size:54px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(250,204,21,.4))}
+.login-logo-name{font-size:30px;font-weight:900;background:linear-gradient(135deg,#facc15 0%,#4ade80 50%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em;font-family:'Sora',sans-serif}
+.login-logo-sub{font-size:11px;color:#d4e8d8;margin-top:4px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
 .lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;display:block;margin-top:12px}
 .inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-size:14px;font-family:inherit}
 .inp:focus{outline:none;border-color:var(--green)}
@@ -592,7 +598,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
     <div class="login-logo">
       <div class="login-logo-icon">🌿</div>
       <div class="login-logo-name">YieldCore AI</div>
-      <div class="login-logo-sub">Proudly South African · Precision Agriculture</div>
+      <div class="login-logo-sub">Agriculture Intelligence</div>
+      <div style="font-size:9.5px;color:#7a9e82;margin-top:6px;letter-spacing:.5px">🛰️ Satellites · 🚁 Drones · 🌾 Crop Health · 📊 Data · 🤖 AI · 💧 Irrigation</div>
     </div>
     <label class="lbl">Email Address</label>
     <input class="inp" id="loginEmail" type="email" placeholder="you@farm.co.za" value="rodwell@yieldcore.ai"/>
