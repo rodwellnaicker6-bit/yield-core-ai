@@ -137,6 +137,97 @@ function dbWrite(rows){
   fs.writeFileSync(tmp, JSON.stringify(rows, null, 2));
   fs.renameSync(tmp, DB_PATH);
 }
+// ── 🔐 USER ACCOUNTS (JSON store, scrypt-hashed passwords) ──
+const USERS_PATH = path.join(__dirname, 'data', 'users.json');
+function usersRead(){ try { return JSON.parse(fs.readFileSync(USERS_PATH,'utf8')); } catch { return []; } }
+function usersWrite(rows){
+  const tmp = USERS_PATH + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(rows, null, 2));
+  fs.renameSync(tmp, USERS_PATH);
+}
+function hashPassword(password){
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.scryptSync(password, salt, 64).toString('hex');
+  return `${salt}:${hash}`;
+}
+function verifyPassword(password, stored){
+  if (!stored || !stored.includes(':')) return false;
+  const [salt, hash] = stored.split(':');
+  const test = crypto.scryptSync(password, salt, 64).toString('hex');
+  const a = Buffer.from(hash, 'hex'), b = Buffer.from(test, 'hex');
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+const SESSION_SECRET = process.env.SESSION_SECRET
+  || process.env.ADMIN_TOKEN
+  || crypto.randomBytes(32).toString('hex');
+function signToken(payload){
+  const body = Buffer.from(JSON.stringify({ ...payload, iat: Date.now() })).toString('base64url');
+  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(body).digest('base64url');
+  return `${body}.${sig}`;
+}
+function verifyToken(token){
+  if (!token || !token.includes('.')) return null;
+  const [body, sig] = token.split('.');
+  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(body).digest('base64url');
+  const a = Buffer.from(sig), b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  try {
+    const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
+    if (Date.now() - (payload.iat||0) > 30*24*60*60*1000) return null; // 30-day expiry
+    return payload;
+  } catch { return null; }
+}
+function requireAuth(req, res, next){
+  const auth = req.get('authorization') || '';
+  const token = auth.startsWith('Bearer ') ? auth.slice(7) : (req.query.token || '');
+  const payload = verifyToken(token);
+  if (!payload) return res.status(401).json({ ok:false, error:'Not signed in' });
+  req.user = payload;
+  next();
+}
+
+const authLimiter = rateLimit({ windowMs: 15*60_000, max: 20, standardHeaders:true, legacyHeaders:false, message:{ok:false,error:'Too many attempts, try again later'} });
+
+app.post('/api/auth/register', authLimiter, (req, res) => {
+  const b = req.body || {};
+  const email = (b.email||'').toString().trim().toLowerCase().slice(0,200);
+  const password = (b.password||'').toString();
+  const name = (b.name||'').toString().trim().slice(0,120);
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ ok:false, error:'Valid email required' });
+  if (!password || password.length < 8) return res.status(400).json({ ok:false, error:'Password must be at least 8 characters' });
+  const users = usersRead();
+  if (users.find(u => u.email === email)) return res.status(409).json({ ok:false, error:'An account with that email already exists' });
+  const user = {
+    id: 'U-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,5).toUpperCase(),
+    email,
+    name: name || email.split('@')[0],
+    password: hashPassword(password),
+    createdAt: new Date().toISOString()
+  };
+  users.push(user);
+  usersWrite(users);
+  const token = signToken({ sub: user.id, email: user.email, name: user.name });
+  res.json({ ok:true, token, user: { id:user.id, email:user.email, name:user.name } });
+});
+
+app.post('/api/auth/login', authLimiter, (req, res) => {
+  const b = req.body || {};
+  const email = (b.email||'').toString().trim().toLowerCase();
+  const password = (b.password||'').toString();
+  if (!email || !password) return res.status(400).json({ ok:false, error:'Email and password required' });
+  const users = usersRead();
+  const user = users.find(u => u.email === email);
+  if (!user || !verifyPassword(password, user.password)) {
+    return res.status(401).json({ ok:false, error:'Invalid email or password' });
+  }
+  const token = signToken({ sub: user.id, email: user.email, name: user.name });
+  res.json({ ok:true, token, user: { id:user.id, email:user.email, name:user.name } });
+});
+
+app.get('/api/auth/me', requireAuth, (req, res) => {
+  res.json({ ok:true, user: { id:req.user.sub, email:req.user.email, name:req.user.name } });
+});
+
 function pingOwner(text){
   try {
     const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';

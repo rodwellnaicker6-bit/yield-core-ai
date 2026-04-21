@@ -744,15 +744,19 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <span>🥬 Bio-Inputs</span><span>🏪 Vending</span>
       </div>
     </div>
+    <div id="authNameWrap" style="display:none">
+      <label class="lbl">Full Name</label>
+      <input class="inp" id="loginName" type="text" placeholder="Your name"/>
+    </div>
     <label class="lbl">Email Address</label>
-    <input class="inp" id="loginEmail" type="email" placeholder="you@farm.co.za" value="rodwell@yieldcore.ai"/>
+    <input class="inp" id="loginEmail" type="email" placeholder="you@farm.co.za" autocomplete="email"/>
     <label class="lbl">Password</label>
-    <input class="inp" id="loginPass" type="password" placeholder="Password" value="yield2025" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <div class="login-err" id="loginErr">Invalid credentials. Use demo login below.</div>
-    <button class="btn-login" onclick="doLogin()">Sign In →</button>
-    <div class="login-demo">
-      <div class="login-demo-label">Demo Access</div>
-      <div class="login-demo-creds">rodwell@yieldcore.ai / yield2025</div>
+    <input class="inp" id="loginPass" type="password" placeholder="Password (min 8 characters)" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <div class="login-err" id="loginErr">Invalid credentials.</div>
+    <button class="btn-login" id="authBtn" onclick="doLogin()">Sign In →</button>
+    <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--sub)">
+      <span id="authToggleText">New here?</span>
+      <a href="#" id="authToggle" onclick="toggleAuthMode();return false" style="color:var(--green);font-weight:700;text-decoration:none">Create account</a>
     </div>
   </div>
 </div>
@@ -1246,18 +1250,66 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 <script>
 // ── AUTH ──
-function doLogin(){
-  const e=document.getElementById('loginEmail').value;
-  const p=document.getElementById('loginPass').value;
-  if((e==='rodwell@yieldcore.ai'&&p==='yield2025')||p==='yield2025'){
-    document.getElementById('loginOverlay').style.display='none';
-    document.getElementById('shell').style.display='flex';
-    // Defer init so layout settles before Mapbox measures the container
-    requestAnimationFrame(()=>requestAnimationFrame(()=>init()));
-  } else {
-    document.getElementById('loginErr').style.display='block';
+let AUTH_MODE = 'login'; // 'login' | 'register'
+function toggleAuthMode(){
+  AUTH_MODE = AUTH_MODE === 'login' ? 'register' : 'login';
+  const isReg = AUTH_MODE === 'register';
+  document.getElementById('authNameWrap').style.display = isReg ? 'block' : 'none';
+  document.getElementById('authBtn').textContent = isReg ? 'Create Account →' : 'Sign In →';
+  document.getElementById('authToggleText').textContent = isReg ? 'Already have an account?' : 'New here?';
+  document.getElementById('authToggle').textContent = isReg ? 'Sign in' : 'Create account';
+  document.getElementById('loginPass').setAttribute('autocomplete', isReg ? 'new-password' : 'current-password');
+  document.getElementById('loginErr').style.display = 'none';
+}
+function showAuthError(msg){
+  const el = document.getElementById('loginErr');
+  el.textContent = msg || 'Something went wrong.';
+  el.style.display = 'block';
+}
+function enterApp(){
+  document.getElementById('loginOverlay').style.display='none';
+  document.getElementById('shell').style.display='flex';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>init()));
+}
+async function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const password=document.getElementById('loginPass').value;
+  const name=(document.getElementById('loginName')?.value||'').trim();
+  document.getElementById('loginErr').style.display='none';
+  if(!email||!password){ showAuthError('Please enter your email and password.'); return; }
+  const url = AUTH_MODE === 'register' ? '/api/auth/register' : '/api/auth/login';
+  const body = AUTH_MODE === 'register' ? { email, password, name } : { email, password };
+  const btn = document.getElementById('authBtn');
+  const oldText = btn.textContent;
+  btn.disabled = true; btn.textContent = AUTH_MODE === 'register' ? 'Creating...' : 'Signing in...';
+  try {
+    const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const j = await r.json().catch(()=>({}));
+    if (!r.ok || !j.ok) { showAuthError(j.error || 'Sign-in failed.'); return; }
+    localStorage.setItem('yc_token', j.token);
+    localStorage.setItem('yc_user', JSON.stringify(j.user||{}));
+    enterApp();
+  } catch(err){
+    showAuthError('Network error. Please try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = oldText;
   }
 }
+function doLogout(){
+  localStorage.removeItem('yc_token');
+  localStorage.removeItem('yc_user');
+  location.reload();
+}
+// Auto-resume if already signed in
+(async function(){
+  const token = localStorage.getItem('yc_token');
+  if (!token) return;
+  try {
+    const r = await fetch('/api/auth/me', { headers:{ Authorization:'Bearer '+token } });
+    if (r.ok) enterApp();
+    else { localStorage.removeItem('yc_token'); localStorage.removeItem('yc_user'); }
+  } catch {}
+})();
 
 // ── SHARE WITH FRIENDS ──
 let SHARE_CFG = {liveUrl:'', sandboxCode:'', sandboxNumber:'+14155238886'};
