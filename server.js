@@ -697,6 +697,31 @@ To activate live alerts on this number, message the bot:
 });
 
 // ── 👀 OWNER-ONLY: list all registered farmers ──
+// ── 📦 DOWNLOAD PROJECT AS TAR.GZ ──
+app.get('/api/download-project', (req, res) => {
+  const { spawn } = require('child_process');
+  const filename = `yieldcore-ai-${new Date().toISOString().slice(0,10)}.tar.gz`;
+  res.setHeader('Content-Type', 'application/gzip');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  const tar = spawn('tar', [
+    '-czf', '-',
+    '--exclude=node_modules',
+    '--exclude=.git',
+    '--exclude=.cache',
+    '--exclude=.local',
+    '--exclude=.agents',
+    '--exclude=*.tar.gz',
+    '--exclude=data/users.json',
+    '-C', __dirname,
+    '.'
+  ], { stdio: ['ignore', 'pipe', 'pipe'] });
+  tar.stdout.pipe(res);
+  tar.stderr.on('data', d => console.warn('tar:', d.toString()));
+  tar.on('error', err => { console.error('tar spawn error:', err); if (!res.headersSent) res.status(500).end(); });
+  tar.on('close', code => { if (code !== 0 && !res.writableEnded) res.end(); });
+  req.on('close', () => { try { tar.kill('SIGTERM'); } catch {} });
+});
+
 app.get('/api/farmers', requireAdmin, (req, res) => {
   res.json({ ok:true, count: dbRead().length, farmers: dbRead() });
 });
