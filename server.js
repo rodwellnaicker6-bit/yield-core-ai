@@ -128,100 +128,113 @@ function validateTwilio(req, res, next) {
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-// ── 🌾 FARMER DATABASE (JSON store, atomic writes) ──
+// ── 🟢 SUPABASE CLIENTS (Auth + farmers table) ──
 const fs = require('fs');
+const { createClient } = require('@supabase/supabase-js');
+const cleanEnv = v => (v||'').toString().trim().replace(/^["'=\s]+|["'\s]+$/g, '');
+const SUPABASE_URL = cleanEnv(process.env.SUPABASE_URL);
+const SUPABASE_ANON_KEY = cleanEnv(process.env.SUPABASE_ANON_KEY);
+const SUPABASE_SERVICE_ROLE_KEY = cleanEnv(process.env.SUPABASE_SERVICE_ROLE_KEY);
+const supaPublic = SUPABASE_URL && SUPABASE_ANON_KEY
+  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false }})
+  : null;
+const supaAdmin = SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY
+  ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false, autoRefreshToken: false }})
+  : null;
+if (!supaPublic || !supaAdmin) console.warn('⚠️  Supabase not fully configured — set SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY');
+
+// ── 🌾 FARMER DATABASE (Supabase, JSON-file fallback) ──
 const DB_PATH = path.join(__dirname, 'data', 'farmers.json');
-function dbRead(){ try { return JSON.parse(fs.readFileSync(DB_PATH,'utf8')); } catch { return []; } }
-function dbWrite(rows){
+function dbReadFile(){ try { return JSON.parse(fs.readFileSync(DB_PATH,'utf8')); } catch { return []; } }
+function dbWriteFile(rows){
   const tmp = DB_PATH + '.tmp';
   fs.writeFileSync(tmp, JSON.stringify(rows, null, 2));
   fs.renameSync(tmp, DB_PATH);
 }
-// ── 🔐 USER ACCOUNTS (JSON store, scrypt-hashed passwords) ──
-const USERS_PATH = path.join(__dirname, 'data', 'users.json');
-function usersRead(){ try { return JSON.parse(fs.readFileSync(USERS_PATH,'utf8')); } catch { return []; } }
-function usersWrite(rows){
-  const tmp = USERS_PATH + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(rows, null, 2));
-  fs.renameSync(tmp, USERS_PATH);
-}
-function hashPassword(password){
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hash = crypto.scryptSync(password, salt, 64).toString('hex');
-  return `${salt}:${hash}`;
-}
-function verifyPassword(password, stored){
-  if (!stored || !stored.includes(':')) return false;
-  const [salt, hash] = stored.split(':');
-  const test = crypto.scryptSync(password, salt, 64).toString('hex');
-  const a = Buffer.from(hash, 'hex'), b = Buffer.from(test, 'hex');
-  return a.length === b.length && crypto.timingSafeEqual(a, b);
-}
-const SESSION_SECRET = process.env.SESSION_SECRET
-  || process.env.ADMIN_TOKEN
-  || crypto.randomBytes(32).toString('hex');
-function signToken(payload){
-  const body = Buffer.from(JSON.stringify({ ...payload, iat: Date.now() })).toString('base64url');
-  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(body).digest('base64url');
-  return `${body}.${sig}`;
-}
-function verifyToken(token){
-  if (!token || !token.includes('.')) return null;
-  const [body, sig] = token.split('.');
-  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(body).digest('base64url');
-  const a = Buffer.from(sig), b = Buffer.from(expected);
-  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+async function dbRead(){
+  if (!supaAdmin) return dbReadFile();
   try {
-    const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
-    if (Date.now() - (payload.iat||0) > 30*24*60*60*1000) return null; // 30-day expiry
-    return payload;
-  } catch { return null; }
+    const { data, error } = await supaAdmin.from('farmers').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    return (data||[]).map(r => ({ ...r, createdAt: r.created_at, updatedAt: r.updated_at }));
+  } catch (e) {
+    console.warn('Supabase farmers read failed, falling back to file:', e.message);
+    return dbReadFile();
+  }
 }
-function requireAuth(req, res, next){
+async function dbUpsertFarmer(row){
+  if (!supaAdmin) {
+    const rows = dbReadFile();
+    const i = rows.findIndex(r => r.whatsapp === row.whatsapp);
+    if (i >= 0) rows[i] = { ...rows[i], ...row, id: rows[i].id, createdAt: rows[i].createdAt, updatedAt: new Date().toISOString() };
+    else rows.push(row);
+    dbWriteFile(rows);
+    return row;
+  }
+  const payload = {
+    id: row.id,
+    name: row.name, farm: row.farm, whatsapp: row.whatsapp, email: row.email,
+    crop: row.crop, hectares: row.hectares, lat: row.lat, lng: row.lng,
+    loc_label: row.locLabel, note: row.note, referrer: row.referrer,
+    ip: row.ip, ua: row.ua,
+  };
+  const { data, error } = await supaAdmin.from('farmers').upsert(payload, { onConflict: 'whatsapp' }).select().single();
+  if (error) { console.error('Supabase upsert failed:', error.message); return row; }
+  return { ...data, createdAt: data.created_at, updatedAt: data.updated_at, locLabel: data.loc_label };
+}
+
+// ── 🔐 SUPABASE AUTH ──
+async function requireAuth(req, res, next){
   const auth = req.get('authorization') || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : (req.query.token || '');
-  const payload = verifyToken(token);
-  if (!payload) return res.status(401).json({ ok:false, error:'Not signed in' });
-  req.user = payload;
-  next();
+  if (!token || !supaAdmin) return res.status(401).json({ ok:false, error:'Not signed in' });
+  try {
+    const { data, error } = await supaAdmin.auth.getUser(token);
+    if (error || !data?.user) return res.status(401).json({ ok:false, error:'Not signed in' });
+    req.user = { sub: data.user.id, email: data.user.email, name: data.user.user_metadata?.name || data.user.email?.split('@')[0] };
+    next();
+  } catch { return res.status(401).json({ ok:false, error:'Not signed in' }); }
 }
 
 const authLimiter = rateLimit({ windowMs: 15*60_000, max: 20, standardHeaders:true, legacyHeaders:false, message:{ok:false,error:'Too many attempts, try again later'} });
 
-app.post('/api/auth/register', authLimiter, (req, res) => {
+app.post('/api/auth/register', authLimiter, async (req, res) => {
+  if (!supaAdmin || !supaPublic) return res.status(503).json({ ok:false, error:'Auth not configured' });
   const b = req.body || {};
   const email = (b.email||'').toString().trim().toLowerCase().slice(0,200);
   const password = (b.password||'').toString();
   const name = (b.name||'').toString().trim().slice(0,120);
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ ok:false, error:'Valid email required' });
   if (!password || password.length < 8) return res.status(400).json({ ok:false, error:'Password must be at least 8 characters' });
-  const users = usersRead();
-  if (users.find(u => u.email === email)) return res.status(409).json({ ok:false, error:'An account with that email already exists' });
-  const user = {
-    id: 'U-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,5).toUpperCase(),
-    email,
-    name: name || email.split('@')[0],
-    password: hashPassword(password),
-    createdAt: new Date().toISOString()
-  };
-  users.push(user);
-  usersWrite(users);
-  const token = signToken({ sub: user.id, email: user.email, name: user.name });
-  res.json({ ok:true, token, user: { id:user.id, email:user.email, name:user.name } });
+  try {
+    const { data: created, error: cErr } = await supaAdmin.auth.admin.createUser({
+      email, password, email_confirm: true,
+      user_metadata: { name: name || email.split('@')[0] }
+    });
+    if (cErr) {
+      const msg = (cErr.message||'').toLowerCase();
+      if (msg.includes('already') || msg.includes('exists') || msg.includes('registered')) return res.status(409).json({ ok:false, error:'An account with that email already exists' });
+      return res.status(400).json({ ok:false, error: cErr.message });
+    }
+    const { data: signed, error: sErr } = await supaPublic.auth.signInWithPassword({ email, password });
+    if (sErr || !signed?.session) return res.status(500).json({ ok:false, error: sErr?.message || 'Created but could not sign in' });
+    const u = signed.user;
+    res.json({ ok:true, token: signed.session.access_token, refresh_token: signed.session.refresh_token, user: { id:u.id, email:u.email, name: u.user_metadata?.name || name || email.split('@')[0] } });
+  } catch (e) { res.status(500).json({ ok:false, error: e.message }); }
 });
 
-app.post('/api/auth/login', authLimiter, (req, res) => {
+app.post('/api/auth/login', authLimiter, async (req, res) => {
+  if (!supaPublic) return res.status(503).json({ ok:false, error:'Auth not configured' });
   const b = req.body || {};
   const email = (b.email||'').toString().trim().toLowerCase();
   const password = (b.password||'').toString();
   if (!email || !password) return res.status(400).json({ ok:false, error:'Email and password required' });
-  const users = usersRead();
-  const user = users.find(u => u.email === email);
-  if (!user || !verifyPassword(password, user.password)) {
-    return res.status(401).json({ ok:false, error:'Invalid email or password' });
-  }
-  const token = signToken({ sub: user.id, email: user.email, name: user.name });
-  res.json({ ok:true, token, user: { id:user.id, email:user.email, name:user.name } });
+  try {
+    const { data, error } = await supaPublic.auth.signInWithPassword({ email, password });
+    if (error || !data?.session) return res.status(401).json({ ok:false, error:'Invalid email or password' });
+    const u = data.user;
+    res.json({ ok:true, token: data.session.access_token, refresh_token: data.session.refresh_token, user: { id:u.id, email:u.email, name: u.user_metadata?.name || u.email?.split('@')[0] } });
+  } catch (e) { res.status(500).json({ ok:false, error: e.message }); }
 });
 
 app.get('/api/auth/me', requireAuth, (req, res) => {
@@ -650,12 +663,7 @@ app.post('/api/register', writeLimiter, async (req, res) => {
   if (!row.name || !row.whatsapp) return res.status(400).json({ ok:false, error:'Name and WhatsApp number are required.' });
   if (!/^\+\d{8,15}$/.test(row.whatsapp)) return res.status(400).json({ ok:false, error:'Please enter a valid WhatsApp number with country code.' });
 
-  const rows = dbRead();
-  // dedupe by whatsapp — update existing
-  const existing = rows.findIndex(r => r.whatsapp === row.whatsapp);
-  if (existing >= 0) { rows[existing] = { ...rows[existing], ...row, id: rows[existing].id, createdAt: rows[existing].createdAt, updatedAt: new Date().toISOString() }; }
-  else rows.push(row);
-  dbWrite(rows);
+  await dbUpsertFarmer(row);
 
   // ping owner via WhatsApp
   const locTxt = row.lat && row.lng ? `📍 ${row.lat.toFixed(4)}, ${row.lng.toFixed(4)}${row.locLabel?' · '+row.locLabel:''}\n🗺️ https://maps.google.com/?q=${row.lat},${row.lng}` : (row.locLabel || 'Location not shared');
@@ -722,8 +730,9 @@ app.get('/api/download-project', (req, res) => {
   req.on('close', () => { try { tar.kill('SIGTERM'); } catch {} });
 });
 
-app.get('/api/farmers', requireAdmin, (req, res) => {
-  res.json({ ok:true, count: dbRead().length, farmers: dbRead() });
+app.get('/api/farmers', requireAdmin, async (req, res) => {
+  const farmers = await dbRead();
+  res.json({ ok:true, count: farmers.length, farmers });
 });
 
 // ── 📝 PUBLIC REGISTRATION PAGE ──
@@ -829,8 +838,8 @@ form.addEventListener('submit',async e=>{
 });
 
 // ── 👨‍🌾 OWNER VIEW: live farmer dashboard (gated by ?t=ADMIN_TOKEN) ──
-app.get('/farmers', requireAdmin, (req, res) => {
-  const rows = dbRead().sort((a,b)=> (b.createdAt||'').localeCompare(a.createdAt||''));
+app.get('/farmers', requireAdmin, async (req, res) => {
+  const rows = (await dbRead()).sort((a,b)=> (b.createdAt||'').localeCompare(a.createdAt||''));
   const t = (req.query.t||'').toString();
   const escape = s => (s||'').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const cards = rows.map(r => `
