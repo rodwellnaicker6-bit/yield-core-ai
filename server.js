@@ -16,6 +16,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'","'unsafe-inline'","https://api.mapbox.com","https://cdn.jsdelivr.net"],
+      scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc:  ["'self'","'unsafe-inline'","https://fonts.googleapis.com","https://api.mapbox.com"],
       fontSrc:   ["'self'","https://fonts.gstatic.com","data:"],
       imgSrc:    ["'self'","data:","blob:","https:"],
