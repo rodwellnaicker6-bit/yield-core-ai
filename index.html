@@ -25,12 +25,25 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 #main{position:relative}
 #main::before{
   content:'';position:fixed;inset:0;left:var(--sidebar);
-  background-image:url('/public/farm-bg.png');
-  background-size:cover;background-position:center right;
-  opacity:.28;pointer-events:none;z-index:0;
+  background-image:url('/public/farm-sunrise.jpg');
+  background-size:cover;background-position:center top;
+  opacity:.55;pointer-events:none;z-index:0;
+  filter:saturate(1.1) contrast(1.05);
+  animation:bgPanDash 60s ease-in-out infinite alternate;
+}
+#main::after{
+  content:'';position:fixed;inset:0;left:var(--sidebar);
+  background:
+    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.10), transparent 55%),
+    linear-gradient(180deg, rgba(6,15,7,.55) 0%, rgba(6,15,7,.30) 35%, rgba(6,15,7,.78) 100%);
+  pointer-events:none;z-index:1;
+}
+@keyframes bgPanDash{
+  0%{background-position:center top;transform:scale(1)}
+  100%{background-position:right top;transform:scale(1.06)}
 }
 #topbar,#content{position:relative;z-index:2}
-#topbar{background:linear-gradient(180deg,rgba(6,15,7,.94),rgba(6,15,7,.82))!important;backdrop-filter:blur(8px)}
+#topbar{background:linear-gradient(180deg,rgba(6,15,7,.92),rgba(6,15,7,.70))!important;backdrop-filter:blur(10px)}
 #content{background:transparent!important}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
@@ -1341,16 +1354,31 @@ window.addEventListener('DOMContentLoaded',()=>{
   const orb=document.getElementById('loadOrb');
   const bg =document.getElementById('bgImg');
   const box=document.getElementById('loginBox');
+  const tag=document.getElementById('heroTag');
+  const lbl=orb ? orb.querySelector('.lbl') : null;
+  const phrases = [
+    '<b>YIELDCORE AI</b> · INITIALIZING ORBIT',
+    '<b>SATELLITES</b> · LOCKING ONTO FARMS',
+    '<b>WEATHER GRID</b> · LIVE FROM ORBIT',
+    '<b>AI ADVISOR</b> · READY'
+  ];
+  let pi = 0;
+  const phraseTimer = setInterval(()=>{ pi=(pi+1)%phrases.length; if(lbl) lbl.innerHTML = phrases[pi]; }, 900);
   const img=new Image();
   img.onload=()=>{
     if(bg) bg.classList.add('loaded');
-    setTimeout(()=>{ if(orb) orb.classList.add('gone'); },1200);
-    setTimeout(()=>{ if(box) box.classList.add('show'); },1800);
+    if(tag){
+      tag.style.display='block';
+      tag.innerHTML='<div class="ht-name">YieldCore AI</div><div class="ht-sub">South Africa<span class="ht-dot"></span>Smart Farming<span class="ht-dot"></span>From Orbit</div>';
+      tag.classList.add('fade');
+    }
+    setTimeout(()=>{ clearInterval(phraseTimer); if(orb) orb.classList.add('gone'); },2400);
+    setTimeout(()=>{ if(box) box.classList.add('show'); },3000);
   };
-  img.onerror=()=>{ if(orb) orb.classList.add('gone'); if(box) box.classList.add('show'); };
+  img.onerror=()=>{ clearInterval(phraseTimer); if(orb) orb.classList.add('gone'); if(box) box.classList.add('show'); };
   img.src='/public/yieldcore-hero.jpg';
   // safety fallback
-  setTimeout(()=>{ if(orb) orb.classList.add('gone'); if(box) box.classList.add('show'); },4000);
+  setTimeout(()=>{ clearInterval(phraseTimer); if(orb) orb.classList.add('gone'); if(box) box.classList.add('show'); },5500);
 });
 
 // ── CLOCK ──
