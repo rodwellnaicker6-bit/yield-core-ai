@@ -104,6 +104,29 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .share-step{font-size:12.5px;color:#d4e8d8;margin-top:6px;line-height:1.5}
 .share-step:first-child{margin-top:0;color:#facc15;font-weight:800;font-size:11px;letter-spacing:1.5px}
 .share-step code{background:#000;color:#4ade80;padding:2px 7px;border-radius:5px;font-family:'SF Mono',Menlo,monospace;font-size:11.5px;border:1px solid rgba(74,222,128,.3)}
+
+/* ── INTRO / WHO WE ARE ── */
+.intro-card{position:relative;margin:0 0 22px;padding:22px 24px;border-radius:18px;
+  background:linear-gradient(135deg,rgba(8,18,12,.82),rgba(20,40,24,.78));
+  border:1px solid rgba(74,222,128,.30);
+  box-shadow:0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(250,204,21,.12);
+  backdrop-filter:blur(8px);overflow:hidden}
+.intro-card::before{content:'';position:absolute;inset:-40% -10% auto auto;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+.intro-pill{display:inline-block;font-size:10px;letter-spacing:2px;font-weight:800;color:#facc15;
+  padding:4px 10px;border:1px solid rgba(250,204,21,.4);border-radius:99px;background:rgba(250,204,21,.08);text-transform:uppercase}
+.intro-headline{margin-top:10px;font-family:'Sora',sans-serif;font-size:30px;font-weight:900;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#facc15 0%,#4ade80 60%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.05}
+.intro-headline span{color:#facc15;-webkit-text-fill-color:#facc15;background:none}
+.intro-sub{margin-top:8px;color:#d4e8d8;font-size:14px;max-width:760px;line-height:1.5}
+.intro-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.intro-bul{background:rgba(2,8,4,.55);border:1px solid rgba(74,222,128,.18);border-radius:12px;padding:10px 12px}
+.intro-bul b{display:block;font-family:'Sora',sans-serif;font-size:18px;font-weight:900;color:#4ade80;letter-spacing:-.02em}
+.intro-bul span{display:block;font-size:11px;color:#9eb7a4;margin-top:2px;letter-spacing:.3px}
+@media (max-width:760px){
+  .intro-headline{font-size:24px}
+  .intro-row{grid-template-columns:repeat(2,1fr)}
+}
 .yield-ribbon{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .yr-pill{font-size:10.5px;font-weight:700;color:#d4e8d8;background:rgba(8,18,12,.55);border:1px solid rgba(74,222,128,.25);padding:3px 9px;border-radius:99px;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
 .yr-pill b{color:#4ade80;font-weight:900;margin-right:3px}
@@ -860,7 +883,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
           </div>
         </div>
         <div class="share-actions">
-          <a id="shareWa" target="_blank" class="share-btn share-btn-wa">💬 Share on WhatsApp</a>
+          <a id="shareJoinNow" target="_blank" class="share-btn share-btn-wa">⚡ Tap to join WhatsApp bot now</a>
+          <a id="shareWa" target="_blank" class="share-btn share-btn-alt">💬 Forward invite to a friend</a>
           <a id="shareInvite" target="_blank" class="share-btn share-btn-alt">🌐 Open Invite Page</a>
         </div>
         <div class="share-steps">
@@ -874,6 +898,19 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
     <!-- CONTENT -->
     <div id="content">
+
+      <!-- WHO WE ARE -->
+      <div class="intro-card fade">
+        <div class="intro-pill">🌿 YieldCore AI · South Africa</div>
+        <div class="intro-headline">Detect. Decide. <span>Fix.</span> Grow.</div>
+        <div class="intro-sub">Full-farm intelligence on WhatsApp + dashboard — satellites, drones, IoT &amp; AI working for every hectare.</div>
+        <div class="intro-row">
+          <div class="intro-bul"><b>+10–20%</b><span>Yield uplift</span></div>
+          <div class="intro-bul"><b>−32%</b><span>Water &amp; inputs</span></div>
+          <div class="intro-bul"><b>R100–R300</b><span>per ha / month</span></div>
+          <div class="intro-bul"><b>1 SMS</b><span>to onboard a farm</span></div>
+        </div>
+      </div>
 
       <!-- WEATHER -->
       <div class="weather-section fade">
@@ -1336,7 +1373,11 @@ function openShare(){
   document.getElementById('shareLink').value = inviteUrl;
   document.getElementById('shareJoinCode').textContent = 'join '+code;
   document.getElementById('shareNumber').textContent = num;
-  const msg = `🌿 Join YieldCore AI — South Africa's smart-farming network on WhatsApp\n\n👉 Register your farm in 30 seconds: ${inviteUrl}\n\nYou'll get LIVE weather, irrigation plans, frost/storm alerts & crop tips — pinned to your exact GPS location.\n\n+18% yield · −32% water · +R3,200/ha profit`;
+  const numDigits = (num||'').replace(/[^0-9]/g,'');
+  const joinTxt = 'join '+code;
+  // Tap-to-join: opens WhatsApp directly to the sandbox number with the join command pre-filled
+  document.getElementById('shareJoinNow').href = 'https://wa.me/'+numDigits+'?text='+encodeURIComponent(joinTxt);
+  const msg = `🌿 Join YieldCore AI — South Africa's smart-farming network on WhatsApp\n\n2-step setup:\n1) Send "${joinTxt}" to ${num} on WhatsApp\n2) Register your farm: ${inviteUrl}\n\nYou'll get LIVE weather, irrigation plans, frost/storm alerts & crop tips — pinned to your exact GPS location.\n\n+10–20% yield · −32% water · R100–R300/ha`;
   document.getElementById('shareWa').href = 'https://wa.me/?text='+encodeURIComponent(msg);
   document.getElementById('shareInvite').href = inviteUrl;
   document.getElementById('shareModal').classList.add('show');
