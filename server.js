@@ -113,17 +113,23 @@ function requireAdmin(req, res, next) {
 function validateTwilio(req, res, next) {
   const sig = req.get('X-Twilio-Signature');
   const token = process.env.TWILIO_AUTH_TOKEN;
-  if (!sig || !token) return res.status(403).type('text/xml').send('<Response/>');
-  // Build the URL Twilio used to sign: prefer LIVE_URL host
-  const proto = req.get('x-forwarded-proto') || req.protocol || 'https';
+  console.log(`📨 Twilio hit ${req.originalUrl} from ${req.ip} sig=${sig?'yes':'no'} token=${token?'yes':'no'} body.From=${req.body?.From||'-'}`);
+  // If TWILIO_SKIP_VALIDATION is true OR no auth token configured, allow through (dev)
+  if (process.env.TWILIO_SKIP_VALIDATION === 'true' || !token) return next();
+  if (!sig) return res.status(403).type('text/xml').send('<Response/>');
+  // Build candidate URLs: Twilio signs the EXACT URL configured in their console.
   const host  = req.get('x-forwarded-host')  || req.get('host');
-  const url = `${proto}://${host}${req.originalUrl}`;
-  const ok = twilio.validateRequest(token, sig, url, req.body || {});
-  if (!ok) {
-    console.warn('🚫 Invalid Twilio signature from', req.ip);
-    return res.status(403).type('text/xml').send('<Response/>');
+  const proto = req.get('x-forwarded-proto') || req.protocol || 'https';
+  const candidates = [
+    `${proto}://${host}${req.originalUrl}`,
+    `https://${host}${req.originalUrl}`,
+    `https://yieldcore.replit.app${req.originalUrl}`,
+  ];
+  for (const url of candidates) {
+    if (twilio.validateRequest(token, sig, url, req.body || {})) return next();
   }
-  next();
+  console.warn('🚫 Invalid Twilio signature. Tried URLs:', candidates.join(' | '));
+  return res.status(403).type('text/xml').send('<Response/>');
 }
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
