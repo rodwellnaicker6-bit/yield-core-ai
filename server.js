@@ -542,7 +542,29 @@ function waHistory(from) {
   return waSessions.get(from);
 }
 function xmlEscape(s){ return (s||'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&apos;','"':'&quot;'}[c])); }
-function twiml(body){ return `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${xmlEscape(body)}</Message></Response>`; }
+function twiml(body, mediaUrl){
+  const media = mediaUrl ? `<Media>${xmlEscape(mediaUrl)}</Media>` : '';
+  return `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${media}<Body>${xmlEscape(body)}</Body></Message></Response>`;
+}
+const HERO_IMG = `${LIVE_URL}/public/yieldcore-hero.jpg`;
+const WELCOME_TXT =
+`🌱 *Welcome to YieldCore AI*
+
+We help farmers:
+• Increase yield 📈
+• Reduce costs 💰
+• Detect problems early 🚁
+
+Using AI + drone technology + farm solutions.
+
+To get started, reply with:
+
+1️⃣  Register my farm
+2️⃣  Get pricing
+3️⃣  Request drone scan
+
+Or just ask me anything — e.g. *"When should I plant maize in Free State?"*
+Send 📍 your location for hyper-local advice.`;
 
 app.post('/api/whatsapp', validateTwilio, async (req, res) => {
   res.type('text/xml');
@@ -563,23 +585,54 @@ Reply with your question, e.g. "When should I plant maize here?"`));
   }
 
   const cmd = body.toLowerCase();
-  if (!body) return res.send(twiml('🌾 Hi! Send a question, share your 📍 location, or reply MENU for options.'));
+  const isFirstMsg = (waSessions.get(from) || []).length === 0;
+  if (!body) return res.send(twiml(WELCOME_TXT, HERO_IMG));
 
-  if (cmd === 'menu' || cmd === 'help' || cmd === 'hi' || cmd === 'hello') {
+  if (cmd === 'menu' || cmd === 'help' || cmd === 'hi' || cmd === 'hello' || cmd === 'start' || isFirstMsg && cmd.length < 4) {
+    return res.send(twiml(WELCOME_TXT, HERO_IMG));
+  }
+
+  // Quick options 1 / 2 / 3
+  if (cmd === '1' || /^register/.test(cmd)) {
+    return res.send(twiml(`🌾 *Register your farm in 30 seconds*\n\nTap here → ${LIVE_URL}/register\n\nOr reply with your details:\n• Farm name\n• Hectares\n• Main crop\n• 📍 location pin\n\nWe'll create your live command center on WhatsApp + dashboard.`));
+  }
+  if (cmd === '2' || /^(price|pricing|cost|tier)/.test(cmd)) {
     return res.send(twiml(
-`🌿 *YieldCore AI* — Hi ${profileName.split(' ')[0]}!
+`💰 *YieldCore AI Pricing*
 
-I can help with:
-🌾 Crop advice (maize, wheat, citrus, etc.)
-💧 Irrigation & soil
-🐛 Pests & disease
-🌦️ Weather impact
-💰 SAFEX prices
+🌱 *Founding Farms* (limited spots)
+   R50–R80/ha · or R1,000–R3,000/month flat
+   ✓ Lifetime discount, direct support, influence the product
 
-Just ask me anything, or:
-• Send 📍 location for local advice
-• Reply RESET to clear our chat
-• Reply STOP to unsubscribe`));
+🚜 *Starter*  R100/ha/month
+   AI assistant · alerts · insights
+
+🌟 *Pro*  R150–R180/ha/month
+   Advanced AI · yield optimisation · analytics
+
+👑 *PRIME*  R200–R300/ha/month
+   Full AI · priority support · dedicated advisor · drone scans included
+
+🚁 *Drone services*
+   Mapping  R80–R150/ha (min R2,500)
+   Advanced scan  R120–R250/ha
+   Spraying  R150–R300/ha (min R5,000)
+
+Reply *DEMO* to book a free farm walk-through, or *3* to request a drone scan.`));
+  }
+  if (cmd === '3' || /^(drone|scan|spray|mapping)/.test(cmd)) {
+    return res.send(twiml(
+`🚁 *Request a drone service*
+
+Reply with:
+1) Farm name & nearest town
+2) Hectares to scan/spray
+3) Service: *MAP* / *SCAN* / *SPRAY*
+4) Preferred date
+
+We'll quote within 1 working day. For farms above R5,000 jobs we travel anywhere in SA.
+
+Or book online: ${LIVE_URL}/register`));
   }
 
   if (cmd === 'reset' || cmd === 'clear') {
