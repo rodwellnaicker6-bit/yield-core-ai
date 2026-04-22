@@ -26,16 +26,16 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 #main::before{
   content:'';position:fixed;inset:0;left:var(--sidebar);
   background-image:url('/public/farm-sunrise.jpg');
-  background-size:cover;background-position:center top;
-  opacity:.55;pointer-events:none;z-index:0;
-  filter:saturate(1.1) contrast(1.05);
+  background-size:cover;background-position:center center;
+  opacity:1;pointer-events:none;z-index:0;
+  filter:saturate(1.15) contrast(1.05);
   animation:bgPanDash 60s ease-in-out infinite alternate;
 }
 #main::after{
   content:'';position:fixed;inset:0;left:var(--sidebar);
   background:
-    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.10), transparent 55%),
-    linear-gradient(180deg, rgba(6,15,7,.55) 0%, rgba(6,15,7,.30) 35%, rgba(6,15,7,.78) 100%);
+    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.12), transparent 55%),
+    linear-gradient(180deg, rgba(6,15,7,.32) 0%, rgba(6,15,7,.12) 40%, rgba(6,15,7,.55) 100%);
   pointer-events:none;z-index:1;
 }
 @keyframes bgPanDash{
