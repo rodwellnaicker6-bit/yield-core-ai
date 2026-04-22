@@ -223,14 +223,36 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
   } catch (e) { res.status(500).json({ ok:false, error: e.message }); }
 });
 
+// Shared demo login — anyone using these creds gets in (auto-provisioned in Supabase)
+const DEMO_EMAIL = 'demo@yieldcore.ai';
+const DEMO_PASSWORD = 'yield2025';
+
+async function ensureDemoUser(){
+  if (!supaAdmin) return;
+  try {
+    await supaAdmin.auth.admin.createUser({
+      email: DEMO_EMAIL, password: DEMO_PASSWORD, email_confirm: true,
+      user_metadata: { name: 'YieldCore Demo' }
+    });
+  } catch {}
+}
+
 app.post('/api/auth/login', authLimiter, async (req, res) => {
   if (!supaPublic) return res.status(503).json({ ok:false, error:'Auth not configured' });
   const b = req.body || {};
   const email = (b.email||'').toString().trim().toLowerCase();
   const password = (b.password||'').toString();
   if (!email || !password) return res.status(400).json({ ok:false, error:'Email and password required' });
+
+  const isDemo = email === DEMO_EMAIL && password === DEMO_PASSWORD;
+
   try {
-    const { data, error } = await supaPublic.auth.signInWithPassword({ email, password });
+    let { data, error } = await supaPublic.auth.signInWithPassword({ email, password });
+    if ((error || !data?.session) && isDemo) {
+      // Demo user doesn't exist yet — provision and retry
+      await ensureDemoUser();
+      ({ data, error } = await supaPublic.auth.signInWithPassword({ email, password }));
+    }
     if (error || !data?.session) return res.status(401).json({ ok:false, error:'Invalid email or password' });
     const u = data.user;
     res.json({ ok:true, token: data.session.access_token, refresh_token: data.session.refresh_token, user: { id:u.id, email:u.email, name: u.user_metadata?.name || u.email?.split('@')[0] } });
