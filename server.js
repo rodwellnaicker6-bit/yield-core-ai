@@ -513,6 +513,88 @@ Respond concisely, practically, and in a friendly tone. Use South African contex
   }
 });
 
+// ── 📲 INBOUND WHATSAPP WEBHOOK (Twilio → AI reply) ──
+const waSessions = new Map(); // from -> [{role, content}, ...]
+function waHistory(from) {
+  if (!waSessions.has(from)) waSessions.set(from, []);
+  return waSessions.get(from);
+}
+function xmlEscape(s){ return (s||'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&apos;','"':'&quot;'}[c])); }
+function twiml(body){ return `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${xmlEscape(body)}</Message></Response>`; }
+
+app.post('/api/whatsapp', validateTwilio, async (req, res) => {
+  res.type('text/xml');
+  const from = (req.body.From || '').replace(/^whatsapp:/, '');
+  const body = (req.body.Body || '').trim();
+  const lat  = req.body.Latitude;
+  const lng  = req.body.Longitude;
+  const profileName = req.body.ProfileName || 'Farmer';
+  console.log(`📩 WA from ${from} (${profileName}): ${body}`);
+
+  // Handle location pin
+  if (lat && lng) {
+    return res.send(twiml(
+`📍 Location received: ${(+lat).toFixed(4)}, ${(+lng).toFixed(4)}
+Thanks ${profileName.split(' ')[0]} — I'll use this for hyper-local weather & soil advice.
+
+Reply with your question, e.g. "When should I plant maize here?"`));
+  }
+
+  const cmd = body.toLowerCase();
+  if (!body) return res.send(twiml('🌾 Hi! Send a question, share your 📍 location, or reply MENU for options.'));
+
+  if (cmd === 'menu' || cmd === 'help' || cmd === 'hi' || cmd === 'hello') {
+    return res.send(twiml(
+`🌿 *YieldCore AI* — Hi ${profileName.split(' ')[0]}!
+
+I can help with:
+🌾 Crop advice (maize, wheat, citrus, etc.)
+💧 Irrigation & soil
+🐛 Pests & disease
+🌦️ Weather impact
+💰 SAFEX prices
+
+Just ask me anything, or:
+• Send 📍 location for local advice
+• Reply RESET to clear our chat
+• Reply STOP to unsubscribe`));
+  }
+
+  if (cmd === 'reset' || cmd === 'clear') {
+    waSessions.delete(from);
+    return res.send(twiml('🧹 Chat history cleared. Ask me anything!'));
+  }
+
+  if (cmd === 'stop' || cmd === 'unsubscribe') {
+    waSessions.delete(from);
+    return res.send(twiml('👋 You\'re unsubscribed. Reply START to come back anytime.'));
+  }
+
+  if (!openai) return res.send(twiml('⚠️ AI advisor is offline right now. Please try again shortly.'));
+
+  try {
+    const history = waHistory(from);
+    history.push({ role: 'user', content: body });
+    if (history.length > 12) history.splice(0, history.length - 12);
+
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      max_tokens: 280,
+      temperature: 0.6,
+      messages: [
+        { role: 'system', content: `You are YieldCore AI, a WhatsApp farming advisor for South African farmers. Reply in plain text suitable for WhatsApp (no markdown headers, short paragraphs, occasional emojis). Use SA context: provinces, rand, local crops (maize, wheat, citrus, grapes, avocado, sugarcane, macadamia, sunflower). Be concrete and actionable. Keep replies under 120 words. Farmer name: ${profileName}.` },
+        ...history
+      ]
+    });
+    const reply = completion.choices[0].message.content.trim();
+    history.push({ role: 'assistant', content: reply });
+    res.send(twiml(reply));
+  } catch (err) {
+    console.error('WA AI error:', err.message);
+    res.send(twiml('⚠️ Sorry, I had trouble answering that. Please try again in a moment.'));
+  }
+});
+
 // ── STATUS ──
 app.get('/api/status', (req, res) => {
   res.json({
