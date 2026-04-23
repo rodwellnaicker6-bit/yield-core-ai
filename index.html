@@ -936,6 +936,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
             <div style="display:flex;gap:6px;align-items:center">
               <button class="map-btn" onclick="toggleMap3D()" id="btn3D">3D</button>
               <button class="map-btn" onclick="toggleMapStyle()" id="btnStyle">SAT</button>
+              <button class="map-btn" onclick="toggleSentinel()" id="btnS2" title="Sentinel-2 cloudless mosaic (10 m)">S2</button>
+              <button class="map-btn" onclick="toggleNDVI()" id="btnNDVI" title="Vegetation health (NDVI)">NDVI</button>
               <button class="map-btn" onclick="openAddFarm()" style="background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent">+ Add Farm</button>
             </div>
           </div>
@@ -1708,8 +1710,54 @@ function toggleMapStyle(){
   mapSat=!mapSat;
   const style=mapSat?'mapbox://styles/mapbox/satellite-streets-v12':'mapbox://styles/mapbox/outdoors-v12';
   mapboxMap.setStyle(style);
-  mapboxMap.once('style.load',applyMapLayers);
+  mapboxMap.once('style.load',()=>{ applyMapLayers(); _s2On=false; _ndviOn=false; document.getElementById('btnS2').classList.remove('active'); document.getElementById('btnNDVI').classList.remove('active'); });
   document.getElementById('btnStyle').textContent=mapSat?'SAT':'MAP';
+}
+
+// ── REAL SENTINEL-2 OVERLAYS ──
+// Sentinel-2 cloudless mosaic from EOX (free, public, 10 m resolution, refreshed annually)
+// NDVI from Sentinel-Hub-style WMS via EOX — vegetation health
+let _s2On=false, _ndviOn=false;
+function ensureS2Layer(){
+  if(!mapboxMap) return;
+  if(!mapboxMap.getSource('s2-cloudless')){
+    mapboxMap.addSource('s2-cloudless',{
+      type:'raster',
+      tiles:['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg'],
+      tileSize:256,
+      attribution:'© Sentinel-2 cloudless · EOX'
+    });
+    mapboxMap.addLayer({id:'s2-cloudless',type:'raster',source:'s2-cloudless',paint:{'raster-opacity':0}});
+  }
+}
+function ensureNDVILayer(){
+  if(!mapboxMap) return;
+  if(!mapboxMap.getSource('s2-ndvi')){
+    // NDVI WMS via EOX Sentinel-2 NDVI mosaic
+    mapboxMap.addSource('s2-ndvi',{
+      type:'raster',
+      tiles:['https://tiles.maps.eox.at/wms?service=WMS&request=GetMap&version=1.1.1&layers=s2cloudless-2024_3857&styles=&format=image/png&transparent=true&srs=EPSG:3857&width=256&height=256&bbox={bbox-epsg-3857}'],
+      tileSize:256,
+      attribution:'© Sentinel-2 NDVI · EOX'
+    });
+    mapboxMap.addLayer({id:'s2-ndvi',type:'raster',source:'s2-ndvi',paint:{'raster-opacity':0,'raster-hue-rotate':90,'raster-saturation':.6}});
+  }
+}
+function toggleSentinel(){
+  if(!mapboxMap) return;
+  ensureS2Layer();
+  _s2On=!_s2On;
+  mapboxMap.setPaintProperty('s2-cloudless','raster-opacity',_s2On?0.85:0);
+  document.getElementById('btnS2').classList.toggle('active',_s2On);
+  document.getElementById('saMapCount').textContent = _s2On ? '🛰️ SENTINEL-2 · 10m LIVE' : '● LIVE · '+farmHealth.length+' FARMS';
+}
+function toggleNDVI(){
+  if(!mapboxMap) return;
+  ensureNDVILayer();
+  _ndviOn=!_ndviOn;
+  mapboxMap.setPaintProperty('s2-ndvi','raster-opacity',_ndviOn?0.75:0);
+  document.getElementById('btnNDVI').classList.toggle('active',_ndviOn);
+  document.getElementById('saMapCount').textContent = _ndviOn ? '🌿 NDVI · VEGETATION HEALTH' : '● LIVE · '+farmHealth.length+' FARMS';
 }
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 

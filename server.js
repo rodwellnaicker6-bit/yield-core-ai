@@ -604,24 +604,30 @@ Reply with your question, e.g. "When should I plant maize here?"`));
   }
   if (cmd === '2' || /^(price|pricing|cost|tier)/.test(cmd)) {
     return res.send(twiml(
-`💰 *YieldCore AI Pricing*
+`💰 *YieldCore AI Pricing — built so every farm profits*
 
-🌱 *Founding Farms* (limited spots)
-   R50–R80/ha · or R1,000–R3,000/month flat
-   ✓ Lifetime discount, direct support, influence the product
+🌱 *Founding Farms* (1–10 ha)
+   *R200/month flat* · lifetime discount
+   ✓ Same AI brain as the big farms — never priced out
 
-🚜 *Starter*  R100/ha/month
-   AI assistant · alerts · insights
+🚜 *Starter* (11–49 ha)
+   R100/ha/month · capped at R1,500
+   ✓ AI assistant · alerts · insights
 
-🌟 *Pro*  R150–R180/ha/month
-   Advanced AI · yield optimisation · analytics
+🌟 *Pro* (50–199 ha)
+   R165/ha/month · capped at R3,000
+   ✓ Advanced AI · yield optimisation · analytics
 
-👑 *PRIME*  R200–R300/ha/month
-   Full AI · priority support · dedicated advisor · drone scans included
+👑 *PRIME* (200–999 ha)
+   R250/ha/month
+   ✓ Full AI · drone scans · dedicated advisor
 
-🚁 *Drone services*
+🤝 *Co-op / Estate* (1000+ ha)
+   R200/ha/month · custom drone deal
+
+🚁 *Drone services* (add-on)
    Mapping  R80–R150/ha (min R2,500)
-   Advanced scan  R120–R250/ha
+   Scan      R120–R250/ha
    Spraying  R150–R300/ha (min R5,000)
 
 Reply *DEMO* to book a free farm walk-through, or *3* to request a drone scan.`));
@@ -697,13 +703,15 @@ app.get('/api/config', (req, res) => {
   });
 });
 
-// ── PRICING TIERS ──
+// ── PRICING TIERS (aligned with YieldCore AI Pricing Model) ──
+// Phase 1 Founding Farms: small farms (1–10 ha) get a flat R200/month so they always profit.
+// Higher tiers scale per-ha with caps so smaller farms aren't priced out.
 const TIERS = {
-  starter:    { name:'Starter',    range:'1–49 ha',     pricePerHa:200, min:1,    max:49,   color:'#4ade80' },
-  growth:     { name:'Growth',     range:'50–199 ha',   pricePerHa:165, min:50,   max:199,  color:'#22c55e' },
-  pro:        { name:'Pro',        range:'200–499 ha',  pricePerHa:130, min:200,  max:499,  color:'#facc15' },
-  enterprise: { name:'Enterprise', range:'500–999 ha',  pricePerHa:110, min:500,  max:999,  color:'#fb923c', perks:'🎁 FREE on-site install' },
-  coop:       { name:'Co-op',      range:'1000+ ha',    pricePerHa:95,  min:1000, max:99999,color:'#f472b6', perks:'🤝 Dedicated success manager' }
+  founding:   { name:'Founding Farms',  range:'1–10 ha',      pricePerHa:0,   flatMonthly:200,  cap:200,   min:1,     max:10,    color:'#4ade80', perks:'🌱 Lifetime discount · direct support · shape the product' },
+  starter:    { name:'Starter',         range:'11–49 ha',     pricePerHa:100, cap:1500,         min:11,    max:49,    color:'#22c55e', perks:'AI assistant · alerts · insights' },
+  pro:        { name:'Pro',             range:'50–199 ha',    pricePerHa:165, cap:3000,         min:50,    max:199,   color:'#facc15', perks:'Advanced AI · yield optimisation · analytics' },
+  prime:      { name:'PRIME',           range:'200–999 ha',   pricePerHa:250,                   min:200,   max:999,   color:'#fb923c', perks:'👑 Full AI · drone scans · dedicated advisor' },
+  coop:       { name:'Co-op / Estate',  range:'1000+ ha',     pricePerHa:200,                   min:1000,  max:99999, color:'#f472b6', perks:'🤝 Dedicated success manager · custom drone deal' }
 };
 
 function autoTier(ha){ for(const k in TIERS){ const t=TIERS[k]; if(ha>=t.min && ha<=t.max) return {key:k, ...t}; } return {key:'starter',...TIERS.starter}; }
@@ -715,7 +723,9 @@ app.post('/api/quote', (req, res) => {
   const name = (req.body.name||'').toString().slice(0,80);
   const email = (req.body.email||'').toString().slice(0,120);
   const tier = autoTier(ha);
-  const monthly = ha * tier.pricePerHa;
+  // Small farms get a flat affordable rate; capped tiers protect mid-size farms
+  let monthly = tier.flatMonthly ? tier.flatMonthly : ha * tier.pricePerHa;
+  if (tier.cap) monthly = Math.min(monthly, tier.cap);
   const annual = monthly * 12;
   const annualDiscount = Math.round(annual * 0.10);
   const annualNet = annual - annualDiscount;
