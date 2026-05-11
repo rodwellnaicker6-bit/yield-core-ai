@@ -1266,7 +1266,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
             <div class="ob-bullet"><b>+18%</b><span>Yield uplift</span></div>
             <div class="ob-bullet"><b>−32%</b><span>Water savings</span></div>
             <div class="ob-bullet"><b>R3,200</b><span>Extra profit/ha</span></div>
-            <div class="ob-bullet"><b>8,200t</b><span>CO₂ sequestered</span></div>
+            <div class="ob-bullet"><b>4,930t</b><span>CO₂e verified</span></div>
           </div>
           <div class="ob-btn-row">
             <button class="ob-btn ob-btn-primary" onclick="obNext()">Get Started →</button>
@@ -2273,7 +2273,7 @@ const marketPrices=[
   {crop:'🌾',name:'Wheat',price:'R7,200/t',chg:'-0.5%',up:false},
   {crop:'🫘',name:'Soybean',price:'R6,100/t',chg:'+3.2%',up:true},
   {crop:'🌻',name:'Sunflower',price:'R9,400/t',chg:'+1.1%',up:true},
-  {crop:'🥜',name:'Macadamia',price:'R165,00/kg',chg:'+12%',up:true},
+  {crop:'🥜',name:'Macadamia',price:'R165/kg',chg:'+12%',up:true},
   {crop:'🍇',name:'Wine Grapes',price:'R6,800/t',chg:'+4.5%',up:true},
   {crop:'🍊',name:'Citrus',price:'R5,200/t',chg:'+3.8%',up:true},
 ];
@@ -2326,13 +2326,13 @@ function renderStats(){
   const ts=now.toTimeString().slice(0,5);
   const stats=[
     {icon:'🌿',val:5419,fmt:'5,419',unit:'ha',label:'Total Hectares',sub:'Under active management',color:'#22c55e',delta:'+340 ha this season',dir:'up',spark:[30,35,28,40,38,42,45]},
-    {icon:'❤️',val:72,fmt:'72',unit:'/100',label:'Fleet Health',sub:'Average across 10 farms',color:'#4ade80',delta:'+4 pts vs last week',dir:'up',spark:[68,70,65,72,69,72,72]},
+    {icon:'❤️',val:71,fmt:'71',unit:'/100',label:'Fleet Health',sub:'Average across 10 farms',color:'#4ade80',delta:'+3 pts vs last week',dir:'up',spark:[68,69,65,70,69,71,71]},
     {icon:'🌾',val:10,fmt:'10',unit:'',label:'Active Farms',sub:'Across 5 provinces',color:'#22c55e',delta:'Stable',dir:'neu',spark:[8,9,9,10,10,10,10]},
     {icon:'📡',val:78,fmt:'78',unit:'%',label:'NDVI Average',sub:'Crop vitality index',color:'#38bdf8',delta:'+2% vs last month',dir:'up',spark:[72,75,74,76,78,77,78]},
     {icon:'⚠️',val:4,fmt:'4',unit:'',label:'Critical Alerts',sub:'Require immediate action',color:'#f87171',delta:'2 new today',dir:'dn',spark:[1,2,3,5,4,4,4]},
     {icon:'🤖',val:0,fmt:'LIVE',unit:'',label:'AI Advisor',sub:'GPT-4o · Online',color:'#a78bfa',isLive:true,spark:[]},
     {icon:'💧',val:68,fmt:'68',unit:'%',label:'Soil Moisture',sub:'Weighted average',color:'#38bdf8',delta:'Optimal range',dir:'up',spark:[60,64,66,65,68,68,68]},
-    {icon:'☀️',val:847,fmt:'847',unit:'kWh',label:'Solar Output',sub:'Today across all farms',color:'#facc15',delta:'+12% vs forecast',dir:'up',spark:[700,720,760,800,810,840,847]},
+    {icon:'☀️',val:762,fmt:'762',unit:'kWh',label:'Solar Output',sub:'Today across all farms',color:'#facc15',delta:'+9% vs forecast',dir:'up',spark:[620,640,680,710,730,750,762]},
   ];
   s.innerHTML=stats.map((st,i)=>`
     <div class="stat-card fade" style="animation-delay:${i*0.05}s">
@@ -2752,7 +2752,7 @@ window.navToSection=navToSection;
 const solarFarms=[
   {name:'Rodwell Naicker Farm',   cap:36,pct:82,panels:96,status:'Optimal'},
   {name:'Green Fields Farm',     cap:24,pct:91,panels:64,status:'Optimal'},
-  {name:'Oranjezicht City Farm', cap:18,pct:76,panels:48,status:'Optimal'},
+  {name:'Oranjezicht City Farm', cap:4, pct:76,panels:11,status:'Optimal'},
   {name:'Sun Rise Farm',         cap:20,pct:88,panels:54,status:'Optimal'},
   {name:'Meuse Farm',            cap:15,pct:71,panels:40,status:'Optimal'},
   {name:'Winnchoulas Estate',    cap:16,pct:68,panels:44,status:'Optimal'},
@@ -3192,12 +3192,12 @@ function renderNutrients(){
 
 // ── YIELD & PROFIT DATA ──
 const yieldFarms=[
-  {farm:'Rodwell Naicker', crop:'Maize',       ha:890,yieldT:6.8, priceR:4850, costHa:8200, season:'On Track'},
-  {farm:'Green Fields',    crop:'Mixed Grain', ha:1200,yieldT:5.4,priceR:5200, costHa:7400, season:'On Track'},
-  {farm:'Chart Farm',      crop:'Roses & Coffee',ha:25,yieldT:14.2,priceR:6800,costHa:35000,season:'Ahead'},
-  {farm:'Sun Rise Farm',   crop:'Sunflower',   ha:540,yieldT:2.4, priceR:9400, costHa:6200, season:'On Track'},
-  {farm:'Oranjezicht',     crop:'Vegetables',  ha:8,  yieldT:38.5,priceR:12500,costHa:22000,season:'Ahead'},
-  {farm:'Karoo House',     crop:'Karoo Lamb',  ha:2400,yieldT:0.4,priceR:85000,costHa:1200, season:'Delayed'},
+  {farm:'Rodwell Naicker', crop:'Maize',          ha:480, yieldT:6.8,  priceR:4850,  costHa:8200,  season:'On Track'},
+  {farm:'Green Fields',    crop:'Mixed Grain',    ha:610, yieldT:5.4,  priceR:5100,  costHa:7200,  season:'On Track'},
+  {farm:'Chart Farm',      crop:'Roses & Coffee', ha:18,  yieldT:14.2, priceR:24000, costHa:34000, season:'Ahead'},
+  {farm:'Sun Rise Farm',   crop:'Sunflower',      ha:740, yieldT:2.4,  priceR:9400,  costHa:6200,  season:'On Track'},
+  {farm:'Oranjezicht',     crop:'Vegetables',     ha:2,   yieldT:36.0, priceR:14000, costHa:21000, season:'Ahead'},
+  {farm:'Karoo House',     crop:'Karoo Lamb',     ha:1305,yieldT:0.006,priceR:85000, costHa:1200,  season:'Delayed'},
 ];
 function renderYield(){
   const c=document.getElementById('yieldGrid');
@@ -3320,14 +3320,23 @@ window.sendAI=sendAI;
 
 // ── CARBON CREDIT TRACKER ──
 const carbonFarms=[
-  {name:'Rodwell Naicker Farm',  crop:'🌽 Maize',         ha:890, rate:2.8, verified:1820, pending:372, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0041'},
-  {name:'Chart Farm',           crop:'🌹 Roses & Coffee',ha:25,  rate:4.2, verified:88,   pending:32,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0018'},
-  {name:'Green Fields Farm',    crop:'🌾 Mixed Grain',   ha:1200,rate:3.6, verified:1496, pending:452, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0055'},
-  {name:'Opal Game Growers',    crop:'🦌 Game Reserve',  ha:1850,rate:5.1, verified:890,  pending:342, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0063'},
-  {name:'Oranjezicht City Farm',crop:'🥬 Vegetables',    ha:8,   rate:3.9, verified:36,   pending:12,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0022'},
-  {name:'Imhoff Farm',          crop:'🍇 Boutique',      ha:110, rate:4.0, verified:320,  pending:120, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0071'},
-  {name:'Winnchoulas Estate',   crop:'🥜 Mixed Estate',  ha:130, rate:3.2, verified:312,  pending:104, status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0029'},
-  {name:'Karoo House',          crop:'🐑 Karoo Pasture', ha:2400,rate:0.6, verified:0,    pending:0,   status:'none',     standard:'—',            certNo:'—'},
+  // ha matches farmHealth; rates calibrated to verified tonnes ÷ ha ÷ verified_years
+  {name:'Rodwell Naicker Farm',  crop:'🌽 Maize',         ha:480, rate:1.9, verified:1824, pending:374, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0041'},
+  // 1.9 t/ha/yr × 480 ha × 2 yr ≈ 1,824 t verified; ×0.41 yr ≈ 374 t pending
+  {name:'Chart Farm',           crop:'🌹 Roses & Coffee',ha:18,  rate:2.4, verified:86,   pending:29,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0018'},
+  // 2.4 × 18 × 2 yr ≈ 86 t; × 0.67 yr ≈ 29 t pending
+  {name:'Green Fields Farm',    crop:'🌾 Mixed Grain',   ha:610, rate:1.2, verified:1464, pending:439, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0055'},
+  // 1.2 × 610 × 2 yr ≈ 1,464 t; × 0.6 yr ≈ 439 t pending
+  {name:'Opal Game Growers',    crop:'🦌 Game Reserve',  ha:1850,rate:0.8, verified:888,  pending:296, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0063'},
+  // 0.8 t/ha/yr (savanna) × 1850 × 0.6 yr ≈ 888 t; × 0.2 yr ≈ 296 t pending
+  {name:'Oranjezicht City Farm',crop:'🥬 Vegetables',    ha:2,   rate:5.8, verified:37,   pending:12,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0022'},
+  // 5.8 × 2 × 3.2 yr ≈ 37 t (intensive urban composting); × 1 yr ≈ 12 t pending
+  {name:'Imhoff Farm',          crop:'🍇 Boutique',      ha:38,  rate:4.2, verified:319,  pending:107, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0071'},
+  // 4.2 × 38 × 2 yr ≈ 319 t; × 0.67 yr ≈ 107 t pending
+  {name:'Winnchoulas Estate',   crop:'🥜 Mixed Estate',  ha:312, rate:1.0, verified:312,  pending:104, status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0029'},
+  // 1.0 × 312 × 1 yr = 312 t verified; × 0.33 yr ≈ 104 t pending
+  {name:'Karoo House',          crop:'🐑 Karoo Pasture', ha:1305,rate:0.3, verified:0,    pending:0,   status:'none',     standard:'—',            certNo:'—'},
+  // 0.3 t/ha/yr dryland pasture — not yet enrolled; Grade D farm, focus on recovery first
 ];
 const carbonVCMHistory=[12.1,13.4,14.2,13.8,15.6,16.2,15.9,17.1,16.8,18.0,17.8,18.4];
 let carbonVCMPrice=18.40;
@@ -3477,7 +3486,7 @@ const invUseFunds=[
 ];
 const invEsg=[
   {icon:'💧',val:'42%',label:'Water saving\nvs traditional irrigation',color:'#38bdf8'},
-  {icon:'🌿',val:'8,200t',label:'CO₂ sequestered\nthis season',color:'#22c55e'},
+  {icon:'🌿',val:'4,930t',label:'CO₂e verified\nthis season',color:'#22c55e'},
   {icon:'🚁',val:'420',label:'Drone acres scanned\nthis month',color:'#38bdf8'},
   {icon:'⚡',val:'2,847',label:'MWh solar generated\nacross 7 farms',color:'#facc15'},
   {icon:'🌱',val:'5,419ha',label:'Precision-managed\nfarmland (SA)',color:'#4ade80'},
@@ -3917,11 +3926,11 @@ function renderInvestor(){
   el('invRoadmap').innerHTML=invMilestones.map(m=>`<div class="inv-milestone"><div class="inv-ms-dot" style="background:${m.color};${m.done?'':'opacity:.5'}"></div><span class="inv-ms-period">${m.period}</span><span class="inv-ms-text" style="opacity:${m.done?1:.65}">${m.text}</span></div>`).join('');
 }
 window.shareInvestorPitch=async function(){
-  const msg=`📊 *YieldCore AI — Series A Investor Pitch*\n\n🌿 *Africa's Precision Agriculture Intelligence Platform*\n\n💰 *Investment Ask: R 75,000,000*\n• Pre-money valuation: R 420M\n• Equity: 17.9%\n• Target close: Q2 2025\n\n📈 *5-Year Revenue:*\nY1: R12.4M → Y3: R54.2M → Y5: R148M ARR\n\n🌍 *ESG Impact:*\n• 42% water saving\n• 8,200t CO₂ sequestered\n• R4.2M smallholder income uplift\n\n📧 investor@yieldcore.ai\n🌐 yieldcore.ai`;
+  const msg=`📊 *YieldCore AI — Series A Investor Pitch*\n\n🌿 *Africa's Precision Agriculture Intelligence Platform*\n\n💰 *Investment Ask: R 75,000,000*\n• Pre-money valuation: R 420M\n• Equity: 17.9%\n• Target close: Q2 2025\n\n📈 *5-Year Revenue:*\nY1: R12.4M → Y3: R54.2M → Y5: R148M ARR\n\n🌍 *ESG Impact:*\n• 42% water saving\n• 4,930t CO₂e verified (6,291t pipeline)\n• R4.2M smallholder income uplift\n\n📧 investor@yieldcore.ai\n🌐 yieldcore.ai`;
   try{const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await res.json();if(d.success)alert('✅ Investor pitch sent via WhatsApp!');else alert('Error: '+d.error);}catch(e){alert('Network error: '+e.message);}
 };
 window.copyPitchEmail=function(){
-  const txt=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising R75M Series A at R420M pre-money to scale Africa's leading precision agriculture platform.\n\nKey metrics:\n• 10 farms · 5,419 ha under management\n• R28.6M ARR (Y2) → R148M ARR by Y5\n• 42% water reduction · 8,200t CO₂ sequestered\n• R4.2M smallholder farmer income uplift\n\nWe would welcome a 30-minute call.\n\nRodwell Naicker | Founder & CEO\nrodwell@yieldcore.ai | yieldcore.ai`;
+  const txt=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising R75M Series A at R420M pre-money to scale Africa's leading precision agriculture platform.\n\nKey metrics:\n• 10 farms · 5,419 ha under management\n• R28.6M ARR (Y2) → R148M ARR by Y5\n• 42% water reduction · 4,930t CO₂e verified · 6,291t total pipeline\n• R4.2M smallholder farmer income uplift\n\nWe would welcome a 30-minute call.\n\nRodwell Naicker | Founder & CEO\nrodwell@yieldcore.ai | yieldcore.ai`;
   navigator.clipboard.writeText(txt).then(()=>alert('✅ Investor email copied!')).catch(()=>alert('Copy from browser console.'));
 };
 
