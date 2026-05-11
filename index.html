@@ -606,6 +606,37 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .sell-market-type{font-size:9px;color:var(--sub);margin-bottom:5px}
 .sell-market-price{font-size:13px;font-weight:900;color:#a78bfa}
 
+/* ── ECOSYSTEM TAB ── */
+.eco-pipeline{display:flex;flex-direction:column;gap:0}
+.eco-step{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border2);border-radius:12px;padding:14px;background:var(--bg3)}
+.eco-step-green{border-color:#22c55e33;background:linear-gradient(135deg,#22c55e0a,#060f0700)}
+.eco-step-blue{border-color:#38bdf833;background:linear-gradient(135deg,#38bdf80a,#060f0700)}
+.eco-step-yellow{border-color:#facc1533;background:linear-gradient(135deg,#facc150a,#060f0700)}
+.eco-step-num{min-width:32px;height:32px;border-radius:50%;background:#22c55e;color:#03130a;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.eco-step-body{flex:1}
+.eco-step-title{font-size:13px;font-weight:900;color:var(--text);margin-bottom:5px}
+.eco-step-desc{font-size:11px;color:var(--sub);line-height:1.55;margin-bottom:7px}
+.eco-step-tags{display:flex;flex-wrap:wrap;gap:4px}
+.eco-tag{font-size:9px;font-weight:700;background:var(--bg4);border:1px solid var(--border2);color:var(--sub);border-radius:99px;padding:2px 8px}
+.eco-arrow{text-align:center;font-size:20px;color:#22c55e44;line-height:1.2;padding:2px 0}
+.eco-three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.eco-pathway{border:1px solid var(--border2);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.eco-path-orange{border-color:#f9731633;background:linear-gradient(135deg,#f974160a,transparent)}
+.eco-path-green{border-color:#22c55e33;background:linear-gradient(135deg,#22c55e0a,transparent)}
+.eco-path-violet{border-color:#a78bfa33;background:linear-gradient(135deg,#a78bfa0a,transparent)}
+.eco-path-icon{font-size:22px;line-height:1}
+.eco-path-title{font-size:12px;font-weight:900;color:var(--text)}
+.eco-path-body{font-size:10px;color:var(--sub);line-height:1.5;flex:1}
+.eco-path-body ul{margin:5px 0 0 14px;padding:0}
+.eco-path-body li{margin-bottom:4px}
+.eco-path-rev{font-size:10px;font-weight:800;color:#22c55e;background:#22c55e12;border:1px solid #22c55e22;border-radius:6px;padding:4px 8px;text-align:center;margin-top:4px}
+.eco-rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.eco-rev-item{background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:8px;text-align:center}
+.eco-rev-val{font-size:10px;font-weight:800;margin-bottom:2px}
+.eco-rev-num{font-size:12px;font-weight:900;color:var(--text)}
+.eco-rev-sub{font-size:9px;color:var(--dim);margin-top:2px}
+@media(max-width:750px){.eco-three-col{grid-template-columns:1fr}.eco-rev-grid{grid-template-columns:1fr 1fr}}
+
 /* ── SMOOTH FLOW / TRANSITIONS ── */
 .section-transition{height:1px;background:linear-gradient(90deg,transparent,#22c55e18,transparent);margin:6px 0}
 .panel{transition:opacity .25s ease,transform .25s ease}
@@ -1704,6 +1735,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
           <button class="c-tab" id="ctab-biochar" onclick="carbonTab('biochar')">🪵 Biochar</button>
           <button class="c-tab" id="ctab-sars" onclick="carbonTab('sars')">🏛️ SARS Tax</button>
           <button class="c-tab" id="ctab-sell" onclick="carbonTab('sell')">💰 Sell Credits</button>
+          <button class="c-tab" id="ctab-ecosystem" onclick="carbonTab('ecosystem')">🔗 Ecosystem</button>
         </div>
 
         <!-- TAB: PORTFOLIO -->
@@ -1850,6 +1882,121 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
           </div>
           <button class="wa-btn" style="margin-top:14px;width:100%" onclick="shareCarbonReport()">📲 Request Carbon Credit Selling Assessment via WhatsApp</button>
         </div>
+
+        <!-- TAB: ECOSYSTEM -->
+        <div id="cTab-ecosystem" class="c-tab-panel" style="display:none">
+          <div class="biochar-intro" style="margin-bottom:14px">
+            <div class="biochar-headline">🔗 The Carbon Credit Ecosystem — How Everything Connects</div>
+            <div class="biochar-sub">YieldCore AI is not just a monitoring platform — it's a <b style="color:var(--text)">circular economic engine</b>. Every sensor reading, every hectare mapped, and every soil sample feeds into three parallel revenue streams that compound each other. The more precision data you generate, the more carbon you verify. The more carbon you verify, the more revenue flows back into farm investment. Here's how the loops connect:</div>
+          </div>
+
+          <!-- FLOW: 5-step vertical pipeline -->
+          <div class="eco-pipeline">
+
+            <!-- STEP 1: FARMS -->
+            <div class="eco-step eco-step-green">
+              <div class="eco-step-num">①</div>
+              <div class="eco-step-body">
+                <div class="eco-step-title">🌾 10 Farms · 5,419 ha · 5 Provinces</div>
+                <div class="eco-step-desc">Satellite NDVI, IoT soil probes, drone surveys, and Open-Meteo weather data stream in every 5 seconds. The platform knows the soil moisture, temperature, NDVI index, pest risk, nutrient status, and solar output of every farm in real time.</div>
+                <div class="eco-step-tags"><span class="eco-tag">IoT Sensors</span><span class="eco-tag">Satellite NDVI</span><span class="eco-tag">Drone Surveys</span><span class="eco-tag">Open-Meteo</span></div>
+              </div>
+            </div>
+            <div class="eco-arrow">▼</div>
+
+            <!-- STEP 2: PLATFORM -->
+            <div class="eco-step eco-step-blue">
+              <div class="eco-step-num">②</div>
+              <div class="eco-step-body">
+                <div class="eco-step-title">🤖 YieldCore AI — Sequestration Engine</div>
+                <div class="eco-step-desc">GPT-4o and YieldCore's proprietary models aggregate all farm data to calculate exactly how much CO₂e each farm is sequestering per hectare per year. This data feeds the three parallel pathways simultaneously — no double counting, full audit trail.</div>
+                <div class="eco-step-tags"><span class="eco-tag">4,930t CO₂e Verified</span><span class="eco-tag">6,291t Pipeline</span><span class="eco-tag">8 Farms Enrolled</span></div>
+              </div>
+            </div>
+            <div class="eco-arrow">▼</div>
+
+            <!-- STEP 3: THREE PATHWAYS side by side -->
+            <div class="eco-three-col">
+              <div class="eco-pathway eco-path-orange">
+                <div class="eco-path-icon">🔥</div>
+                <div class="eco-path-title">Biochar Pathway</div>
+                <div class="eco-path-body">
+                  Farm bio-waste (maize stalks, husks, invasive alien wood) is pyrolysed into biochar in a low-oxygen kiln. Biochar is then either:
+                  <ul style="margin:6px 0 0 12px;padding:0">
+                    <li><b>Applied to soil</b> → locks C for 500+ yrs, improves water retention, reduces fertiliser need</li>
+                    <li><b>Sold</b> at R1,800/t to neighbouring crop farms</li>
+                    <li><b>Carbon credit bonus</b> — the locked carbon qualifies as additional verified tonnes on top of normal soil sequestration</li>
+                  </ul>
+                </div>
+                <div class="eco-path-rev">R1,800/t · −22% fertiliser cost</div>
+              </div>
+              <div class="eco-pathway eco-path-green">
+                <div class="eco-path-icon">🌿</div>
+                <div class="eco-path-title">VCS / Gold Standard</div>
+                <div class="eco-path-body">
+                  YieldCore's verified data log is accepted by SGS, Bureau Veritas and TÜV Rheinland — eliminating the manual audit cost. Credits are registered with Verra (VCS) or Gold Standard and sold on:
+                  <ul style="margin:6px 0 0 12px;padding:0">
+                    <li><b>Xpansiv CBL</b> — global exchange, USD liquidity</li>
+                    <li><b>Absa Carbon Advisory / Standard Bank Green</b> — ZAR OTC</li>
+                    <li><b>Direct ESG buyers</b> — local corporates meeting TCFD targets</li>
+                  </ul>
+                </div>
+                <div class="eco-path-rev">$18.40/t VCS · $21.60/t Gold Standard</div>
+              </div>
+              <div class="eco-pathway eco-path-violet">
+                <div class="eco-path-icon">🏛️</div>
+                <div class="eco-path-title">SARS Carbon Tax (Section 13)</div>
+                <div class="eco-path-body">
+                  SA's carbon tax (R190/tCO₂e) is offset using Section 13 agriculture credits. YieldCore generates the compliance documentation automatically. This is especially powerful for:
+                  <ul style="margin:6px 0 0 12px;padding:0">
+                    <li><b>Large farms</b> (Opal Game 1,850 ha, Karoo House 1,305 ha) with significant tax exposure</li>
+                    <li><b>Value-chain players</b> — agribusinesses, co-ops, and food processors who purchase offsets</li>
+                    <li>Offset up to <b>10% of total carbon tax liability</b> per year</li>
+                  </ul>
+                </div>
+                <div class="eco-path-rev">R190–R230/t · Domestic ZAR · No forex risk</div>
+              </div>
+            </div>
+            <div class="eco-arrow">▼</div>
+
+            <!-- STEP 4: REVENUE -->
+            <div class="eco-step eco-step-yellow">
+              <div class="eco-step-num">④</div>
+              <div class="eco-step-body">
+                <div class="eco-step-title">💰 Combined Revenue Streams — Current Portfolio</div>
+                <div class="eco-rev-grid">
+                  <div class="eco-rev-item"><div class="eco-rev-val" style="color:#f97316">Biochar</div><div class="eco-rev-num">R1,800/t sold</div><div class="eco-rev-sub">+ soil savings</div></div>
+                  <div class="eco-rev-item"><div class="eco-rev-val" style="color:#22c55e">VCS Credits</div><div class="eco-rev-num">R1.68M verified</div><div class="eco-rev-sub">4,930t × R341/t</div></div>
+                  <div class="eco-rev-item"><div class="eco-rev-val" style="color:#a78bfa">Gold Standard</div><div class="eco-rev-num">R+60/t premium</div><div class="eco-rev-sub">vs VCS baseline</div></div>
+                  <div class="eco-rev-item"><div class="eco-rev-val" style="color:#38bdf8">SARS Offset</div><div class="eco-rev-num">R190–R230/t</div><div class="eco-rev-sub">domestic tax relief</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="eco-arrow">▼</div>
+
+            <!-- STEP 5: REINVEST -->
+            <div class="eco-step eco-step-green" style="border-color:#22c55e55;background:linear-gradient(135deg,#22c55e08,#4ade8005)">
+              <div class="eco-step-num" style="background:#22c55e">♻️</div>
+              <div class="eco-step-body">
+                <div class="eco-step-title">♻️ Reinvest → Grow the Loop</div>
+                <div class="eco-step-desc">Carbon revenue pays for more precision sensors, drone fly-overs, and biochar kilns — which generate better data, which verifies more carbon, which earns more revenue. This is the <b style="color:#22c55e">compounding carbon flywheel</b>: each season you enrol more hectares, verify more tonnes, and unlock higher-tier verification standards.</div>
+                <div class="eco-step-tags"><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Sensors</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Ha Enrolled</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">Higher Credit Volume</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Revenue</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">→ Repeat ①</span></div>
+              </div>
+            </div>
+
+          </div><!-- /eco-pipeline -->
+
+          <!-- KEY NUMBERS FOOTER -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:14px">
+            <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:900;color:#22c55e">4,930t</div><div style="font-size:9px;color:var(--sub)">CO₂e Verified</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:900;color:#facc15">6,291t</div><div style="font-size:9px;color:var(--sub)">Total Pipeline</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:900;color:#f97316">R1,800</div><div style="font-size:9px;color:var(--sub)">Biochar per tonne</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:900;color:#38bdf8">$18.40</div><div style="font-size:9px;color:var(--sub)">VCM Spot (USD/t)</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:900;color:#a78bfa">R190/t</div><div style="font-size:9px;color:var(--sub)">SA Carbon Tax Rate</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:900;color:#4ade80">8</div><div style="font-size:9px;color:var(--sub)">Farms Enrolled</div></div>
+          </div>
+          <button class="wa-btn" style="margin-top:12px;width:100%" onclick="shareCarbonReport()">📲 Share Full Carbon Ecosystem Report via WhatsApp</button>
+        </div><!-- /cTab-ecosystem -->
 
       </div>
 
@@ -3809,7 +3956,7 @@ window.sendFarmReport=sendFarmReport;
 
 // ── CARBON TABS ──
 window.carbonTab=function(tab){
-  ['portfolio','biochar','sars','sell'].forEach(t=>{
+  ['portfolio','biochar','sars','sell','ecosystem'].forEach(t=>{
     const panel=document.getElementById('cTab-'+t);
     const btn=document.getElementById('ctab-'+t);
     if(panel) panel.style.display=t===tab?'':'none';
