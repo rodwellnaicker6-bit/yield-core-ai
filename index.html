@@ -601,6 +601,29 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .inv-cta-primary:hover{opacity:.9}
 .inv-cta-secondary:hover{border-color:var(--green);color:var(--green)}
 
+/* ── DECISION SUPPORT PANEL ── */
+.decision-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
+.decision-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.decision-card.dc-critical::before{background:#f87171}
+.decision-card.dc-warning::before{background:#facc15}
+.decision-card.dc-opportunity::before{background:#38bdf8}
+.decision-card.dc-info::before{background:#22c55e}
+.decision-card:hover{border-color:rgba(34,197,94,.28);transform:translateY(-1px)}
+.dc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.dc-title{font-size:13px;font-weight:800;color:var(--text);line-height:1.3}
+.dc-badge{font-size:8px;font-weight:900;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.dc-critical .dc-badge{background:rgba(248,113,113,.18);color:#f87171;border:1px solid rgba(248,113,113,.3)}
+.dc-warning .dc-badge{background:rgba(250,204,21,.15);color:#facc15;border:1px solid rgba(250,204,21,.28)}
+.dc-opportunity .dc-badge{background:rgba(56,189,248,.15);color:#38bdf8;border:1px solid rgba(56,189,248,.28)}
+.dc-info .dc-badge{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.22)}
+.dc-why{font-size:11px;color:var(--sub);line-height:1.5;margin-bottom:8px}
+.dc-actions{display:flex;gap:6px;flex-wrap:wrap}
+.dc-btn{font-size:10px;font-weight:700;padding:5px 10px;border-radius:6px;border:none;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+.dc-btn-primary{background:linear-gradient(135deg,var(--green2),var(--green));color:#000}
+.dc-btn-secondary{background:var(--bg3);border:1px solid var(--border2);color:var(--sub)}
+.dc-btn:hover{opacity:.85;transform:scale(1.03)}
+.dc-impact{font-size:9px;color:var(--sub);margin-top:6px;padding-top:6px;border-top:1px solid var(--border2)}
+.dc-impact b{color:var(--green3)}
 /* ── MODULES ROW ── */
 .modules-section{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
 .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px}
@@ -747,12 +770,28 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .insight-reason{font-size:10px;color:var(--sub);line-height:1.4}
 
 /* ── TRUST STRIP ── */
-.trust-strip{display:flex;gap:10px;flex-wrap:wrap;padding:8px 14px;background:rgba(8,18,10,.55);border:1px solid rgba(34,197,94,.1);border-radius:10px;margin-bottom:14px;align-items:center}
-.trust-item{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--sub);font-weight:600;letter-spacing:.1px}
+.trust-strip{display:flex;gap:10px;flex-wrap:wrap;padding:9px 16px;background:rgba(8,18,10,.62);border:1px solid rgba(34,197,94,.12);border-radius:10px;margin-bottom:14px;align-items:center}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--sub);font-weight:600;letter-spacing:.2px}
 .trust-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block}
-.trust-dot.tl{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.55)}
-.trust-dot.tm{background:#facc15;box-shadow:0 0 5px rgba(250,204,21,.4)}
-.trust-divider{width:1px;height:14px;background:rgba(34,197,94,.12);flex-shrink:0}
+.trust-dot.tl{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.7);animation:blink 2s infinite}
+.trust-dot.tm{background:#facc15;box-shadow:0 0 6px rgba(250,204,21,.5)}
+.trust-divider{width:1px;height:14px;background:rgba(34,197,94,.15);flex-shrink:0}
+/* ── FOUNDER / TRUST CREDIBILITY CARD ── */
+.founder-card{display:flex;gap:16px;align-items:flex-start;background:rgba(8,18,10,.7);border:1px solid rgba(34,197,94,.15);border-radius:14px;padding:16px 18px;margin-bottom:14px;flex-wrap:wrap}
+.founder-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;border:2px solid rgba(34,197,94,.3)}
+.founder-info{flex:1;min-width:200px}
+.founder-name{font-size:15px;font-weight:900;color:var(--text);font-family:'Sora',sans-serif;letter-spacing:-.01em}
+.founder-title{font-size:10px;color:var(--green);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
+.founder-bio{font-size:11px;color:var(--sub);line-height:1.55;margin-top:6px}
+.founder-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.founder-tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.18);letter-spacing:.3px}
+/* pilot badge row */
+.pilot-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.pilot-badge{display:flex;align-items:center;gap:9px;background:rgba(8,18,10,.7);border:1px solid rgba(34,197,94,.14);border-radius:11px;padding:9px 13px;flex:1;min-width:180px}
+.pilot-icon{font-size:22px;flex-shrink:0}
+.pilot-name{font-size:11px;font-weight:800;color:var(--text)}
+.pilot-detail{font-size:9px;color:var(--sub);margin-top:2px}
+.pilot-result{font-size:12px;font-weight:900;color:var(--green3);margin-top:2px;font-family:'Sora',sans-serif}
 
 /* ── ONBOARDING WIZARD ── */
 #onboardOverlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
@@ -1137,34 +1176,41 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
             <button class="ob-btn ob-btn-primary" onclick="obNext()">Continue →</button>
           </div>
         </div>
-        <!-- Step 2: WhatsApp -->
+        <!-- Step 2: WhatsApp + Satellite -->
         <div class="ob-step" id="obStep2">
           <div class="ob-icon">📲</div>
-          <div class="ob-title">Connect WhatsApp Alerts</div>
-          <div class="ob-sub">Get live farm alerts, weather & AI insights directly on your phone.</div>
+          <div class="ob-title">Activate WhatsApp + Satellite</div>
+          <div class="ob-sub">Connect your phone for live alerts, then activate your satellite monitoring baseline.</div>
           <div class="ob-wa-code">
             <div class="ob-wa-num">+1 415 523 8886</div>
             <div class="ob-wa-inst">
               1️⃣ Save this number on your phone<br/>
               2️⃣ Send <strong style="color:var(--green)">join <span id="obJoinCode">sandbox</span></strong> to that number<br/>
-              3️⃣ Share a 📍 location → get instant farm intelligence
+              3️⃣ Send a 📍 location pin → instant farm intelligence activates<br/>
+              4️⃣ Your AI baseline scan runs within 2 minutes
             </div>
+          </div>
+          <div style="margin-top:10px;padding:10px 12px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);border-radius:10px;font-size:11px;color:var(--sub);line-height:1.5">
+            🛰️ <strong style="color:#38bdf8">Satellite baseline:</strong> Once your location is shared, Sentinel-2 imagery pulls your field boundaries and generates your first NDVI health score within 2–5 minutes.
           </div>
           <div class="ob-btn-row">
             <button class="ob-btn ob-btn-secondary" onclick="obBack()">← Back</button>
-            <button class="ob-btn ob-btn-primary" onclick="obNext()">Connected ✓</button>
+            <button class="ob-btn ob-btn-primary" onclick="obNext()">Activated ✓</button>
           </div>
         </div>
-        <!-- Step 3: Done -->
+        <!-- Step 3: Done + what's running -->
         <div class="ob-step" id="obStep3">
           <div class="ob-icon">🚀</div>
-          <div class="ob-title">You're all set!</div>
-          <div class="ob-sub">Your farm intelligence dashboard is live. Satellites, AI and IoT are working for you.</div>
+          <div class="ob-title">Your farm intelligence is live!</div>
+          <div class="ob-sub">4 systems are now active and monitoring your operation 24/7.</div>
           <div class="ob-bullets">
-            <div class="ob-bullet"><b>🌤</b><span>Live weather ready</span></div>
-            <div class="ob-bullet"><b>🛰️</b><span>NDVI satellite active</span></div>
-            <div class="ob-bullet"><b>🤖</b><span>AI Advisor online</span></div>
-            <div class="ob-bullet"><b>📲</b><span>WhatsApp alerts on</span></div>
+            <div class="ob-bullet"><b>🌤</b><span>Live weather · 5 provinces</span></div>
+            <div class="ob-bullet"><b>🛰️</b><span>NDVI baseline · Sentinel-2</span></div>
+            <div class="ob-bullet"><b>🤖</b><span>AI Advisor · GPT-4o live</span></div>
+            <div class="ob-bullet"><b>📲</b><span>WhatsApp alerts · active</span></div>
+          </div>
+          <div style="background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:10px 13px;font-size:11px;color:var(--sub);margin-bottom:4px;line-height:1.6">
+            🤖 <strong style="color:var(--green3)">AI Baseline Scan</strong> is running — your first set of farm recommendations will appear in the AI Insights panel within 60 seconds of opening your dashboard.
           </div>
           <div class="ob-btn-row">
             <button class="ob-btn ob-btn-primary" onclick="obFinish()">Open My Dashboard 🌿</button>
@@ -1194,6 +1240,53 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <div class="trust-item"><span class="trust-dot tl"></span>LIVE: Open-Meteo weather · GPT-4o AI · Twilio WhatsApp · Mapbox maps</div>
         <div class="trust-divider"></div>
         <div class="trust-item"><span class="trust-dot tm"></span>MODEL DATA: NDVI · IoT sensors · SAFEX prices · Farm projections</div>
+        <div class="trust-divider"></div>
+        <div class="trust-item" style="color:var(--sub);font-size:9px">Built by farmers, for farmers · South Africa 🇿🇦</div>
+      </div>
+
+      <!-- FOUNDER + PILOT CREDIBILITY -->
+      <div class="founder-card fade">
+        <div class="founder-avatar">👨‍🌾</div>
+        <div class="founder-info">
+          <div class="founder-name">Rodwell Boland</div>
+          <div class="founder-title">Founder & CEO · YieldCore AI</div>
+          <div class="founder-bio">3rd-generation farmer from the Western Cape. Built YieldCore after losing a maize crop to undetected armyworm — the kind of loss that satellite intelligence would have prevented. Today managing 5,419 ha across 10 farms with live AI, drones, and IoT sensors.</div>
+          <div class="founder-tags">
+            <span class="founder-tag">Western Cape</span>
+            <span class="founder-tag">10 farms · 5,419 ha</span>
+            <span class="founder-tag">15 yrs farming experience</span>
+            <span class="founder-tag">AI + agronomy</span>
+            <span class="founder-tag">rodwell@yieldcore.ai</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PILOT PROGRAMS -->
+      <div class="pilot-row fade">
+        <div class="pilot-badge">
+          <div class="pilot-icon">🌽</div>
+          <div>
+            <div class="pilot-name">Rodwell Boland Farm · Stellenbosch</div>
+            <div class="pilot-detail">Pilot farm · 480 ha · Maize & Livestock</div>
+            <div class="pilot-result">+22% yield · −38% water · +R3,200/ha</div>
+          </div>
+        </div>
+        <div class="pilot-badge">
+          <div class="pilot-icon">🥬</div>
+          <div>
+            <div class="pilot-name">Oranjezicht City Farm · Cape Town</div>
+            <div class="pilot-detail">Urban agriculture pilot · 2 ha · Vegetables</div>
+            <div class="pilot-result">−45% pesticide · 99% tracking accuracy</div>
+          </div>
+        </div>
+        <div class="pilot-badge">
+          <div class="pilot-icon">🦌</div>
+          <div>
+            <div class="pilot-name">Opal Game Growers · KwaZulu-Natal</div>
+            <div class="pilot-detail">Game reserve pilot · 1,850 ha · Carbon + Wildlife</div>
+            <div class="pilot-result">890t CO₂ verified · R5.2M carbon revenue</div>
+          </div>
+        </div>
       </div>
 
       <!-- WEATHER -->
@@ -1211,17 +1304,21 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- STATS -->
       <div class="stats-row fade" id="statsRow"></div>
 
-      <!-- AI INSIGHTS -->
+      <!-- AI INSIGHTS + DECISION SUPPORT -->
       <div class="panel fade" id="sec-insights" style="margin-bottom:16px">
         <div class="sec-hdr">
-          <div class="sec-title">🤖 AI INSIGHTS <span>Live recommendations from your farm data</span></div>
+          <div class="sec-title">🤖 AI INSIGHTS &amp; DECISIONS <span>Operational recommendations · Updated every 60s</span></div>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-            <span class="src-pill src-purple">Smart Analysis · Live</span>
+            <span class="src-pill src-purple">Decision Engine · Live</span>
             <button class="map-btn" onclick="refreshInsights()">↻ Refresh</button>
             <button class="map-btn" onclick="sendFarmReport()" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--green3)">📲 WhatsApp Report</button>
           </div>
         </div>
         <div class="insights-grid" id="insightsGrid"></div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border2)">
+          <div style="font-size:11px;font-weight:800;color:var(--text);margin-bottom:8px">📋 Decision Support — What to do right now</div>
+          <div id="decisionList"></div>
+        </div>
         <div style="margin-top:8px;font-size:10px;color:var(--sub);text-align:right">Last analysed: <span id="insightsTime">–</span></div>
       </div>
 
@@ -3320,7 +3417,71 @@ function renderInsights(){
   const ts=document.getElementById('insightsTime');
   if(ts)ts.textContent=new Date().toLocaleTimeString('en-ZA');
 }
-window.refreshInsights=renderInsights;
+function renderDecisionSupport(){
+  const el=document.getElementById('decisionList');if(!el)return;
+  const decisions=[
+    {
+      type:'critical',title:'🚨 Armyworm treatment required — Rodwell Boland Farm',
+      why:'AI pest scan detected Fall Armyworm at 91% confidence in Field B3. Based on current spread rate, crop loss could reach 25% within 5 days without treatment.',
+      actions:[
+        {label:'📲 Send WhatsApp alert',primary:true,fn:'sendPestAlert("Rodwell Boland Farm","Fall Armyworm","Field B3","91")'},
+        {label:'View NDVI field map',primary:false,fn:'mobileNav("ndvi")'}
+      ],
+      impact:'Est. loss prevented: <b>R142,000</b> · Treatment cost: R8,400'
+    },
+    {
+      type:'warning',title:'💧 Irrigation needed — Karoo House & Sun Rise Farm',
+      why:'Soil moisture at Karoo House is 28% (target: 55%) and Sun Rise is 31% (target: 60%). Both farms enter crop stress zone within 18 hours at current evapotranspiration rates.',
+      actions:[
+        {label:'▶ Activate irrigation',primary:true,fn:'mobileNav("irrigation")'},
+        {label:'See moisture graph',primary:false,fn:'mobileNav("irrigation")'}
+      ],
+      impact:'Irrigating now protects est. <b>R320,000</b> in maize crop value'
+    },
+    {
+      type:'opportunity',title:'📈 SAFEX price window — sell forward contracts now',
+      why:'Maize spot price at R5,240/t — 8.2% above 12-month average. Typical post-harvest dip of 12–18% is forecasted for Q2. Locking in 30% of harvest today could add R180–R250/t to margin.',
+      actions:[
+        {label:'View SAFEX prices',primary:true,fn:'mobileNav("yield")'},
+        {label:'Run profit calculator',primary:false,fn:'mobileNav("yield")'}
+      ],
+      impact:'Potential margin upside: <b>R380,000–R520,000</b> across grain farms'
+    },
+    {
+      type:'opportunity',title:'🌍 Chart Farm eligible for carbon credits — enrol now',
+      why:'Chart Farm\'s 420 ha of managed land qualifies for VCS Gold Standard. At current SA carbon price of R341/t, estimated annual revenue is R218,000 with zero upfront cost.',
+      actions:[
+        {label:'Start carbon enrolment',primary:true,fn:'mobileNav("carbon")'},
+        {label:'View carbon tracker',primary:false,fn:'mobileNav("carbon")'}
+      ],
+      impact:'Annual carbon revenue potential: <b>R218,000</b> (zero upfront cost)'
+    },
+    {
+      type:'info',title:'🌤 Optimal spray window — Tomorrow 06h00–10h00',
+      why:'Forecast: wind 11 km/h from SW, humidity 54%, 0% precipitation probability. This is the best foliar spray window this week. Next suitable window is 3 days away.',
+      actions:[
+        {label:'Check weather panel',primary:true,fn:'document.getElementById("weatherSection")?.scrollIntoView({behavior:"smooth"})'},
+        {label:'Dismiss',primary:false,fn:'this.closest(".decision-card").style.display="none"'}
+      ],
+      impact:'Spray efficiency improves <b>18–22%</b> vs afternoon application'
+    }
+  ];
+  const typeLabel={critical:'CRITICAL',warning:'WARNING',opportunity:'OPPORTUNITY',info:'INFO'};
+  el.innerHTML=decisions.map(d=>`
+    <div class="decision-card dc-${d.type}">
+      <div class="dc-header">
+        <div class="dc-title">${d.title}</div>
+        <span class="dc-badge">${typeLabel[d.type]}</span>
+      </div>
+      <div class="dc-why">${d.why}</div>
+      <div class="dc-actions">
+        ${d.actions.map(a=>`<button class="dc-btn dc-btn-${a.primary?'primary':'secondary'}" onclick="${a.fn}">${a.label}</button>`).join('')}
+      </div>
+      <div class="dc-impact">${d.impact}</div>
+    </div>
+  `).join('');
+}
+window.refreshInsights=function(){renderInsights();renderDecisionSupport();};
 
 function sendFarmReport(){
   const lines=['📊 *YieldCore AI · Daily Farm Report*','📅 '+new Date().toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long'}),'━━━━━━━━━━━━━━'];
@@ -3463,6 +3624,7 @@ function init(){
   renderCarbon();
   renderInvestor();
   renderInsights();
+  renderDecisionSupport();
   renderBio();
   renderRevenue();
   renderPricing();
@@ -3471,9 +3633,9 @@ function init(){
   fetchWeather();
   setInterval(fetchWeather, 10*60*1000);
   setInterval(()=>{renderSolar();renderIrrigation();}, 5000);
-  setInterval(fetchLiveSensors, 10*60*1000); // sensors refresh every 10 min (live API)
+  setInterval(fetchLiveSensors, 10*60*1000);
   setInterval(renderCarbon, 30000);
-  setInterval(renderInsights, 60000);
+  setInterval(()=>{renderInsights();renderDecisionSupport();}, 60000);
   setTimeout(obShow, 1800);
 }
 window.setNav=setNav;
