@@ -538,6 +538,82 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .carbon-rev-val{font-size:16px;font-weight:900;color:#22c55e}
 .carbon-rev-label{font-size:9px;color:var(--sub);margin-top:3px}
 
+/* ── CARBON TABS ── */
+.carbon-tab-bar{display:flex;gap:6px;margin-bottom:14px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:5px}
+.c-tab{flex:1;padding:8px 10px;border:none;border-radius:9px;font-size:11px;font-weight:800;cursor:pointer;transition:all .18s;background:transparent;color:var(--sub);font-family:'Inter',sans-serif;white-space:nowrap}
+.c-tab.active{background:linear-gradient(135deg,#22c55e18,#4ade8010);color:#22c55e;border:1px solid #22c55e33}
+.c-tab:hover:not(.active){background:var(--bg4);color:var(--text)}
+
+/* ── BIOCHAR PANEL ── */
+.biochar-intro{background:linear-gradient(135deg,#1a2e0a,#0f1f08);border:1px solid #22c55e28;border-radius:14px;padding:18px 20px;margin-bottom:12px;position:relative;overflow:hidden}
+.biochar-intro::after{content:'🪵';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:60px;opacity:.08;pointer-events:none}
+.biochar-headline{font-size:15px;font-weight:900;color:var(--text);margin-bottom:4px;font-family:'Sora',sans-serif}
+.biochar-sub{font-size:11px;color:var(--sub);line-height:1.55;max-width:640px}
+.biochar-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.biochar-stat{background:#ffffff07;border:1px solid #22c55e1a;border-radius:9px;padding:10px 8px;text-align:center}
+.biochar-stat-val{font-size:16px;font-weight:900;color:#22c55e;font-family:'Sora',sans-serif}
+.biochar-stat-lbl{font-size:8px;color:var(--sub);margin-top:3px;text-transform:uppercase;letter-spacing:.8px;line-height:1.3}
+.biochar-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.biochar-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:14px 15px}
+.biochar-card-icon{font-size:22px;margin-bottom:7px}
+.biochar-card-title{font-size:12px;font-weight:900;color:var(--text);margin-bottom:5px;font-family:'Sora',sans-serif}
+.biochar-card-body{font-size:11px;color:var(--sub);line-height:1.5}
+.biochar-card-body b{color:var(--text)}
+.biochar-process-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.biochar-step{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:12px 10px;text-align:center;position:relative}
+.biochar-step-num{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#4ade80);color:#03130a;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 7px}
+.biochar-step-title{font-size:10px;font-weight:800;color:var(--text);margin-bottom:3px}
+.biochar-step-body{font-size:9px;color:var(--sub);line-height:1.4}
+
+/* ── SARS TAX PANEL ── */
+.sars-intro{background:linear-gradient(135deg,#0a1628,#0d1f3c);border:1px solid #38bdf828;border-radius:14px;padding:18px 20px;margin-bottom:12px;position:relative;overflow:hidden}
+.sars-intro::after{content:'🏛️';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:60px;opacity:.08;pointer-events:none}
+.sars-headline{font-size:15px;font-weight:900;color:var(--text);margin-bottom:4px;font-family:'Sora',sans-serif}
+.sars-sub{font-size:11px;color:var(--sub);line-height:1.55}
+.sars-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sars-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:15px 16px}
+.sars-card-label{font-size:9px;font-weight:800;color:#38bdf8;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
+.sars-card-val{font-size:20px;font-weight:900;color:var(--text);font-family:'Sora',sans-serif;margin-bottom:3px}
+.sars-card-sub{font-size:10px;color:var(--sub);line-height:1.45}
+.sars-steps{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.sars-step-item{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.sars-step-dot{width:24px;height:24px;border-radius:50%;background:#38bdf820;border:2px solid #38bdf855;color:#38bdf8;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sars-step-title{font-size:11px;font-weight:800;color:var(--text);margin-bottom:3px}
+.sars-step-body{font-size:10px;color:var(--sub);line-height:1.45}
+.sars-callout{background:#38bdf80d;border:1px solid #38bdf822;border-radius:10px;padding:12px 14px;font-size:11px;color:var(--sub);line-height:1.5;margin-top:10px}
+.sars-callout b{color:#38bdf8}
+
+/* ── SELL CREDITS PANEL ── */
+.sell-intro{background:linear-gradient(135deg,#1a0f28,#200d3c);border:1px solid #a78bfa28;border-radius:14px;padding:18px 20px;margin-bottom:12px;position:relative;overflow:hidden}
+.sell-intro::after{content:'💰';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:60px;opacity:.08;pointer-events:none}
+.sell-headline{font-size:15px;font-weight:900;color:var(--text);margin-bottom:4px;font-family:'Sora',sans-serif}
+.sell-sub{font-size:11px;color:var(--sub);line-height:1.55}
+.sell-price-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.sell-price-card{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:12px 10px;text-align:center}
+.sell-price-tag{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.sell-price-val{font-size:18px;font-weight:900;font-family:'Sora',sans-serif;margin-bottom:3px}
+.sell-price-sub{font-size:9px;color:var(--sub);line-height:1.4}
+.sell-steps{display:flex;flex-direction:column;gap:8px}
+.sell-step{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:13px 15px;display:flex;gap:13px;align-items:flex-start;transition:border-color .15s}
+.sell-step:hover{border-color:#a78bfa44}
+.sell-step-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#818cf8);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sell-step-title{font-size:12px;font-weight:900;color:var(--text);margin-bottom:4px;font-family:'Sora',sans-serif}
+.sell-step-body{font-size:10px;color:var(--sub);line-height:1.5}
+.sell-step-tag{display:inline-block;background:#a78bfa18;border:1px solid #a78bfa33;border-radius:5px;padding:2px 7px;font-size:9px;font-weight:800;color:#a78bfa;margin-top:5px}
+.sell-markets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.sell-market{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:11px 12px;text-align:center}
+.sell-market-name{font-size:11px;font-weight:800;color:var(--text);margin-bottom:3px}
+.sell-market-type{font-size:9px;color:var(--sub);margin-bottom:5px}
+.sell-market-price{font-size:13px;font-weight:900;color:#a78bfa}
+
+/* ── SMOOTH FLOW / TRANSITIONS ── */
+.section-transition{height:1px;background:linear-gradient(90deg,transparent,#22c55e18,transparent);margin:6px 0}
+.panel{transition:opacity .25s ease,transform .25s ease}
+.panel.slide-in{animation:slideIn .35s ease both}
+@keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.c-tab-panel{animation:tabFade .25s ease both}
+@keyframes tabFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
 /* Certificate Modal */
 .cert-overlay{position:fixed;inset:0;background:#000000cc;z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
 .cert-card{background:linear-gradient(160deg,#030f04,#051a06,#041008);border:2px solid #22c55e55;border-radius:20px;padding:36px 40px;max-width:520px;width:100%;position:relative}
@@ -1102,7 +1178,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
     <!-- TOPBAR -->
     <div id="topbar">
       <div>
-        <div class="tb-welcome">Welcome back, Rodwell 🌿</div>
+        <div class="tb-welcome">Welcome back, Rodwell Naicker 🌿</div>
         <div class="tb-sub">10 Farms &nbsp;•&nbsp; 5,419 Hectares &nbsp;•&nbsp; Live Intelligence</div>
         <div class="yield-ribbon">
           <span class="yr-pill"><b>+18%</b> yield uplift</span>
@@ -1294,15 +1370,14 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
       <!-- FOUNDER + PILOT CREDIBILITY -->
       <div class="founder-card fade">
-        <div class="founder-avatar">👨‍🌾</div>
+        <div class="founder-avatar">👨‍💼</div>
         <div class="founder-info">
-          <div class="founder-name">Rodwell Boland</div>
+          <div class="founder-name">Rodwell Naicker</div>
           <div class="founder-title">Founder & CEO · YieldCore AI</div>
-          <div class="founder-bio">3rd-generation farmer from the Western Cape. Built YieldCore after losing a maize crop to undetected armyworm — the kind of loss that satellite intelligence would have prevented. Today managing 5,419 ha across 10 farms with live AI, drones, and IoT sensors.</div>
+          <div class="founder-bio">Built YieldCore AI to bring satellite intelligence, drone technology, and AI-driven decision-making to South African agriculture. Today managing 5,419 ha across 10 farms with live AI, drones, and IoT sensors — and opening the platform to all SA farmers.</div>
           <div class="founder-tags">
-            <span class="founder-tag">Western Cape</span>
+            <span class="founder-tag">South Africa</span>
             <span class="founder-tag">10 farms · 5,419 ha</span>
-            <span class="founder-tag">15 yrs farming experience</span>
             <span class="founder-tag">AI + agronomy</span>
             <span class="founder-tag">rodwell@yieldcore.ai</span>
           </div>
@@ -1314,7 +1389,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <div class="pilot-badge">
           <div class="pilot-icon">🌽</div>
           <div>
-            <div class="pilot-name">Rodwell Boland Farm · Stellenbosch</div>
+            <div class="pilot-name">Rodwell Naicker Farm · Stellenbosch</div>
             <div class="pilot-detail">Pilot farm · 480 ha · Maize & Livestock</div>
             <div class="pilot-result">+22% yield · −38% water · +R3,200/ha</div>
           </div>
@@ -1618,32 +1693,162 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <div class="carbon-header-band">
           <div class="carbon-header-left">
             <div class="carbon-header-title">🌿 Carbon Credit Tracker</div>
-            <div class="carbon-header-sub">Voluntary Carbon Market · VCS &amp; Gold Standard · Real-time sequestration monitoring across your farm fleet</div>
+            <div class="carbon-header-sub">Voluntary Carbon Market · VCS &amp; Gold Standard · Biochar · SARS Carbon Tax · Live sequestration monitoring</div>
           </div>
           <div class="carbon-header-stats" id="carbonHeaderStats"></div>
         </div>
 
-        <!-- REVENUE SUMMARY BAR -->
-        <div class="carbon-revenue-summary" id="carbonRevSummary"></div>
+        <!-- TAB BAR -->
+        <div class="carbon-tab-bar">
+          <button class="c-tab active" id="ctab-portfolio" onclick="carbonTab('portfolio')">📊 Portfolio</button>
+          <button class="c-tab" id="ctab-biochar" onclick="carbonTab('biochar')">🪵 Biochar</button>
+          <button class="c-tab" id="ctab-sars" onclick="carbonTab('sars')">🏛️ SARS Tax</button>
+          <button class="c-tab" id="ctab-sell" onclick="carbonTab('sell')">💰 Sell Credits</button>
+        </div>
 
-        <!-- MAIN GRID: farm cards + market panel -->
-        <div class="carbon-grid-main">
-          <div class="carbon-farm-grid" id="carbonFarmGrid"></div>
-          <div class="carbon-market-card">
-            <div class="carbon-market-title">📈 VCM Spot Price</div>
-            <div>
-              <div class="carbon-price-big" id="carbonPrice">$18.40</div>
-              <div class="carbon-price-meta">per tonne CO₂e &nbsp;·&nbsp; <span class="carbon-price-chg" id="carbonPriceChg">+2.1%</span> today</div>
+        <!-- TAB: PORTFOLIO -->
+        <div id="cTab-portfolio" class="c-tab-panel">
+          <!-- REVENUE SUMMARY BAR -->
+          <div class="carbon-revenue-summary" id="carbonRevSummary"></div>
+          <!-- MAIN GRID: farm cards + market panel -->
+          <div class="carbon-grid-main">
+            <div class="carbon-farm-grid" id="carbonFarmGrid"></div>
+            <div class="carbon-market-card">
+              <div class="carbon-market-title">📈 VCM Spot Price</div>
+              <div>
+                <div class="carbon-price-big" id="carbonPrice">$18.40</div>
+                <div class="carbon-price-meta">per tonne CO₂e &nbsp;·&nbsp; <span class="carbon-price-chg" id="carbonPriceChg">+2.1%</span> today</div>
+              </div>
+              <div>
+                <div style="font-size:10px;color:var(--sub);margin-bottom:6px">ZAR equivalent: <span id="carbonPriceZAR" style="color:var(--green);font-weight:900">R341/t</span></div>
+                <div class="carbon-sparkline-row" id="carbonSparkline"></div>
+                <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--dim);margin-top:4px"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Now</span></div>
+              </div>
+              <div class="carbon-market-title" style="margin-top:4px">🏅 Verification Standards</div>
+              <div class="carbon-standards" id="carbonStandards"></div>
+              <button class="wa-btn" style="margin-top:4px" onclick="shareCarbonReport()">📲 Send Carbon Report via WhatsApp</button>
             </div>
-            <div>
-              <div style="font-size:10px;color:var(--sub);margin-bottom:6px">ZAR equivalent: <span id="carbonPriceZAR" style="color:var(--green);font-weight:900">R341/t</span></div>
-              <div class="carbon-sparkline-row" id="carbonSparkline"></div>
-              <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--dim);margin-top:4px"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Now</span></div>
-            </div>
-            <div class="carbon-market-title" style="margin-top:4px">🏅 Verification Standards</div>
-            <div class="carbon-standards" id="carbonStandards"></div>
-            <button class="wa-btn" style="margin-top:4px" onclick="shareCarbonReport()">📲 Send Carbon Report via WhatsApp</button>
           </div>
+        </div>
+
+        <!-- TAB: BIOCHAR -->
+        <div id="cTab-biochar" class="c-tab-panel" style="display:none">
+          <div class="biochar-intro">
+            <div class="biochar-headline">🪵 What is Biochar — and why does it matter for SA farmers?</div>
+            <div class="biochar-sub">Biochar is a stable, carbon-rich material produced by heating biomass (crop residues, wood waste, sugarcane bagasse) in a low-oxygen process called <b style="color:var(--text)">pyrolysis</b>. When applied to soil it locks carbon away for <b style="color:var(--text)">hundreds to thousands of years</b> — far longer than any cover crop or composting method. It also improves water retention, raises soil pH, and boosts fertiliser uptake, making it one of the most powerful tools for SA dryland farmers.</div>
+            <div class="biochar-stats-row">
+              <div class="biochar-stat"><div class="biochar-stat-val">2–3.5t</div><div class="biochar-stat-lbl">CO₂e sequestered per ha/yr</div></div>
+              <div class="biochar-stat"><div class="biochar-stat-val">500+yr</div><div class="biochar-stat-lbl">Stable in soil (no re-emission)</div></div>
+              <div class="biochar-stat"><div class="biochar-stat-val">+28%</div><div class="biochar-stat-lbl">Avg water retention improvement</div></div>
+              <div class="biochar-stat"><div class="biochar-stat-val">−22%</div><div class="biochar-stat-lbl">Fertiliser N required (less leaching)</div></div>
+            </div>
+          </div>
+          <div class="biochar-grid">
+            <div class="biochar-card">
+              <div class="biochar-card-icon">🌽</div>
+              <div class="biochar-card-title">SA Feedstocks for Biochar</div>
+              <div class="biochar-card-body">
+                <b>Maize stalks &amp; cobs</b> — most abundant. Produced post-harvest from your fields.<br><br>
+                <b>Sugarcane bagasse</b> — KZN &amp; Mpumalanga. High-volume, low-ash biochar.<br><br>
+                <b>Invasive alien wood</b> — Wattle, Port Jackson. Biochar is a government-supported removal pathway.<br><br>
+                <b>Macadamia shells &amp; peach pits</b> — Western Cape orchards. Premium high-carbon biochar.
+              </div>
+            </div>
+            <div class="biochar-card">
+              <div class="biochar-card-icon">🌱</div>
+              <div class="biochar-card-title">Soil Benefits — SA Context</div>
+              <div class="biochar-card-body">
+                <b>Sandy Karoo soils</b> — Biochar dramatically improves CEC and water-holding. Drought resilience improvement of up to 40% measured in trials.<br><br>
+                <b>Clay soils (Highveld)</b> — Reduces compaction, improves aeration, root penetration.<br><br>
+                <b>Acidic soils (KZN)</b> — Raises pH similar to lime but lasts decades. pH shift of 0.5–1.2 units documented.<br><br>
+                <b>Mycorrhizal habitat</b> — Porous structure acts as habitat for beneficial fungi — synergy with our bio-inputs.
+              </div>
+            </div>
+            <div class="biochar-card">
+              <div class="biochar-card-icon">💰</div>
+              <div class="biochar-card-title">Revenue Potential per Hectare</div>
+              <div class="biochar-card-body">
+                Applying biochar at <b>3 t/ha</b> sequesters approximately <b>2.4–3.0 tCO₂e/ha</b> per year.<br><br>
+                At current VCM spot prices of <b>~R341/t</b>, this generates <b>R818–R1,023 per ha annually</b> in carbon credit revenue — on top of yield improvements from soil health gains.<br><br>
+                Over a 10-year verified project, a <b>500 ha farm</b> could earn <b>R4.1M–R5.1M</b> in carbon credits alone, plus yield savings from reduced fertiliser.
+              </div>
+            </div>
+            <div class="biochar-card">
+              <div class="biochar-card-icon">⚠️</div>
+              <div class="biochar-card-title">Application Guidelines</div>
+              <div class="biochar-card-body">
+                <b>Rate:</b> 1–5 t/ha depending on crop, soil type, and budget. Start at 2 t/ha for first season.<br><br>
+                <b>Timing:</b> Incorporate before planting — ideally 4–6 weeks before. Broadcast and disc-in 10–15cm deep.<br><br>
+                <b>Activation:</b> Pre-charge with compost tea or liquid N-Fix Pro before application for best results.<br><br>
+                <b>Testing:</b> Run baseline soil carbon test before application and annually thereafter for carbon credit verification.
+              </div>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:900;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">🔁 Biochar Production Process</div>
+          <div class="biochar-process-row">
+            <div class="biochar-step"><div class="biochar-step-num">1</div><div class="biochar-step-title">Collect Feedstock</div><div class="biochar-step-body">Harvest crop residues, alien wood, or arrange collection with a local biochar co-op. Must be dry (&lt;20% moisture).</div></div>
+            <div class="biochar-step"><div class="biochar-step-num">2</div><div class="biochar-step-title">Pyrolysis / Kiln</div><div class="biochar-step-body">Heat to 400–700°C in a flame-cap kiln or continuous retort. YieldCore partner kilns available in WC, KZN, GP.</div></div>
+            <div class="biochar-step"><div class="biochar-step-num">3</div><div class="biochar-step-title">Quality Test</div><div class="biochar-step-body">Measure pH, surface area, volatile matter. Must meet European Biochar Certificate (EBC) or IBI standards for credit eligibility.</div></div>
+            <div class="biochar-step"><div class="biochar-step-num">4</div><div class="biochar-step-title">Apply &amp; Monitor</div><div class="biochar-step-body">Incorporate into soil. Collect GPS-logged field photos. YieldCore auto-logs application events for verification audit trail.</div></div>
+          </div>
+          <div style="background:#22c55e0d;border:1px solid #22c55e22;border-radius:10px;padding:12px 14px;font-size:11px;color:var(--sub);margin-top:12px;line-height:1.5">
+            💡 <b style="color:var(--text)">YieldCore Biochar Partner Network:</b> We connect farmers with certified pyrolysis operators in Western Cape, KZN, and Mpumalanga. Bulk pricing from <b style="color:#22c55e">R1,800/t</b>. WhatsApp us to connect with your nearest producer.
+            <button class="wa-btn" style="margin-top:10px;width:100%" onclick="sendBiocharEnquiry()">📲 Request Biochar Quote via WhatsApp</button>
+          </div>
+        </div>
+
+        <!-- TAB: SARS CARBON TAX -->
+        <div id="cTab-sars" class="c-tab-panel" style="display:none">
+          <div class="sars-intro">
+            <div class="sars-headline">🏛️ South African Carbon Tax — What Farmers Need to Know</div>
+            <div class="sars-sub">South Africa's <b style="color:var(--text)">Carbon Tax Act (No. 15 of 2019)</b> places a levy on greenhouse gas emissions — but it also creates a mechanism for farmers to <b style="color:var(--text)">earn offset credits</b> that reduce carbon tax liabilities. Agriculture is exempt from direct carbon tax, but farmers can sell offsets to emitters who need to reduce their liability. Understanding this creates a genuine new revenue stream.</div>
+          </div>
+          <div class="sars-grid">
+            <div class="sars-card"><div class="sars-card-label">Carbon Tax Rate (2025)</div><div class="sars-card-val">R236/tCO₂e</div><div class="sars-card-sub">Increases by CPI + 2% each year until 2030. Phase 2 (2026–2030) will expand to more sectors and close exemptions.</div></div>
+            <div class="sars-card"><div class="sars-card-label">Max Offset Allowance</div><div class="sars-card-val">Up to 10%</div><div class="sars-card-sub">Emitters can use approved carbon offsets to reduce up to 10% of their carbon tax liability. Agriculture and forestry offsets are approved.</div></div>
+            <div class="sars-card"><div class="sars-card-label">Farmer's Offset Price</div><div class="sars-card-val">~R190–R230/t</div><div class="sars-card-sub">SA Carbon Tax offsets trade at a discount to the full tax rate. Typically R190–R230/tCO₂e for SARS-approved Section 13 credits.</div></div>
+            <div class="sars-card"><div class="sars-card-label">Approved Activities</div><div class="sars-card-val">4 Categories</div><div class="sars-card-sub">Soil carbon sequestration, biochar application, agroforestry / windbreaks, improved manure management (Section 13 regulations).</div></div>
+          </div>
+          <div style="font-size:11px;font-weight:900;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;margin:12px 0 8px">📋 How to Claim Section 13 Offset Credits with SARS</div>
+          <div class="sars-steps">
+            <div class="sars-step-item"><div class="sars-step-dot">1</div><div><div class="sars-step-title">Establish a Baseline Measurement</div><div class="sars-step-body">Commission a DEA&amp;DP-accredited baseline soil carbon assessment before you start your sequestration activity. This is the legal starting point for any offset claim. Cost: approximately R4,000–R8,000 per farm.</div></div></div>
+            <div class="sars-step-item"><div class="sars-step-dot">2</div><div><div class="sars-step-title">Implement an Approved Sequestration Activity</div><div class="sars-step-body">Apply biochar, establish agroforestry buffers, convert to no-till, or implement improved grazing. Keep GPS-logged records of every application event — YieldCore auto-logs these for you.</div></div></div>
+            <div class="sars-step-item"><div class="sars-step-dot">3</div><div><div class="sars-step-title">Third-Party Verification</div><div class="sars-step-body">After 12 months, appoint a SANAS-accredited verifier (SGS, Bureau Veritas, or TÜV Rheinland) to audit your records and soil measurements. They issue a Verified Emission Reduction (VER) statement.</div></div></div>
+            <div class="sars-step-item"><div class="sars-step-dot">4</div><div><div class="sars-step-title">Register in the South African Carbon Offset Administration System (COAS)</div><div class="sars-step-body">Submit your verified VER statement to SARS / DFFE via COAS. Credits are issued as South African offset certificates linked to your entity tax number.</div></div></div>
+            <div class="sars-step-item"><div class="sars-step-dot">5</div><div><div class="sars-step-title">Sell Your Credits to a Taxable Emitter</div><div class="sars-step-body">Credits can be sold directly to a mining house, manufacturer, or energy company who needs to reduce their carbon tax bill — or via a broker (Absa Carbon, Standard Bank Green Finance, Carbon Neutral Group SA). Payment is in ZAR, taxable as income under the Income Tax Act.</div></div></div>
+          </div>
+          <div class="sars-callout">📌 <b>YieldCore files your COAS documentation automatically.</b> Our platform captures the GPS logs, application records, and soil sensor data required for verification — reducing your admin burden to near-zero. Contact us to start your Section 13 offset registration: <b>rodwell@yieldcore.ai</b></div>
+        </div>
+
+        <!-- TAB: SELL CREDITS -->
+        <div id="cTab-sell" class="c-tab-panel" style="display:none">
+          <div class="sell-intro">
+            <div class="sell-headline">💰 How to Sell Your Carbon Credits — Step-by-Step</div>
+            <div class="sell-sub">Once your sequestration is measured and verified, your carbon credits are a real financial asset — tradeable on global voluntary carbon markets or sold directly to SA emitters. Here's the complete process from soil to sale, including current market prices and where to list.</div>
+          </div>
+          <div class="sell-price-row">
+            <div class="sell-price-card"><div class="sell-price-tag" style="color:#22c55e">Verra VCS</div><div class="sell-price-val" style="color:#22c55e" id="sellPriceVCS">R341/t</div><div class="sell-price-sub">Voluntary Carbon Market. Globally liquid. Best for larger portfolios (&gt;500t/yr).</div></div>
+            <div class="sell-price-card"><div class="sell-price-tag" style="color:#facc15">Gold Standard</div><div class="sell-price-val" style="color:#facc15" id="sellPriceGS">R400/t</div><div class="sell-price-sub">Premium co-benefit label. Higher price, stricter audit. Favoured by ESG corporates.</div></div>
+            <div class="sell-price-card"><div class="sell-price-tag" style="color:#38bdf8">SARS Carbon Tax</div><div class="sell-price-val" style="color:#38bdf8">R190–R230/t</div><div class="sell-price-sub">Section 13 credits. Lower price but domestic ZAR payment, no forex risk.</div></div>
+          </div>
+          <div class="sell-steps">
+            <div class="sell-step"><div class="sell-step-num">1</div><div><div class="sell-step-title">Choose Your Standard</div><div class="sell-step-body">VCS (Verra) for global liquidity and best prices. Gold Standard for premium ESG buyers. SARS Section 13 for domestic SA emitters — simpler process, ZAR-denominated payment.<span class="sell-step-tag">Decision point</span></div></div></div>
+            <div class="sell-step"><div class="sell-step-num">2</div><div><div class="sell-step-title">Baseline &amp; Project Design Document (PDD)</div><div class="sell-step-body">Engage an accredited project developer or consultant to write your Project Design Document — this describes your sequestration method, baseline, monitoring plan, and additionality argument. YieldCore partners: <b>Climate Good, South Pole, Carbon Tanzania SA</b>. Cost R15k–R60k (amortised over the project life).<span class="sell-step-tag">~3–6 months</span></div></div></div>
+            <div class="sell-step"><div class="sell-step-num">3</div><div><div class="sell-step-title">Monitoring &amp; Data Collection</div><div class="sell-step-body">Collect soil samples, keep GPS event logs, and record all input/output data for your sequestration activity. YieldCore's platform automatically generates a verified data log — this replaces manual spreadsheets and is accepted by SGS, Bureau Veritas, and TÜV Rheinland verifiers.<span class="sell-step-tag">Ongoing — YieldCore auto-logs</span></div></div></div>
+            <div class="sell-step"><div class="sell-step-num">4</div><div><div class="sell-step-title">Independent Verification Audit</div><div class="sell-step-body">After 12 months (or per your monitoring plan), a SANAS/VVOB-accredited verifier audits your records on-site and issues a Verified Emission Reduction (VER) statement. Typical audit cost: R25,000–R65,000 for a first-time verification on a 500 ha farm.<span class="sell-step-tag">~2–4 months</span></div></div></div>
+            <div class="sell-step"><div class="sell-step-num">5</div><div><div class="sell-step-title">Registry Issuance</div><div class="sell-step-body">Submit to Verra (VCS) or Gold Standard registry. Credits are issued as unique serial-numbered units in your registry account — each representing exactly 1 tonne of CO₂e. Issuance fee: ~$0.10–$0.20 per credit.<span class="sell-step-tag">~4–8 weeks</span></div></div></div>
+            <div class="sell-step"><div class="sell-step-num">6</div><div><div class="sell-step-title">List and Sell</div><div class="sell-step-body">Sell directly on <b>Xpansiv CBL</b> (global exchange, USD), via brokers (<b>Absa Carbon Advisory, Standard Bank Green Finance</b>), or through <b>Carbon Neutral Group SA</b> who buy directly from farmers. YieldCore's marketplace integration is launching Q3 2025 — connect your registry account for one-click listing.<span class="sell-step-tag">Revenue lands in 2–8 weeks</span></div></div></div>
+          </div>
+          <div style="font-size:11px;font-weight:900;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;margin:14px 0 8px">🏬 Where to Sell — SA &amp; Global Marketplaces</div>
+          <div class="sell-markets">
+            <div class="sell-market"><div class="sell-market-name">Xpansiv CBL</div><div class="sell-market-type">Global Exchange · USD</div><div class="sell-market-price" id="sellMktVCS">~R341/t</div></div>
+            <div class="sell-market"><div class="sell-market-name">Absa Carbon Advisory</div><div class="sell-market-type">SA Broker · ZAR OTC</div><div class="sell-market-price">R190–R380/t</div></div>
+            <div class="sell-market"><div class="sell-market-name">Standard Bank Green</div><div class="sell-market-type">SA Bank · ZAR OTC</div><div class="sell-market-price">R200–R360/t</div></div>
+            <div class="sell-market"><div class="sell-market-name">Carbon Neutral SA</div><div class="sell-market-type">Direct Buyer · ZAR</div><div class="sell-market-price">R180–R320/t</div></div>
+            <div class="sell-market"><div class="sell-market-name">South Pole</div><div class="sell-market-type">Global Developer · USD</div><div class="sell-market-price">~R280–R400/t</div></div>
+            <div class="sell-market"><div class="sell-market-name">Gold Standard Registry</div><div class="sell-market-type">Premium · USD</div><div class="sell-market-price" id="sellMktGS">~R400/t</div></div>
+          </div>
+          <button class="wa-btn" style="margin-top:14px;width:100%" onclick="shareCarbonReport()">📲 Request Carbon Credit Selling Assessment via WhatsApp</button>
         </div>
 
       </div>
@@ -2051,7 +2256,7 @@ function updateTopTemp(){
 
 const farmHealth=[
   {name:'Oranjezicht City Farm',  grade:'A+',score:92,color:'#4ade80',  province:'Western Cape', crop:'Mixed Vegetables',         lat:-33.9354,lng:18.4154,ha:2,    owner:'OZCF Trust'},
-  {name:'Rodwell Boland Farm',    grade:'A', score:88,color:'#22c55e',  province:'Western Cape', crop:'Mixed Grain & Livestock',  lat:-33.9319,lng:18.8602,ha:480,  owner:'Rodwell Boland'},
+  {name:'Rodwell Naicker Farm',    grade:'A', score:88,color:'#22c55e',  province:'Western Cape', crop:'Mixed Grain & Livestock',  lat:-33.9319,lng:18.8602,ha:480,  owner:'Rodwell Naicker'},
   {name:'Imhoff Farm',            grade:'A', score:81,color:'#22c55e',  province:'Western Cape', crop:'Venue & Boutique Produce', lat:-34.1379,lng:18.3290,ha:38,   owner:'Imhoff Estate'},
   {name:'Opal Game Growers',      grade:'B+',score:76,color:'#86efac',  province:'KwaZulu-Natal',crop:'Game & Game Products',     lat:-28.7282,lng:31.4659,ha:1850, owner:'Sipho Dlamini'},
   {name:'Meuse Farm',             grade:'B', score:74,color:'#86efac',  province:'Western Cape', crop:'Horticulture',             lat:-34.0411,lng:18.3568,ha:64,   owner:'Meuse Holdings'},
@@ -2545,7 +2750,7 @@ window.navToSection=navToSection;
 
 // ── SOLAR DATA ──
 const solarFarms=[
-  {name:'Rodwell Boland Farm',   cap:36,pct:82,panels:96,status:'Optimal'},
+  {name:'Rodwell Naicker Farm',   cap:36,pct:82,panels:96,status:'Optimal'},
   {name:'Green Fields Farm',     cap:24,pct:91,panels:64,status:'Optimal'},
   {name:'Oranjezicht City Farm', cap:18,pct:76,panels:48,status:'Optimal'},
   {name:'Sun Rise Farm',         cap:20,pct:88,panels:54,status:'Optimal'},
@@ -2597,7 +2802,7 @@ function renderSolar(){
 // ── IRRIGATION DATA ──
 const irrigFarms=[
   {name:'Karoo House',          icon:'💧',moist:28,flow:3.2,target:60,status:'LOW',color:'#f87171'},
-  {name:'Rodwell Boland Farm',  icon:'💧',moist:67,flow:8.1,target:65,status:'OK', color:'#22c55e'},
+  {name:'Rodwell Naicker Farm',  icon:'💧',moist:67,flow:8.1,target:65,status:'OK', color:'#22c55e'},
   {name:'Oranjezicht City Farm',icon:'💧',moist:72,flow:6.4,target:70,status:'OK', color:'#22c55e'},
   {name:'Green Fields Farm',    icon:'💧',moist:55,flow:7.2,target:65,status:'OK', color:'#22c55e'},
   {name:'Sun Rise Farm',        icon:'💧',moist:48,flow:4.9,target:60,status:'LOW',color:'#facc15'},
@@ -2720,7 +2925,7 @@ function renderNDVI(){
 // ── LIVE IoT SENSOR DATA — real Open-Meteo per farm coordinate ──
 // Farm coordinates for the 5 sensor farms
 const sensorFarms=[
-  {name:'Rodwell Boland', province:'Western Cape',  lat:-33.9319,lng:18.8602},
+  {name:'Rodwell Naicker', province:'Western Cape',  lat:-33.9319,lng:18.8602},
   {name:'Imhoff Farm',    province:'Kommetjie',     lat:-34.1379,lng:18.3290},
   {name:'Karoo House',    province:'Karoo',         lat:-32.3536,lng:22.5239},
   {name:'Green Fields',   province:'Limpopo',       lat:-23.9045,lng:29.4689},
@@ -2815,7 +3020,7 @@ const pestData=[
   {icon:'🍄',name:'Botrytis (Fungal)', farm:'Chart Farm',         severity:'MED', confidence:82,detected:'1d ago',field:'Rose rows 14–18'},
   {icon:'🐌',name:'Snail Damage',      farm:'Meuse Farm',         severity:'LOW', confidence:61,detected:'2d ago',field:'Section 3'},
   {icon:'🦟',name:'Whitefly',          farm:'Imhoff Farm',        severity:'LOW', confidence:71,detected:'3d ago',field:'Greenhouse F'},
-  {icon:'🐞',name:'Thrips',            farm:'Rodwell Boland Farm',severity:'LOW', confidence:58,detected:'3d ago',field:'Field 2'},
+  {icon:'🐞',name:'Thrips',            farm:'Rodwell Naicker Farm',severity:'LOW', confidence:58,detected:'3d ago',field:'Field 2'},
   {icon:'✅',name:'No Pest Detected',  farm:'Oranjezicht City Farm',severity:'NONE',confidence:99,detected:'Today',field:'All zones'},
 ];
 function renderPests(){
@@ -2856,7 +3061,7 @@ const fullAlerts=[
   {type:'warning', icon:'💧',farm:'Sun Rise Farm',         msg:'Drip irrigation pressure low — check filters',time:'7h ago'},
   {type:'warning', icon:'📡',farm:'Opal Game Growers',     msg:'Wind sensor offline in Camp 4 — battery dead, Sipho Dlamini',time:'2h ago'},
   {type:'warning', icon:'🌡️',farm:'Chart Farm',            msg:'Temperature spike 39°C in greenhouse — roses at risk',time:'3h ago'},
-  {type:'info',    icon:'🌾',farm:'Rodwell Boland Farm',   msg:'Maize harvest window opens in 9 days',time:'1d ago'},
+  {type:'info',    icon:'🌾',farm:'Rodwell Naicker Farm',   msg:'Maize harvest window opens in 9 days',time:'1d ago'},
   {type:'info',    icon:'🌧️',farm:'Imhoff Farm',           msg:'Rain forecast 60% in Kommetjie — adjust irrigation schedule',time:'1d ago'},
   {type:'info',    icon:'☀️',farm:'Oranjezicht City Farm', msg:'Solar output 12% above monthly average',time:'2d ago'},
   {type:'info',    icon:'🥬',farm:'Meuse Farm',            msg:'Hout Bay vegetable beds ready for spring planting',time:'2d ago'},
@@ -2918,7 +3123,7 @@ const npkFarms=[
     N:{val:68,min:80,max:120,unit:'kg/ha'},P:{val:22,min:20,max:40,unit:'kg/ha'},K:{val:95,min:80,max:150,unit:'kg/ha'},Ca:{val:310,min:200,max:400,unit:'mg/kg'}},
   {name:'Green Fields Farm',crop:'🌾 Mixed Grain',
     N:{val:112,min:100,max:160,unit:'kg/ha'},P:{val:35,min:25,max:50,unit:'kg/ha'},K:{val:180,min:150,max:250,unit:'kg/ha'},Ca:{val:420,min:300,max:600,unit:'mg/kg'}},
-  {name:'Rodwell Boland Farm',crop:'🌽 Maize',
+  {name:'Rodwell Naicker Farm',crop:'🌽 Maize',
     N:{val:88,min:80,max:120,unit:'kg/ha'},P:{val:28,min:20,max:40,unit:'kg/ha'},K:{val:105,min:80,max:150,unit:'kg/ha'},Ca:{val:280,min:200,max:400,unit:'mg/kg'}},
   {name:'Sun Rise Farm',crop:'🌻 Sunflower',
     N:{val:145,min:120,max:180,unit:'kg/ha'},P:{val:18,min:15,max:35,unit:'kg/ha'},K:{val:220,min:180,max:300,unit:'kg/ha'},Ca:{val:380,min:250,max:500,unit:'mg/kg'}},
@@ -2987,7 +3192,7 @@ function renderNutrients(){
 
 // ── YIELD & PROFIT DATA ──
 const yieldFarms=[
-  {farm:'Rodwell Boland',  crop:'Maize',       ha:890,yieldT:6.8, priceR:4850, costHa:8200, season:'On Track'},
+  {farm:'Rodwell Naicker', crop:'Maize',       ha:890,yieldT:6.8, priceR:4850, costHa:8200, season:'On Track'},
   {farm:'Green Fields',    crop:'Mixed Grain', ha:1200,yieldT:5.4,priceR:5200, costHa:7400, season:'On Track'},
   {farm:'Chart Farm',      crop:'Roses & Coffee',ha:25,yieldT:14.2,priceR:6800,costHa:35000,season:'Ahead'},
   {farm:'Sun Rise Farm',   crop:'Sunflower',   ha:540,yieldT:2.4, priceR:9400, costHa:6200, season:'On Track'},
@@ -3115,7 +3320,7 @@ window.sendAI=sendAI;
 
 // ── CARBON CREDIT TRACKER ──
 const carbonFarms=[
-  {name:'Rodwell Boland Farm',  crop:'🌽 Maize',         ha:890, rate:2.8, verified:1820, pending:372, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0041'},
+  {name:'Rodwell Naicker Farm',  crop:'🌽 Maize',         ha:890, rate:2.8, verified:1820, pending:372, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0041'},
   {name:'Chart Farm',           crop:'🌹 Roses & Coffee',ha:25,  rate:4.2, verified:88,   pending:32,  status:'verified', standard:'Gold Standard',certNo:'GS-YC-2024-0018'},
   {name:'Green Fields Farm',    crop:'🌾 Mixed Grain',   ha:1200,rate:3.6, verified:1496, pending:452, status:'verified', standard:'VCS',          certNo:'VCS-YC-2024-0055'},
   {name:'Opal Game Growers',    crop:'🦌 Game Reserve',  ha:1850,rate:5.1, verified:890,  pending:342, status:'pending',  standard:'VCS',          certNo:'VCS-YC-2024-0063'},
@@ -3298,6 +3503,7 @@ const bioProducts=[
   {icon:'🦴',name:'CalMag-Plus',cat:'Liquid Calcium-Mg',desc:'Chelated Ca + Mg. Prevents blossom-end rot, bitter pit, tip-burn. Compatible with all bio-inputs.',price:'R 220 / L',rate:'1 L / ha foliar',target:'Tomato · Apple · Lettuce',color:'#facc15',uplift:'+22% Grade-A pack-out'},
   {icon:'🪲',name:'NemaStop',cat:'Bio-Nematicide',desc:'Purpureocillium lilacinum. Parasitises root-knot nematode eggs. Replaces fenamiphos at 60% cost.',price:'R 510 / kg',rate:'4 kg / ha',target:'Root-knot · Cyst nematode',color:'#f87171',uplift:'+19% root-veg yield · zero MRL'},
   {icon:'☀️',name:'Photo-K',cat:'Potassium-Silica Tonic',desc:'Soluble K₂SiO₃. Strengthens cell walls vs powdery mildew, hail, heat stress. Harvest-day safe.',price:'R 240 / L',rate:'2 L / ha',target:'Vine · Cereal · Cucurbit',color:'#86efac',uplift:'+13% yield · −40% mildew sprays'},
+  {icon:'🪵',name:'BioChar-Pro',cat:'Activated Biochar Amendment',desc:'SA-sourced maize-stalk biochar, EBC-certified, pre-charged with N-Fix Pro consortium. Sequesters 2.4–3t CO₂e/ha/yr. Improves water retention +28%, reduces fertiliser N by 22%.',price:'R 1,800 / t',rate:'2–3 t / ha (once)',target:'All crops · Sandy & Clay soils',color:'#a78bfa',uplift:'+12–18% yield · R818–R1,023/ha carbon revenue/yr'},
 ];
 function renderBio(){
   const c=document.getElementById('bioGrid'); if(!c) return;
@@ -3493,10 +3699,10 @@ function renderDecisionSupport(){
   const el=document.getElementById('decisionList');if(!el)return;
   const decisions=[
     {
-      type:'critical',title:'🚨 Armyworm treatment required — Rodwell Boland Farm',
+      type:'critical',title:'🚨 Armyworm treatment required — Rodwell Naicker Farm',
       why:'AI pest scan detected Fall Armyworm at 91% confidence in Field B3. Based on current spread rate, crop loss could reach 25% within 5 days without treatment.',
       actions:[
-        {label:'📲 Send WhatsApp alert',primary:true,fn:'sendPestAlert("Rodwell Boland Farm","Fall Armyworm","Field B3","91")'},
+        {label:'📲 Send WhatsApp alert',primary:true,fn:'sendPestAlert("Rodwell Naicker Farm","Fall Armyworm","Field B3","91")'},
         {label:'View NDVI field map',primary:false,fn:'mobileNav("ndvi")'}
       ],
       impact:'Est. loss prevented: <b>R142,000</b> · Treatment cost: R8,400'
@@ -3592,6 +3798,50 @@ function sendFarmReport(){
 }
 window.sendFarmReport=sendFarmReport;
 
+// ── CARBON TABS ──
+window.carbonTab=function(tab){
+  ['portfolio','biochar','sars','sell'].forEach(t=>{
+    const panel=document.getElementById('cTab-'+t);
+    const btn=document.getElementById('ctab-'+t);
+    if(panel) panel.style.display=t===tab?'':'none';
+    if(btn) btn.classList.toggle('active',t===tab);
+  });
+  // Update sell prices from live carbon price
+  if(tab==='sell'){
+    const priceZAR=Math.round(carbonVCMPrice*ZAR_PER_USD);
+    const el1=document.getElementById('sellPriceVCS');
+    const el2=document.getElementById('sellPriceGS');
+    const el3=document.getElementById('sellMktVCS');
+    const el4=document.getElementById('sellMktGS');
+    if(el1) el1.textContent='R'+priceZAR+'/t';
+    if(el2) el2.textContent='R'+Math.round((carbonVCMPrice+3.2)*ZAR_PER_USD)+'/t';
+    if(el3) el3.textContent='~R'+priceZAR+'/t';
+    if(el4) el4.textContent='~R'+Math.round((carbonVCMPrice+3.2)*ZAR_PER_USD)+'/t';
+  }
+};
+
+// ── BIOCHAR WHATSAPP ENQUIRY ──
+window.sendBiocharEnquiry=function(){
+  const f=(typeof farmHealth!=='undefined'&&farmHealth[0])||{name:'YieldCore Farm',province:'South Africa',ha:200};
+  const msg=`🪵 *YieldCore Biochar Enquiry*\n\nFarm: ${f.name}\nLocation: ${f.province}\nSize: ${f.ha} ha\n\nI'm interested in:\n• Biochar supply & pricing\n• Carbon credit registration for biochar sequestration\n• SARS Section 13 offset application\n\nPlease send a quote and next steps.`;
+  fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})
+    .then(r=>r.json()).then(d=>alert(d.success?'✅ Biochar enquiry sent via WhatsApp! We\'ll be in touch within 24 hours.':'WhatsApp error: '+d.error))
+    .catch(e=>alert('Network error: '+e.message));
+};
+
+// ── FLOW: INTERSECTION OBSERVER FOR PANEL REVEAL ──
+(function initFlowObserver(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('slide-in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.06,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.panel,.stat-card,.bio-card,.carbon-farm-card,.rev-card').forEach(el=>io.observe(el));
+})();
+
 // ── ONBOARDING WIZARD ──
 let _obStep=0;
 function obShow(){
@@ -3671,7 +3921,7 @@ window.shareInvestorPitch=async function(){
   try{const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await res.json();if(d.success)alert('✅ Investor pitch sent via WhatsApp!');else alert('Error: '+d.error);}catch(e){alert('Network error: '+e.message);}
 };
 window.copyPitchEmail=function(){
-  const txt=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising R75M Series A at R420M pre-money to scale Africa's leading precision agriculture platform.\n\nKey metrics:\n• 10 farms · 5,419 ha under management\n• R28.6M ARR (Y2) → R148M ARR by Y5\n• 42% water reduction · 8,200t CO₂ sequestered\n• R4.2M smallholder farmer income uplift\n\nWe would welcome a 30-minute call.\n\nRodwell Boland | Founder & CEO\nrodwell@yieldcore.ai | yieldcore.ai`;
+  const txt=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising R75M Series A at R420M pre-money to scale Africa's leading precision agriculture platform.\n\nKey metrics:\n• 10 farms · 5,419 ha under management\n• R28.6M ARR (Y2) → R148M ARR by Y5\n• 42% water reduction · 8,200t CO₂ sequestered\n• R4.2M smallholder farmer income uplift\n\nWe would welcome a 30-minute call.\n\nRodwell Naicker | Founder & CEO\nrodwell@yieldcore.ai | yieldcore.ai`;
   navigator.clipboard.writeText(txt).then(()=>alert('✅ Investor email copied!')).catch(()=>alert('Copy from browser console.'));
 };
 
