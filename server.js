@@ -92,6 +92,10 @@ Disallow: /api/
 `);
 });
 
+// ── 🌐 PAGE ROUTES ──
+app.get('/landing', (req, res) => res.sendFile(path.join(__dirname, 'landing.html')));
+app.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, 'landing.html')));
+
 // ── 🚦 RATE LIMITS ──
 const apiLimiter   = rateLimit({ windowMs: 60_000, max: 60,  standardHeaders:true, legacyHeaders:false, message:{error:'Too many requests'} });
 const writeLimiter = rateLimit({ windowMs: 60_000, max: 12,  standardHeaders:true, legacyHeaders:false, message:{error:'Too many requests'} });

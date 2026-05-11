@@ -119,7 +119,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   background:radial-gradient(circle,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
 .intro-pill{display:inline-block;font-size:10px;letter-spacing:2px;font-weight:800;color:#facc15;
   padding:4px 10px;border:1px solid rgba(250,204,21,.4);border-radius:99px;background:rgba(250,204,21,.08);text-transform:uppercase}
-.intro-headline{margin-top:10px;font-family:'Sora',sans-serif;font-size:30px;font-weight:900;letter-spacing:-.02em;
+.intro-headline{margin-top:10px;font-family:'Sora',sans-serif;font-size:33px;font-weight:900;letter-spacing:-.025em;
   background:linear-gradient(135deg,#facc15 0%,#4ade80 60%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.05}
 .intro-headline span{color:#facc15;-webkit-text-fill-color:#facc15;background:none}
 .intro-sub{margin-top:8px;color:#d4e8d8;font-size:14px;max-width:760px;line-height:1.5}
@@ -176,7 +176,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .stat-card:hover{border-color:rgba(34,197,94,.28);box-shadow:0 0 20px rgba(34,197,94,.1)}
 .stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(34,197,94,.06),transparent 60%);pointer-events:none}
 .stat-icon{font-size:20px;margin-bottom:6px;opacity:.9}
-.stat-val{font-size:22px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:3px;letter-spacing:-.02em}
+.stat-val{font-size:26px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:3px;letter-spacing:-.02em}
 .stat-unit{font-size:11px;font-weight:600;color:var(--sub)}
 .stat-label{font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4;letter-spacing:.1px}
 .stat-sparkline{position:absolute;bottom:0;left:0;right:0;height:26px;opacity:.35}
@@ -719,7 +719,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .yr-pill.green{box-shadow:0 0 0 1px rgba(250,204,21,.3),0 0 12px -4px rgba(250,204,21,.35)}
 
 /* stat value subtle glow */
-.stat-val{text-shadow:0 0 20px rgba(34,197,94,.25)}
+.stat-val{text-shadow:0 0 14px rgba(34,197,94,.18)}
 
 /* modules grid icons */
 .module-card:hover .module-icon{filter:drop-shadow(0 0 10px rgba(34,197,94,.6));transform:scale(1.08)}
@@ -728,6 +728,86 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 /* Subtle grid dot overlay — on content, not on #main::before which holds the bg image */
 #content{position:relative;z-index:1}
 #content::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(34,197,94,.035) 1px,transparent 1px);background-size:36px 36px;z-index:-1;opacity:1}
+
+/* ── AI INSIGHTS ── */
+.insights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.insight-card{border-radius:12px;padding:13px 14px;display:flex;gap:11px;align-items:flex-start;border:1px solid}
+.insight-card.ic-critical{background:rgba(248,113,113,.06);border-color:rgba(248,113,113,.22)}
+.insight-card.ic-warning{background:rgba(250,204,21,.05);border-color:rgba(250,204,21,.2)}
+.insight-card.ic-opportunity{background:rgba(56,189,248,.05);border-color:rgba(56,189,248,.18)}
+.insight-card.ic-info{background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.15)}
+.insight-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.insight-badge{font-size:8px;font-weight:900;letter-spacing:1px;padding:2px 6px;border-radius:4px;text-transform:uppercase;display:inline-block;margin-bottom:4px}
+.ic-critical .insight-badge{background:rgba(248,113,113,.2);color:#f87171}
+.ic-warning .insight-badge{background:rgba(250,204,21,.2);color:#facc15}
+.ic-opportunity .insight-badge{background:rgba(56,189,248,.2);color:#38bdf8}
+.ic-info .insight-badge{background:rgba(34,197,94,.2);color:#22c55e}
+.insight-action{font-size:12px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:3px}
+.insight-farm{font-size:10px;color:var(--sub);margin-bottom:3px}
+.insight-reason{font-size:10px;color:var(--sub);line-height:1.4}
+
+/* ── TRUST STRIP ── */
+.trust-strip{display:flex;gap:10px;flex-wrap:wrap;padding:8px 14px;background:rgba(8,18,10,.55);border:1px solid rgba(34,197,94,.1);border-radius:10px;margin-bottom:14px;align-items:center}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--sub);font-weight:600;letter-spacing:.1px}
+.trust-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block}
+.trust-dot.tl{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.55)}
+.trust-dot.tm{background:#facc15;box-shadow:0 0 5px rgba(250,204,21,.4)}
+.trust-divider{width:1px;height:14px;background:rgba(34,197,94,.12);flex-shrink:0}
+
+/* ── ONBOARDING WIZARD ── */
+#onboardOverlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+#onboardOverlay.show{display:flex}
+.onboard-box{background:linear-gradient(180deg,#0a1c0c,#060f07);border:1px solid rgba(34,197,94,.3);border-radius:22px;padding:28px 26px;max-width:440px;width:100%;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.ob-step{display:none}.ob-step.active{display:block}
+.ob-prog{display:flex;gap:6px;margin-bottom:22px}
+.ob-prog-dot{flex:1;height:3px;border-radius:3px;background:rgba(34,197,94,.15);transition:background .3s}
+.ob-prog-dot.done{background:var(--green)}
+.ob-icon{font-size:40px;text-align:center;margin-bottom:10px}
+.ob-title{font-size:20px;font-weight:900;text-align:center;color:var(--text);font-family:'Sora',sans-serif;margin-bottom:6px}
+.ob-sub{font-size:13px;color:var(--sub);text-align:center;line-height:1.5;margin-bottom:18px}
+.ob-field{margin-bottom:11px}
+.ob-label{font-size:10px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.ob-input,.ob-select{width:100%;background:rgba(13,26,15,.8);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:10px 13px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;appearance:none}
+.ob-input:focus,.ob-select:focus{border-color:rgba(34,197,94,.5)}
+.ob-btn-row{display:flex;gap:10px;margin-top:18px}
+.ob-btn{flex:1;padding:12px;border-radius:11px;font-size:14px;font-weight:900;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .2s}
+.ob-btn-primary{background:linear-gradient(135deg,var(--green2),var(--green));color:#000}
+.ob-btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--sub)}
+.ob-wa-code{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.22);border-radius:12px;padding:14px;text-align:center;margin-bottom:14px}
+.ob-wa-num{font-size:17px;font-weight:900;color:var(--green);margin-bottom:6px}
+.ob-wa-inst{font-size:12px;color:var(--sub);line-height:1.6}
+.ob-bullets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ob-bullet{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.12);border-radius:10px;padding:10px 12px}
+.ob-bullet b{display:block;font-size:16px;font-weight:900;color:var(--green3);font-family:'Sora',sans-serif}
+.ob-bullet span{display:block;font-size:10px;color:var(--sub);margin-top:2px}
+
+/* ── MOBILE BOTTOM NAV ── */
+#bottomNav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(3,8,4,.97);border-top:1px solid rgba(34,197,94,.2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:0 0 env(safe-area-inset-bottom,4px);box-shadow:0 -4px 30px rgba(0,0,0,.65)}
+.bn-row{display:flex}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 2px 5px;cursor:pointer;color:var(--sub);font-size:9px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;border:none;background:transparent;-webkit-tap-highlight-color:transparent;font-family:'Inter',sans-serif;transition:color .12s}
+.bn-icon{font-size:21px;line-height:1}
+.bn-item.bn-active{color:var(--green)}
+.bn-item.bn-active .bn-icon{filter:drop-shadow(0 0 8px rgba(34,197,94,.65))}
+/* Mobile drawer overlay */
+#drawerOverlay{display:none;position:fixed;inset:0;z-index:149;background:rgba(0,0,0,.72);backdrop-filter:blur(3px);-webkit-tap-highlight-color:transparent}
+#drawerOverlay.show{display:block}
+/* Mobile slide-in drawer (opens from right) */
+#mobileDrawer{position:fixed;top:0;right:0;bottom:0;width:78vw;max-width:300px;z-index:150;background:linear-gradient(180deg,#06100a,#040c05);border-left:1px solid rgba(34,197,94,.15);transform:translateX(101%);transition:transform .27s cubic-bezier(.4,0,.2,1);overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;box-shadow:-14px 0 60px rgba(0,0,0,.75)}
+#mobileDrawer.open{transform:translateX(0)}
+.md-head{display:flex;align-items:center;justify-content:space-between;padding:18px 14px 13px;border-bottom:1px solid rgba(34,197,94,.1)}
+.md-logo{display:flex;align-items:center;gap:9px}
+.md-logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--green2),var(--green));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.md-logo-text{font-size:13px;font-weight:900;color:var(--green);font-family:'Sora',sans-serif;line-height:1.1}
+.md-logo-sub{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1px}
+.md-close{background:none;border:1px solid rgba(34,197,94,.2);color:var(--sub);font-size:20px;width:32px;height:32px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.md-nav{padding:8px 10px 24px;flex:1;overflow-y:auto}
+.md-section{font-size:9px;color:rgba(34,197,94,.4);text-transform:uppercase;letter-spacing:2.5px;font-weight:800;padding:11px 10px 4px;margin-top:2px}
+.md-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;cursor:pointer;color:var(--sub);border:1px solid transparent;margin-bottom:2px;transition:all .13s;font-size:13px;font-weight:600;-webkit-tap-highlight-color:transparent;width:100%;background:none;text-align:left}
+.md-item:active,.md-item.active{background:rgba(34,197,94,.12);color:var(--green3);border-color:rgba(34,197,94,.22)}
+.md-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+/* Mobile topbar menu btn — hidden on desktop */
+#mobileMenuBtn{display:none;background:none;border:1px solid rgba(34,197,94,.22);color:var(--green);font-size:20px;width:36px;height:36px;border-radius:9px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent;transition:background .15s}
+#mobileMenuBtn:active{background:rgba(34,197,94,.15)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1300px){
@@ -764,6 +844,92 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   .npk-farm-grid,.yield-grid{grid-template-columns:1fr}
   .tb-pay,.tb-share{font-size:10px;padding:7px 10px}
   #content{padding:16px 14px}
+}
+/* ── PHONE (≤ 480 px) — full mobile-first treatment ── */
+@media(max-width:480px){
+  :root{--sidebar:0px}
+  /* Sidebar off — bottom nav takes over */
+  #sidebar{display:none!important}
+  #main{margin-left:0!important}
+  #main::before,#main::after{left:0}
+  /* Show bottom nav + hamburger */
+  #bottomNav{display:block}
+  #mobileMenuBtn{display:flex!important}
+  /* Compact topbar — 1 line */
+  #topbar{height:52px;padding:0 12px;gap:8px}
+  .tb-welcome{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+  .tb-sub,.yield-ribbon,.tb-bell,.tb-pay,.tb-share{display:none!important}
+  .tb-pill{padding:4px 9px;font-size:11px}
+  .tb-time{font-size:15px}
+  .tb-date{font-size:9px}
+  .tb-right{gap:7px}
+  /* Content — bottom padding for nav bar */
+  #content{padding:10px 11px 84px}
+  /* Intro */
+  .intro-headline{font-size:19px}
+  .intro-sub{font-size:12px}
+  .intro-row{grid-template-columns:1fr 1fr}
+  .intro-bul b{font-size:15px}
+  .intro-card{padding:16px 14px}
+  /* Stats 2-col */
+  .stats-row{grid-template-columns:1fr 1fr;gap:7px}
+  .stat-val{font-size:16px}
+  .stat-card{padding:11px 11px 9px}
+  /* All panels stack */
+  .panels-row{grid-template-columns:1fr!important}
+  .panels-row .panel:not(#sec-farms):not(#sec-solar-roof){align-self:auto}
+  #sec-farms,#sec-solar-roof{grid-column:auto!important}
+  .panels2,.panels3{grid-template-columns:1fr!important}
+  .panel{padding:13px 12px}
+  /* Farm health map — stack list then map */
+  #farmHealthMap{flex-direction:column!important}
+  #farmHealthMap .map-wrap{min-width:100%!important}
+  #saMap{height:200px!important}
+  #healthList{min-width:100%!important}
+  .map-btn{font-size:9px!important;padding:4px 7px!important}
+  .map-btn-row{gap:3px;flex-wrap:wrap}
+  /* Solar roof 2-col */
+  #solarRoofGrid{grid-template-columns:1fr 1fr!important}
+  /* NDVI 2-col */
+  .ndvi-grid{grid-template-columns:repeat(2,1fr)!important}
+  .ndvi-cell{padding:9px 8px}
+  /* Sensors 2-col */
+  .sensor-row{grid-template-columns:repeat(2,1fr)!important}
+  .sensor-gauge-wrap{flex-direction:column}
+  /* Pest 2-col */
+  .pest-grid{grid-template-columns:1fr 1fr!important}
+  /* Nutrients, Yield — 1-col */
+  .npk-farm-grid{grid-template-columns:1fr!important}
+  .yield-grid{grid-template-columns:1fr!important}
+  /* Bio, Revenue, Pricing — 1-col */
+  #bioGrid,#revGrid,#priceGrid{display:grid!important;grid-template-columns:1fr!important}
+  /* Carbon */
+  .carbon-grid-main{grid-template-columns:1fr!important}
+  .carbon-farm-grid{grid-template-columns:1fr!important}
+  /* Investor pitch */
+  .inv-hero-metrics{grid-template-columns:repeat(2,1fr)!important}
+  .inv-grid2,.inv-grid3{grid-template-columns:1fr!important}
+  .inv-ask-val{font-size:24px}
+  .inv-cta-row{flex-direction:column}
+  .inv-tagline{font-size:12px}
+  /* Modules 3-col */
+  .modules-grid{grid-template-columns:repeat(3,1fr)!important}
+  /* Weather cards scroll */
+  .weather-card{min-width:105px;padding:10px 10px}
+  .weather-temp{font-size:22px}
+  .weather-section{padding:12px 12px}
+  /* NPK range */
+  .npk-range-grid{grid-template-columns:repeat(2,1fr)}
+  /* AI advisor */
+  .ai-input-row{flex-direction:column;gap:6px}
+  #aiSendBtn{width:100%}
+  /* Section headers */
+  .sec-hdr{gap:3px}
+  .sec-title{font-size:11px}
+  /* Login page */
+  .login-box{padding:20px 16px;border-radius:16px}
+  /* Investor CTA */
+  .inv-cta{padding:11px}
 }
 </style>
 </head>
@@ -887,6 +1053,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <div class="tb-bell">🔔<div class="tb-badge">4</div></div>
         <a href="/pay" class="tb-pay">💳 Pricing & Pay</a>
         <button class="tb-share" onclick="openShare()">📲 Share with friends</button>
+        <button id="mobileMenuBtn" onclick="openMobileDrawer()">☰</button>
       </div>
     </div>
 
@@ -918,6 +1085,94 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       </div>
     </div>
 
+    <!-- ONBOARDING WIZARD -->
+    <div id="onboardOverlay">
+      <div class="onboard-box">
+        <div class="ob-prog">
+          <div class="ob-prog-dot done" id="obDot0"></div>
+          <div class="ob-prog-dot" id="obDot1"></div>
+          <div class="ob-prog-dot" id="obDot2"></div>
+          <div class="ob-prog-dot" id="obDot3"></div>
+        </div>
+        <!-- Step 0: Welcome -->
+        <div class="ob-step active" id="obStep0">
+          <div class="ob-icon">🌿</div>
+          <div class="ob-title">Welcome to YieldCore AI</div>
+          <div class="ob-sub">Africa's precision agriculture platform. Let's set up your farm intelligence in 3 quick steps.</div>
+          <div class="ob-bullets">
+            <div class="ob-bullet"><b>+18%</b><span>Yield uplift</span></div>
+            <div class="ob-bullet"><b>−32%</b><span>Water savings</span></div>
+            <div class="ob-bullet"><b>R3,200</b><span>Extra profit/ha</span></div>
+            <div class="ob-bullet"><b>8,200t</b><span>CO₂ sequestered</span></div>
+          </div>
+          <div class="ob-btn-row">
+            <button class="ob-btn ob-btn-primary" onclick="obNext()">Get Started →</button>
+          </div>
+        </div>
+        <!-- Step 1: Farm details -->
+        <div class="ob-step" id="obStep1">
+          <div class="ob-icon">🏡</div>
+          <div class="ob-title">Tell us about your farm</div>
+          <div class="ob-sub">We'll personalise your dashboard and AI recommendations.</div>
+          <div class="ob-field"><div class="ob-label">Farm Name</div><input class="ob-input" id="obFarmName" type="text" placeholder="e.g. Sunrise Farm"/></div>
+          <div class="ob-field"><div class="ob-label">Province</div>
+            <select class="ob-select" id="obProvince">
+              <option value="">Select province…</option>
+              <option>Western Cape</option><option>Eastern Cape</option><option>Northern Cape</option>
+              <option>Free State</option><option>KwaZulu-Natal</option><option>North West</option>
+              <option>Gauteng</option><option>Mpumalanga</option><option>Limpopo</option>
+            </select></div>
+          <div class="ob-field" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><div class="ob-label">Hectares</div><input class="ob-input" id="obHa" type="number" placeholder="e.g. 250" min="1"/></div>
+            <div><div class="ob-label">Main Crop</div>
+              <select class="ob-select" id="obCrop">
+                <option value="">Select…</option>
+                <option>Maize</option><option>Wheat</option><option>Vegetables</option>
+                <option>Citrus</option><option>Grapes</option><option>Avocado</option>
+                <option>Sugarcane</option><option>Livestock</option><option>Game</option><option>Mixed</option>
+              </select></div>
+          </div>
+          <div class="ob-btn-row">
+            <button class="ob-btn ob-btn-secondary" onclick="obBack()">← Back</button>
+            <button class="ob-btn ob-btn-primary" onclick="obNext()">Continue →</button>
+          </div>
+        </div>
+        <!-- Step 2: WhatsApp -->
+        <div class="ob-step" id="obStep2">
+          <div class="ob-icon">📲</div>
+          <div class="ob-title">Connect WhatsApp Alerts</div>
+          <div class="ob-sub">Get live farm alerts, weather & AI insights directly on your phone.</div>
+          <div class="ob-wa-code">
+            <div class="ob-wa-num">+1 415 523 8886</div>
+            <div class="ob-wa-inst">
+              1️⃣ Save this number on your phone<br/>
+              2️⃣ Send <strong style="color:var(--green)">join <span id="obJoinCode">sandbox</span></strong> to that number<br/>
+              3️⃣ Share a 📍 location → get instant farm intelligence
+            </div>
+          </div>
+          <div class="ob-btn-row">
+            <button class="ob-btn ob-btn-secondary" onclick="obBack()">← Back</button>
+            <button class="ob-btn ob-btn-primary" onclick="obNext()">Connected ✓</button>
+          </div>
+        </div>
+        <!-- Step 3: Done -->
+        <div class="ob-step" id="obStep3">
+          <div class="ob-icon">🚀</div>
+          <div class="ob-title">You're all set!</div>
+          <div class="ob-sub">Your farm intelligence dashboard is live. Satellites, AI and IoT are working for you.</div>
+          <div class="ob-bullets">
+            <div class="ob-bullet"><b>🌤</b><span>Live weather ready</span></div>
+            <div class="ob-bullet"><b>🛰️</b><span>NDVI satellite active</span></div>
+            <div class="ob-bullet"><b>🤖</b><span>AI Advisor online</span></div>
+            <div class="ob-bullet"><b>📲</b><span>WhatsApp alerts on</span></div>
+          </div>
+          <div class="ob-btn-row">
+            <button class="ob-btn ob-btn-primary" onclick="obFinish()">Open My Dashboard 🌿</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CONTENT -->
     <div id="content">
 
@@ -934,6 +1189,13 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         </div>
       </div>
 
+      <!-- TRUST STRIP -->
+      <div class="trust-strip fade">
+        <div class="trust-item"><span class="trust-dot tl"></span>LIVE: Open-Meteo weather · GPT-4o AI · Twilio WhatsApp · Mapbox maps</div>
+        <div class="trust-divider"></div>
+        <div class="trust-item"><span class="trust-dot tm"></span>MODEL DATA: NDVI · IoT sensors · SAFEX prices · Farm projections</div>
+      </div>
+
       <!-- WEATHER -->
       <div class="weather-section fade">
         <div class="sec-hdr">
@@ -948,6 +1210,20 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
       <!-- STATS -->
       <div class="stats-row fade" id="statsRow"></div>
+
+      <!-- AI INSIGHTS -->
+      <div class="panel fade" id="sec-insights" style="margin-bottom:16px">
+        <div class="sec-hdr">
+          <div class="sec-title">🤖 AI INSIGHTS <span>Live recommendations from your farm data</span></div>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <span class="src-pill src-purple">Smart Analysis · Live</span>
+            <button class="map-btn" onclick="refreshInsights()">↻ Refresh</button>
+            <button class="map-btn" onclick="sendFarmReport()" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--green3)">📲 WhatsApp Report</button>
+          </div>
+        </div>
+        <div class="insights-grid" id="insightsGrid"></div>
+        <div style="margin-top:8px;font-size:10px;color:var(--sub);text-align:right">Last analysed: <span id="insightsTime">–</span></div>
+      </div>
 
       <!-- PANELS -->
       <div class="panels-row fade">
@@ -1383,6 +1659,51 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
     </div><!-- end content -->
   </div><!-- end main -->
 </div><!-- end shell -->
+
+<!-- MOBILE OVERLAY + DRAWER + BOTTOM NAV (position:fixed — works anywhere) -->
+<div id="drawerOverlay" onclick="closeMobileDrawer()"></div>
+
+<div id="mobileDrawer">
+  <div class="md-head">
+    <div class="md-logo">
+      <div class="md-logo-icon">🌿</div>
+      <div>
+        <div class="md-logo-text">YieldCore AI</div>
+        <div class="md-logo-sub">Agricultural Intelligence</div>
+      </div>
+    </div>
+    <button class="md-close" onclick="closeMobileDrawer()">×</button>
+  </div>
+  <div class="md-nav">
+    <div class="md-section">Intelligence</div>
+    <button class="md-item" onclick="mobileNav(null,'top')"><span class="md-icon">🏠</span>Dashboard</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-ai')"><span class="md-icon">🤖</span>AI Advisor</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-alerts')"><span class="md-icon">🔔</span>Alerts</button>
+    <div class="md-section">Farm Monitoring</div>
+    <button class="md-item" onclick="mobileNav(null,'sec-farms')"><span class="md-icon">🌾</span>Farm Health</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-solar')"><span class="md-icon">☀️</span>Solar</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-ndvi')"><span class="md-icon">🛰️</span>NDVI Zones</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-nutrients')"><span class="md-icon">💊</span>Nutrients</button>
+    <div class="md-section">Operations</div>
+    <button class="md-item" onclick="mobileNav(null,'sec-yield')"><span class="md-icon">📈</span>Yield &amp; Profit</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-revenue')"><span class="md-icon">💸</span>Revenue Uplift</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-bio')"><span class="md-icon">🧪</span>Bio-Inputs</button>
+    <div class="md-section">Platform</div>
+    <button class="md-item" onclick="mobileNav(null,'carbonSection')"><span class="md-icon">🌍</span>Carbon Credits</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-pricing')"><span class="md-icon">🚁</span>Pricing &amp; Drones</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-investor')"><span class="md-icon">📊</span>Investor Pitch</button>
+  </div>
+</div>
+
+<nav id="bottomNav">
+  <div class="bn-row">
+    <button class="bn-item bn-active" onclick="mobileNav(this,'top')"><span class="bn-icon">🏠</span>Home</button>
+    <button class="bn-item" onclick="mobileNav(this,'sec-farms')"><span class="bn-icon">🌾</span>Farms</button>
+    <button class="bn-item" onclick="mobileNav(this,'sec-ai')"><span class="bn-icon">🤖</span>AI</button>
+    <button class="bn-item" onclick="mobileNav(this,'sec-alerts')"><span class="bn-icon">🔔</span>Alerts</button>
+    <button class="bn-item" onclick="openMobileDrawer()"><span class="bn-icon">☰</span>More</button>
+  </div>
+</nav>
 
 <script>
 // ── AUTH ──
@@ -2950,6 +3271,146 @@ window.quotePrice=function(){
     .catch(e=>alert('Network error: '+e.message));
 };
 
+// ── AI INSIGHTS ENGINE ──
+function renderInsights(){
+  const grid=document.getElementById('insightsGrid');if(!grid)return;
+  const recs=[];
+  if(typeof irrigFarms!=='undefined'){
+    irrigFarms.forEach(f=>{
+      if(f.moist<35) recs.push({type:'critical',icon:'💧',badge:'URGENT',action:`Irrigate ${f.name} — critically low`,farm:f.name,reason:`Soil moisture at ${f.moist}% — ${f.target-f.moist}% below target. Crop stress risk within 24–48h if not addressed.`});
+      else if(f.moist<f.target-8) recs.push({type:'warning',icon:'💧',badge:'ACTION NEEDED',action:`Schedule irrigation at ${f.name}`,farm:f.name,reason:`Soil at ${f.moist}% — approaching lower threshold. Irrigate within next 48h for optimal yield.`});
+    });
+  }
+  if(typeof pestData!=='undefined'){
+    pestData.filter(p=>p.severity==='HIGH').slice(0,2).forEach(p=>{
+      recs.push({type:'critical',icon:p.icon,badge:'PEST ALERT',action:`Treat ${p.name} at ${p.farm}`,farm:p.farm,reason:`${p.confidence}% AI confidence · Fields: ${p.field}. Apply treatment within 48h to prevent yield loss.`});
+    });
+  }
+  if(typeof npkFarms!=='undefined'){
+    npkFarms.forEach(f=>{
+      const low=['N','P','K'].filter(n=>f[n].val<f[n].min);
+      if(low.length) recs.push({type:'warning',icon:'💊',badge:'NUTRIENT LOW',action:`Apply ${low.join('+')} fertiliser to ${f.name}`,farm:f.name,reason:low.map(n=>`${n}: ${f[n].val}${f[n].unit} (min ${f[n].min})`).join(' · ')+'. Yield impact if not corrected.'});
+    });
+  }
+  if(typeof solarFarms!=='undefined'){
+    solarFarms.filter(f=>f.pct<50).slice(0,1).forEach(f=>{
+      recs.push({type:'warning',icon:'☀️',badge:'SOLAR LOW',action:`Service solar panels at ${f.name}`,farm:f.name,reason:`Efficiency at ${Math.round(f.pct)}% — soiling or shading suspected. Cleaning could restore 20–40% output.`});
+    });
+  }
+  if(typeof carbonFarms!=='undefined'){
+    carbonFarms.filter(f=>f.status==='none'&&f.ha>500).slice(0,1).forEach(f=>{
+      recs.push({type:'opportunity',icon:'🌍',badge:'CARBON OPP',action:`Enrol ${f.name} in VCS carbon programme`,farm:f.name,reason:`${f.ha}ha eligible. Est. ${Math.round(f.ha*3)}t CO₂e/yr at R${Math.round(18.4*18.55)}/t. Zero upfront cost.`});
+    });
+  }
+  recs.push({type:'opportunity',icon:'📈',badge:'MARKET',action:'Consider forward-selling grain — SAFEX near 2-year high',farm:'All grain farms',reason:'SAFEX maize at R5,240/t — 8% above 12-month avg. Locking in 30–40% of harvest now protects margin.'});
+  recs.push({type:'info',icon:'🌤️',badge:'WEATHER',action:'Optimal spraying window: Tomorrow 06h00–10h00',farm:'Western Cape farms',reason:'Wind < 15km/h, humidity 55%, no rain forecast. Ideal conditions for foliar application.'});
+  const order={critical:0,warning:1,opportunity:2,info:3};
+  recs.sort((a,b)=>order[a.type]-order[b.type]);
+  const cls={critical:'ic-critical',warning:'ic-warning',opportunity:'ic-opportunity',info:'ic-info'};
+  grid.innerHTML=recs.slice(0,6).map(r=>`
+    <div class="insight-card ${cls[r.type]}">
+      <div class="insight-icon">${r.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div class="insight-badge">${r.badge}</div>
+        <div class="insight-action">${r.action}</div>
+        <div class="insight-farm">📍 ${r.farm}</div>
+        <div class="insight-reason">${r.reason}</div>
+      </div>
+    </div>`).join('');
+  const ts=document.getElementById('insightsTime');
+  if(ts)ts.textContent=new Date().toLocaleTimeString('en-ZA');
+}
+window.refreshInsights=renderInsights;
+
+function sendFarmReport(){
+  const lines=['📊 *YieldCore AI · Daily Farm Report*','📅 '+new Date().toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long'}),'━━━━━━━━━━━━━━'];
+  if(typeof farmHealth!=='undefined'&&farmHealth.length){
+    const avg=Math.round(farmHealth.reduce((s,f)=>s+f.score,0)/farmHealth.length);
+    const excellent=farmHealth.filter(f=>f.score>=80).length;
+    const warn=farmHealth.filter(f=>f.score<60).length;
+    lines.push(`\n🌾 *FARM HEALTH*\n• Avg score: ${avg}/100\n• ${excellent} farms excellent · ${warn} need attention`);
+  }
+  if(typeof solarFarms!=='undefined'&&solarFarms.length){
+    const kw=solarFarms.reduce((s,f)=>s+(f.cap*(f.pct/100)),0).toFixed(1);
+    const eff=Math.round(solarFarms.reduce((s,f)=>s+f.pct,0)/solarFarms.length);
+    lines.push(`\n☀️ *SOLAR*\n• Output: ${kw} kWh\n• Avg efficiency: ${eff}%`);
+  }
+  if(typeof irrigFarms!=='undefined'&&irrigFarms.length){
+    const low=irrigFarms.filter(f=>f.moist<f.target-8);
+    const avg=Math.round(irrigFarms.reduce((s,f)=>s+f.moist,0)/irrigFarms.length);
+    lines.push(`\n💧 *IRRIGATION*\n• ${low.length} farm${low.length!==1?'s':''} need watering\n• Avg soil moisture: ${avg}%${low.length?'\n• 🚨 Urgent: '+low.map(f=>f.name).join(', '):''}`);
+  }
+  if(typeof npkFarms!=='undefined'&&npkFarms.length){
+    const def=npkFarms.filter(f=>['N','P','K'].some(n=>f[n].val<f[n].min));
+    lines.push(`\n💊 *NUTRIENTS*\n• ${def.length} farm${def.length!==1?'s':''} with deficiencies${def.length?'\n• Apply fertiliser: '+def.map(f=>f.name).join(', '):''}`);
+  }
+  if(typeof pestData!=='undefined'&&pestData.length){
+    const high=pestData.filter(p=>p.severity==='HIGH');
+    lines.push(`\n🐛 *PEST MONITORING*\n• ${pestData.length} active detections · ${high.length} HIGH severity${high.length?'\n• 🚨 Treat: '+high.map(p=>p.farm).join(', '):''}`);
+  }
+  if(typeof carbonFarms!=='undefined'&&carbonFarms.length){
+    const tot=carbonFarms.reduce((s,f)=>s+(f.verified||0),0);
+    lines.push(`\n🌍 *CARBON CREDITS*\n• Verified: ${tot}t CO₂e\n• Est. value: R${(tot*18.4*18.55).toLocaleString('en-ZA',{maximumFractionDigits:0})}`);
+  }
+  lines.push('\n━━━━━━━━━━━━━━\n🤖 _YieldCore AI · Live Farm Intelligence_\n🌐 yieldcore.replit.app');
+  fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:lines.join('\n')})})
+    .then(r=>r.json()).then(d=>alert(d.success?'✅ Daily farm report sent to WhatsApp!':'WhatsApp error: '+d.error))
+    .catch(e=>alert('Network error: '+e.message));
+}
+window.sendFarmReport=sendFarmReport;
+
+// ── ONBOARDING WIZARD ──
+let _obStep=0;
+function obShow(){
+  if(localStorage.getItem('yc_onboarded')==='1') return;
+  const ov=document.getElementById('onboardOverlay');if(!ov)return;
+  ov.classList.add('show');
+  const jc=document.getElementById('obJoinCode');
+  const shareCode=document.getElementById('shareJoinCode');
+  if(jc&&shareCode)jc.textContent=shareCode.textContent.replace('join ','').trim()||'sandbox';
+}
+function obSetStep(n){
+  _obStep=Math.max(0,Math.min(3,n));
+  document.querySelectorAll('.ob-step').forEach((s,i)=>s.classList.toggle('active',i===_obStep));
+  document.querySelectorAll('.ob-prog-dot').forEach((d,i)=>d.classList.toggle('done',i<=_obStep));
+}
+function obNext(){obSetStep(_obStep+1);}
+function obBack(){obSetStep(_obStep-1);}
+function obFinish(){
+  localStorage.setItem('yc_onboarded','1');
+  const farm={name:document.getElementById('obFarmName')?.value,province:document.getElementById('obProvince')?.value,ha:document.getElementById('obHa')?.value,crop:document.getElementById('obCrop')?.value};
+  if(Object.values(farm).some(v=>v)) localStorage.setItem('yc_farm',JSON.stringify(farm));
+  document.getElementById('onboardOverlay').classList.remove('show');
+}
+window.obNext=obNext;window.obBack=obBack;window.obFinish=obFinish;
+
+// ── MOBILE NAV ──
+function openMobileDrawer(){
+  document.getElementById('mobileDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeMobileDrawer(){
+  document.getElementById('mobileDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+function mobileNav(btn,section){
+  closeMobileDrawer();
+  if(btn){
+    document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('bn-active'));
+    btn.classList.add('bn-active');
+  }
+  if(section==='top'){window.scrollTo({top:0,behavior:'smooth'});}
+  else{
+    const el=document.getElementById(section);
+    if(el){const y=el.getBoundingClientRect().top+window.scrollY-60;window.scrollTo({top:y,behavior:'smooth'});}
+  }
+}
+window.openMobileDrawer=openMobileDrawer;
+window.closeMobileDrawer=closeMobileDrawer;
+window.mobileNav=mobileNav;
+
 // ── INVESTOR PITCH ──
 function renderInvestor(){
   const el=id=>document.getElementById(id); if(!el('invMetrics')) return;
@@ -3001,6 +3462,7 @@ function init(){
   initAI();
   renderCarbon();
   renderInvestor();
+  renderInsights();
   renderBio();
   renderRevenue();
   renderPricing();
@@ -3011,6 +3473,8 @@ function init(){
   setInterval(()=>{renderSolar();renderIrrigation();}, 5000);
   setInterval(fetchLiveSensors, 10*60*1000); // sensors refresh every 10 min (live API)
   setInterval(renderCarbon, 30000);
+  setInterval(renderInsights, 60000);
+  setTimeout(obShow, 1800);
 }
 window.setNav=setNav;
 </script>

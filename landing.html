@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>YieldCore AI — Smart Farming Platform for South Africa</title>
+<meta name="description" content="Satellites, drones, AI & IoT for South African farmers. +18% yield, −32% water, +R3,200/ha profit. From R95/ha/month."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--g:#22c55e;--g2:#16a34a;--g3:#4ade80;--bg:#040c05;--txt:#ecf5ee;--sub:#6b9475}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(4,12,5,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(34,197,94,.12);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.n-logo{display:flex;align-items:center;gap:10px}
+.n-icon{width:34px;height:34px;background:linear-gradient(135deg,#16a34a,#22c55e);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.n-name{font-size:15px;font-weight:900;color:var(--g);font-family:'Sora',sans-serif}
+.n-right{display:flex;gap:10px;align-items:center}
+.btn{padding:8px 18px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-block;font-family:'Inter',sans-serif}
+.btn-o{border:1px solid rgba(34,197,94,.28);color:var(--g);background:transparent}
+.btn-o:hover{background:rgba(34,197,94,.1)}
+.btn-s{background:linear-gradient(135deg,#16a34a,#22c55e);color:#000;border:none}
+.btn-s:hover{opacity:.9;transform:translateY(-1px)}
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px 64px;position:relative;overflow:hidden}
+.hero-bg{position:fixed;inset:0;background-image:url('/public/farm-sunrise.jpg');background-size:cover;background-position:center;opacity:.28;pointer-events:none;z-index:0;filter:saturate(1.3)}
+.hero-fade{position:fixed;inset:0;background:linear-gradient(180deg,rgba(4,12,5,.55) 0%,rgba(4,12,5,.25) 35%,rgba(4,12,5,.82) 100%);pointer-events:none;z-index:0}
+.hero>*{position:relative;z-index:1}
+.h-pill{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--g3);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.28);border-radius:99px;padding:5px 15px;margin-bottom:24px;letter-spacing:.5px}
+.h-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:bl 1.4s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.25}}
+.h1{font-family:'Sora',sans-serif;font-size:clamp(36px,7vw,70px);font-weight:900;line-height:1.05;letter-spacing:-.025em;margin-bottom:20px;background:linear-gradient(140deg,#facc15 0%,#4ade80 55%,#22c55e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.h-sub{font-size:clamp(15px,2.5vw,19px);color:#d4e8d8;max-width:600px;line-height:1.6;margin:0 auto 36px}
+.h-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
+.btn-hp{padding:16px 34px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#000;font-size:15px;font-weight:900;border-radius:99px;box-shadow:0 8px 32px rgba(34,197,94,.45);transition:all .2s;font-family:'Sora',sans-serif}
+.btn-hp:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(34,197,94,.55)}
+.btn-hs{padding:16px 34px;background:rgba(8,18,12,.75);border:1px solid rgba(74,222,128,.3);color:var(--txt);font-size:15px;font-weight:700;border-radius:99px;backdrop-filter:blur(8px);transition:all .2s}
+.btn-hs:hover{border-color:rgba(74,222,128,.6)}
+.h-stats{display:flex;border:1px solid rgba(34,197,94,.14);border-radius:18px;overflow:hidden;background:rgba(8,18,10,.82);backdrop-filter:blur(14px);max-width:560px;width:100%}
+.h-stat{flex:1;padding:18px 10px;text-align:center;border-right:1px solid rgba(34,197,94,.1)}
+.h-stat:last-child{border-right:none}
+.h-sv{font-size:22px;font-weight:900;color:var(--g3);font-family:'Sora',sans-serif;letter-spacing:-.02em}
+.h-sl{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;margin-top:4px}
+/* SECTION */
+section{padding:76px 20px}
+.con{max-width:1080px;margin:0 auto}
+.s-pill{font-size:10px;font-weight:800;letter-spacing:3px;color:var(--g);text-transform:uppercase;margin-bottom:12px}
+.s-title{font-family:'Sora',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:900;margin-bottom:12px;line-height:1.1}
+.s-sub{font-size:15px;color:var(--sub);max-width:540px;line-height:1.6;margin-bottom:48px}
+/* FEATURES */
+.f-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.f-card{background:rgba(8,18,10,.72);border:1px solid rgba(34,197,94,.1);border-radius:16px;padding:24px;transition:all .22s}
+.f-card:hover{border-color:rgba(34,197,94,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.f-icon{font-size:30px;margin-bottom:14px}
+.f-name{font-size:16px;font-weight:800;color:var(--txt);margin-bottom:8px;font-family:'Sora',sans-serif}
+.f-desc{font-size:13px;color:var(--sub);line-height:1.6}
+.f-tag{display:inline-block;margin-top:12px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(34,197,94,.1);color:var(--g);border:1px solid rgba(34,197,94,.2);letter-spacing:.5px}
+/* SOCIAL PROOF */
+.proof-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:48px 0}
+.proof-card{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:14px;padding:18px 16px;text-align:center}
+.proof-val{font-size:28px;font-weight:900;color:var(--g3);font-family:'Sora',sans-serif;letter-spacing:-.02em}
+.proof-lbl{font-size:11px;color:var(--sub);margin-top:4px}
+/* PRICING */
+.p-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.p-card{background:rgba(8,18,10,.72);border:1px solid rgba(34,197,94,.1);border-radius:16px;padding:22px;text-align:center;position:relative;transition:all .22s}
+.p-card.feat{border-color:rgba(34,197,94,.45);background:linear-gradient(180deg,rgba(34,197,94,.09),rgba(8,18,10,.72))}
+.p-card:hover{transform:translateY(-2px);border-color:rgba(34,197,94,.28)}
+.p-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#facc15,#fbbf24);color:#000;font-size:9px;font-weight:900;padding:3px 14px;border-radius:99px;white-space:nowrap;letter-spacing:.5px}
+.p-tier{font-size:9px;font-weight:900;letter-spacing:2px;color:var(--g);text-transform:uppercase;margin-bottom:6px}
+.p-name{font-size:17px;font-weight:900;font-family:'Sora',sans-serif;margin-bottom:4px}
+.p-range{font-size:11px;color:var(--sub);margin-bottom:16px}
+.p-amt{font-size:28px;font-weight:900;color:var(--g3);font-family:'Sora',sans-serif;letter-spacing:-.02em}
+.p-amt small{font-size:12px;color:var(--sub);font-weight:500}
+.p-feats{list-style:none;text-align:left;margin:14px 0}
+.p-feats li{font-size:12px;color:var(--sub);padding:5px 0;border-bottom:1px solid rgba(34,197,94,.07);display:flex;gap:7px;align-items:flex-start}
+.p-feats li::before{content:'✓';color:var(--g);font-weight:900;flex-shrink:0}
+.p-cta{display:block;padding:11px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#000;font-weight:900;font-size:13px;border-radius:10px;margin-top:14px;transition:opacity .2s}
+.p-cta:hover{opacity:.88}
+/* CTA BOX */
+.cta-box{background:linear-gradient(135deg,rgba(22,163,74,.1),rgba(34,197,94,.05));border:1px solid rgba(34,197,94,.22);border-radius:24px;padding:60px 36px;text-align:center;margin:0 auto 72px;max-width:720px}
+.cta-title{font-family:'Sora',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:900;margin-bottom:12px}
+.cta-sub{font-size:15px;color:var(--sub);margin-bottom:32px;line-height:1.5}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+/* FOOTER */
+footer{background:rgba(4,12,5,.95);border-top:1px solid rgba(34,197,94,.1);padding:36px 24px;text-align:center}
+.f-logo{font-size:17px;font-weight:900;color:var(--g);font-family:'Sora',sans-serif;margin-bottom:6px}
+.f-sub{font-size:12px;color:var(--sub);margin-bottom:18px;line-height:1.6}
+.f-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.f-links a{font-size:12px;color:var(--sub);transition:color .2s}
+.f-links a:hover{color:var(--g)}
+/* Mobile */
+@media(max-width:600px){
+  nav{padding:0 14px}
+  .n-name{font-size:13px}
+  .hero{padding:72px 14px 52px}
+  .h-btns{flex-direction:column;align-items:center}
+  .btn-hp,.btn-hs{width:100%;max-width:300px;text-align:center}
+  .h-sv{font-size:18px}
+  section{padding:52px 14px}
+  .s-sub{margin-bottom:32px}
+  .f-grid{grid-template-columns:1fr}
+  .p-grid{grid-template-columns:1fr}
+  .cta-box{padding:36px 18px;margin:0 0 52px}
+  .cta-btns{flex-direction:column;align-items:center}
+  .proof-strip{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg"></div>
+<div class="hero-fade"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="n-logo">
+    <div class="n-icon">🌿</div>
+    <div class="n-name">YieldCore AI</div>
+  </div>
+  <div class="n-right">
+    <a href="tel:+27825172688" class="btn btn-o">📞 082 517 2688</a>
+    <a href="/" class="btn btn-s">Sign In →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="h-pill"><div class="h-dot"></div>LIVE · 10 FARMS · 5,419 HA UNDER MANAGEMENT</div>
+  <h1 class="h1">Turn Every Hectare<br/>Into Maximum Profit</h1>
+  <p class="h-sub">South Africa's leading precision agriculture platform — satellites, drones, AI &amp; IoT working together to grow more, waste less, and earn more on every farm.</p>
+  <div class="h-btns">
+    <a href="/" class="btn-hp">🚀 Open Free Dashboard</a>
+    <a href="tel:+27825172688" class="btn-hs">📞 Book a Demo</a>
+  </div>
+  <div class="h-stats">
+    <div class="h-stat"><div class="h-sv">+18%</div><div class="h-sl">Yield uplift</div></div>
+    <div class="h-stat"><div class="h-sv">−32%</div><div class="h-sl">Water saved</div></div>
+    <div class="h-stat"><div class="h-sv">R3,200</div><div class="h-sl">Extra profit/ha</div></div>
+    <div class="h-stat"><div class="h-sv">8,200t</div><div class="h-sl">CO₂ sequestered</div></div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<section style="padding-top:56px;padding-bottom:40px">
+  <div class="con">
+    <div class="proof-strip">
+      <div class="proof-card"><div class="proof-val">10</div><div class="proof-lbl">Active farms</div></div>
+      <div class="proof-card"><div class="proof-val">5,419 ha</div><div class="proof-lbl">Under management</div></div>
+      <div class="proof-card"><div class="proof-val">17</div><div class="proof-lbl">Live data sources</div></div>
+      <div class="proof-card"><div class="proof-val">R17.2M</div><div class="proof-lbl">Projected uplift / year</div></div>
+      <div class="proof-card"><div class="proof-val">4,962t</div><div class="proof-lbl">Verified carbon credits</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="con">
+    <div class="s-pill">What we do</div>
+    <h2 class="s-title">Everything your farm needs<br/>in one platform</h2>
+    <p class="s-sub">From satellite imagery to WhatsApp alerts — YieldCore connects all your farm intelligence in a single dashboard that works on any phone.</p>
+    <div class="f-grid">
+      <div class="f-card">
+        <div class="f-icon">🛰️</div>
+        <div class="f-name">Satellite NDVI Monitoring</div>
+        <div class="f-desc">Real-time crop vitality from Sentinel-2 at 10m resolution. Detect stress, disease and drought zones before they cost you yield — updated every 5 days.</div>
+        <div class="f-tag">LIVE · Sentinel-2 · Copernicus</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">🤖</div>
+        <div class="f-name">AI Crop Advisor</div>
+        <div class="f-desc">GPT-4o powered agronomist trained on South African farming conditions. Ask anything — fertiliser plans, pest treatment, harvest timing, market strategy.</div>
+        <div class="f-tag">Powered by OpenAI GPT-4o</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">💧</div>
+        <div class="f-name">Smart Irrigation Control</div>
+        <div class="f-desc">Live soil moisture sensors combined with 48h rain forecasts create automatic irrigation schedules that cut water use by up to 32% without yield loss.</div>
+        <div class="f-tag">IoT Sensors · Open-Meteo API</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">📲</div>
+        <div class="f-name">WhatsApp Farm Alerts</div>
+        <div class="f-desc">Pest detections, frost warnings, low soil moisture and harvest windows sent directly to your WhatsApp. Works on any phone — no app download needed.</div>
+        <div class="f-tag">Twilio · Works on any phone</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">🌍</div>
+        <div class="f-name">Carbon Credit Revenue</div>
+        <div class="f-desc">Get paid for sequestering carbon. We manage VCS and Gold Standard certification, connect you to the voluntary carbon market — zero upfront cost.</div>
+        <div class="f-tag">VCS · Gold Standard · SA Carbon Tax</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">☀️</div>
+        <div class="f-name">Solar &amp; Energy Intelligence</div>
+        <div class="f-desc">Monitor solar output across all farms. Track kWh generated, identify underperforming panels and calculate real savings vs Eskom grid power.</div>
+        <div class="f-tag">Live kWh · SA Irradiance Model</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">🐛</div>
+        <div class="f-name">AI Pest Detection</div>
+        <div class="f-desc">Computer vision identifies 20+ SA pest species from drone imagery. Get WhatsApp alerts within minutes of detection with treatment recommendations.</div>
+        <div class="f-tag">94% AI confidence · Drone vision</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">💊</div>
+        <div class="f-name">Nutrient &amp; NPK Monitoring</div>
+        <div class="f-desc">Track N, P, K and Ca levels across all fields. Compare against SAFEX-standard optimal ranges and get precise fertiliser application recommendations.</div>
+        <div class="f-tag">IoT soil sensors · 6 farms live</div>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">🧪</div>
+        <div class="f-name">Bio-Input Products</div>
+        <div class="f-desc">Our own range of microbial fungicides, nitrogen biostimulants and biopesticides. Average +14% yield uplift at 60% lower cost than synthetic alternatives.</div>
+        <div class="f-tag">Made in SA · Zero residue</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="background:rgba(8,18,10,.55);border-top:1px solid rgba(34,197,94,.08);border-bottom:1px solid rgba(34,197,94,.08)">
+  <div class="con">
+    <div class="s-pill">Pricing</div>
+    <h2 class="s-title">Simple per-hectare pricing</h2>
+    <p class="s-sub">Pay only for what you farm. No lock-in contracts — scale up as you grow. The bigger your farm, the lower the rate.</p>
+    <div class="p-grid">
+      <div class="p-card">
+        <div class="p-tier">STARTER</div>
+        <div class="p-name">Smallholder</div>
+        <div class="p-range">1 – 50 ha</div>
+        <div class="p-amt">R200<small> / ha / mo</small></div>
+        <ul class="p-feats">
+          <li>Full dashboard &amp; AI advisor</li>
+          <li>Satellite NDVI weekly</li>
+          <li>WhatsApp alerts</li>
+          <li>Weather &amp; market prices</li>
+          <li>1 IoT soil probe (self-install)</li>
+        </ul>
+        <a href="/" class="p-cta">Get Started Free</a>
+      </div>
+      <div class="p-card feat">
+        <div class="p-badge">MOST POPULAR</div>
+        <div class="p-tier">ESTATE</div>
+        <div class="p-name">Commercial Estate</div>
+        <div class="p-range">201 – 500 ha</div>
+        <div class="p-amt">R150<small> / ha / mo</small></div>
+        <ul class="p-feats">
+          <li>Everything in Grower</li>
+          <li>8 IoT stations + LoRa gateway</li>
+          <li>Bi-weekly drone NDVI + thermal</li>
+          <li>Dedicated remote agronomist</li>
+          <li>Solar-on-roof feasibility</li>
+          <li>Quarterly on-site review</li>
+        </ul>
+        <a href="/" class="p-cta">Get Started</a>
+      </div>
+      <div class="p-card">
+        <div class="p-tier">ENTERPRISE</div>
+        <div class="p-name">Large Farm</div>
+        <div class="p-range">501 – 2,000 ha</div>
+        <div class="p-amt">R120<small> / ha / mo</small></div>
+        <ul class="p-feats">
+          <li>🚁 Team flies to your farm</li>
+          <li>On-site drone + sensor install</li>
+          <li>Full LoRa mesh · 15 stations</li>
+          <li>Resident agronomist setup</li>
+          <li>Staff training &amp; certification</li>
+          <li>24/7 priority WhatsApp line</li>
+        </ul>
+        <a href="/" class="p-cta">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-bottom:0">
+  <div class="con">
+    <div class="cta-box">
+      <h2 class="cta-title">Ready to grow smarter?</h2>
+      <p class="cta-sub">Join forward-thinking South African farmers using AI, satellites and IoT to outperform the market — every season, every hectare.</p>
+      <div class="cta-btns">
+        <a href="/" class="btn-hp">🌿 Open Free Dashboard</a>
+        <a href="tel:+27825172688" class="btn-hs">📞 +27 82 517 2688</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">🌿 YieldCore AI</div>
+  <div class="f-sub">South Africa's Agricultural Intelligence Platform<br/>10 farms · 5,419 ha · 17 live data sources · Made in SA 🇿🇦</div>
+  <div class="f-links">
+    <a href="/">Dashboard Login</a>
+    <a href="/pay">Pricing &amp; Pay</a>
+    <a href="tel:+27825172688">Call Us</a>
+    <a href="mailto:hello@yieldcore.ai">hello@yieldcore.ai</a>
+  </div>
+</footer>
+
+</body>
+</html>
