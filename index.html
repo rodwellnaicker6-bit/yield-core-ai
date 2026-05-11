@@ -146,9 +146,17 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .tb-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:9px;font-weight:900;padding:1px 5px;border-radius:99px}
 
 /* ── SECTION HEADERS ── */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.sec-title{font-size:14px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:6px}
+.sec-title{font-size:13px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .sec-title span{font-size:11px;font-weight:400;color:var(--sub)}
+/* Source-data badge pills */
+.src-pill{display:inline-flex;align-items:center;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;vertical-align:middle}
+.src-green{background:#22c55e18;color:#22c55e;border:1px solid #22c55e33}
+.src-blue{background:#38bdf818;color:#38bdf8;border:1px solid #38bdf833}
+.src-purple{background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33}
+.src-yellow{background:#facc1518;color:#facc15;border:1px solid #facc1533}
+/* Map toolbar button row */
+.map-btn-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .sec-badge{background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:3px 10px;font-size:10px;color:var(--green);font-weight:700}
 .sec-link{font-size:11px;color:var(--green);cursor:pointer;font-weight:700;display:flex;align-items:center;gap:3px}
 
@@ -163,7 +171,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .weather-more{background:linear-gradient(135deg,var(--green2),var(--green));border-radius:11px;padding:12px 14px;min-width:110px;flex-shrink:0;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;font-size:13px;font-weight:900;color:#000}
 
 /* ── STAT CARDS ── */
-.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-bottom:18px}
 .stat-card{background:rgba(8,18,10,.82);border:1px solid rgba(34,197,94,.12);border-radius:14px;padding:15px 15px 13px;position:relative;overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s,box-shadow .2s}
 .stat-card:hover{border-color:rgba(34,197,94,.28);box-shadow:0 0 20px rgba(34,197,94,.1)}
 .stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(34,197,94,.06),transparent 60%);pointer-events:none}
@@ -175,7 +183,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .stat-live{font-size:14px;font-weight:900;color:var(--purple);animation:blink 1.2s infinite}
 
 /* ── BOTTOM THREE PANELS ── */
-.panels-row{display:grid;grid-template-columns:1fr 1fr 280px;gap:14px;margin-bottom:16px}
+.panels-row{display:grid;grid-template-columns:1fr 1fr 270px;gap:14px;margin-bottom:16px;grid-auto-flow:dense}
+/* Farm Health + Solar Roof each span 2 cols; Market Prices + Alerts stack in col 3 */
+#sec-farms{grid-column:1/3}
+#sec-solar-roof{grid-column:1/3}
 .panel{background:rgba(8,18,10,.78);border:1px solid rgba(34,197,94,.1);border-radius:16px;padding:18px;backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.04)}
 .map-btn{background:rgba(13,26,15,.8);border:1px solid rgba(34,197,94,.18);color:var(--sub);font-size:11px;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
 .map-btn:hover{background:rgba(34,197,94,.15);color:var(--text);border-color:rgba(34,197,94,.35)}
@@ -712,15 +723,45 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .module-card:hover .module-icon{filter:drop-shadow(0 0 10px rgba(34,197,94,.6));transform:scale(1.08)}
 .module-icon{transition:all .22s}
 
-/* Subtle grid dot overlay */
-#main::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(34,197,94,.04) 1px,transparent 1px);background-size:36px 36px;z-index:0;opacity:.7}
+/* Subtle grid dot overlay — on content, not on #main::before which holds the bg image */
 #content{position:relative;z-index:1}
+#content::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(34,197,94,.035) 1px,transparent 1px);background-size:36px 36px;z-index:-1;opacity:1}
 
-@media(max-width:1300px){.stats-row{grid-template-columns:repeat(3,1fr)}.modules-grid{grid-template-columns:repeat(5,1fr)}}
-@media(max-width:1000px){.panels-row{grid-template-columns:1fr 1fr}}
+/* ── RESPONSIVE ── */
+@media(max-width:1300px){
+  .stats-row{grid-template-columns:repeat(3,1fr)}
+  .modules-grid{grid-template-columns:repeat(5,1fr)}
+  .panels-row{grid-template-columns:1fr 270px}
+  #sec-farms{grid-column:1/2}
+  #sec-solar-roof{grid-column:1/2}
+}
+@media(max-width:1000px){
+  .panels-row{grid-template-columns:1fr}
+  #sec-farms,#sec-solar-roof{grid-column:auto}
+  .panels2,.panels3{grid-template-columns:1fr}
+  .sensor-row{grid-template-columns:repeat(3,1fr)}
+  .ndvi-grid{grid-template-columns:repeat(4,1fr)}
+  .pest-grid{grid-template-columns:repeat(2,1fr)}
+  .inv-grid3{grid-template-columns:1fr 1fr}
+  .inv-hero-metrics{grid-template-columns:repeat(3,1fr)}
+}
 @media(max-width:750px){
-  #sidebar{width:60px;min-width:60px}.nav-item span,.sb-logo-text,.sb-logo-sub,.sb-version,.sb-status,.sb-role-label,.sb-role-val{display:none}
-  #main{margin-left:60px}.stats-row{grid-template-columns:repeat(2,1fr)}.modules-grid{grid-template-columns:repeat(3,1fr)}
+  #sidebar{width:60px;min-width:60px}
+  .nav-item span,.sb-logo-text,.sb-logo-sub,.sb-version,.sb-status,.sb-role-label,.sb-role-val{display:none}
+  #main{margin-left:60px}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .modules-grid{grid-template-columns:repeat(3,1fr)}
+  .sensor-row{grid-template-columns:repeat(2,1fr)}
+  .ndvi-grid{grid-template-columns:repeat(3,1fr)}
+  .pest-grid{grid-template-columns:1fr 1fr}
+  .solar-farm-row{grid-template-columns:1fr}
+  .intro-row{grid-template-columns:1fr 1fr}
+  .inv-hero-metrics{grid-template-columns:repeat(2,1fr)}
+  .carbon-grid-main{grid-template-columns:1fr}
+  .carbon-farm-grid{grid-template-columns:1fr 1fr}
+  .npk-farm-grid,.yield-grid{grid-template-columns:1fr}
+  .tb-pay,.tb-share{font-size:10px;padding:7px 10px}
+  #content{padding:16px 14px}
 }
 </style>
 </head>
@@ -911,14 +952,14 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- FARM HEALTH -->
         <div class="panel" id="sec-farms">
           <div class="sec-hdr">
-            <div class="sec-title">🌿 FARM HEALTH OVERVIEW · LIVE 3D TERRAIN</div>
-            <div style="display:flex;gap:6px;align-items:center">
-              <button class="map-btn" onclick="toggleMap3D()" id="btn3D">3D</button>
-              <button class="map-btn" onclick="toggleMapStyle()" id="btnStyle">SAT</button>
-              <button class="map-btn" onclick="toggleSentinel()" id="btnS2" title="Sentinel-2 cloudless mosaic (10 m)">S2</button>
-              <button class="map-btn" onclick="toggleNDVI()" id="btnNDVI" title="NASA MODIS NDVI — real vegetation health">NDVI</button>
-              <button class="map-btn" onclick="toggleMODIS()" id="btnMODIS" title="NASA MODIS Terra true colour">MODIS</button>
-              <button class="map-btn" onclick="openAddFarm()" style="background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent">+ Add Farm</button>
+            <div class="sec-title">🌿 FARM HEALTH <span>Live · 3D Terrain · Satellite</span></div>
+            <div class="map-btn-row">
+              <button class="map-btn" onclick="toggleMap3D()" id="btn3D" title="Toggle 3D terrain">3D</button>
+              <button class="map-btn" onclick="toggleMapStyle()" id="btnStyle" title="Satellite / terrain style">SAT</button>
+              <button class="map-btn" onclick="toggleSentinel()" id="btnS2" title="Sentinel-2 cloudless mosaic 10m">S2</button>
+              <button class="map-btn" onclick="toggleNDVI()" id="btnNDVI" title="NASA MODIS real NDVI">NDVI</button>
+              <button class="map-btn" onclick="toggleMODIS()" id="btnMODIS" title="NASA MODIS true colour">MODIS</button>
+              <button class="map-btn" onclick="openAddFarm()" style="background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent;font-weight:900">＋ Farm</button>
             </div>
           </div>
           <div id="farmHealthMap" style="display:flex;gap:14px;flex-wrap:wrap">
@@ -937,8 +978,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- SOLAR ROOF SIMULATION -->
         <div class="panel" id="sec-solar-roof">
           <div class="sec-hdr">
-            <div class="sec-title">☀️ SOLAR-ON-ROOF SIMULATION</div>
-            <div class="sec-badge">Live SA irradiance · 5.5 sun-hrs/day</div>
+            <div class="sec-title">☀️ SOLAR-ON-ROOF <span>SA irradiance · 5.5 sun-hrs/day</span></div>
+            <span class="src-pill src-yellow">Live · SA Grid</span>
           </div>
           <div id="solarRoofGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px"></div>
           <div id="solarRoofTotal" style="margin-top:12px;padding:12px 14px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3);border-radius:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"></div>
@@ -983,7 +1024,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- MARKET PRICES -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">📊 MARKET PRICES (SAFEX)</div>
+            <div class="sec-title">📊 SAFEX MARKET PRICES</div>
           </div>
           <div id="marketPrices"></div>
           <div style="margin-top:10px"><div class="sec-link">View full market data →</div></div>
@@ -1031,8 +1072,13 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- NDVI -->
         <div class="panel" id="sec-ndvi">
           <div class="sec-hdr">
-            <div class="sec-title">🛰️ NDVI — CROP VITALITY INDEX <span style="display:inline-flex;gap:5px;align-items:center"><span style="background:#22c55e18;color:#22c55e;border:1px solid #22c55e33;border-radius:99px;padding:1px 7px;font-size:9px;font-weight:700">Sentinel-2</span><span style="background:#38bdf818;color:#38bdf8;border:1px solid #38bdf833;border-radius:99px;padding:1px 7px;font-size:9px;font-weight:700">NASA GIBS</span><span style="background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33;border-radius:99px;padding:1px 7px;font-size:9px;font-weight:700">Open-Meteo soil</span></span></div>
-            <div style="font-size:9px;color:#22c55e;font-weight:700">● Updated 2h ago</div>
+            <div class="sec-title">🛰️ NDVI <span>Crop Vitality Index</span></div>
+            <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+              <span class="src-pill src-green">Sentinel-2</span>
+              <span class="src-pill src-blue">NASA GIBS</span>
+              <span class="src-pill src-purple">Open-Meteo</span>
+              <span style="font-size:9px;color:#22c55e;font-weight:700">● Live</span>
+            </div>
           </div>
           <div class="ndvi-grid" id="ndviGrid"></div>
           <div class="ndvi-avg-bar"><div class="ndvi-avg-fill" id="ndviAvgBar"></div></div>
@@ -1050,8 +1096,11 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- TEMP & HUMIDITY SENSORS -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">🌡️ TEMP &amp; HUMIDITY SENSORS <span style="background:#22c55e18;color:#22c55e;border:1px solid #22c55e33;border-radius:99px;padding:1px 7px;font-size:9px;font-weight:700">Live · Open-Meteo IoT</span></div>
-            <div style="font-size:9px;color:var(--sub);font-weight:700" id="sensorTimestamp">Loading live data…</div>
+            <div class="sec-title">🌡️ TEMP &amp; HUMIDITY <span>IoT Sensors</span></div>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+              <span class="src-pill src-green">Live · Open-Meteo</span>
+              <span style="font-size:9px;color:var(--sub);font-weight:600" id="sensorTimestamp">Loading…</span>
+            </div>
           </div>
           <div class="sensor-row" id="sensorRow"></div>
           <div class="sensor-gauge-wrap" id="sensorGauges"></div>
@@ -1199,8 +1248,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- YIELDCORE BIO-INPUTS (our own products) -->
       <div class="panel fade" id="sec-bio">
         <div class="sec-hdr">
-          <div class="sec-title">🧪 YIELDCORE BIO-INPUTS · OUR OWN GREEN PRODUCTS</div>
-          <div class="sec-badge">Microbial · Organic · SA-Made</div>
+          <div class="sec-title">🧪 BIO-INPUTS <span>Microbial · Organic · SA-Made</span></div>
+          <span class="src-pill src-green">SA-Registered</span>
         </div>
         <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.5">Living-microbe formulations and biostimulants designed to fight disease, suppress pests, and boost yield without chemical residue. Every product is registered, traceable, and proudly South African.</div>
         <div id="bioGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px"></div>
@@ -1209,8 +1258,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- PER-FARM ROI / REVENUE UPLIFT (each of 10 farms on its own) -->
       <div class="panel fade" id="sec-revenue">
         <div class="sec-hdr">
-          <div class="sec-title">💸 PER-FARM REVENUE UPLIFT</div>
-          <div class="sec-badge">Live model · 10 farms</div>
+          <div class="sec-title">💸 REVENUE UPLIFT <span>Per-farm · live model</span></div>
+          <span class="src-pill src-blue">10 Farms</span>
         </div>
         <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.5">Each farm's projected revenue with our bio-inputs applied — precision-modelled per crop type, hectare, and SAFEX price. Every rand of uplift is tracked and verified.</div>
         <div id="revGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px"></div>
@@ -1219,8 +1268,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- PRICING + DRONES + IRRIGATION -->
       <div class="panel fade" id="sec-pricing">
         <div class="sec-hdr">
-          <div class="sec-title">🚁 PRICING · DRONES · IRRIGATION · SENSORS</div>
-          <div class="sec-badge">Per-hectare · transparent</div>
+          <div class="sec-title">🚁 PRICING &amp; DRONES <span>Per-hectare · transparent</span></div>
+          <span class="src-pill src-yellow">From R100/ha</span>
         </div>
         <div style="font-size:12px;color:var(--sub);margin-bottom:14px;line-height:1.55">
           YieldCore AI is a complete farm intelligence stack — <strong style="color:var(--green3)">dashboard, drone fly-overs, smart irrigation control, IoT soil & weather sensors, AI advisor and WhatsApp alerts</strong>. We price per hectare, the bigger your farm, the lower the rate, and once you cross 500 ha we fly the team to your gate, install the drones and sensors, and train your staff on-site.
