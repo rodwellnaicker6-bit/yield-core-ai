@@ -12,12 +12,14 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --green:#22c55e;--green2:#16a34a;--green3:#4ade80;
-  --bg:#060f07;--bg2:rgba(10,26,12,.72);--bg3:rgba(13,32,16,.78);--bg4:rgba(17,31,19,.62);
-  --bg2-solid:#0a1a0c;
-  --border:#1a3a1d;--border2:#132a16;
-  --text:#e2f0e6;--sub:#7a9e82;--dim:#3a5a3d;
+  --bg:#040c05;--bg2:rgba(8,20,10,.80);--bg3:rgba(10,24,12,.82);--bg4:rgba(13,26,15,.70);
+  --bg2-solid:#080f09;
+  --border:rgba(34,197,94,.12);--border2:rgba(34,197,94,.08);
+  --text:#ecf5ee;--sub:#6b9475;--dim:#2e4a31;
   --red:#f87171;--yellow:#facc15;--orange:#fb923c;--blue:#38bdf8;--purple:#a78bfa;
-  --sidebar:220px;
+  --sidebar:224px;
+  --glass:rgba(8,18,10,.72);
+  --glow:rgba(34,197,94,.18);
 }
 html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;font-feature-settings:'cv11','ss01','ss03';-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
 .sec-title,.sb-logo-text,.stat-val,.weather-temp,.login-logo-name,h1,h2,h3,.tb-welcome,.btn-login,.inv-headline{font-family:'Sora','Inter',sans-serif;letter-spacing:-.02em}
@@ -51,26 +53,28 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 /* ── LAYOUT ── */
 #shell{display:flex;min-height:100vh}
-#sidebar{width:var(--sidebar);min-width:var(--sidebar);background:var(--bg2-solid);border-right:1px solid var(--border2);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto}
+#sidebar{width:var(--sidebar);min-width:var(--sidebar);background:linear-gradient(180deg,#060d07 0%,#040c05 100%);border-right:1px solid rgba(34,197,94,.1);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;backdrop-filter:blur(20px)}
 #main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
-#topbar{background:var(--bg);border-bottom:1px solid var(--border2);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-#content{flex:1;padding:22px 26px;overflow-y:auto;background:var(--bg)}
+#topbar{background:rgba(4,12,5,.88);border-bottom:1px solid rgba(34,197,94,.1);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;backdrop-filter:blur(20px)}
+#content{flex:1;padding:24px 28px;overflow-y:auto;background:transparent}
 
 /* ── SIDEBAR ── */
-.sb-logo{padding:20px 18px 16px;border-bottom:1px solid var(--border2)}
+.sb-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(34,197,94,.1);background:linear-gradient(135deg,rgba(34,197,94,.06),transparent)}
 .sb-logo-mark{display:flex;align-items:center;gap:10px}
-.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--green2),var(--green));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--green2),var(--green));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 4px 16px rgba(34,197,94,.4)}
 .sb-logo-text{font-size:14px;font-weight:900;color:var(--green);letter-spacing:-.3px;line-height:1.1}
-.sb-logo-sub{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px}
-.sb-nav{padding:12px 10px;flex:1}
-.sb-section{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;font-weight:700;padding:8px 8px 4px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:all .18s;margin-bottom:2px;font-size:13px;font-weight:600;color:var(--sub)}
-.nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:linear-gradient(135deg,#0d2f10,#142e17);color:var(--green);border:1px solid #1a4a1e}
-.nav-item .ni{font-size:17px;width:22px;text-align:center}
-.sb-footer{padding:14px 14px 18px;border-top:1px solid var(--border2)}
-.sb-role{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:10px}
-.sb-role-label{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px}
+.sb-logo-sub{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;opacity:.8}
+.sb-nav{padding:14px 10px;flex:1}
+.sb-section{font-size:9px;color:rgba(34,197,94,.45);text-transform:uppercase;letter-spacing:2.5px;font-weight:800;padding:12px 10px 5px;margin-top:2px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:all .18s;margin-bottom:1px;font-size:12.5px;font-weight:600;color:var(--sub);border:1px solid transparent}
+.nav-item:hover{background:rgba(34,197,94,.07);color:var(--text);border-color:rgba(34,197,94,.15)}
+.nav-item.active{background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(34,197,94,.08));color:var(--green3);border-color:rgba(34,197,94,.3);box-shadow:0 0 0 1px rgba(34,197,94,.1) inset}
+.nav-item.active::before{content:'';position:absolute;left:-1px;top:8px;bottom:8px;width:2.5px;background:linear-gradient(180deg,var(--green3),var(--green2));border-radius:0 3px 3px 0}
+.nav-item{position:relative}
+.nav-item .ni{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+.sb-footer{padding:14px 14px 18px;border-top:1px solid rgba(34,197,94,.1)}
+.sb-role{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.15);border-radius:10px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:10px}
+.sb-role-label{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px}
 .sb-role-val{font-size:12px;font-weight:800;color:var(--green)}
 .sb-version{font-size:10px;color:var(--dim);margin-bottom:2px}
 .sb-status{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--green)}
@@ -159,21 +163,23 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .weather-more{background:linear-gradient(135deg,var(--green2),var(--green));border-radius:11px;padding:12px 14px;min-width:110px;flex-shrink:0;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;font-size:13px;font-weight:900;color:#000}
 
 /* ── STAT CARDS ── */
-.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
-.stat-card{background:var(--bg2);border:1px solid var(--border2);border-radius:13px;padding:14px 14px 12px;position:relative;overflow:hidden}
-.stat-icon{font-size:22px;margin-bottom:6px}
-.stat-val{font-size:22px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:3px}
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}
+.stat-card{background:rgba(8,18,10,.82);border:1px solid rgba(34,197,94,.12);border-radius:14px;padding:15px 15px 13px;position:relative;overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s,box-shadow .2s}
+.stat-card:hover{border-color:rgba(34,197,94,.28);box-shadow:0 0 20px rgba(34,197,94,.1)}
+.stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(34,197,94,.06),transparent 60%);pointer-events:none}
+.stat-icon{font-size:20px;margin-bottom:6px;opacity:.9}
+.stat-val{font-size:22px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:3px;letter-spacing:-.02em}
 .stat-unit{font-size:11px;font-weight:600;color:var(--sub)}
-.stat-label{font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4}
-.stat-sparkline{position:absolute;bottom:0;left:0;right:0;height:28px;opacity:.4}
+.stat-label{font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4;letter-spacing:.1px}
+.stat-sparkline{position:absolute;bottom:0;left:0;right:0;height:26px;opacity:.35}
 .stat-live{font-size:14px;font-weight:900;color:var(--purple);animation:blink 1.2s infinite}
 
 /* ── BOTTOM THREE PANELS ── */
 .panels-row{display:grid;grid-template-columns:1fr 1fr 280px;gap:14px;margin-bottom:16px}
-.panel{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:16px}
-.map-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif}
-.map-btn:hover{background:var(--green2);color:#03130a;border-color:var(--green)}
-.map-btn.active{background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent}
+.panel{background:rgba(8,18,10,.78);border:1px solid rgba(34,197,94,.1);border-radius:16px;padding:18px;backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.04)}
+.map-btn{background:rgba(13,26,15,.8);border:1px solid rgba(34,197,94,.18);color:var(--sub);font-size:11px;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
+.map-btn:hover{background:rgba(34,197,94,.15);color:var(--text);border-color:rgba(34,197,94,.35)}
+.map-btn.active{background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent;box-shadow:0 0 14px rgba(34,197,94,.4)}
 .search-result{padding:8px 12px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text);border:1px solid transparent;margin-bottom:3px}
 .search-result:hover{background:var(--bg3);border-color:var(--border)}
 .search-result .sr-place{font-weight:700;color:var(--green3)}
@@ -219,9 +225,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .rev-roi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:9px}
 .rev-mini-lbl{font-size:8.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
 .rev-mini-val{font-size:13px;font-weight:800;margin-top:2px;font-family:'Sora',sans-serif}
-.rev-vending{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.22);border-radius:9px;padding:9px 11px}
-.rev-vending-hdr{font-size:9px;font-weight:800;color:#a78bfa;letter-spacing:1.5px;margin-bottom:6px}
-.rev-vending-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .rev-vlbl{font-size:8.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
 .rev-vval{font-size:11.5px;font-weight:800;color:var(--text);margin-top:2px;font-family:'Sora',sans-serif}
 
@@ -449,30 +452,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .ai-quick-btn{padding:5px 11px;background:var(--bg4);border:1px solid var(--border2);border-radius:99px;font-size:10px;font-weight:700;color:var(--sub);cursor:pointer;transition:all .18s}
 .ai-quick-btn:hover{border-color:var(--green);color:var(--green)}
 
-/* ── COMMUNITY GRAIN VENDING ── */
-.vend-map-row{display:flex;gap:12px;margin-bottom:12px}
-.vend-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.vend-stat{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:10px 12px;text-align:center}
-.vend-stat-val{font-size:18px;font-weight:900}
-.vend-stat-label{font-size:9px;color:var(--sub);margin-top:2px}
-.vend-list{display:flex;flex-direction:column;gap:8px}
-.vend-item{background:var(--bg4);border:1px solid var(--border2);border-radius:11px;padding:11px 13px}
-.vend-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.vend-name{font-size:12px;font-weight:800;color:var(--text)}
-.vend-loc{font-size:10px;color:var(--sub)}
-.vend-online{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px}
-.vend-on{background:#22c55e18;color:#22c55e;border:1px solid #22c55e33}
-.vend-off{background:#f8717118;color:#f87171;border:1px solid #f8717133}
-.vend-stocks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.vend-stock{background:var(--bg3);border-radius:7px;padding:6px 8px;text-align:center}
-.vend-stock-icon{font-size:14px}
-.vend-stock-name{font-size:9px;color:var(--sub);margin:2px 0}
-.vend-stock-val{font-size:11px;font-weight:900}
-.vend-stock-price{font-size:9px;color:var(--green);font-weight:700}
-.vend-stock-bar{height:3px;background:var(--bg);border-radius:2px;overflow:hidden;margin-top:4px}
-.vend-stock-fill{height:100%;border-radius:2px;transition:width .4s}
-.vend-dispense-btn{width:100%;margin-top:8px;padding:7px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:800;cursor:pointer;transition:opacity .2s}
-.vend-dispense-btn:hover{opacity:.85}
+/* vending removed */
 
 /* ── CARBON CREDITS ── */
 .carbon-header-band{background:linear-gradient(135deg,#022c02,#031e03,#04280a);border:1px solid #22c55e2a;border-radius:16px;padding:20px 24px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;overflow:hidden}
@@ -700,48 +680,40 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 @keyframes scanSweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 @keyframes cornerBlink{0%,100%{opacity:.55}50%{opacity:1}}
 
-/* glow ring on all cards/panels/modules */
-.stat-card,.panel,.module-card{position:relative;animation:glowPulse 4.5s ease-in-out infinite;border-color:rgba(74,222,128,.3) !important;background:linear-gradient(180deg,rgba(8,18,12,.85),rgba(12,24,16,.7)) !important;backdrop-filter:blur(8px) saturate(140%);transition:transform .25s ease,box-shadow .25s ease}
-.stat-card::before,.panel::before,.module-card::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(120deg,rgba(74,222,128,.55),rgba(250,204,21,.45),rgba(34,197,94,.35),rgba(74,222,128,.55));background-size:200% 200%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.7;animation:borderShine 6s linear infinite}
-.stat-card::after,.panel::after,.module-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(74,222,128,.9),transparent);animation:scanSweep 4s ease-in-out infinite;pointer-events:none}
-.stat-card:hover,.module-card:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(74,222,128,.7),0 0 32px -2px rgba(74,222,128,.55),0 0 80px -8px rgba(250,204,21,.30) !important}
+/* Premium card/panel/module base — no aggressive animation */
+.stat-card,.module-card{position:relative;transition:transform .22s ease,box-shadow .22s ease,border-color .2s}
+.stat-card:hover,.module-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 0 1px rgba(34,197,94,.22)}
 
-/* corner brackets on panels */
-.panel{position:relative}
-.panel > .pcorner{position:absolute;width:14px;height:14px;border:1.5px solid rgba(74,222,128,.6);pointer-events:none;animation:cornerBlink 2.6s ease-in-out infinite;z-index:2}
-.panel .pcorner.tl{top:6px;left:6px;border-right:none;border-bottom:none}
-.panel .pcorner.tr{top:6px;right:6px;border-left:none;border-bottom:none}
-.panel .pcorner.bl{bottom:6px;left:6px;border-right:none;border-top:none}
-.panel .pcorner.br{bottom:6px;right:6px;border-left:none;border-top:none}
+/* Panel hover lift */
+.panel{transition:box-shadow .22s,border-color .2s}
+.panel:hover{box-shadow:0 8px 32px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)}
 
-/* glowing sidebar nav */
-#sidebar{box-shadow:inset -1px 0 0 rgba(74,222,128,.18),4px 0 30px -10px rgba(74,222,128,.25)}
-.nav-item{position:relative;border:1px solid transparent;transition:all .2s}
-.nav-item:hover{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25);color:var(--text);box-shadow:inset 0 0 18px rgba(74,222,128,.10),0 0 14px -4px rgba(74,222,128,.35)}
-.nav-item.active{background:linear-gradient(135deg,rgba(74,222,128,.18),rgba(250,204,21,.10));border-color:rgba(74,222,128,.55) !important;color:#fff;box-shadow:0 0 0 1px rgba(74,222,128,.5),0 0 22px -4px rgba(74,222,128,.55),inset 0 1px 0 rgba(255,255,255,.06)}
-.nav-item.active::before{content:'';position:absolute;left:-1px;top:6px;bottom:6px;width:3px;background:linear-gradient(180deg,#facc15,#4ade80);border-radius:0 4px 4px 0;box-shadow:0 0 12px #4ade80}
+/* Glowing sidebar */
+#sidebar{box-shadow:2px 0 20px -6px rgba(34,197,94,.2)}
+/* Premium nav overrides — clean, subtle glow */
+.nav-item:hover{background:rgba(34,197,94,.09);border-color:rgba(34,197,94,.22);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,rgba(34,197,94,.16),rgba(34,197,94,.07));border-color:rgba(34,197,94,.35)!important;color:var(--green3);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.nav-item.active::before{content:'';position:absolute;left:-1px;top:8px;bottom:8px;width:2.5px;background:linear-gradient(180deg,var(--green3),var(--green2));border-radius:0 3px 3px 0}
 
-/* sidebar logo glow */
-.sb-logo-icon{filter:drop-shadow(0 0 14px rgba(74,222,128,.6)) drop-shadow(0 0 4px rgba(250,204,21,.3))}
+/* Sidebar logo glow */
+.sb-logo-icon{box-shadow:0 4px 16px rgba(34,197,94,.45),0 0 0 1px rgba(34,197,94,.2)}
 
-/* topbar pill glow */
-.tb-pill{box-shadow:0 0 0 1px rgba(74,222,128,.25),0 0 14px -4px rgba(74,222,128,.35)}
-.tb-live-dot{box-shadow:0 0 12px #4ade80,0 0 4px #fff}
+/* Topbar pill */
+.tb-pill{box-shadow:0 0 0 1px rgba(34,197,94,.15),0 0 10px -2px rgba(34,197,94,.2)}
+.tb-live-dot{box-shadow:0 0 10px #22c55e,0 0 3px #fff}
 
-/* yield ribbon pills glow */
-.yr-pill.green{box-shadow:0 0 0 1px rgba(250,204,21,.35),0 0 16px -4px rgba(250,204,21,.45)}
+/* yield ribbon pills */
+.yr-pill.green{box-shadow:0 0 0 1px rgba(250,204,21,.3),0 0 12px -4px rgba(250,204,21,.35)}
 
-/* stat values shine */
-.stat-val{text-shadow:0 0 18px rgba(74,222,128,.4)}
-.stat-icon{filter:drop-shadow(0 0 8px rgba(74,222,128,.45))}
+/* stat value subtle glow */
+.stat-val{text-shadow:0 0 20px rgba(34,197,94,.25)}
 
-/* modules grid icons glow on hover */
-.module-card:hover .module-icon{filter:drop-shadow(0 0 12px rgba(74,222,128,.7));transform:scale(1.1)}
-.module-icon{transition:all .25s}
+/* modules grid icons */
+.module-card:hover .module-icon{filter:drop-shadow(0 0 10px rgba(34,197,94,.6));transform:scale(1.08)}
+.module-icon{transition:all .22s}
 
-/* hex grid background overlay */
-#main{position:relative}
-#main::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(74,222,128,.05) 1px,transparent 1px);background-size:32px 32px;z-index:0;opacity:.6}
+/* Subtle grid dot overlay */
+#main::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(34,197,94,.04) 1px,transparent 1px);background-size:36px 36px;z-index:0;opacity:.7}
 #content{position:relative;z-index:1}
 
 @media(max-width:1300px){.stats-row{grid-template-columns:repeat(3,1fr)}.modules-grid{grid-template-columns:repeat(5,1fr)}}
@@ -777,7 +749,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <div class="login-caps">
         <span>🛰️ Satellites</span><span>🚁 Drones</span><span>💧 Irrigation</span>
         <span>📡 Sensors</span><span>🤖 AI Advisor</span><span>☀️ Solar</span>
-        <span>🥬 Bio-Inputs</span><span>🏪 Vending</span>
+        <span>🥬 Bio-Inputs</span><span>🌍 Carbon</span>
       </div>
     </div>
     <div id="authNameWrap" style="display:none">
@@ -812,17 +784,24 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       </div>
     </div>
     <div class="sb-nav">
+      <div class="sb-section">Intelligence</div>
       <div class="nav-item active" onclick="navTo(this,'top')"><div class="ni">🏠</div><span>Dashboard</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">🌾</div><span>Farms</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">❤️</div><span>Health</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-solar')"><div class="ni">☀️</div><span>Solar</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-ndvi')"><div class="ni">🗺️</div><span>Zones</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-nutrients')"><div class="ni">💊</div><span>Nutrients</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-yield')"><div class="ni">💰</div><span>Costs</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-ai')"><div class="ni">🤖</div><span>AI Advisor</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-alerts')"><div class="ni">🔔</div><span>Alerts</span></div>
+
+      <div class="sb-section">Farm Monitoring</div>
+      <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">🌾</div><span>Farm Health</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-solar')"><div class="ni">☀️</div><span>Solar</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-ndvi')"><div class="ni">🛰️</div><span>NDVI Zones</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-nutrients')"><div class="ni">💊</div><span>Nutrients</span></div>
+
+      <div class="sb-section">Operations</div>
+      <div class="nav-item" onclick="navTo(this,'sec-yield')"><div class="ni">📈</div><span>Yield &amp; Profit</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-revenue')"><div class="ni">💸</div><span>Revenue Uplift</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-bio')"><div class="ni">🧪</div><span>Bio-Inputs</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-revenue')"><div class="ni">💸</div><span>Per-Farm ROI</span></div>
+
+      <div class="sb-section">Platform</div>
+      <div class="nav-item" onclick="navTo(this,'carbonSection')"><div class="ni">🌍</div><span>Carbon Credits</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-pricing')"><div class="ni">🚁</div><span>Pricing &amp; Drones</span></div>
     </div>
     <div class="sb-footer">
@@ -1145,35 +1124,20 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
       </div>
 
-      <!-- AI ADVISOR & VENDING MACHINE -->
-      <div class="panels2 fade">
-
-        <!-- AI ADVISOR -->
-        <div class="panel" id="sec-ai">
-          <div class="sec-hdr">
-            <div class="sec-title">🤖 AI CROP ADVISOR <span>GPT-4o powered</span></div>
-            <div id="aiStatusBadge" style="font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33">● Online</div>
-          </div>
-          <div class="ai-chat-wrap">
-            <div class="ai-quick" id="aiQuick"></div>
-            <div class="ai-messages" id="aiMessages"></div>
-            <div class="ai-input-row">
-              <textarea class="ai-inp" id="aiInput" rows="1" placeholder="Ask about crops, pests, nutrients, irrigation…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}"></textarea>
-              <button class="ai-send" id="aiSendBtn" onclick="sendAI()">Send →</button>
-            </div>
+      <!-- AI ADVISOR (full width) -->
+      <div class="panel fade" id="sec-ai" style="margin-bottom:16px">
+        <div class="sec-hdr">
+          <div class="sec-title">🤖 AI CROP ADVISOR <span>GPT-4o powered</span></div>
+          <div id="aiStatusBadge" style="font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33">● Online</div>
+        </div>
+        <div class="ai-chat-wrap">
+          <div class="ai-quick" id="aiQuick"></div>
+          <div class="ai-messages" id="aiMessages"></div>
+          <div class="ai-input-row">
+            <textarea class="ai-inp" id="aiInput" rows="1" placeholder="Ask about crops, pests, nutrients, weather, carbon credits, yield optimisation…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}"></textarea>
+            <button class="ai-send" id="aiSendBtn" onclick="sendAI()">Send →</button>
           </div>
         </div>
-
-        <!-- COMMUNITY GRAIN VENDING -->
-        <div class="panel">
-          <div class="sec-hdr">
-            <div class="sec-title">🏧 COMMUNITY GRAIN VENDING</div>
-            <div style="font-size:9px;color:var(--purple);font-weight:700;background:#a78bfa18;border:1px solid #a78bfa33;padding:2px 10px;border-radius:99px">YieldCore Social Impact</div>
-          </div>
-          <div class="vend-stats" id="vendStats"></div>
-          <div class="vend-list" id="vendList"></div>
-        </div>
-
       </div>
 
       <!-- CARBON CREDIT TRACKER -->
@@ -1244,10 +1208,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- PER-FARM ROI / REVENUE UPLIFT (each of 10 farms on its own) -->
       <div class="panel fade" id="sec-revenue">
         <div class="sec-hdr">
-          <div class="sec-title">💸 PER-FARM REVENUE UPLIFT &amp; VENDING PROJECTION</div>
+          <div class="sec-title">💸 PER-FARM REVENUE UPLIFT</div>
           <div class="sec-badge">Live model · 10 farms</div>
         </div>
-        <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.5">Each farm's projected revenue with our bio-inputs applied, plus the volume of harvest they could feed into our community vending network — turning every hectare into both income and food security.</div>
+        <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.5">Each farm's projected revenue with our bio-inputs applied — precision-modelled per crop type, hectare, and SAFEX price. Every rand of uplift is tracked and verified.</div>
         <div id="revGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px"></div>
       </div>
 
@@ -1270,7 +1234,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
           <div class="cap-pill">🤖 AI Crop Advisor</div>
           <div class="cap-pill">📲 WhatsApp Alerts</div>
           <div class="cap-pill">☀️ Solar-on-Roof</div>
-          <div class="cap-pill">🏧 Vending Network</div>
+          <div class="cap-pill">🌍 Carbon Credits</div>
         </div>
 
         <!-- pricing tiers -->
@@ -1544,7 +1508,7 @@ const modules=[
   {icon:'🤖',name:'AI ADVISOR',desc:'OpenAI crop advisor\n(Live + Local fallback)',     section:'sec-ai'},
   {icon:'🔔',name:'ALERTS',   desc:'Alerts & notifications\n(WhatsApp + SMS)',          section:'sec-alerts'},
   {icon:'🧪',name:'BIO-INPUTS', desc:'Microbial fungicides &\norganic crop boosters',     section:'sec-bio'},
-  {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nvending projections',            section:'sec-revenue'},
+  {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nROI per farm',            section:'sec-revenue'},
   {icon:'🚁',name:'PRICING',  desc:'Drones · sensors · irrigation\nfrom R200/ha',          section:'sec-pricing'},
 ];
 
@@ -2397,75 +2361,7 @@ async function sendAI(){
 }
 window.sendAI=sendAI;
 
-// ── COMMUNITY GRAIN VENDING ──
-const vendingMachines=[
-  {name:'Botshabelo Hub VM-01',loc:'Botshabelo, Free State',online:true,
-    stocks:[
-      {icon:'🌽',name:'White Maize',qty:450,max:500,price:'R8.50/kg',pct:90},
-      {icon:'🌾',name:'Wheat Flour',qty:120,max:200,price:'R12/kg',pct:60},
-      {icon:'🫘',name:'Soya Mince',qty:80,max:150,price:'R15/kg',pct:53},
-    ]},
-  {name:'Khayelitsha VM-02',loc:'Khayelitsha, Western Cape',online:true,
-    stocks:[
-      {icon:'🌽',name:'White Maize',qty:310,max:500,price:'R8.50/kg',pct:62},
-      {icon:'🌾',name:'Wheat Flour',qty:190,max:200,price:'R12/kg',pct:95},
-      {icon:'🫘',name:'Yellow Split Peas',qty:40,max:100,price:'R10/kg',pct:40},
-    ]},
-  {name:'Soweto VM-03',loc:'Meadowlands, Gauteng',online:false,
-    stocks:[
-      {icon:'🌽',name:'White Maize',qty:0,max:500,price:'R8.50/kg',pct:0},
-      {icon:'🌾',name:'Wheat Flour',qty:0,max:200,price:'R12/kg',pct:0},
-      {icon:'🫘',name:'Soya Mince',qty:0,max:150,price:'R15/kg',pct:0},
-    ]},
-  {name:'Motherwell VM-04',loc:'Motherwell, Eastern Cape',online:true,
-    stocks:[
-      {icon:'🌽',name:'White Maize',qty:200,max:500,price:'R8.50/kg',pct:40},
-      {icon:'🌾',name:'Wheat Flour',qty:55,max:200,price:'R12/kg',pct:28},
-      {icon:'🫘',name:'Lentils',qty:90,max:120,price:'R11/kg',pct:75},
-    ]},
-];
-function renderVending(){
-  const online=vendingMachines.filter(v=>v.online).length;
-  const totalDispensed=12840;
-  const familiesServed=3210;
-  document.getElementById('vendStats').innerHTML=`
-    <div class="vend-stat"><div class="vend-stat-val" style="color:#22c55e">${online}/${vendingMachines.length}</div><div class="vend-stat-label">Machines Online</div></div>
-    <div class="vend-stat"><div class="vend-stat-val" style="color:#a78bfa">${totalDispensed.toLocaleString()}kg</div><div class="vend-stat-label">Grain Dispensed</div></div>
-    <div class="vend-stat"><div class="vend-stat-val" style="color:#facc15">${familiesServed.toLocaleString()}</div><div class="vend-stat-label">Families Served</div></div>
-  `;
-  document.getElementById('vendList').innerHTML=vendingMachines.map((v,vi)=>`
-    <div class="vend-item">
-      <div class="vend-item-top">
-        <div>
-          <div class="vend-name">${v.name}</div>
-          <div class="vend-loc">📍 ${v.loc}</div>
-        </div>
-        <span class="vend-online ${v.online?'vend-on':'vend-off'}">${v.online?'● Online':'○ Offline'}</span>
-      </div>
-      <div class="vend-stocks">
-        ${v.stocks.map(s=>`<div class="vend-stock">
-          <div class="vend-stock-icon">${s.icon}</div>
-          <div class="vend-stock-name">${s.name}</div>
-          <div class="vend-stock-val" style="color:${s.pct<30?'#f87171':s.pct<60?'#facc15':'#22c55e'}">${s.qty}kg</div>
-          <div class="vend-stock-price">${s.price}</div>
-          <div class="vend-stock-bar"><div class="vend-stock-fill" style="width:${s.pct}%;background:${s.pct<30?'#f87171':s.pct<60?'#facc15':'#22c55e'}"></div></div>
-        </div>`).join('')}
-      </div>
-      ${v.online?`<button class="vend-dispense-btn" onclick="vendDispense(${vi})">🏧 Dispense / Restock Alert via WhatsApp</button>`:'<div style="text-align:center;font-size:11px;color:#f87171;margin-top:8px;padding:6px;background:#f8717110;border-radius:7px">⚠️ Machine offline — technician dispatched</div>'}
-    </div>
-  `).join('');
-}
-window.vendDispense=async function(i){
-  const v=vendingMachines[i];
-  const low=v.stocks.filter(s=>s.pct<40);
-  const msg=`🏧 YieldCore — Community Vending Alert\n\n*${v.name}*\n📍 ${v.loc}\n\n${low.length>0?`⚠️ LOW STOCK:\n${low.map(s=>`• ${s.icon} ${s.name}: ${s.qty}kg remaining (${s.pct}%)`).join('\n')}\n\n🚚 Please arrange restock within 24h.`:'✅ Stock levels are adequate. Dispense approved.'}\n\n_Sent by YieldCore AI Platform_`;
-  try{
-    const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
-    const d=await res.json();
-    if(d.success)alert('✅ Vending machine alert sent via WhatsApp!');
-    else alert('Error: '+d.error);
-  }catch(e){alert('Network error: '+e.message);}
-};
+// vending module removed
 
 // ── CARBON CREDIT TRACKER ──
 const carbonFarms=[
@@ -2614,20 +2510,20 @@ const invRevMix=[
   {icon:'🌾',name:'SaaS Platform Licences',val:'R22.4M',pct:100,color:'#22c55e'},
   {icon:'📡',name:'IoT Sensor Subscriptions',val:'R12.8M',pct:57,color:'#38bdf8'},
   {icon:'🤖',name:'AI Advisory Services',val:'R8.6M',pct:38,color:'#a78bfa'},
-  {icon:'🏧',name:'Grain Vending Margin',val:'R5.2M',pct:23,color:'#f59e0b'},
-  {icon:'🌍',name:'Carbon Credit Trading',val:'R3.8M',pct:17,color:'#4ade80'},
+  {icon:'🌍',name:'Carbon Credit Revenue',val:'R5.2M',pct:23,color:'#4ade80'},
+  {icon:'📊',name:'Drone Analytics Services',val:'R3.8M',pct:17,color:'#fb923c'},
   {icon:'📊',name:'Data & Market Intelligence',val:'R1.4M',pct:6,color:'#fb923c'},
 ];
 const invUseFunds=[
   {icon:'💻',color:'#22c55e22',iconColor:'#22c55e',label:'Technology & AI Infrastructure',sub:'Platform scaling, model training, IoT network',pct:45},
   {icon:'🌾',color:'#38bdf822',iconColor:'#38bdf8',label:'Farm Expansion & Onboarding',sub:'100 new farms across SA, Zambia & Zimbabwe',pct:30},
-  {icon:'🏧',color:'#a78bfa22',iconColor:'#a78bfa',label:'Community Vending Network',sub:'50 new grain vending machines in food-insecure areas',pct:15},
+  {icon:'🌍',color:'#22c55e22',iconColor:'#22c55e',label:'Carbon Credit Infrastructure',sub:'Full verification pipeline, market access & ESG reporting',pct:15},
   {icon:'📣',color:'#f59e0b22',iconColor:'#f59e0b',label:'Sales, Marketing & Brand',sub:'Enterprise deals, government contracts & PR',pct:10},
 ];
 const invEsg=[
   {icon:'💧',val:'42%',label:'Water saving\nvs traditional irrigation',color:'#38bdf8'},
   {icon:'🌿',val:'8,200t',label:'CO₂ sequestered\nthis season',color:'#22c55e'},
-  {icon:'🏧',val:'3,210',label:'Families fed via\ncommunity vending',color:'#a78bfa'},
+  {icon:'🚁',val:'420',label:'Drone acres scanned\nthis month',color:'#38bdf8'},
   {icon:'⚡',val:'2,847',label:'MWh solar generated\nacross 7 farms',color:'#facc15'},
   {icon:'🌱',val:'5,419ha',label:'Precision-managed\nfarmland (SA)',color:'#4ade80'},
   {icon:'👩‍🌾',val:'R4.2M',label:'Smallholder farmer\nincome uplift 2024',color:'#fb923c'},
@@ -2635,10 +2531,10 @@ const invEsg=[
 const invMilestones=[
   {period:'Q2 2023',text:'Founded · MVP built · First 3 farms onboarded',color:'#22c55e',done:true},
   {period:'Q4 2023',text:'10 farms · Live IoT sensors · R12.4M ARR',color:'#22c55e',done:true},
-  {period:'Q2 2024',text:'WhatsApp alerts · Solar monitoring · Vending pilot (2 sites)',color:'#22c55e',done:true},
+  {period:'Q2 2024',text:'WhatsApp alerts · Solar monitoring · Carbon credit pilot enrolment',color:'#22c55e',done:true},
   {period:'Q4 2024',text:'AI Advisor (GPT-4o) · NDVI satellite · R28.6M ARR',color:'#22c55e',done:true},
   {period:'Q2 2025',text:'Series A close · 40 new farms · Carbon credit API',color:'#facc15',done:false},
-  {period:'Q4 2025',text:'50 vending machines · Zambia pilot · R54.2M ARR',color:'#facc15',done:false},
+  {period:'Q4 2025',text:'Pan-Africa expansion · Zambia pilot · R54.2M ARR',color:'#facc15',done:false},
   {period:'Q2 2026',text:'JSE listing preparation · Pan-Africa expansion',color:'#7a9e82',done:false},
 ];
 
@@ -2680,32 +2576,30 @@ window.orderBio=function(name){
     .catch(e=>alert('Network error: '+e.message));
 };
 
-// ── PER-FARM REVENUE UPLIFT + VENDING PROJECTION ──
+// ── PER-FARM REVENUE UPLIFT ──
 // crop yield (t/ha) × SAFEX price (R/t) baseline; uplift % from our bio-stack.
 const cropYieldPrice={
-  'Mixed Vegetables':       {yt:25,  rt:18000, u:0.18, vend:'Mixed veg packs', vendKgPerHa:8500},
-  'Mixed Grain & Livestock':{yt:5.2, rt:4850,  u:0.16, vend:'White Maize',     vendKgPerHa:5200},
-  'Venue & Boutique Produce':{yt:18, rt:22000, u:0.20, vend:'Salad greens',    vendKgPerHa:6200},
-  'Game & Game Products':   {yt:0.4, rt:78000, u:0.10, vend:'Biltong & jerky', vendKgPerHa:120},
-  'Horticulture':           {yt:30,  rt:14000, u:0.22, vend:'Tomato · Pepper', vendKgPerHa:9000},
-  'Roses & Coffee':         {yt:1.8, rt:120000,u:0.14, vend:'Specialty coffee',vendKgPerHa:600},
-  'Mixed Estate':           {yt:6.5, rt:8200,  u:0.17, vend:'Wheat Flour',     vendKgPerHa:3800},
-  'Sunrise Crops':          {yt:5.8, rt:6800,  u:0.19, vend:'Sunflower oil',   vendKgPerHa:2400},
-  'Agri Development':       {yt:4.5, rt:5400,  u:0.21, vend:'Maize meal',      vendKgPerHa:3100},
-  'Karoo Livestock':        {yt:0.18,rt:65000, u:0.09, vend:'Lamb & wool',     vendKgPerHa:65},
+  'Mixed Vegetables':       {yt:25,  rt:18000, u:0.18},
+  'Mixed Grain & Livestock':{yt:5.2, rt:4850,  u:0.16},
+  'Venue & Boutique Produce':{yt:18, rt:22000, u:0.20},
+  'Game & Game Products':   {yt:0.4, rt:78000, u:0.10},
+  'Horticulture':           {yt:30,  rt:14000, u:0.22},
+  'Roses & Coffee':         {yt:1.8, rt:120000,u:0.14},
+  'Mixed Estate':           {yt:6.5, rt:8200,  u:0.17},
+  'Sunrise Crops':          {yt:5.8, rt:6800,  u:0.19},
+  'Agri Development':       {yt:4.5, rt:5400,  u:0.21},
+  'Karoo Livestock':        {yt:0.18,rt:65000, u:0.09},
 };
 function renderRevenue(){
   const c=document.getElementById('revGrid'); if(!c) return;
   c.innerHTML=farmHealth.map(f=>{
-    const y=cropYieldPrice[f.crop]||{yt:5,rt:6000,u:0.15,vend:'Mixed',vendKgPerHa:2000};
+    const y=cropYieldPrice[f.crop]||{yt:5,rt:6000,u:0.15};
     const baseRev=Math.round(f.ha*y.yt*y.rt);
     const upliftRev=Math.round(baseRev*(1+y.u));
     const gain=upliftRev-baseRev;
     const stackCost=Math.round(f.ha*1850); // avg R1850/ha for full bio stack
     const netGain=gain-stackCost;
     const roi=Math.round((netGain/stackCost)*100);
-    const vendKgYr=Math.round(f.ha*y.vendKgPerHa*0.15); // 15% of harvest into vending
-    const vendRevYr=Math.round(vendKgYr*9.5); // avg R9.50/kg vending margin
     return `<div class="rev-card" style="border-top:3px solid ${f.color}">
       <div class="rev-head">
         <div>
@@ -2731,14 +2625,6 @@ function renderRevenue(){
         <div><div class="rev-mini-lbl">Net profit gain</div><div class="rev-mini-val mono" style="color:#22c55e">R ${netGain.toLocaleString()}</div></div>
         <div><div class="rev-mini-lbl">ROI</div><div class="rev-mini-val mono" style="color:#facc15">${roi}%</div></div>
       </div>
-      <div class="rev-vending">
-        <div class="rev-vending-hdr">🏧 VENDING MACHINE PROJECTION</div>
-        <div class="rev-vending-row">
-          <div><div class="rev-vlbl">Stock supplied</div><div class="rev-vval mono">${vendKgYr.toLocaleString()} kg/yr</div></div>
-          <div><div class="rev-vlbl">Product</div><div class="rev-vval">${esc(y.vend)}</div></div>
-          <div><div class="rev-vlbl">Vending revenue</div><div class="rev-vval mono" style="color:#a78bfa">R ${vendRevYr.toLocaleString()}/yr</div></div>
-        </div>
-      </div>
     </div>`;
   }).join('');
 }
@@ -2748,13 +2634,13 @@ const priceTiers=[
   {tier:'STARTER',  name:'Smallholder', range:'1 – 50 ha',     rate:200, featured:false, badge:null,
    feats:['Full dashboard access','Satellite NDVI weekly','AI crop advisor (GPT-4o)','WhatsApp alerts','Weather + market prices','Self-install soil probe (1)']},
   {tier:'GROWER',   name:'Commercial',  range:'51 – 200 ha',   rate:175, featured:false, badge:null,
-   feats:['Everything in Starter','3 IoT soil + weather stations','Monthly drone fly-over (regional pilot)','Smart irrigation control','Bio-input ordering','Vending-network access']},
+   feats:['Everything in Starter','3 IoT soil + weather stations','Monthly drone fly-over (regional pilot)','Smart irrigation control','Bio-input ordering','Carbon credit enrolment']},
   {tier:'ESTATE',   name:'Estate',      range:'201 – 500 ha',  rate:150, featured:true,  badge:'MOST POPULAR',
    feats:['Everything in Grower','8 IoT stations + LoRa gateway','Bi-weekly drone NDVI + thermal','Dedicated agronomist (remote)','Solar-on-roof feasibility','Quarterly on-site review']},
   {tier:'ENTERPRISE',name:'Enterprise', range:'501 – 2,000 ha',rate:120, featured:false, badge:'WE FLY OUT',
    feats:['🚁 Team flies to your farm','✈️ On-site drone + sensor install','📡 Full LoRa mesh + 15 stations','👨‍🌾 Resident agronomist (3-day setup)','🎓 Staff training & certification','24/7 priority WhatsApp line']},
   {tier:'PAN-AFRICA',name:'Mega-Farm',  range:'2,000+ ha',     rate:95,  featured:false, badge:'CUSTOM',
-   feats:['Custom drone fleet (DJI Agras)','Variable-rate prescriptions','Carbon-credit certification','Direct vending offtake','API + data warehouse','SLA + dedicated success team']},
+   feats:['Custom drone fleet (DJI Agras)','Variable-rate prescriptions','Carbon-credit certification','ESG reporting & compliance','API + data warehouse','SLA + dedicated success team']},
 ];
 function renderPricing(){
   const c=document.getElementById('priceGrid'); if(!c) return;
@@ -2822,7 +2708,6 @@ function init(){
   renderNutrients();
   renderYield();
   initAI();
-  renderVending();
   renderCarbon();
   renderBio();
   renderRevenue();
