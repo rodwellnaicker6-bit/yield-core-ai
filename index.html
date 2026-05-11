@@ -187,6 +187,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 /* Farm Health + Solar Roof each span 2 cols; Market Prices + Alerts stack in col 3 */
 #sec-farms{grid-column:1/3}
 #sec-solar-roof{grid-column:1/3}
+/* Col-3 panels stay at natural height — don't stretch to match the tall map/solar panels */
+.panels-row .panel:not(#sec-farms):not(#sec-solar-roof){align-self:start}
 .panel{background:rgba(8,18,10,.78);border:1px solid rgba(34,197,94,.1);border-radius:16px;padding:18px;backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.04)}
 .map-btn{background:rgba(13,26,15,.8);border:1px solid rgba(34,197,94,.18);color:var(--sub);font-size:11px;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
 .map-btn:hover{background:rgba(34,197,94,.15);color:var(--text);border-color:rgba(34,197,94,.35)}
@@ -844,6 +846,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <div class="sb-section">Platform</div>
       <div class="nav-item" onclick="navTo(this,'carbonSection')"><div class="ni">🌍</div><span>Carbon Credits</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-pricing')"><div class="ni">🚁</div><span>Pricing &amp; Drones</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-investor')"><div class="ni">📊</div><span>Investor Pitch</span></div>
     </div>
     <div class="sb-footer">
       <div class="sb-role">
@@ -981,7 +984,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
             <div class="sec-title">☀️ SOLAR-ON-ROOF <span>SA irradiance · 5.5 sun-hrs/day</span></div>
             <span class="src-pill src-yellow">Live · SA Grid</span>
           </div>
-          <div id="solarRoofGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px"></div>
+          <div id="solarRoofGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px"></div>
           <div id="solarRoofTotal" style="margin-top:12px;padding:12px 14px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3);border-radius:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"></div>
         </div>
 
@@ -1302,6 +1305,73 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         </div>
       </div>
 
+      <!-- INVESTOR PITCH -->
+      <div class="panel fade" id="sec-investor" style="margin-bottom:16px">
+        <div class="sec-hdr">
+          <div class="sec-title">📊 INVESTOR PITCH <span>Series A · R75M · YieldCore AI</span></div>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <span class="src-pill src-purple">Series A</span>
+            <button class="map-btn" onclick="shareInvestorPitch()">📲 Share</button>
+            <button class="map-btn" onclick="copyPitchEmail()">📧 Email</button>
+            <button class="map-btn" onclick="window.print()">🖨️ PDF</button>
+          </div>
+        </div>
+        <div class="inv-hero">
+          <div class="inv-hero-top">
+            <div class="inv-logo-wrap">
+              <div class="inv-logo-icon">🌿</div>
+              <div>
+                <div class="inv-logo-text">YieldCore AI</div>
+                <div class="inv-logo-sub">Africa's Precision Agriculture Intelligence Platform</div>
+              </div>
+            </div>
+            <div class="inv-series">SERIES A</div>
+          </div>
+          <div class="inv-tagline">Feeding Africa with <strong>satellite intelligence</strong>, IoT sensors &amp; AI — turning 10 farms into a <strong>pan-African platform</strong> for 100,000+ smallholder farmers.</div>
+          <div class="inv-hero-metrics" id="invMetrics"></div>
+        </div>
+        <div class="inv-grid2">
+          <div class="inv-card">
+            <div class="inv-card-title">📈 5-Year Revenue Projection (ZAR)</div>
+            <div class="inv-chart-wrap" id="invChart"></div>
+            <div style="height:24px"></div>
+          </div>
+          <div class="inv-card">
+            <div class="inv-card-title">💰 Revenue Mix — Year 3 (R54.2M ARR)</div>
+            <div id="invRevMix"></div>
+          </div>
+        </div>
+        <div class="inv-grid3">
+          <div class="inv-card">
+            <div class="inv-card-title">💸 Use of Funds</div>
+            <div id="invFunds"></div>
+          </div>
+          <div class="inv-card">
+            <div class="inv-card-title">🌍 ESG Impact</div>
+            <div class="inv-esg-grid" id="invEsg"></div>
+          </div>
+          <div class="inv-card">
+            <div class="inv-card-title">🗺️ Roadmap</div>
+            <div class="inv-milestone-list" id="invRoadmap"></div>
+          </div>
+        </div>
+        <div class="inv-ask-box">
+          <div class="inv-ask-val">R 75,000,000</div>
+          <div class="inv-ask-label">Series A Investment Ask — Equity funding for pan-African expansion</div>
+          <div class="inv-ask-terms">
+            <div class="inv-ask-term">Valuation: <strong>R 420M pre-money</strong></div>
+            <div class="inv-ask-term">Equity: <strong>17.9%</strong></div>
+            <div class="inv-ask-term">Target close: <strong>Q2 2025</strong></div>
+            <div class="inv-ask-term">Instrument: <strong>Equity + SAFE</strong></div>
+          </div>
+        </div>
+        <div class="inv-cta-row">
+          <button class="inv-cta inv-cta-primary" onclick="shareInvestorPitch()">📲 Share Pitch via WhatsApp</button>
+          <button class="inv-cta inv-cta-secondary" onclick="copyPitchEmail()">📧 Copy Investor Email</button>
+          <button class="inv-cta inv-cta-secondary" onclick="window.print()">🖨️ Download PDF</button>
+        </div>
+      </div>
+
       <!-- MODULES -->
       <div class="modules-section fade">
         <div class="sec-hdr">
@@ -1560,6 +1630,8 @@ const modules=[
   {icon:'🧪',name:'BIO-INPUTS', desc:'Microbial fungicides &\norganic crop boosters',     section:'sec-bio'},
   {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nROI per farm',            section:'sec-revenue'},
   {icon:'🚁',name:'PRICING',  desc:'Drones · sensors · irrigation\nfrom R200/ha',          section:'sec-pricing'},
+  {icon:'🌍',name:'CARBON',   desc:'Carbon credits & VCM\nmarket prices live',              section:'carbonSection'},
+  {icon:'📊',name:'INVESTOR', desc:'Series A pitch deck\n& 5-year projection',              section:'sec-investor'},
 ];
 
 // ── RENDER WEATHER ──
@@ -2878,6 +2950,37 @@ window.quotePrice=function(){
     .catch(e=>alert('Network error: '+e.message));
 };
 
+// ── INVESTOR PITCH ──
+function renderInvestor(){
+  const el=id=>document.getElementById(id); if(!el('invMetrics')) return;
+  el('invMetrics').innerHTML=[
+    {val:'R 54.2M',label:'Y3 ARR<br>Projected'},
+    {val:'10 → 100+',label:'Farms<br>This Year'},
+    {val:'5,419 ha',label:'Land Under<br>Management'},
+    {val:'R 420M',label:'Pre-Money<br>Valuation'},
+    {val:'3 Countries',label:'SA · Zambia<br>· Zimbabwe'},
+  ].map(m=>`<div class="inv-metric"><div class="inv-metric-val">${m.val}</div><div class="inv-metric-label">${m.label}</div></div>`).join('');
+  const maxRev=Math.max(...invProjection.map(y=>y.rev));
+  const bw=100/invProjection.length;
+  el('invChart').innerHTML=invProjection.map((y,i)=>{
+    const h=Math.round((y.rev/maxRev)*106);
+    const left=i*bw, cx=left+bw/2;
+    return `<div class="inv-chart-bar" style="left:${left}%;width:${bw-3}%;height:${h}px;background:linear-gradient(180deg,${y.color}99,${y.color})"></div><div class="inv-chart-val" style="left:${cx}%;bottom:${h+4}px">R${y.rev}M</div><div class="inv-chart-label" style="left:${cx}%">${y.year.replace('\n','<br>')}</div>`;
+  }).join('');
+  el('invRevMix').innerHTML=invRevMix.map(r=>`<div class="inv-revenue-row"><span class="inv-rev-icon">${r.icon}</span><span class="inv-rev-name">${r.name}</span><div class="inv-rev-bar-wrap"><div class="inv-rev-bar" style="width:${r.pct}%;background:${r.color}"></div></div><span class="inv-rev-val">${r.val}</span></div>`).join('');
+  el('invFunds').innerHTML=invUseFunds.map(f=>`<div class="inv-fund-item"><div class="inv-fund-icon" style="background:${f.color}">${f.icon}</div><div style="flex:1"><div class="inv-fund-label">${f.label}</div><div class="inv-fund-sub">${f.sub}</div></div><div class="inv-fund-pct" style="color:${f.iconColor}">${f.pct}%</div></div>`).join('');
+  el('invEsg').innerHTML=invEsg.map(e=>`<div class="inv-esg-item"><span class="inv-esg-icon">${e.icon}</span><div><div class="inv-esg-val" style="color:${e.color}">${e.val}</div><div class="inv-esg-label">${e.label.replace('\n','<br>')}</div></div></div>`).join('');
+  el('invRoadmap').innerHTML=invMilestones.map(m=>`<div class="inv-milestone"><div class="inv-ms-dot" style="background:${m.color};${m.done?'':'opacity:.5'}"></div><span class="inv-ms-period">${m.period}</span><span class="inv-ms-text" style="opacity:${m.done?1:.65}">${m.text}</span></div>`).join('');
+}
+window.shareInvestorPitch=async function(){
+  const msg=`📊 *YieldCore AI — Series A Investor Pitch*\n\n🌿 *Africa's Precision Agriculture Intelligence Platform*\n\n💰 *Investment Ask: R 75,000,000*\n• Pre-money valuation: R 420M\n• Equity: 17.9%\n• Target close: Q2 2025\n\n📈 *5-Year Revenue:*\nY1: R12.4M → Y3: R54.2M → Y5: R148M ARR\n\n🌍 *ESG Impact:*\n• 42% water saving\n• 8,200t CO₂ sequestered\n• R4.2M smallholder income uplift\n\n📧 investor@yieldcore.ai\n🌐 yieldcore.ai`;
+  try{const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await res.json();if(d.success)alert('✅ Investor pitch sent via WhatsApp!');else alert('Error: '+d.error);}catch(e){alert('Network error: '+e.message);}
+};
+window.copyPitchEmail=function(){
+  const txt=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising R75M Series A at R420M pre-money to scale Africa's leading precision agriculture platform.\n\nKey metrics:\n• 10 farms · 5,419 ha under management\n• R28.6M ARR (Y2) → R148M ARR by Y5\n• 42% water reduction · 8,200t CO₂ sequestered\n• R4.2M smallholder farmer income uplift\n\nWe would welcome a 30-minute call.\n\nRodwell Boland | Founder & CEO\nrodwell@yieldcore.ai | yieldcore.ai`;
+  navigator.clipboard.writeText(txt).then(()=>alert('✅ Investor email copied!')).catch(()=>alert('Copy from browser console.'));
+};
+
 // ── INIT ──
 function init(){
   renderWeather();
@@ -2897,6 +3000,7 @@ function init(){
   renderYield();
   initAI();
   renderCarbon();
+  renderInvestor();
   renderBio();
   renderRevenue();
   renderPricing();
