@@ -146,15 +146,16 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .tb-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:9px;font-weight:900;padding:1px 5px;border-radius:99px}
 
 /* ── SECTION HEADERS ── */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:6px}
-.sec-title{font-size:13px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.sec-title span{font-size:11px;font-weight:400;color:var(--sub)}
-/* Source-data badge pills */
-.src-pill{display:inline-flex;align-items:center;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;vertical-align:middle}
-.src-green{background:#22c55e18;color:#22c55e;border:1px solid #22c55e33}
-.src-blue{background:#38bdf818;color:#38bdf8;border:1px solid #38bdf833}
-.src-purple{background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33}
-.src-yellow{background:#facc1518;color:#facc15;border:1px solid #facc1533}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.sec-title{font-size:14px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:-.01em}
+.sec-title span{font-size:12px;font-weight:400;color:var(--sub)}
+.sec-ts{font-size:10px;color:rgba(107,148,117,.55);font-variant-numeric:tabular-nums;margin-left:4px}
+/* Source-data badge pills — kept but quieter */
+.src-pill{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;vertical-align:middle}
+.src-green{background:#22c55e12;color:#22c55e;border:1px solid #22c55e22}
+.src-blue{background:#38bdf812;color:#38bdf8;border:1px solid #38bdf822}
+.src-purple{background:#a78bfa12;color:#a78bfa;border:1px solid #a78bfa22}
+.src-yellow{background:#facc1512;color:#facc15;border:1px solid #facc1522}
 /* Map toolbar button row */
 .map-btn-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .sec-badge{background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:3px 10px;font-size:10px;color:var(--green);font-weight:700}
@@ -171,25 +172,43 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .weather-more{background:linear-gradient(135deg,var(--green2),var(--green));border-radius:11px;padding:12px 14px;min-width:110px;flex-shrink:0;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;font-size:13px;font-weight:900;color:#000}
 
 /* ── STAT CARDS ── */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-bottom:18px}
-.stat-card{background:rgba(8,18,10,.82);border:1px solid rgba(34,197,94,.12);border-radius:14px;padding:15px 15px 13px;position:relative;overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s,box-shadow .2s}
-.stat-card:hover{border-color:rgba(34,197,94,.28);box-shadow:0 0 20px rgba(34,197,94,.1)}
-.stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(34,197,94,.06),transparent 60%);pointer-events:none}
-.stat-icon{font-size:20px;margin-bottom:6px;opacity:.9}
-.stat-val{font-size:26px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:3px;letter-spacing:-.02em}
-.stat-unit{font-size:11px;font-weight:600;color:var(--sub)}
-.stat-label{font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4;letter-spacing:.1px}
-.stat-sparkline{position:absolute;bottom:0;left:0;right:0;height:26px;opacity:.35}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin-bottom:22px}
+.stat-card{background:rgba(8,18,10,.85);border:1px solid rgba(34,197,94,.13);border-radius:16px;padding:20px 20px 16px;position:relative;overflow:hidden;backdrop-filter:blur(12px);transition:border-color .22s,box-shadow .22s,transform .22s}
+.stat-card:hover{border-color:rgba(34,197,94,.3);box-shadow:0 10px 32px rgba(0,0,0,.4),0 0 22px rgba(34,197,94,.1);transform:translateY(-2px)}
+.stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 85% 15%,rgba(34,197,94,.07),transparent 60%);pointer-events:none}
+.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,.2),transparent);opacity:0;transition:opacity .22s}
+.stat-card:hover::after{opacity:1}
+.stat-icon{font-size:22px;margin-bottom:10px;opacity:.9;display:block}
+.stat-val{font-size:32px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:3px;letter-spacing:-.03em}
+.stat-unit{font-size:12px;font-weight:600;color:var(--sub)}
+.stat-label{font-size:11px;color:var(--sub);margin-top:6px;line-height:1.4;letter-spacing:.1px}
+.stat-delta{font-size:10px;font-weight:700;margin-top:5px;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:99px}
+.stat-delta-up{background:rgba(34,197,94,.1);color:var(--green3);border:1px solid rgba(34,197,94,.2)}
+.stat-delta-dn{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)}
+.stat-delta-neu{background:rgba(107,148,117,.1);color:var(--sub);border:1px solid rgba(107,148,117,.2)}
+.stat-sparkline{position:absolute;bottom:0;left:0;right:0;height:28px;opacity:.28}
 .stat-live{font-size:14px;font-weight:900;color:var(--purple);animation:blink 1.2s infinite}
+.stat-ts{font-size:9px;color:rgba(107,148,117,.5);position:absolute;top:10px;right:12px;font-variant-numeric:tabular-nums}
+
+/* ── ENTERPRISE SYSTEM STATUS BAR ── */
+.sys-status-bar{display:flex;align-items:center;gap:16px;padding:8px 18px;background:rgba(4,8,5,.65);border-bottom:1px solid rgba(34,197,94,.07);font-size:10px;color:var(--sub);overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-wrap:nowrap}
+.sys-status-bar::-webkit-scrollbar{display:none}
+.sys-item{display:flex;align-items:center;gap:5px;font-weight:600;flex-shrink:0}
+.sys-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sys-dot-green{background:#22c55e;box-shadow:0 0 6px #22c55e;animation:blink 2s infinite}
+.sys-dot-yellow{background:#facc15}
+.sys-dot-blue{background:#38bdf8}
+.sys-sep{color:rgba(34,197,94,.2);margin:0 2px}
+.sys-clock{font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(107,148,117,.7);margin-left:auto;flex-shrink:0}
 
 /* ── BOTTOM THREE PANELS ── */
-.panels-row{display:grid;grid-template-columns:1fr 1fr 270px;gap:14px;margin-bottom:16px;grid-auto-flow:dense}
+.panels-row{display:grid;grid-template-columns:1fr 1fr 270px;gap:16px;margin-bottom:18px;grid-auto-flow:dense}
 /* Farm Health + Solar Roof each span 2 cols; Market Prices + Alerts stack in col 3 */
 #sec-farms{grid-column:1/3}
 #sec-solar-roof{grid-column:1/3}
 /* Col-3 panels stay at natural height — don't stretch to match the tall map/solar panels */
 .panels-row .panel:not(#sec-farms):not(#sec-solar-roof){align-self:start}
-.panel{background:rgba(8,18,10,.78);border:1px solid rgba(34,197,94,.1);border-radius:16px;padding:18px;backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.04)}
+.panel{background:rgba(8,18,10,.80);border:1px solid rgba(34,197,94,.1);border-radius:18px;padding:22px;backdrop-filter:blur(14px);box-shadow:0 6px 28px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.04)}
 .map-btn{background:rgba(13,26,15,.8);border:1px solid rgba(34,197,94,.18);color:var(--sub);font-size:11px;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
 .map-btn:hover{background:rgba(34,197,94,.15);color:var(--text);border-color:rgba(34,197,94,.35)}
 .map-btn.active{background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent;box-shadow:0 0 14px rgba(34,197,94,.4)}
@@ -638,8 +657,19 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .flex{display:flex}.center{align-items:center}.between{justify-content:space-between}.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}
 .green{color:var(--green)}.red{color:var(--red)}.yellow{color:var(--yellow)}.sub{color:var(--sub)}
 .bold{font-weight:800}.w100{width:100%}
-.fade{animation:fadeIn .3s ease both}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeIn .4s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* staggered reveal for grids */
+.stats-row .stat-card:nth-child(1){animation-delay:.04s}
+.stats-row .stat-card:nth-child(2){animation-delay:.08s}
+.stats-row .stat-card:nth-child(3){animation-delay:.12s}
+.stats-row .stat-card:nth-child(4){animation-delay:.16s}
+.stats-row .stat-card:nth-child(5){animation-delay:.20s}
+.stats-row .stat-card:nth-child(6){animation-delay:.24s}
+.stats-row .stat-card:nth-child(7){animation-delay:.28s}
+.stats-row .stat-card:nth-child(8){animation-delay:.32s}
+/* count-up number animation */
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── LOGIN ── */
 #loginOverlay{position:fixed;inset:0;display:flex;align-items:flex-end;justify-content:center;z-index:9999;padding-bottom:36px;
@@ -1096,6 +1126,24 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       </div>
     </div>
 
+    <!-- ENTERPRISE SYSTEM STATUS BAR -->
+    <div class="sys-status-bar" id="sysStatusBar">
+      <div class="sys-item"><span class="sys-dot sys-dot-green"></span>AI Engine Online</div>
+      <span class="sys-sep">·</span>
+      <div class="sys-item"><span class="sys-dot sys-dot-green"></span>Weather API Live</div>
+      <span class="sys-sep">·</span>
+      <div class="sys-item"><span class="sys-dot sys-dot-green"></span>Mapbox Satellite</div>
+      <span class="sys-sep">·</span>
+      <div class="sys-item"><span class="sys-dot sys-dot-green"></span>WhatsApp Connected</div>
+      <span class="sys-sep">·</span>
+      <div class="sys-item"><span class="sys-dot sys-dot-yellow"></span>NDVI · Model Data</div>
+      <span class="sys-sep">·</span>
+      <div class="sys-item"><span class="sys-dot sys-dot-blue"></span>10 Farms · 5,419 ha</div>
+      <span class="sys-sep">·</span>
+      <div class="sys-item"><span class="sys-dot sys-dot-blue"></span>SAFEX · Real-time</div>
+      <div class="sys-clock" id="sysClock">--:--:--</div>
+    </div>
+
     <!-- SHARE MODAL -->
     <div id="shareModal" class="share-modal">
       <div class="share-card">
@@ -1292,10 +1340,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- WEATHER -->
       <div class="weather-section fade">
         <div class="sec-hdr">
-          <div class="sec-title">🌤 LIVE WEATHER <span>(Open-Meteo)</span></div>
-          <div style="display:flex;align-items:center;gap:12px">
+          <div class="sec-title">🌤 Live Weather <span>Open-Meteo · All 10 farms</span><span class="sec-ts" id="weatherTs"></span></div>
+          <div style="display:flex;align-items:center;gap:10px">
             <div class="dot-live" style="display:inline-block"></div>
-            <span style="font-size:11px;color:var(--sub)">All 10 farms &nbsp;•&nbsp; Live data</span>
+            <span style="font-size:11px;color:var(--sub)">Updates every 10 min</span>
           </div>
         </div>
         <div class="weather-cards" id="weatherCards"></div>
@@ -1307,19 +1355,18 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- AI INSIGHTS + DECISION SUPPORT -->
       <div class="panel fade" id="sec-insights" style="margin-bottom:16px">
         <div class="sec-hdr">
-          <div class="sec-title">🤖 AI INSIGHTS &amp; DECISIONS <span>Operational recommendations · Updated every 60s</span></div>
-          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-            <span class="src-pill src-purple">Decision Engine · Live</span>
+          <div class="sec-title">🤖 AI Insights &amp; Decisions <span>Auto-ranked · Every 60 seconds</span><span class="sec-ts" id="insightsTs"></span></div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <button class="map-btn" onclick="refreshInsights()">↻ Refresh</button>
             <button class="map-btn" onclick="sendFarmReport()" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--green3)">📲 WhatsApp Report</button>
           </div>
         </div>
         <div class="insights-grid" id="insightsGrid"></div>
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border2)">
-          <div style="font-size:11px;font-weight:800;color:var(--text);margin-bottom:8px">📋 Decision Support — What to do right now</div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border2)">
+          <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-.01em">📋 Decision Support — What to do right now</div>
           <div id="decisionList"></div>
         </div>
-        <div style="margin-top:8px;font-size:10px;color:var(--sub);text-align:right">Last analysed: <span id="insightsTime">–</span></div>
+        <div style="margin-top:10px;font-size:11px;color:var(--sub);text-align:right">Last analysed: <span id="insightsTime">–</span></div>
       </div>
 
       <!-- PANELS -->
@@ -1328,7 +1375,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- FARM HEALTH -->
         <div class="panel" id="sec-farms">
           <div class="sec-hdr">
-            <div class="sec-title">🌿 FARM HEALTH <span>Live · 3D Terrain · Satellite</span></div>
+            <div class="sec-title">🌿 Farm Health <span>Satellite · 3D Terrain · Mapbox</span><span class="sec-ts live-sec-ts"></span></div>
             <div class="map-btn-row">
               <button class="map-btn" onclick="toggleMap3D()" id="btn3D" title="Toggle 3D terrain">3D</button>
               <button class="map-btn" onclick="toggleMapStyle()" id="btnStyle" title="Satellite / terrain style">SAT</button>
@@ -1354,8 +1401,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- SOLAR ROOF SIMULATION -->
         <div class="panel" id="sec-solar-roof">
           <div class="sec-hdr">
-            <div class="sec-title">☀️ SOLAR-ON-ROOF <span>SA irradiance · 5.5 sun-hrs/day</span></div>
-            <span class="src-pill src-yellow">Live · SA Grid</span>
+            <div class="sec-title">☀️ Solar-on-Roof <span>SA irradiance · 5.5 sun-hrs/day</span><span class="sec-ts live-sec-ts"></span></div>
+            <span class="src-pill src-yellow">SA Grid · Live</span>
           </div>
           <div id="solarRoofGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px"></div>
           <div id="solarRoofTotal" style="margin-top:12px;padding:12px 14px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3);border-radius:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"></div>
@@ -1400,7 +1447,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- MARKET PRICES -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">📊 SAFEX MARKET PRICES</div>
+            <div class="sec-title">📊 SAFEX Market Prices <span class="sec-ts live-sec-ts"></span></div>
           </div>
           <div id="marketPrices"></div>
           <div style="margin-top:10px"><div class="sec-link">View full market data →</div></div>
@@ -1409,8 +1456,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- ACTIVE ALERTS -->
         <div class="panel" id="sec-alerts">
           <div class="sec-hdr">
-            <div class="sec-title">🚨 ACTIVE ALERTS</div>
-            <div class="sec-link">View all →</div>
+            <div class="sec-title">🚨 Active Alerts <span class="sec-ts live-sec-ts"></span></div>
+            <div class="sec-link" onclick="navTo(document.querySelector('[onclick*=sec-alerts]'),'sec-alerts')">View all →</div>
           </div>
           <div id="alertsList"></div>
         </div>
@@ -1423,8 +1470,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- SOLAR -->
         <div class="panel" id="sec-solar">
           <div class="sec-hdr">
-            <div class="sec-title">☀️ SOLAR MONITORING <span>7 farms active</span></div>
-            <div id="solarLiveTag" style="font-size:9px;color:#facc15;font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:#facc15;box-shadow:0 0 6px #facc15"></div>LIVE</div>
+            <div class="sec-title">☀️ Solar Monitoring <span>7 farms active · Live</span><span class="sec-ts live-sec-ts"></span></div>
+            <div id="solarLiveTag" style="display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:#facc15;box-shadow:0 0 6px #facc15;width:7px;height:7px;border-radius:50%"></div><span style="font-size:11px;color:#facc15;font-weight:700">Live</span></div>
           </div>
           <div class="solar-farm-row" id="solarCards"></div>
           <div class="solar-totals" id="solarTotals"></div>
@@ -1433,8 +1480,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- IRRIGATION -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">💧 IRRIGATION CONTROL <span>Live sensor data</span></div>
-            <div style="font-size:9px;color:var(--blue);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>LIVE</div>
+            <div class="sec-title">💧 Irrigation Control <span>IoT sensors · Live</span><span class="sec-ts live-sec-ts"></span></div>
+            <div style="display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--blue);box-shadow:0 0 6px var(--blue);width:7px;height:7px;border-radius:50%"></div><span style="font-size:11px;color:var(--blue);font-weight:700">Live</span></div>
           </div>
           <div id="irrigCards"></div>
           <div class="irrig-summary" id="irrigSummary"></div>
@@ -1448,12 +1495,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- NDVI -->
         <div class="panel" id="sec-ndvi">
           <div class="sec-hdr">
-            <div class="sec-title">🛰️ NDVI <span>Crop Vitality Index</span></div>
-            <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+            <div class="sec-title">🛰️ NDVI <span>Crop Vitality Index · Sentinel-2</span><span class="sec-ts live-sec-ts"></span></div>
+            <div style="display:flex;gap:6px;align-items:center">
               <span class="src-pill src-green">Sentinel-2</span>
               <span class="src-pill src-blue">NASA GIBS</span>
-              <span class="src-pill src-purple">Open-Meteo</span>
-              <span style="font-size:9px;color:#22c55e;font-weight:700">● Live</span>
             </div>
           </div>
           <div class="ndvi-grid" id="ndviGrid"></div>
@@ -1472,10 +1517,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- TEMP & HUMIDITY SENSORS -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">🌡️ TEMP &amp; HUMIDITY <span>IoT Sensors</span></div>
-            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-              <span class="src-pill src-green">Live · Open-Meteo</span>
-              <span style="font-size:9px;color:var(--sub);font-weight:600" id="sensorTimestamp">Loading…</span>
+            <div class="sec-title">🌡️ Temp &amp; Humidity <span>IoT Sensors · Open-Meteo</span><span class="sec-ts live-sec-ts"></span></div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span class="src-pill src-green">Live</span>
+              <span style="font-size:11px;color:var(--sub);font-weight:600" id="sensorTimestamp"></span>
             </div>
           </div>
           <div class="sensor-row" id="sensorRow"></div>
@@ -1490,8 +1535,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- PEST ID -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">🐛 PEST IDENTIFICATION <span>AI-powered</span></div>
-            <div style="font-size:9px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>4 detections</div>
+            <div class="sec-title">🐛 Pest Identification <span>AI-powered · Drone imagery</span><span class="sec-ts live-sec-ts"></span></div>
+            <div style="font-size:11px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--orange);box-shadow:0 0 6px var(--orange);width:7px;height:7px;border-radius:50%"></div>4 detections</div>
           </div>
           <div class="pest-grid" id="pestGrid"></div>
           <div style="font-size:11px;color:var(--sub);padding:8px 10px;background:var(--bg4);border-radius:8px;border:1px solid var(--border2)">
@@ -1502,7 +1547,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- FULL ALERTS -->
         <div class="panel">
           <div class="sec-hdr">
-            <div class="sec-title">🔔 ALL ALERTS <span id="alertCount"></span></div>
+            <div class="sec-title">🔔 All Alerts <span id="alertCount"></span><span class="sec-ts live-sec-ts"></span></div>
             <div class="sec-link" onclick="sendAllWhatsApp()">📲 Send All →</div>
           </div>
           <div class="alert-filter">
@@ -1522,8 +1567,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- NUTRIENTS -->
         <div class="panel" id="sec-nutrients">
           <div class="sec-hdr">
-            <div class="sec-title">💊 NUTRIENT MONITORING <span>NPK + Micronutrients</span></div>
-            <div style="font-size:9px;color:var(--purple);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--purple);box-shadow:0 0 6px var(--purple)"></div>LIVE</div>
+            <div class="sec-title">💊 Nutrient Monitoring <span>NPK + Micronutrients</span><span class="sec-ts live-sec-ts"></span></div>
+            <div style="display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--purple);box-shadow:0 0 6px var(--purple);width:7px;height:7px;border-radius:50%"></div><span style="font-size:11px;color:var(--purple);font-weight:700">Live</span></div>
           </div>
           <div class="npk-farm-grid" id="npkGrid"></div>
           <div class="npk-range-info">
@@ -1541,8 +1586,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
         <!-- YIELD & PROFIT -->
         <div class="panel" id="sec-yield">
           <div class="sec-hdr">
-            <div class="sec-title">📈 YIELD PROJECTION &amp; PROFIT</div>
-            <div style="font-size:9px;color:#22c55e;font-weight:700">2024/25 Season</div>
+            <div class="sec-title">📈 Yield Projection &amp; Profit <span>2024/25 Season</span><span class="sec-ts live-sec-ts"></span></div>
+            <div style="font-size:11px;color:#22c55e;font-weight:700">SA Forecast</div>
           </div>
           <div class="yield-grid" id="yieldGrid"></div>
           <div class="yield-summary" id="yieldSummary"></div>
@@ -1553,8 +1598,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- AI ADVISOR (full width) -->
       <div class="panel fade" id="sec-ai" style="margin-bottom:16px">
         <div class="sec-hdr">
-          <div class="sec-title">🤖 AI CROP ADVISOR <span>GPT-4o powered</span></div>
-          <div id="aiStatusBadge" style="font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33">● Online</div>
+          <div class="sec-title">🤖 AI Crop Advisor <span>GPT-4o · South Africa specialised</span></div>
+          <div id="aiStatusBadge" style="font-size:11px;font-weight:700;padding:3px 11px;border-radius:99px;background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa33">● Online</div>
         </div>
         <div class="ai-chat-wrap">
           <div class="ai-quick" id="aiQuick"></div>
@@ -1644,7 +1689,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- PRICING + DRONES + IRRIGATION -->
       <div class="panel fade" id="sec-pricing">
         <div class="sec-hdr">
-          <div class="sec-title">🚁 PRICING &amp; DRONES <span>Per-hectare · transparent</span></div>
+          <div class="sec-title">🚁 Pricing &amp; Drones <span>Per-hectare · transparent</span></div>
           <span class="src-pill src-yellow">From R100/ha</span>
         </div>
         <div style="font-size:12px;color:var(--sub);margin-bottom:14px;line-height:1.55">
@@ -1681,9 +1726,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- INVESTOR PITCH -->
       <div class="panel fade" id="sec-investor" style="margin-bottom:16px">
         <div class="sec-hdr">
-          <div class="sec-title">📊 INVESTOR PITCH <span>Series A · R75M · YieldCore AI</span></div>
-          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-            <span class="src-pill src-purple">Series A</span>
+          <div class="sec-title">📊 Investor Pitch <span>Series A · R75M · YieldCore AI</span></div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <button class="map-btn" onclick="shareInvestorPitch()">📲 Share</button>
             <button class="map-btn" onclick="copyPitchEmail()">📧 Email</button>
             <button class="map-btn" onclick="window.print()">🖨️ PDF</button>
@@ -1748,7 +1792,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
       <!-- MODULES -->
       <div class="modules-section fade">
         <div class="sec-hdr">
-          <div class="sec-title">⚙️ YIELDCORE MODULES</div>
+          <div class="sec-title">⚙️ YieldCore Modules <span>Quick access to all tools</span></div>
         </div>
         <div class="modules-grid" id="modulesGrid"></div>
       </div>
@@ -2073,22 +2117,50 @@ function renderWeather(){ renderWeatherCards(); }
 // ── RENDER STATS ──
 function renderStats(){
   const s=document.getElementById('statsRow');
+  const now=new Date();
+  const ts=now.toTimeString().slice(0,5);
   const stats=[
-    {icon:'🌿',val:'5,419',unit:'',label:'HECTARES\nTotal under management',color:'#22c55e',spark:[30,35,28,40,38,42,45]},
-    {icon:'❤️',val:'72',unit:'/100',label:'FLEET HEALTH\nAverage health score',color:'#f87171',spark:[68,70,65,72,69,72,72]},
-    {icon:'🌾',val:'10',unit:'',label:'ACTIVE FARMS\nAcross 5 provinces',color:'#22c55e',spark:[8,9,9,10,10,10,10]},
-    {icon:'📡',val:'78',unit:'%',label:'NDVI AVERAGE\nCrop vitality index',color:'#3b82f6',spark:[72,75,74,76,78,77,78]},
-    {icon:'⚠️',val:'4',unit:'',label:'CRITICAL ALERTS\nRequire attention',color:'#f87171',spark:[1,2,3,5,4,4,4]},
-    {icon:'🤖',val:'LIVE',unit:'',label:'AI ADVISOR\nClaude AI Online',color:'#a78bfa',isLive:true},
+    {icon:'🌿',val:5419,fmt:'5,419',unit:'ha',label:'Total Hectares',sub:'Under active management',color:'#22c55e',delta:'+340 ha this season',dir:'up',spark:[30,35,28,40,38,42,45]},
+    {icon:'❤️',val:72,fmt:'72',unit:'/100',label:'Fleet Health',sub:'Average across 10 farms',color:'#4ade80',delta:'+4 pts vs last week',dir:'up',spark:[68,70,65,72,69,72,72]},
+    {icon:'🌾',val:10,fmt:'10',unit:'',label:'Active Farms',sub:'Across 5 provinces',color:'#22c55e',delta:'Stable',dir:'neu',spark:[8,9,9,10,10,10,10]},
+    {icon:'📡',val:78,fmt:'78',unit:'%',label:'NDVI Average',sub:'Crop vitality index',color:'#38bdf8',delta:'+2% vs last month',dir:'up',spark:[72,75,74,76,78,77,78]},
+    {icon:'⚠️',val:4,fmt:'4',unit:'',label:'Critical Alerts',sub:'Require immediate action',color:'#f87171',delta:'2 new today',dir:'dn',spark:[1,2,3,5,4,4,4]},
+    {icon:'🤖',val:0,fmt:'LIVE',unit:'',label:'AI Advisor',sub:'GPT-4o · Online',color:'#a78bfa',isLive:true,spark:[]},
+    {icon:'💧',val:68,fmt:'68',unit:'%',label:'Soil Moisture',sub:'Weighted average',color:'#38bdf8',delta:'Optimal range',dir:'up',spark:[60,64,66,65,68,68,68]},
+    {icon:'☀️',val:847,fmt:'847',unit:'kWh',label:'Solar Output',sub:'Today across all farms',color:'#facc15',delta:'+12% vs forecast',dir:'up',spark:[700,720,760,800,810,840,847]},
   ];
-  s.innerHTML=stats.map(st=>`
-    <div class="stat-card">
-      <div class="stat-icon">${st.icon}</div>
-      <div class="stat-val" style="color:${st.color}">${st.isLive?`<span class="stat-live">LIVE</span>`:st.val}<span class="stat-unit">${st.unit}</span></div>
-      <div class="stat-label">${st.label.replace('\n','<br/>')}</div>
-      ${st.spark?`<svg class="stat-sparkline" viewBox="0 0 70 28"><polyline fill="none" stroke="${st.color}" stroke-width="1.5" points="${st.spark.map((v,i)=>`${i*11},${28-v/2}`).join(' ')}"/></svg>`:''}
+  s.innerHTML=stats.map((st,i)=>`
+    <div class="stat-card fade" style="animation-delay:${i*0.05}s">
+      <span class="stat-ts">${ts}</span>
+      <span class="stat-icon">${st.icon}</span>
+      <div class="stat-val" id="sv_${i}" style="color:${st.color}">${st.isLive?`<span class="stat-live">●&nbsp;LIVE</span>`:st.fmt}<span class="stat-unit"> ${st.unit}</span></div>
+      <div class="stat-label" style="font-size:12px;font-weight:700;color:var(--text);margin-top:4px">${st.label}</div>
+      <div class="stat-label" style="font-size:11px">${st.sub}</div>
+      ${st.delta?`<div class="stat-delta stat-delta-${st.dir}">${st.dir==='up'?'↑':st.dir==='dn'?'↓':'—'} ${st.delta}</div>`:''}
+      ${st.spark&&st.spark.length?`<svg class="stat-sparkline" viewBox="0 0 77 28" preserveAspectRatio="none"><polyline fill="none" stroke="${st.color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" points="${st.spark.map((v,i)=>`${i*12},${28-Math.round(v/2)}`).join(' ')}"/></svg>`:''}
     </div>
   `).join('');
+  // count-up animation for numeric stat values
+  stats.forEach((st,i)=>{
+    if(st.isLive||!st.val) return;
+    const el=document.getElementById(`sv_${i}`);
+    if(!el) return;
+    const target=st.val;
+    const dur=900;
+    const start=performance.now();
+    const unit=` ${st.unit}`;
+    function tick(now){
+      const prog=Math.min((now-start)/dur,1);
+      const ease=1-Math.pow(1-prog,3);
+      const cur=Math.round(ease*target);
+      const display=cur>=1000?cur.toLocaleString():String(cur);
+      el.innerHTML=`${display}<span class="stat-unit">${unit}</span>`;
+      el.style.color=st.color;
+      if(prog<1) requestAnimationFrame(tick);
+      else el.innerHTML=`${st.fmt}<span class="stat-unit">${unit}</span>`;
+    }
+    requestAnimationFrame(tick);
+  });
 }
 
 // ── RENDER FARM HEALTH ──
@@ -3603,7 +3675,46 @@ window.copyPitchEmail=function(){
   navigator.clipboard.writeText(txt).then(()=>alert('✅ Investor email copied!')).catch(()=>alert('Copy from browser console.'));
 };
 
-// ── INIT ──
+// ── LIVE SYSTEM CLOCK & TIMESTAMPS ──
+function startSystemClock(){
+  function tick(){
+    const now=new Date();
+    const h=String(now.getHours()).padStart(2,'0');
+    const m=String(now.getMinutes()).padStart(2,'0');
+    const s=String(now.getSeconds()).padStart(2,'0');
+    const timeStr=`${h}:${m}:${s}`;
+    const dateStr=now.toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+    // topbar clock
+    const cl=document.getElementById('clock');
+    if(cl) cl.textContent=timeStr;
+    const cd=document.getElementById('clockDate');
+    if(cd) cd.textContent=dateStr;
+    // system status bar clock
+    const sc=document.getElementById('sysClock');
+    if(sc) sc.textContent=`SA · ${timeStr}`;
+    // weather timestamp
+    const wts=document.getElementById('weatherTs');
+    if(wts) wts.textContent=`· ${h}:${m}`;
+    // insights timestamp
+    const its=document.getElementById('insightsTs');
+    if(its) its.textContent=`· ${h}:${m}`;
+    // section header timestamps
+    document.querySelectorAll('.live-sec-ts').forEach(el=>{el.textContent=`${h}:${m}`;});
+  }
+  tick();
+  setInterval(tick,1000);
+}
+
+// ── LIVE NOTIFICATION BADGE UPDATE ──
+function updateNotificationBadge(){
+  const badge=document.querySelector('.tb-badge');
+  if(badge){
+    const critCount=4;
+    badge.textContent=critCount;
+    badge.style.display=critCount>0?'block':'none';
+  }
+}
+
 function init(){
   renderWeather();
   renderStats();
@@ -3631,6 +3742,8 @@ function init(){
   calcPrice();
   renderModules();
   fetchWeather();
+  startSystemClock();
+  updateNotificationBadge();
   setInterval(fetchWeather, 10*60*1000);
   setInterval(()=>{renderSolar();renderIrrigation();}, 5000);
   setInterval(fetchLiveSensors, 10*60*1000);
