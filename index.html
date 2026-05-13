@@ -1107,6 +1107,551 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   /* Investor CTA */
   .inv-cta{padding:11px}
 }
+
+/* ══════════════════════════════════════════════════════════════
+   YIELDCORE — PREMIUM UI/UX OVERHAUL v2
+   Bloomberg / Stripe / Tesla fintech aesthetic
+   Injected overrides — all improvements in one block
+══════════════════════════════════════════════════════════════ */
+
+/* ── 1. IMPROVED CONTRAST VARIABLES ── */
+:root {
+  --sub: #a0c4ab;        /* was #6b9475 — WCAG AA readable */
+  --dim: #658f74;        /* was #2e4a31 — raised from near-invisible */
+  --text: #f2f8f4;       /* slightly crisper white-green */
+  --border:  rgba(34,197,94,.18);
+  --border2: rgba(34,197,94,.13);
+  --bg2: rgba(6,14,8,.93);
+  --bg3: rgba(9,20,11,.88);
+  --bg4: rgba(12,24,14,.82);
+  --glass: rgba(7,16,9,.88);
+}
+
+/* ── 2. STRONGER BACKGROUND OVERLAY ── */
+#main::after {
+  background:
+    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.08), transparent 50%),
+    linear-gradient(180deg,
+      rgba(4,10,5,.72) 0%,
+      rgba(4,10,5,.58) 35%,
+      rgba(4,10,5,.72) 75%,
+      rgba(4,10,5,.90) 100%) !important;
+}
+
+/* ── 3. PANEL GLASS UPGRADE ── */
+.panel {
+  background: rgba(5,13,7,.94) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border-color: rgba(34,197,94,.15) !important;
+}
+.panel:hover {
+  border-color: rgba(34,197,94,.28) !important;
+  box-shadow: 0 12px 44px rgba(0,0,0,.6),
+              0 0 0 1px rgba(34,197,94,.18),
+              inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+/* ── 4. STAT CARDS — PREMIUM GLASS ── */
+.stat-card {
+  background: rgba(7,16,9,.90) !important;
+  border-color: rgba(34,197,94,.16) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4),
+              inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+.stat-card:hover {
+  border-color: rgba(34,197,94,.35) !important;
+  box-shadow: 0 10px 32px rgba(0,0,0,.55),
+              0 0 0 1px rgba(34,197,94,.24),
+              inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+.stat-val {
+  font-size: 26px !important;
+  letter-spacing: -.035em !important;
+  text-shadow: 0 0 22px rgba(34,197,94,.32),
+               0 2px 6px rgba(0,0,0,.55) !important;
+}
+.stat-label {
+  font-size: 9px !important;
+  letter-spacing: 1.8px !important;
+  font-weight: 700 !important;
+  color: var(--sub) !important;
+  opacity: 1 !important;
+}
+.stat-icon {
+  font-size: 24px !important;
+  filter: drop-shadow(0 0 8px rgba(34,197,94,.4)) !important;
+}
+
+/* ── 5. TOPBAR — STRONGER GLASS ── */
+#topbar {
+  background: rgba(3,8,4,.97) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+  border-bottom: 1px solid rgba(34,197,94,.15) !important;
+  box-shadow: 0 2px 24px rgba(0,0,0,.55) !important;
+}
+.tb-welcome {
+  color: var(--text) !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.5) !important;
+}
+.tb-sub  { color: var(--sub) !important; font-size: 11px !important; }
+.tb-time { color: #4ade80 !important;    font-weight: 900 !important;
+           text-shadow: 0 0 12px rgba(74,222,128,.3) !important; }
+.tb-date { color: var(--sub) !important; font-size: 10px !important; }
+
+/* ── 6. SIDEBAR ── */
+#sidebar {
+  background: linear-gradient(180deg,
+    rgba(3,8,4,.99) 0%,
+    rgba(3,9,5,.99) 100%) !important;
+  border-right: 1px solid rgba(34,197,94,.13) !important;
+  box-shadow: 2px 0 28px -4px rgba(0,0,0,.7),
+              2px 0 20px -8px rgba(34,197,94,.2) !important;
+}
+.nav-item {
+  color: var(--sub) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+.nav-item span { color: inherit !important; font-weight: inherit !important; }
+.nav-item.active { color: #4ade80 !important; }
+.nav-item:hover  { color: var(--text) !important; }
+.sb-version { color: var(--dim) !important; }
+.sb-status  { color: var(--green) !important; }
+.sb-logo-sub { color: var(--sub) !important; opacity: 1 !important; }
+
+/* ── 7. SECTION HEADERS ── */
+.sec-title {
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: .04em !important;
+  color: var(--text) !important;
+  text-shadow: 0 1px 6px rgba(0,0,0,.6) !important;
+}
+.sec-subtitle { color: var(--sub) !important; font-size: 10.5px !important; }
+.sec-hdr { margin-bottom: 14px !important; }
+
+/* ── 8. SKELETON LOADERS ── */
+@keyframes shimmer {
+  0%   { background-position: -800px 0 }
+  100% { background-position:  800px 0 }
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(34,197,94,.05) 25%,
+    rgba(34,197,94,.13) 50%,
+    rgba(34,197,94,.05) 75%);
+  background-size: 1600px 100%;
+  animation: shimmer 1.8s infinite linear;
+  border-radius: 6px;
+  pointer-events: none;
+}
+.skeleton-text { height: 11px; margin-bottom: 7px; border-radius: 4px; }
+.skeleton-val  { height: 28px; width: 85px; margin-bottom: 5px; border-radius: 6px; }
+.skeleton-bar  { height: 7px;  width: 100%; margin-top: 5px; border-radius: 4px; }
+.skeleton-card {
+  background: rgba(7,16,9,.90);
+  border: 1px solid rgba(34,197,94,.1);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+/* ── 9. LIVE PULSE DOT ── */
+@keyframes livePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.7),  0 0 8px rgba(34,197,94,.5) }
+  60%     { box-shadow: 0 0 0 6px rgba(34,197,94,.0), 0 0 16px rgba(34,197,94,.7) }
+}
+.tb-live-dot { animation: livePulse 2.2s infinite !important; }
+.trust-dot.tl { animation: livePulse 2.5s infinite !important; }
+
+/* ── 10. HEALTH BARS ── */
+.health-bar-fill {
+  transition: width .9s cubic-bezier(.4,0,.2,1) !important;
+  box-shadow: 0 0 10px rgba(34,197,94,.3) !important;
+}
+.health-score {
+  font-size: 22px !important;
+  text-shadow: 0 0 14px rgba(34,197,94,.4) !important;
+}
+.health-name {
+  color: var(--text) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+}
+.health-ha   { color: var(--sub) !important; font-size: 10px !important; }
+.health-crop { color: var(--sub) !important; font-size: 10px !important; }
+
+/* ── 11. BACKDROP FOR ALL DATA CARDS ── */
+.npk-card, .yield-card, .carbon-farm-card, .pest-card,
+.solar-farm-card, .irr-zone-card, .sensor-card,
+.biochar-card, .sars-card, .sell-step, .sell-market,
+.inv-card, .decision-card, .module-card,
+.inv-metric, .ndvi-cell, .insight-card {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* ── 12. NUMERIC VALUES — MAXIMUM CONTRAST ── */
+.solar-kwh, .ndvi-val, .sensor-temp,
+.carbon-num-val, .yield-val-num, .npk-val,
+.sars-card-val, .sell-price-val, .eco-rev-num {
+  color: #ffffff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.7) !important;
+}
+/* Values that stay in signature green */
+.stat-val, .yield-sum-val, .carbon-rev-val, .biochar-stat-val,
+.inv-metric-val, .inv-ask-val, .inv-rev-val,
+.carbon-price-big, .carbon-std-price, .pilot-result {
+  color: #4ade80 !important;
+  text-shadow: 0 0 18px rgba(74,222,128,.28),
+               0 2px 4px rgba(0,0,0,.5) !important;
+}
+
+/* ── 13. SUBTEXT GLOBAL VISIBILITY UPGRADE ── */
+.health-crop, .pest-farm, .pest-conf, .yield-crop, .yield-profit-row,
+.carbon-farm-crop, .carbon-farm-meta, .carbon-num-label,
+.carbon-market-title, .npk-range-title, .npk-legend,
+.insight-farm, .insight-reason, .dc-why, .dc-impact,
+.biochar-card-body, .biochar-step-body, .biochar-stat-lbl,
+.sars-sub, .sars-step-body, .sars-callout, .sell-sub,
+.sell-market-type, .sell-price-sub, .eco-step-desc, .eco-tag,
+.eco-path-body, .eco-rev-sub, .inv-tagline, .inv-logo-sub,
+.inv-metric-label, .inv-ms-period, .inv-ask-label, .inv-ask-term,
+.inv-card-title, .inv-fund-sub, .inv-esg-label, .inv-chart-label,
+.cert-field-label, .cert-footer, .cert-title, .carbon-header-sub,
+.carbon-stat-pill-label, .carbon-price-meta, .ob-sub, .ob-label,
+.login-demo-label, .lbl, .module-desc, .pilot-detail, .founder-bio,
+.trust-item, .tb-sub, .yield-sum-label, .carbon-rev-label,
+.biochar-sub, .eco-rev-val, .npk-range-vals, .ai-msg-system,
+.sars-callout, .sell-market-type, .yield-profit-row,
+.carbon-std-sub { color: var(--sub) !important; }
+
+/* ── 14. INTRO HEADLINE ── */
+.intro-headline {
+  font-size: 33px !important;
+  text-shadow: 0 2px 20px rgba(0,0,0,.85),
+               0 0 40px rgba(34,197,94,.18) !important;
+  line-height: 1.18 !important;
+}
+.intro-sub {
+  color: var(--sub) !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+.intro-bul span { color: var(--sub) !important; font-size: 11px !important; }
+.intro-bul b    { font-size: 16px !important; }
+
+/* ── 15. CARBON ECOSYSTEM — PREMIUM ANIMATIONS ── */
+@keyframes ecoPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.45) }
+  55%     { box-shadow: 0 0 0 7px rgba(34,197,94,.0) }
+}
+.eco-step-num { animation: ecoPulse 2.8s infinite !important; }
+.eco-step {
+  transition: transform .22s ease, border-color .2s, box-shadow .2s !important;
+  margin-bottom: 2px;
+}
+.eco-step:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,.5) !important;
+}
+@keyframes flowArrow {
+  0%,100% { opacity: .32; transform: scaleY(1) }
+  50%     { opacity: .90; transform: scaleY(1.1) }
+}
+.eco-arrow {
+  animation: flowArrow 2.2s ease-in-out infinite !important;
+  font-size: 22px !important;
+  color: rgba(34,197,94,.55) !important;
+}
+.eco-path-orange { box-shadow: 0 4px 24px rgba(249,115,22,.10) !important; }
+.eco-path-green  { box-shadow: 0 4px 24px rgba(34,197,94,.10) !important; }
+.eco-path-violet { box-shadow: 0 4px 24px rgba(167,139,250,.10) !important; }
+.eco-pathway {
+  transition: transform .22s ease, box-shadow .22s !important;
+}
+.eco-pathway:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 32px rgba(0,0,0,.5) !important;
+}
+.eco-step-title  { font-size: 14px !important; font-weight: 900 !important; }
+.eco-step-desc   { font-size: 12px !important; line-height: 1.58 !important; }
+.eco-path-title  { font-size: 13px !important; font-weight: 900 !important; color: var(--text) !important; }
+.eco-path-body   { font-size: 11px !important; line-height: 1.55 !important; }
+
+/* ── 16. CARBON SPARK BARS — ANIMATED ── */
+@keyframes barGrow {
+  from { transform: scaleY(0); transform-origin: bottom }
+  to   { transform: scaleY(1);  transform-origin: bottom }
+}
+.carbon-spark-bar {
+  animation: barGrow .7s ease both !important;
+  background: linear-gradient(180deg,#4ade80,rgba(34,197,94,.5)) !important;
+}
+
+/* ── 17. PROFIT / PROGRESS BARS ── */
+.yield-profit-fill {
+  background: linear-gradient(90deg,#15803d,#22c55e,#4ade80) !important;
+  box-shadow: 0 0 10px rgba(34,197,94,.25) !important;
+}
+.npk-bar    { box-shadow: 0 0 6px rgba(34,197,94,.18) !important; }
+.carbon-bar-fill { box-shadow: 0 0 10px rgba(34,197,94,.22) !important; }
+
+/* ── 18. ALERTS PANEL ── */
+.af-crit { background: rgba(127,29,29,.10) !important; border-color: rgba(248,113,113,.28) !important; }
+.af-warn { background: rgba(113,64,18,.10) !important; border-color: rgba(251,146,60,.28) !important; }
+.af-info { background: rgba(30,58,95,.10) !important; border-color: rgba(56,189,248,.28) !important; }
+.af-btn:not(.active) { color: var(--sub) !important; }
+
+/* ── 19. FILTER / TAB BUTTONS ── */
+.c-tab        { color: var(--sub) !important; }
+.c-tab.active { color: #4ade80 !important; font-weight: 900 !important; }
+.ai-quick-btn       { color: var(--sub) !important; }
+.ai-quick-btn:hover { color: #4ade80 !important; }
+
+/* ── 20. CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: rgba(3,8,4,.85); }
+::-webkit-scrollbar-thumb { background: rgba(34,197,94,.22); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(34,197,94,.42); }
+
+/* ── 21. WEATHER CARDS ── */
+.weather-temp { text-shadow: 0 0 14px rgba(34,197,94,.28) !important; }
+.weather-card { backdrop-filter: blur(10px) !important; }
+.weather-section { border-color: rgba(34,197,94,.13) !important; }
+
+/* ── 22. CERTIFICATE MODAL ── */
+.cert-card {
+  box-shadow: 0 32px 90px rgba(0,0,0,.75),
+              0 0 0 1px rgba(34,197,94,.25) !important;
+}
+
+/* ── 23. BOTTOM NAV ── */
+#bottomNav {
+  background: rgba(2,6,3,.98) !important;
+  box-shadow: 0 -6px 40px rgba(0,0,0,.75) !important;
+  border-top-color: rgba(34,197,94,.18) !important;
+}
+.bn-item { font-size: 8.5px !important; letter-spacing: .5px !important; }
+
+/* ── 24. MODULES GRID ── */
+.module-name { color: var(--text) !important; font-size: 11px !important; font-weight: 800 !important; }
+.module-desc { color: var(--sub) !important; font-size: 9px !important; line-height: 1.5 !important; }
+.module-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,.5),
+              0 0 0 1px rgba(34,197,94,.22) !important;
+}
+
+/* ── 25. INVESTOR PITCH ── */
+.inv-hero {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05),
+              0 6px 36px rgba(0,0,0,.45) !important;
+}
+.inv-metric { transition: transform .2s, box-shadow .2s; }
+.inv-metric:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45) !important;
+}
+.inv-ask-val {
+  font-size: 40px !important;
+  text-shadow: 0 0 30px rgba(74,222,128,.3) !important;
+}
+.inv-card-title { color: var(--sub) !important; letter-spacing: 1.8px !important; }
+.inv-ms-text    { color: var(--text) !important; font-size: 11.5px !important; }
+.inv-rev-name   { color: var(--text) !important; }
+.inv-fund-label { color: var(--text) !important; }
+.inv-esg-val    { font-size: 15px !important; }
+
+/* ── 26. AI ADVISOR ── */
+.ai-msg-ai    { border-color: rgba(34,197,94,.16) !important; }
+.ai-inp       { border-color: rgba(34,197,94,.20) !important; font-size: 13px !important; }
+.ai-msg       { font-size: 13px !important; line-height: 1.68 !important; }
+.ai-send      { letter-spacing: .3px !important; }
+
+/* ── 27. TRUST STRIP ── */
+.trust-strip  { border-color: rgba(34,197,94,.18) !important; background: rgba(6,14,8,.70) !important; }
+.trust-item   { font-size: 10.5px !important; color: var(--sub) !important; font-weight: 600 !important; }
+
+/* ── 28. DECISION / INSIGHT CARDS ── */
+.decision-card { border-color: rgba(34,197,94,.12) !important; }
+.decision-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,.5),
+              0 0 0 1px rgba(34,197,94,.20) !important;
+}
+.dc-title { font-size: 13px !important; font-weight: 800 !important; color: var(--text) !important; }
+.dc-why   { font-size: 11.5px !important; line-height: 1.58 !important; }
+.insight-action { font-size: 12.5px !important; font-weight: 700 !important; color: var(--text) !important; }
+.insight-farm   { font-size: 10.5px !important; }
+.insight-reason { font-size: 10.5px !important; line-height: 1.5 !important; }
+
+/* ── 29. CARBON HEADER ── */
+.carbon-header-title {
+  font-size: 20px !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.6) !important;
+}
+.carbon-stat-pill {
+  transition: transform .2s, box-shadow .2s !important;
+}
+.carbon-stat-pill:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,.45) !important;
+}
+.carbon-stat-pill-val { font-size: 20px !important; }
+
+/* ── 30. HEALTH GRADES ── */
+.health-grade {
+  box-shadow: 0 2px 10px rgba(0,0,0,.45) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+/* ── 31. ONBOARDING WIZARD ── */
+.onboard-box {
+  box-shadow: 0 40px 110px rgba(0,0,0,.85),
+              0 0 0 1px rgba(34,197,94,.22) !important;
+}
+.ob-title { text-shadow: 0 2px 12px rgba(0,0,0,.6) !important; }
+.ob-sub   { color: var(--sub) !important; }
+
+/* ── 32. FOCUS RING (ACCESSIBILITY) ── */
+button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid rgba(34,197,94,.65) !important;
+  outline-offset: 2px !important;
+}
+
+/* ── 33. CARBON MARKET CARD ── */
+.carbon-market-card   { border-color: rgba(34,197,94,.15) !important; }
+.carbon-market-title  { color: var(--sub) !important; letter-spacing: 2px !important; font-size: 10.5px !important; }
+.carbon-price-meta    { color: var(--sub) !important; }
+
+/* ── 34. NPKW RANGE INFO ── */
+.npk-range-info  { border-color: rgba(34,197,94,.15) !important; }
+.npk-range-vals  { color: var(--text) !important; font-size: 11px !important; }
+.npk-range-title { color: var(--sub) !important; }
+
+/* ── 35. SELL / BIOCHAR / SARS SECTION HEADINGS ── */
+.biochar-headline { font-size: 16px !important; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+.biochar-sub { font-size: 12px !important; color: var(--sub) !important; line-height: 1.6 !important; }
+.sars-headline { font-size: 16px !important; }
+.sars-sub      { font-size: 12px !important; color: var(--sub) !important; line-height: 1.6 !important; }
+.sell-headline { font-size: 16px !important; }
+.sell-sub      { font-size: 12px !important; color: var(--sub) !important; line-height: 1.6 !important; }
+
+/* ── 36. BIOCHAR / SARS / SELL CARD NAMES ── */
+.biochar-card-title { font-size: 12.5px !important; color: var(--text) !important; }
+.biochar-card-body  { font-size: 11.5px !important; line-height: 1.55 !important; }
+.biochar-step-title { font-size: 10.5px !important; color: var(--text) !important; }
+.sars-step-title    { font-size: 11.5px !important; color: var(--text) !important; }
+.sars-step-body     { font-size: 10.5px !important; }
+.sell-step-title    { font-size: 12.5px !important; }
+.sell-step-body     { font-size: 10.5px !important; }
+.sell-market-name   { font-size: 12px !important; color: var(--text) !important; }
+.sell-market-price  { font-size: 14px !important; font-weight: 900 !important; }
+
+/* ── 37. MOBILE DRAWER ── */
+.md-item { font-size: 13px !important; }
+.md-item.active, .md-item:active { color: #4ade80 !important; }
+.md-section { color: rgba(34,197,94,.5) !important; }
+
+/* ── 38. FONT RENDERING ── */
+* { -webkit-font-smoothing: antialiased !important; -moz-osx-font-smoothing: grayscale !important; }
+
+/* ── 39. CARBON SELL MARKET / FARM CARDS ── */
+.carbon-farm-name { font-size: 11.5px !important; color: var(--text) !important; font-weight: 800 !important; }
+.carbon-farm-crop { color: var(--sub) !important; font-size: 10px !important; }
+
+/* ── 40. NPK FARM NAME & YIELD FARM ── */
+.npk-farm-name  { color: var(--text) !important; font-size: 11.5px !important; }
+.yield-farm     { color: var(--text) !important; font-size: 11.5px !important; }
+.yield-crop     { color: var(--sub) !important; }
+.yield-val-label{ color: var(--sub) !important; font-size: 8.5px !important; }
+
+/* ── 41. PEST SECTION ── */
+.pest-name { color: var(--text) !important; font-size: 12.5px !important; }
+.pest-farm { color: var(--sub) !important; }
+.pest-conf { color: var(--sub) !important; font-size: 10.5px !important; }
+
+/* ── 42. SOLAR CARDS ── */
+.solar-farm-name { color: var(--text) !important; font-weight: 800 !important; }
+.solar-sub       { color: var(--sub) !important; }
+.solar-meta      { color: var(--sub) !important; font-size: 10px !important; }
+
+/* ── 43. IRRIGATION CARDS ── */
+.irr-zone-name { color: var(--text) !important; font-weight: 800 !important; }
+.irr-label     { color: var(--sub) !important; }
+
+/* ── 44. NDVI CELLS ── */
+.ndvi-name { color: var(--text) !important; font-size: 10.5px !important; font-weight: 700 !important; }
+.ndvi-crop { color: var(--sub) !important; font-size: 9px !important; }
+.ndvi-status { font-weight: 800 !important; }
+
+/* ── 45. SENSOR CARDS ── */
+.sensor-name { color: var(--text) !important; font-weight: 800 !important; }
+.sensor-sub  { color: var(--sub) !important; font-size: 10px !important; }
+
+/* ── 46. YIELD SUMMARY ROW ── */
+.yield-sum-label { color: var(--sub) !important; font-size: 9.5px !important; }
+
+/* ── 47. SAFEX / PRICE TABLE ── */
+.safex-name   { color: var(--text) !important; font-weight: 700 !important; }
+.safex-price  { font-weight: 900 !important; }
+.safex-change { font-weight: 800 !important; }
+
+/* ── 48. FOUNDER / PILOT CARDS ── */
+.founder-name  { font-size: 15.5px !important; }
+.founder-title { color: var(--green) !important; font-size: 10.5px !important; }
+.founder-bio   { color: var(--sub) !important; line-height: 1.6 !important; }
+.pilot-name    { color: var(--text) !important; font-size: 11.5px !important; }
+.pilot-detail  { color: var(--sub) !important; }
+
+/* ── 49. LOGIN BOX ── */
+.login-box {
+  background: rgba(7,16,10,.85) !important;
+  backdrop-filter: blur(24px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(170%) !important;
+}
+.login-demo-label { color: var(--sub) !important; }
+.login-demo-creds { font-size: 11.5px !important; }
+.login-caps span  { color: #d4e8d8 !important; }
+
+/* ── 50. ANIMATED COUNTER MICRO-EFFECT ── */
+@keyframes countPop {
+  0%   { transform: scale(.92); opacity: 0 }
+  60%  { transform: scale(1.04) }
+  100% { transform: scale(1);   opacity: 1 }
+}
+.stat-val.animated, .carbon-price-big.animated, .inv-ask-val.animated {
+  animation: countPop .5s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* ── 51. RESPONSIVE ADJUSTMENTS ── */
+@media(max-width:480px) {
+  .stat-val        { font-size: 20px !important; }
+  .stat-label      { font-size: 8px !important; }
+  .intro-headline  { font-size: 22px !important; }
+  .panel           { background: rgba(4,11,6,.97) !important; }
+  .carbon-stat-pill-val { font-size: 16px !important; }
+  .eco-rev-num     { font-size: 11px !important; }
+  .eco-step-desc   { font-size: 11px !important; }
+  .dc-title        { font-size: 12.5px !important; }
+  .insight-action  { font-size: 12px !important; }
+  .npk-farm-name   { font-size: 11px !important; }
+}
+
+/* ── 52. SOLAR / CARBON SPARKLINE BARS STAGGER ── */
+.carbon-spark-bar:nth-child(1) { animation-delay: .05s }
+.carbon-spark-bar:nth-child(2) { animation-delay: .10s }
+.carbon-spark-bar:nth-child(3) { animation-delay: .15s }
+.carbon-spark-bar:nth-child(4) { animation-delay: .20s }
+.carbon-spark-bar:nth-child(5) { animation-delay: .25s }
+.carbon-spark-bar:nth-child(6) { animation-delay: .30s }
+.carbon-spark-bar:nth-child(7) { animation-delay: .35s }
+.carbon-spark-bar:nth-child(8) { animation-delay: .40s }
+
+/* ── END PREMIUM OVERHAUL ── */
 </style>
 </head>
 <body>
