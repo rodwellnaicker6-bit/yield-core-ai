@@ -1127,43 +1127,46 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   --glass: rgba(7,16,9,.88);
 }
 
-/* ── 2. STRONGER BACKGROUND OVERLAY ── */
+/* ── 2. BRIGHTENED BACKGROUND OVERLAY ── */
 #main::after {
   background:
-    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.08), transparent 50%),
+    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.12), transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(34,197,94,.06), transparent 45%),
     linear-gradient(180deg,
-      rgba(4,10,5,.72) 0%,
-      rgba(4,10,5,.58) 35%,
-      rgba(4,10,5,.72) 75%,
-      rgba(4,10,5,.90) 100%) !important;
+      rgba(4,10,5,.50) 0%,
+      rgba(4,10,5,.30) 30%,
+      rgba(4,10,5,.52) 70%,
+      rgba(4,10,5,.78) 100%) !important;
 }
 
-/* ── 3. PANEL GLASS UPGRADE ── */
+/* ── 3. LIGHTER PANEL GLASS (lets farm image breathe) ── */
 .panel {
-  background: rgba(5,13,7,.94) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-  border-color: rgba(34,197,94,.15) !important;
+  background: rgba(5,13,7,.82) !important;
+  backdrop-filter: blur(22px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(170%) !important;
+  border-color: rgba(34,197,94,.18) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.04) !important;
 }
 .panel:hover {
-  border-color: rgba(34,197,94,.28) !important;
-  box-shadow: 0 12px 44px rgba(0,0,0,.6),
-              0 0 0 1px rgba(34,197,94,.18),
-              inset 0 1px 0 rgba(255,255,255,.04) !important;
+  border-color: rgba(34,197,94,.32) !important;
+  box-shadow: 0 12px 44px rgba(0,0,0,.45),
+              0 0 0 1px rgba(34,197,94,.22),
+              inset 0 1px 0 rgba(255,255,255,.06) !important;
 }
 
-/* ── 4. STAT CARDS — PREMIUM GLASS ── */
+/* ── 4. STAT CARDS — VIBRANT GLASS ── */
 .stat-card {
-  background: rgba(7,16,9,.90) !important;
-  border-color: rgba(34,197,94,.16) !important;
-  box-shadow: 0 2px 16px rgba(0,0,0,.4),
-              inset 0 1px 0 rgba(255,255,255,.04) !important;
+  background: rgba(7,18,10,.80) !important;
+  border-color: rgba(34,197,94,.20) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.3),
+              inset 0 1px 0 rgba(255,255,255,.06) !important;
 }
 .stat-card:hover {
-  border-color: rgba(34,197,94,.35) !important;
-  box-shadow: 0 10px 32px rgba(0,0,0,.55),
-              0 0 0 1px rgba(34,197,94,.24),
-              inset 0 1px 0 rgba(255,255,255,.06) !important;
+  border-color: rgba(74,222,128,.42) !important;
+  box-shadow: 0 10px 36px rgba(0,0,0,.4),
+              0 0 0 1px rgba(74,222,128,.28),
+              0 0 28px -4px rgba(34,197,94,.18),
+              inset 0 1px 0 rgba(255,255,255,.08) !important;
 }
 .stat-val {
   font-size: 26px !important;
@@ -1651,6 +1654,161 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .carbon-spark-bar:nth-child(7) { animation-delay: .35s }
 .carbon-spark-bar:nth-child(8) { animation-delay: .40s }
 
+/* ── 53. VIBRANCY BOOST — brighter backgrounds & stronger glows ── */
+#main::before { opacity: .92 !important; filter: saturate(1.25) contrast(1.06) brightness(1.04) !important; }
+:root {
+  --green:  #22c55e;
+  --green3: #4ade80;
+  --green2: #16a34a;
+}
+/* Brighter intro card */
+.intro-card {
+  background: rgba(6,16,8,.78) !important;
+  border: 1px solid rgba(74,222,128,.22) !important;
+  box-shadow: 0 8px 36px rgba(0,0,0,.38),
+              0 0 60px -20px rgba(34,197,94,.22),
+              inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+.intro-headline {
+  background: linear-gradient(135deg,#f2f8f4 0%,#4ade80 60%,#facc15 100%);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 2px 12px rgba(74,222,128,.3)) !important;
+}
+.intro-headline span {
+  background: linear-gradient(135deg,#facc15,#fbbf24);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+/* Brighter pills / intro bullets */
+.intro-bul {
+  background: rgba(7,20,10,.72) !important;
+  border-color: rgba(74,222,128,.22) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+.intro-bul b { color: #4ade80 !important; font-size: 17px !important; }
+
+/* Stronger stat value glow */
+.stat-val {
+  text-shadow: 0 0 28px rgba(74,222,128,.40),
+               0 0 8px rgba(74,222,128,.18),
+               0 2px 6px rgba(0,0,0,.50) !important;
+}
+
+/* Brighter green accent overall */
+.yield-profit-fill, .carbon-bar-fill, .health-bar-fill {
+  filter: brightness(1.12) !important;
+}
+
+/* Vibrant topbar time */
+.tb-time { font-size: 18px !important; }
+
+/* Section title gradient */
+.sec-title {
+  background: linear-gradient(135deg, #f2f8f4 0%, #a0c4ab 100%);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Make data cards slightly more translucent for vibrancy */
+.npk-card, .yield-card, .carbon-farm-card, .pest-card,
+.solar-farm-card, .irr-zone-card, .sensor-card,
+.biochar-card, .sars-card, .sell-step, .inv-card {
+  background: rgba(12,24,14,.72) !important;
+  border-color: rgba(34,197,94,.14) !important;
+}
+
+/* NFC tag styling */
+.eco-tag[style*="38bdf8"] {
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+}
+
+/* ── 54. INTRO PILL UPGRADE ── */
+.intro-pill {
+  background: rgba(34,197,94,.12) !important;
+  border: 1px solid rgba(74,222,128,.30) !important;
+  color: #4ade80 !important;
+  box-shadow: 0 0 20px -6px rgba(74,222,128,.25) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 99px !important;
+  display: inline-block !important;
+  margin-bottom: 10px !important;
+}
+
+/* ── 55. CARBON HEADER BAND BRIGHTER ── */
+.carbon-header-band {
+  background: linear-gradient(135deg,#021e02,#031408,#062012) !important;
+  border-color: rgba(34,197,94,.35) !important;
+  box-shadow: 0 4px 30px rgba(0,0,0,.4),
+              0 0 50px -20px rgba(34,197,94,.25) !important;
+}
+.carbon-header-title { color: #f2f8f4 !important; }
+
+/* ── 56. TRUST STRIP BRIGHTER ── */
+.trust-strip {
+  background: rgba(6,16,8,.65) !important;
+  border-color: rgba(74,222,128,.20) !important;
+}
+
+/* ── 57. FOUNDER CARD BRIGHTER ── */
+.founder-card {
+  background: rgba(6,16,8,.72) !important;
+  border-color: rgba(74,222,128,.20) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,.3) !important;
+}
+
+/* ── 58. PILOT BADGES BRIGHTER ── */
+.pilot-badge {
+  background: rgba(6,16,8,.72) !important;
+  border-color: rgba(74,222,128,.18) !important;
+}
+
+/* ── 59. INVESTOR HERO BAND ── */
+.inv-hero {
+  background: linear-gradient(135deg,#030e04 0%,#061a08 40%,#0c2812 100%) !important;
+  border-color: rgba(34,197,94,.40) !important;
+  box-shadow: 0 0 60px -20px rgba(34,197,94,.30),
+              inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+.inv-ask-box {
+  background: linear-gradient(135deg,#0d3010,#152e18) !important;
+  border-color: rgba(74,222,128,.50) !important;
+  box-shadow: 0 0 40px -10px rgba(34,197,94,.28) !important;
+}
+
+/* ── 60. CARBON TABS BRIGHTER ── */
+.carbon-tab-bar {
+  background: rgba(6,16,8,.80) !important;
+  border-color: rgba(34,197,94,.18) !important;
+}
+.c-tab.active {
+  background: linear-gradient(135deg,rgba(34,197,94,.22),rgba(74,222,128,.12)) !important;
+  border-color: rgba(74,222,128,.40) !important;
+}
+
+/* ── 61. MOBILE BOTTOM NAV UPGRADE ── */
+#bottomNav {
+  background: rgba(2,6,3,.99) !important;
+  border-top: 1px solid rgba(74,222,128,.22) !important;
+}
+.bn-item.bn-active { color: #4ade80 !important; }
+
+/* ── 62. CONTENT PADDING / HEADING FIX ── */
+#content { padding-top: 28px !important; }
+@media(max-width:480px) {
+  #content { padding-top: 16px !important; }
+  .intro-headline {
+    font-size: 22px !important;
+    -webkit-text-fill-color: unset !important;
+    color: #f2f8f4 !important;
+  }
+}
+
 /* ── END PREMIUM OVERHAUL ── */
 </style>
 </head>
@@ -1924,7 +2082,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 
       <!-- WHO WE ARE -->
       <div class="intro-card fade">
-        <div class="intro-pill">🌿 YieldCore AI · South Africa</div>
+        <div class="intro-pill">🌿 YieldCore AI · South Africa &nbsp;·&nbsp; <span style="color:#38bdf8;font-weight:800">📶 NFC</span> · AI · Fintech · Sustainability</div>
         <div class="intro-headline">Detect. Decide. <span>Fix.</span> Grow.</div>
         <div class="intro-sub">Full-farm intelligence on WhatsApp + dashboard — satellites, drones, IoT &amp; AI working for every hectare.</div>
         <div class="intro-row">
@@ -2444,7 +2602,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
               <div class="eco-step-body">
                 <div class="eco-step-title">🌾 10 Farms · 5,419 ha · 5 Provinces</div>
                 <div class="eco-step-desc">Satellite NDVI, IoT soil probes, drone surveys, and Open-Meteo weather data stream in every 5 seconds. The platform knows the soil moisture, temperature, NDVI index, pest risk, nutrient status, and solar output of every farm in real time.</div>
-                <div class="eco-step-tags"><span class="eco-tag">IoT Sensors</span><span class="eco-tag">Satellite NDVI</span><span class="eco-tag">Drone Surveys</span><span class="eco-tag">Open-Meteo</span></div>
+                <div class="eco-step-tags"><span class="eco-tag">IoT Sensors</span><span class="eco-tag">Satellite NDVI</span><span class="eco-tag">Drone Surveys</span><span class="eco-tag">Open-Meteo</span><span class="eco-tag" style="background:#38bdf820;color:#38bdf8;border-color:#38bdf833">📶 NFC Smart Tracking</span><span class="eco-tag" style="background:#38bdf820;color:#38bdf8;border-color:#38bdf833">NFC Logistics Tags</span></div>
               </div>
             </div>
             <div class="eco-arrow">▼</div>
@@ -2455,7 +2613,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
               <div class="eco-step-body">
                 <div class="eco-step-title">🤖 YieldCore AI — Sequestration Engine</div>
                 <div class="eco-step-desc">GPT-4o and YieldCore's proprietary models aggregate all farm data to calculate exactly how much CO₂e each farm is sequestering per hectare per year. This data feeds the three parallel pathways simultaneously — no double counting, full audit trail.</div>
-                <div class="eco-step-tags"><span class="eco-tag">4,930t CO₂e Verified</span><span class="eco-tag">6,291t Pipeline</span><span class="eco-tag">8 Farms Enrolled</span></div>
+                <div class="eco-step-tags"><span class="eco-tag">4,930t CO₂e Verified</span><span class="eco-tag">6,291t Pipeline</span><span class="eco-tag">8 Farms Enrolled</span><span class="eco-tag" style="background:#38bdf820;color:#38bdf8;border-color:#38bdf833">📶 NFC Auth</span><span class="eco-tag" style="background:#38bdf820;color:#38bdf8;border-color:#38bdf833">NFC Smart Payments</span></div>
               </div>
             </div>
             <div class="eco-arrow">▼</div>
@@ -2525,7 +2683,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
               <div class="eco-step-body">
                 <div class="eco-step-title">♻️ Reinvest → Grow the Loop</div>
                 <div class="eco-step-desc">Carbon revenue pays for more precision sensors, drone fly-overs, and biochar kilns — which generate better data, which verifies more carbon, which earns more revenue. This is the <b style="color:#22c55e">compounding carbon flywheel</b>: each season you enrol more hectares, verify more tonnes, and unlock higher-tier verification standards.</div>
-                <div class="eco-step-tags"><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Sensors</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Ha Enrolled</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">Higher Credit Volume</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Revenue</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">→ Repeat ①</span></div>
+                <div class="eco-step-tags"><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Sensors</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Ha Enrolled</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">Higher Credit Volume</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">More Revenue</span><span class="eco-tag" style="background:#38bdf820;color:#38bdf8;border-color:#38bdf833">📶 NFC Vending</span><span class="eco-tag" style="background:#38bdf820;color:#38bdf8;border-color:#38bdf833">NFC Food Logistics</span><span class="eco-tag" style="background:#22c55e22;color:#22c55e;border-color:#22c55e33">→ Repeat ①</span></div>
               </div>
             </div>
 
