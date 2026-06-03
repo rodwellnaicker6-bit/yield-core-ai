@@ -684,6 +684,10 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .dc-warning .dc-badge{background:rgba(250,204,21,.15);color:#facc15;border:1px solid rgba(250,204,21,.28)}
 .dc-opportunity .dc-badge{background:rgba(56,189,248,.15);color:#38bdf8;border:1px solid rgba(56,189,248,.28)}
 .dc-info .dc-badge{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.22)}
+.dc-rank{display:inline-block;background:rgba(34,197,94,.16);color:#22c55e;font-size:10px;font-weight:900;padding:1px 6px;border-radius:5px;margin-right:7px;vertical-align:middle}
+.dc-impact-val{font-weight:900;color:#22c55e}
+.dc-impact-lbl{color:var(--sub);font-weight:600}
+.dc-meta{color:var(--sub);font-weight:600;font-size:11px}
 .dc-why{font-size:11px;color:var(--sub);line-height:1.5;margin-bottom:8px}
 .dc-actions{display:flex;gap:6px;flex-wrap:wrap}
 .dc-btn{font-size:10px;font-weight:700;padding:5px 10px;border-radius:6px;border:none;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
@@ -2177,7 +2181,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         </div>
         <div class="insights-grid" id="insightsGrid"></div>
         <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border2)">
-          <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-.01em">📋 Decision Support — What to do right now</div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:800;color:var(--text);letter-spacing:-.01em">📋 AI Decision Center — ranked by financial impact</div>
+            <div id="decisionSummary" style="font-size:11px;color:var(--green3);font-weight:800"></div>
+          </div>
           <div id="decisionList"></div>
         </div>
         <div style="margin-top:10px;font-size:11px;color:var(--sub);text-align:right">Last analysed: <span id="insightsTime">–</span></div>
@@ -2292,7 +2299,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         </div>
 
         <!-- IRRIGATION -->
-        <div class="panel">
+        <div class="panel" id="sec-irrigation">
           <div class="sec-hdr">
             <div class="sec-title">💧 Irrigation Control <span>IoT sensors · Live</span><span class="sec-ts live-sec-ts"></span></div>
             <div style="display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--blue);box-shadow:0 0 6px var(--blue);width:7px;height:7px;border-radius:50%"></div><span style="font-size:11px;color:var(--blue);font-weight:700">Live</span></div>
@@ -2347,7 +2354,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
       <div class="panels2 fade">
 
         <!-- PEST ID -->
-        <div class="panel">
+        <div class="panel" id="sec-pest">
           <div class="sec-hdr">
             <div class="sec-title">🐛 Pest Identification <span>AI-powered · Drone imagery</span><span class="sec-ts live-sec-ts"></span></div>
             <div style="font-size:11px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--orange);box-shadow:0 0 6px var(--orange);width:7px;height:7px;border-radius:50%"></div><span id="pestCount">8</span> detections</div>
@@ -4446,69 +4453,111 @@ function renderInsights(){
   const ts=document.getElementById('insightsTime');
   if(ts)ts.textContent=new Date().toLocaleTimeString('en-ZA');
 }
+// ── AI DECISION CENTER — every decision derived from live data, ranked by ZAR impact ──
+function _fmtR(v){v=Math.round(v);return v>=1e6?'R'+(v/1e6).toFixed(2)+'M':v>=1e3?'R'+Math.round(v/1e3)+'k':'R'+v;}
+function _yieldOf(name){
+  const n=name.toLowerCase();
+  return yieldFarms.find(y=>{
+    const yk=y.farm.toLowerCase(), key=yk.split(' ').slice(0,2).join(' ');
+    return n.startsWith(key)||yk.startsWith(n.split(' ').slice(0,2).join(' '));
+  });
+}
+function _medianRevPerHa(){
+  const a=yieldFarms.map(y=>y.yieldT*y.priceR).sort((x,y)=>x-y),m=(a.length-1)/2;
+  return (a[Math.floor(m)]+a[Math.ceil(m)])/2;
+}
+function _haOf(name){
+  const c=(typeof carbonFarms!=='undefined')?carbonFarms.find(f=>f.name===name):null; if(c)return c.ha;
+  const h=(typeof farmHealth!=='undefined')?farmHealth.find(f=>f.name===name):null; return h?h.ha:120;
+}
+function _cropValue(name){ const y=_yieldOf(name); if(y)return y.ha*y.yieldT*y.priceR; return _haOf(name)*_medianRevPerHa(); }
+
 function renderDecisionSupport(){
   const el=document.getElementById('decisionList');if(!el)return;
-  const decisions=[
-    {
-      type:'critical',title:'🚨 Armyworm treatment required — Rodwell Naicker Farm',
-      why:'AI pest scan detected Fall Armyworm at 91% confidence in Field B3. Based on current spread rate, crop loss could reach 25% within 5 days without treatment.',
-      actions:[
-        {label:'📲 Send WhatsApp alert',primary:true,fn:'sendPestAlert("Rodwell Naicker Farm","Fall Armyworm","Field B3","91")'},
-        {label:'View NDVI field map',primary:false,fn:'mobileNav("ndvi")'}
-      ],
-      impact:'Est. loss prevented: <b>R142,000</b> · Treatment cost: R8,400'
-    },
-    {
-      type:'warning',title:'💧 Irrigation needed — Karoo House & Sun Rise Farm',
-      why:'Soil moisture at Karoo House is 28% (target: 55%) and Sun Rise is 31% (target: 60%). Both farms enter crop stress zone within 18 hours at current evapotranspiration rates.',
-      actions:[
-        {label:'▶ Activate irrigation',primary:true,fn:'mobileNav("irrigation")'},
-        {label:'See moisture graph',primary:false,fn:'mobileNav("irrigation")'}
-      ],
-      impact:'Irrigating now protects est. <b>R320,000</b> in maize crop value'
-    },
-    {
-      type:'opportunity',title:'📈 SAFEX price window — sell forward contracts now',
-      why:'Maize spot price at R5,240/t — 8.2% above 12-month average. Typical post-harvest dip of 12–18% is forecasted for Q2. Locking in 30% of harvest today could add R180–R250/t to margin.',
-      actions:[
-        {label:'View SAFEX prices',primary:true,fn:'mobileNav("yield")'},
-        {label:'Run profit calculator',primary:false,fn:'mobileNav("yield")'}
-      ],
-      impact:'Potential margin upside: <b>R380,000–R520,000</b> across grain farms'
-    },
-    {
-      type:'opportunity',title:'🌍 Chart Farm eligible for carbon credits — enrol now',
-      why:'Chart Farm\'s 420 ha of managed land qualifies for VCS Gold Standard. At current SA carbon price of R341/t, estimated annual revenue is R218,000 with zero upfront cost.',
-      actions:[
-        {label:'Start carbon enrolment',primary:true,fn:'mobileNav("carbon")'},
-        {label:'View carbon tracker',primary:false,fn:'mobileNav("carbon")'}
-      ],
-      impact:'Annual carbon revenue potential: <b>R218,000</b> (zero upfront cost)'
-    },
-    {
-      type:'info',title:'🌤 Optimal spray window — Tomorrow 06h00–10h00',
-      why:'Forecast: wind 11 km/h from SW, humidity 54%, 0% precipitation probability. This is the best foliar spray window this week. Next suitable window is 3 days away.',
-      actions:[
-        {label:'Check weather panel',primary:true,fn:'document.getElementById("weatherSection")?.scrollIntoView({behavior:"smooth"})'},
-        {label:'Dismiss',primary:false,fn:'this.closest(".decision-card").style.display="none"'}
-      ],
-      impact:'Spray efficiency improves <b>18–22%</b> vs afternoon application'
-    }
-  ];
+  const cPriceR=Math.round((typeof carbonVCMPrice!=='undefined'?carbonVCMPrice:18.4)*(typeof ZAR_PER_USD!=='undefined'?ZAR_PER_USD:18.55));
+  const D=[];
+
+  // 1) Irrigation — yield-at-risk from soil moisture deficit
+  if(typeof irrigFarms!=='undefined') irrigFarms.forEach(f=>{
+    if(f.moist>=f.target-5)return;
+    const cv=_cropValue(f.name), deficit=(f.target-f.moist)/f.target;
+    const impact=cv*Math.min(0.22,deficit*0.45), crit=deficit>=0.15;
+    D.push({type:crit?'critical':'warning',icon:'💧',pillar:'crop value protected',impactZAR:impact,cost:f.flow*60,
+      title:`Irrigate ${f.name} — soil ${Math.round(f.moist)}% vs ${f.target}% target`,
+      why:`Soil moisture is ${Math.round(deficit*100)}% below target. At current evapotranspiration, ${f.name} enters crop-stress within ${crit?'18–24':'48'}h — irrigating now protects projected yield.`,
+      actions:[{label:'▶ Activate irrigation',primary:true,fn:"mobileNav(null,'sec-irrigation')"},{label:'View moisture',primary:false,fn:"mobileNav(null,'sec-irrigation')"}]});
+  });
+
+  // 2) Pest — crop value at risk scaled by severity × AI confidence
+  if(typeof pestData!=='undefined') pestData.forEach((p,idx)=>{
+    if(p.severity!=='HIGH'&&p.severity!=='MED')return;
+    const cv=_cropValue(p.farm), sevLoss=p.severity==='HIGH'?0.20:0.09;
+    const impact=cv*sevLoss*(p.confidence/100);
+    D.push({type:p.severity==='HIGH'?'critical':'warning',icon:p.icon,pillar:'crop value protected',impactZAR:impact,cost:cv*0.005,
+      title:`Treat ${p.name} — ${p.farm}`,
+      why:`AI drone scan detected ${p.name} at ${p.confidence}% confidence (${p.field}). Untreated ${p.severity} infestations cost ~${Math.round(sevLoss*100)}% of crop value — apply treatment within 48h.`,
+      actions:[{label:'📲 Send WhatsApp alert',primary:true,fn:`sendPestAlert(${idx})`},{label:'View pest scan',primary:false,fn:"mobileNav(null,'sec-pest')"}]});
+  });
+
+  // 3) Nutrient (NPK) — yield uplift from correcting deficiency
+  if(typeof npkFarms!=='undefined') npkFarms.forEach(f=>{
+    const low=['N','P','K'].filter(n=>f[n].val<f[n].min);
+    if(!low.length)return;
+    const cv=_cropValue(f.name), sumDef=low.reduce((a,n)=>a+(f[n].min-f[n].val)/f[n].min,0);
+    const upliftPct=Math.min(0.08,sumDef*0.12), impact=cv*upliftPct;
+    D.push({type:'warning',icon:'💊',pillar:'yield uplift',impactZAR:impact,cost:_haOf(f.name)*120,
+      title:`Apply ${low.join('+')} fertiliser — ${f.name}`,
+      why:`${f.crop} soil shows ${low.map(n=>`${n} ${f[n].val}${f[n].unit} (min ${f[n].min})`).join(', ')}. Correcting the deficiency lifts projected yield ~${Math.round(upliftPct*100)}%.`,
+      actions:[{label:'View NPK panel',primary:true,fn:"mobileNav(null,'sec-nutrients')"}]});
+  });
+
+  // 4) Solar — recoverable generation from servicing underperforming arrays
+  if(typeof solarFarms!=='undefined') solarFarms.filter(f=>f.pct<55).forEach(f=>{
+    const annualKwh=f.cap*5.2*365*(f.pct/100), impact=annualKwh*0.30*2.85;
+    D.push({type:'opportunity',icon:'☀️',pillar:'energy savings/yr',impactZAR:impact,cost:f.panels*45,
+      title:`Service solar array — ${f.name}`,
+      why:`Panel efficiency at ${Math.round(f.pct)}% (status: ${f.status}). Soiling or shading suspected across ${f.panels} panels (${f.cap}kW) — cleaning restores ~30% of lost output.`,
+      actions:[{label:'View solar panel',primary:true,fn:"mobileNav(null,'sec-solar')"}]});
+  });
+
+  // 5) Carbon — new annual revenue from enrolling eligible unregistered land
+  if(typeof carbonFarms!=='undefined') carbonFarms.filter(f=>f.status==='none'&&f.ha>300).forEach(f=>{
+    const tYr=f.rate*f.ha, impact=tYr*cPriceR;
+    D.push({type:'opportunity',icon:'🌍',pillar:'new carbon revenue/yr',impactZAR:impact,cost:0,
+      title:`Enrol ${f.name} in VCS carbon programme`,
+      why:`${f.ha}ha of ${f.crop} qualifies at ${f.rate}t CO₂e/ha/yr. At R${cPriceR}/t that's ~${Math.round(tYr)}t/yr in new revenue with zero upfront cost.`,
+      actions:[{label:'Start enrolment',primary:true,fn:"mobileNav(null,'carbonSection')"}]});
+  });
+
+  // 6) Market — margin captured by forward-selling grain at the SAFEX high
+  if(typeof yieldFarms!=='undefined'){
+    const grain=yieldFarms.filter(y=>/maize|grain|sunflower/i.test(y.crop));
+    const grainVal=grain.reduce((a,y)=>a+y.ha*y.yieldT*y.priceR,0);
+    D.push({type:'opportunity',icon:'📈',pillar:'margin upside',impactZAR:grainVal*0.082*0.30,cost:0,
+      title:'Forward-sell grain — SAFEX near 2-year high',
+      why:`SAFEX maize at R5,240/t — 8.2% above the 12-month average. Locking in 30% of the grain harvest now protects margin against the typical post-harvest dip.`,
+      actions:[{label:'Run profit calculator',primary:true,fn:"mobileNav(null,'sec-yield')"}]});
+  }
+
+  D.sort((a,b)=>b.impactZAR-a.impactZAR);
+  const top=D.slice(0,8);
+  const totalImpact=top.reduce((a,d)=>a+d.impactZAR,0);
   const typeLabel={critical:'CRITICAL',warning:'WARNING',opportunity:'OPPORTUNITY',info:'INFO'};
-  el.innerHTML=decisions.map(d=>`
+  el.innerHTML=top.map((d,i)=>`
     <div class="decision-card dc-${d.type}">
       <div class="dc-header">
-        <div class="dc-title">${d.title}</div>
+        <div class="dc-title"><span class="dc-rank">#${i+1}</span>${d.icon} ${d.title}</div>
         <span class="dc-badge">${typeLabel[d.type]}</span>
       </div>
       <div class="dc-why">${d.why}</div>
       <div class="dc-actions">
         ${d.actions.map(a=>`<button class="dc-btn dc-btn-${a.primary?'primary':'secondary'}" onclick="${a.fn}">${a.label}</button>`).join('')}
       </div>
-      <div class="dc-impact">${d.impact}</div>
+      <div class="dc-impact"><span class="dc-impact-val">${_fmtR(d.impactZAR)}</span> <span class="dc-impact-lbl">${d.pillar}</span> <span class="dc-meta">${d.cost>0?`· cost ~${_fmtR(d.cost)} · ROI ${Math.round(d.impactZAR/d.cost)}×`:'· zero upfront cost'}</span></div>
     </div>
   `).join('');
+  const sum=document.getElementById('decisionSummary');
+  if(sum)sum.textContent=`Total value at stake: ${_fmtR(totalImpact)} · ${top.length} ranked actions`;
 }
 window.refreshInsights=function(){renderInsights();renderDecisionSupport();};
 
