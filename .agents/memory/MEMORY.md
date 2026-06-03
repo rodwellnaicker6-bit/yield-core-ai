@@ -1,0 +1,1 @@
+- [Auth Supabase dead-URL fallback](auth-supabase-fallback.md) — demo login must work via local HMAC token even when SUPABASE_URL DNS fails (ENOTFOUND).

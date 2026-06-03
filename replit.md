@@ -4,8 +4,10 @@
 A full-featured desktop + mobile precision agriculture dashboard for South African farming operations. Built with Node.js/Express backend + vanilla HTML/CSS/JS frontend.
 
 ## Login
-- Email: rodwell@yieldcore.ai
+- Email: rodwell@yieldcore.ai (or demo@yieldcore.ai)
 - Password: yield2025
+- Note: Login uses Supabase Auth when reachable, with a built-in local HMAC-token
+  fallback so the demo account always works even if Supabase is down/unconfigured.
 
 ## Tech Stack
 - **Backend:** Node.js + Express (server.js) on port 5000
