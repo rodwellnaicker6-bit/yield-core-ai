@@ -1809,6 +1809,22 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   }
 }
 
+/* ── 62b. HEADER / HEADLINE ANTI-CLIP FIX (gradient text was clipping ascenders) ── */
+.intro-headline {
+  line-height: 1.22 !important;
+  padding-top: 6px !important;
+  padding-bottom: 8px !important;
+  overflow: visible !important;
+}
+.sec-title { line-height: 1.35 !important; padding-top: 2px !important; }
+.tb-welcome { line-height: 1.3 !important; padding-top: 2px !important; }
+#topbar { padding-top: 6px !important; padding-bottom: 6px !important; height: auto !important; min-height: 64px !important; align-items: center !important; }
+#content { padding-top: 30px !important; }
+@media(max-width:480px){
+  #topbar { min-height: 52px !important; }
+  #content { padding-top: 18px !important; }
+}
+
 /* ── 63. ECOSYSTEM BRANDING STRIP (7 pillars) ── */
 .eco-strip {
   margin: 14px 0 18px;
@@ -4241,21 +4257,50 @@ async function sendAI(){
   wrap.scrollTop=wrap.scrollHeight;
   try{
     const res=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:aiMessages})});
-    const data=await res.json();
+    const data=await res.json().catch(()=>({}));
     thinking.remove();
-    if(data.reply){
+    if(data && data.reply){
       aiMessages.push({role:'assistant',content:data.reply});
       addAIMessage('ai',data.reply);
     } else {
-      addAIMessage('system','⚠️ '+( data.error||'No response'));
+      // Never expose internal/provider errors — always show a clean, on-brand message.
+      addAIMessage('ai','YieldCore AI Advisor is temporarily unavailable. Please try again shortly.');
     }
   }catch(e){
     thinking.remove();
-    addAIMessage('system','⚠️ Network error. Please try again.');
+    addAIMessage('ai','YieldCore AI Advisor is temporarily unavailable. Please try again shortly.');
   }
   btn.disabled=false;
 }
 window.sendAI=sendAI;
+
+// ── PRESENTATION MODE (?presentation=true) — always shows the Advisor as ready ──
+(function(){
+  try{
+    const isPresentation = new URLSearchParams(location.search).get('presentation')==='true';
+    if(!isPresentation) return;
+    window.__presentationMode = true;
+    const apply=()=>{
+      const badge=document.getElementById('aiStatusBadge');
+      if(badge){
+        badge.textContent='● AI Advisor Ready';
+        badge.style.background='#22c55e1f';
+        badge.style.color='#4ade80';
+        badge.style.border='1px solid #22c55e44';
+      }
+      // Seed a friendly ready message so the chat looks live during the demo.
+      const msgs=document.getElementById('aiMessages');
+      if(msgs && !msgs.dataset.seeded){
+        msgs.dataset.seeded='1';
+        if(typeof addAIMessage==='function'){
+          addAIMessage('ai','👋 AI Advisor ready. Ask me about irrigation, pests, nutrients, market prices, carbon credits, weather or yield — I\'ll give you practical, South-Africa-specific guidance.');
+        }
+      }
+    };
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',apply);
+    else apply();
+  }catch(e){}
+})();
 
 // vending module removed
 
