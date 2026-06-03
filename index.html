@@ -2855,7 +2855,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
           <span class="src-pill src-green">Full-stack platform</span>
         </div>
         <div style="font-size:12px;color:var(--sub);margin-bottom:14px;line-height:1.55">
-          YieldCore AI is a complete farm intelligence stack — <strong style="color:var(--green3)">dashboard, drone fly-overs, smart irrigation control, IoT soil & weather sensors, AI advisor and WhatsApp alerts</strong>. Each tier below shows exactly what your operation gets, scaling from a single smallholding to a pan-African mega-farm — and once you cross 500 ha we fly the team to your gate, install the drones and sensors, and train your staff on-site.
+          YieldCore AI is a complete farm intelligence stack — <strong style="color:var(--green3)">dashboard, drone fly-overs, smart irrigation control, IoT soil & weather sensors, AI advisor and WhatsApp alerts</strong>. From a single smallholding to a pan-African mega-farm, our team flies to your gate, installs the drones and sensors, and trains your staff on-site.
         </div>
 
         <!-- capability ribbon -->
@@ -2869,9 +2869,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
           <div class="cap-pill">☀️ Solar-on-Roof</div>
           <div class="cap-pill">🌍 Carbon Credits</div>
         </div>
-
-        <!-- pricing tiers -->
-        <div id="priceGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:16px"></div>
 
         <!-- talk to us -->
         <div class="price-calc">
@@ -4579,37 +4576,6 @@ function renderRevenue(){
 }
 
 // ── PRICING TIERS · DRONES · IRRIGATION · SENSORS ──
-const priceTiers=[
-  {tier:'STARTER',  name:'Smallholder', range:'1 – 50 ha',     rate:200, featured:false, badge:null,
-   feats:['Full dashboard access','Satellite NDVI weekly','AI crop advisor (GPT-4o)','WhatsApp alerts','Weather + market prices','Self-install soil probe (1)']},
-  {tier:'GROWER',   name:'Commercial',  range:'51 – 200 ha',   rate:175, featured:false, badge:null,
-   feats:['Everything in Starter','3 IoT soil + weather stations','Monthly drone fly-over (regional pilot)','Smart irrigation control','Bio-input ordering','Carbon credit enrolment']},
-  {tier:'ESTATE',   name:'Estate',      range:'201 – 500 ha',  rate:150, featured:true,  badge:'MOST POPULAR',
-   feats:['Everything in Grower','8 IoT stations + LoRa gateway','Bi-weekly drone NDVI + thermal','Dedicated agronomist (remote)','Solar-on-roof feasibility','Quarterly on-site review']},
-  {tier:'ENTERPRISE',name:'Enterprise', range:'501 – 2,000 ha',rate:120, featured:false, badge:'WE FLY OUT',
-   feats:['🚁 Team flies to your farm','✈️ On-site drone + sensor install','📡 Full LoRa mesh + 15 stations','👨‍🌾 Resident agronomist (3-day setup)','🎓 Staff training & certification','24/7 priority WhatsApp line']},
-  {tier:'PAN-AFRICA',name:'Mega-Farm',  range:'2,000+ ha',     rate:95,  featured:false, badge:'CUSTOM',
-   feats:['Custom drone fleet (DJI Agras)','Variable-rate prescriptions','Carbon-credit certification','ESG reporting & compliance','API + data warehouse','SLA + dedicated success team']},
-];
-function renderPricing(){
-  const c=document.getElementById('priceGrid'); if(!c) return;
-  c.innerHTML=priceTiers.map(p=>`
-    <div class="price-card${p.featured?' featured':''}">
-      ${p.badge?`<div class="price-badge">${esc(p.badge)}</div>`:''}
-      <div class="price-tier">${esc(p.tier)}</div>
-      <div class="price-name">${esc(p.name)}</div>
-      <div class="price-range">${esc(p.range)}</div>
-      <div class="price-feat">${p.feats.map(f=>`<span>${esc(f)}</span>`).join('')}</div>
-    </div>
-  `).join('');
-}
-function pickRate(ha){
-  if(ha>=2000) return {rate:95, tier:'PAN-AFRICA'};
-  if(ha>=501)  return {rate:120,tier:'ENTERPRISE'};
-  if(ha>=201)  return {rate:150,tier:'ESTATE'};
-  if(ha>=51)   return {rate:175,tier:'GROWER'};
-  return         {rate:200,tier:'STARTER'};
-}
 window.requestDemo=function(){
   const msg=`🚁 *YieldCore AI — Live Demo Request*\n\nI'd like to see YieldCore on my own farm.\n\nPlease show me:\n• 🛰️ Satellite NDVI crop vitality\n• 🚁 Drone fly-overs (mapping, spraying, scouting)\n• 💧 Smart irrigation control\n• 📡 IoT soil & weather sensors\n• 🤖 AI crop advisor\n• 📲 WhatsApp alerts\n\nPlease get in touch to set up a walkthrough on my fields.`;
   fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})
@@ -4959,7 +4925,6 @@ function init(){
   renderDecisionSupport();
   renderBio();
   renderRevenue();
-  renderPricing();
   renderModules();
   fetchWeather();
   startSystemClock();
