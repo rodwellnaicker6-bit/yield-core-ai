@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>YieldCore AI · Smart Farming SA</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23060f07'/%3E%3Ctext y='74' x='50' font-size='68' text-anchor='middle'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet"/>
@@ -3099,33 +3100,48 @@ function renderWeatherCards(){
 function renderWeather(){ renderWeatherCards(); }
 
 // ── RENDER STATS ──
-function renderStats(){
+function renderStats(animate=true){
   const s=document.getElementById('statsRow');
   const now=new Date();
   const ts=now.toTimeString().slice(0,5);
+  // ── Executive KPIs computed from live platform data so figures tie out across modules ──
+  const totalFarms=farmHealth.length;
+  const totalHa=farmHealth.reduce((a,f)=>a+(f.ha||0),0);
+  const provinces=new Set(farmHealth.map(f=>f.province)).size;
+  const predYield=Math.round(yieldFarms.reduce((a,f)=>a+f.yieldT*f.ha,0));
+  const revM=yieldFarms.reduce((a,f)=>a+f.yieldT*f.ha*f.priceR,0)/1e6;
+  const cVerified=carbonFarms.reduce((a,f)=>a+f.verified,0);
+  const cPending=carbonFarms.reduce((a,f)=>a+f.pending,0);
+  const carbonValM=(cVerified*carbonVCMPrice*ZAR_PER_USD)/1e6;
+  const solarToday=Math.round((solarLive||[]).reduce((a,f)=>a+(f.kwh||0),0));
+  const activeAlerts=alertsData.length;
+  const critAlerts=alertsData.filter(a=>a.type==='critical').length;
   const stats=[
-    {icon:'🌿',val:5419,fmt:'5,419',unit:'ha',label:'Total Hectares',sub:'Under active management',color:'#22c55e',delta:'+340 ha this season',dir:'up',spark:[30,35,28,40,38,42,45]},
-    {icon:'❤️',val:71,fmt:'71',unit:'/100',label:'Fleet Health',sub:'Average across 10 farms',color:'#4ade80',delta:'+3 pts vs last week',dir:'up',spark:[68,69,65,70,69,71,71]},
-    {icon:'🌾',val:10,fmt:'10',unit:'',label:'Active Farms',sub:'Across 5 provinces',color:'#22c55e',delta:'Stable',dir:'neu',spark:[8,9,9,10,10,10,10]},
-    {icon:'📡',val:78,fmt:'78',unit:'%',label:'NDVI Average',sub:'Crop vitality index',color:'#38bdf8',delta:'+2% vs last month',dir:'up',spark:[72,75,74,76,78,77,78]},
-    {icon:'⚠️',val:4,fmt:'4',unit:'',label:'Critical Alerts',sub:'Require immediate action',color:'#f87171',delta:'2 new today',dir:'dn',spark:[1,2,3,5,4,4,4]},
-    {icon:'🤖',val:0,fmt:'LIVE',unit:'',label:'AI Advisor',sub:'GPT-4o · Online',color:'#a78bfa',isLive:true,spark:[]},
-    {icon:'💧',val:68,fmt:'68',unit:'%',label:'Soil Moisture',sub:'Weighted average',color:'#38bdf8',delta:'Optimal range',dir:'up',spark:[60,64,66,65,68,68,68]},
-    {icon:'☀️',val:762,fmt:'762',unit:'kWh',label:'Solar Output',sub:'Today across all farms',color:'#facc15',delta:'+9% vs forecast',dir:'up',spark:[620,640,680,710,730,750,762]},
+    {icon:'🌾',val:totalFarms,fmt:String(totalFarms),unit:'',label:'Total Farms',sub:`Across ${provinces} provinces`,color:'#22c55e',delta:'2 added this season',dir:'up',spark:[7,8,8,9,9,10,10]},
+    {icon:'🌿',val:totalHa,fmt:totalHa.toLocaleString(),unit:'ha',label:'Total Hectares',sub:'Under active management',color:'#4ade80',delta:'+340 ha this season',dir:'up',spark:[30,35,28,40,38,42,45]},
+    {icon:'🌽',val:predYield,fmt:predYield.toLocaleString(),unit:'t',label:'Predicted Yield',sub:'2025/26 season forecast',color:'#facc15',delta:'+6% vs last season',dir:'up',spark:[60,62,61,64,66,67,70]},
+    {icon:'💰',pre:'R',val:revM,dec:1,fmt:revM.toFixed(1),unit:'M',label:'Revenue Forecast',sub:'Gross across portfolio',color:'#22c55e',delta:'+R4.2M vs last yr',dir:'up',spark:[44,47,49,51,53,55,57]},
+    {icon:'🌍',pre:'R',val:carbonValM,dec:2,fmt:carbonValM.toFixed(2),unit:'M',label:'Carbon Credits Value',sub:`${cVerified.toLocaleString()} t verified CO₂e`,color:'#34d399',delta:`+${cPending.toLocaleString()} t pending`,dir:'up',spark:[1.1,1.2,1.3,1.4,1.5,1.6,1.7]},
+    {icon:'💧',val:34,fmt:'34',unit:'%',label:'Water Saved',sub:'vs conventional irrigation',color:'#38bdf8',delta:'~2.4M L this season',dir:'up',spark:[22,25,27,29,31,33,34]},
+    {icon:'☀️',val:solarToday,fmt:solarToday.toLocaleString(),unit:'kWh',label:'Solar Production',sub:'Today across all farms',color:'#facc15',delta:'+9% vs forecast',dir:'up',spark:[620,640,680,710,730,750,762]},
+    {icon:'⚠️',val:activeAlerts,fmt:String(activeAlerts),unit:'',label:'Active Alerts',sub:`${critAlerts} critical · ${activeAlerts-critAlerts} advisory`,color:'#f87171',delta:'2 new today',dir:'dn',spark:[1,2,3,5,4,4,4]},
   ];
-  s.innerHTML=stats.map((st,i)=>`
-    <div class="stat-card fade" style="animation-delay:${i*0.05}s">
+  const sparkMax=(arr)=>Math.max(...arr,1);
+  s.innerHTML=stats.map((st,i)=>{
+    const mx=st.spark&&st.spark.length?sparkMax(st.spark):1;
+    return `
+    <div class="stat-card${animate?' fade':''}" style="animation-delay:${i*0.05}s">
       <span class="stat-ts">${ts}</span>
       <span class="stat-icon">${st.icon}</span>
-      <div class="stat-val" id="sv_${i}" style="color:${st.color}">${st.isLive?`<span class="stat-live">●&nbsp;LIVE</span>`:st.fmt}<span class="stat-unit"> ${st.unit}</span></div>
+      <div class="stat-val" id="sv_${i}" style="color:${st.color}">${st.isLive?`<span class="stat-live">●&nbsp;LIVE</span>`:`${st.pre||''}${st.fmt}`}<span class="stat-unit"> ${st.unit}</span></div>
       <div class="stat-label" style="font-size:12px;font-weight:700;color:var(--text);margin-top:4px">${st.label}</div>
       <div class="stat-label" style="font-size:11px">${st.sub}</div>
       ${st.delta?`<div class="stat-delta stat-delta-${st.dir}">${st.dir==='up'?'↑':st.dir==='dn'?'↓':'—'} ${st.delta}</div>`:''}
-      ${st.spark&&st.spark.length?`<svg class="stat-sparkline" viewBox="0 0 77 28" preserveAspectRatio="none"><polyline fill="none" stroke="${st.color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" points="${st.spark.map((v,i)=>`${i*12},${28-Math.round(v/2)}`).join(' ')}"/></svg>`:''}
-    </div>
-  `).join('');
-  // count-up animation for numeric stat values
-  stats.forEach((st,i)=>{
+      ${st.spark&&st.spark.length?`<svg class="stat-sparkline" viewBox="0 0 77 28" preserveAspectRatio="none"><polyline fill="none" stroke="${st.color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" points="${st.spark.map((v,j)=>`${j*12},${28-Math.round((v/mx)*24)-2}`).join(' ')}"/></svg>`:''}
+    </div>`;
+  }).join('');
+  // count-up animation (first render only; interval re-renders pass animate=false to stay in lockstep without flicker)
+  if(animate) stats.forEach((st,i)=>{
     if(st.isLive||!st.val) return;
     const el=document.getElementById(`sv_${i}`);
     if(!el) return;
@@ -3136,12 +3152,12 @@ function renderStats(){
     function tick(now){
       const prog=Math.min((now-start)/dur,1);
       const ease=1-Math.pow(1-prog,3);
-      const cur=Math.round(ease*target);
-      const display=cur>=1000?cur.toLocaleString():String(cur);
-      el.innerHTML=`${display}<span class="stat-unit">${unit}</span>`;
+      const cur=ease*target;
+      const display=st.dec?cur.toFixed(st.dec):(Math.round(cur)>=1000?Math.round(cur).toLocaleString():String(Math.round(cur)));
+      el.innerHTML=`${st.pre||''}${display}<span class="stat-unit">${unit}</span>`;
       el.style.color=st.color;
       if(prog<1) requestAnimationFrame(tick);
-      else el.innerHTML=`${st.fmt}<span class="stat-unit">${unit}</span>`;
+      else el.innerHTML=`${st.pre||''}${st.fmt}<span class="stat-unit">${unit}</span>`;
     }
     requestAnimationFrame(tick);
   });
@@ -4667,7 +4683,6 @@ function updateNotificationBadge(){
 
 function init(){
   renderWeather();
-  renderStats();
   renderFarmHealth();
   renderMap();
   renderSolarRoof();
@@ -4683,6 +4698,7 @@ function init(){
   renderYield();
   initAI();
   renderCarbon();
+  renderStats(); // after solar+carbon so KPI figures tie out with those modules
   renderInsights();
   renderDecisionSupport();
   renderBio();
@@ -4692,9 +4708,9 @@ function init(){
   startSystemClock();
   updateNotificationBadge();
   setInterval(fetchWeather, 10*60*1000);
-  setInterval(()=>{renderSolar();renderIrrigation();}, 5000);
+  setInterval(()=>{renderSolar();renderIrrigation();renderStats(false);}, 5000);
   setInterval(fetchLiveSensors, 10*60*1000);
-  setInterval(renderCarbon, 30000);
+  setInterval(()=>{renderCarbon();renderStats(false);}, 30000);
   setInterval(()=>{renderInsights();renderDecisionSupport();}, 60000);
   setTimeout(obShow, 1800);
 }
