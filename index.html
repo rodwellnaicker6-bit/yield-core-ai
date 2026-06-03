@@ -3201,23 +3201,57 @@ async function renderMap(){
       window._mbxToken=j.mapboxToken;
     }catch(e){window._mbxToken=null;}
   }
-  if(!window._mbxToken || !window.mapboxgl){
-    el.innerHTML='<div style="padding:40px;text-align:center;color:var(--sub);font-size:12px">Map unavailable — add MAPBOX_TOKEN secret</div>';
+  // Wait for the Mapbox GL script to load; fall back to jsDelivr if the primary CDN is blocked
+  if(!window.mapboxgl){
+    window._mbxWait=(window._mbxWait||0)+1;
+    if(window._mbxWait===20 && !window._mbxFallbackTried){
+      window._mbxFallbackTried=true;
+      // remove any stale fallback assets from a previous attempt, then re-inject fresh
+      document.querySelectorAll('#mbxFallbackJs,#mbxFallbackCss').forEach(n=>n.remove());
+      const fs=document.createElement('script');
+      fs.id='mbxFallbackJs';
+      fs.src='https://cdn.jsdelivr.net/npm/mapbox-gl@3.6.0/dist/mapbox-gl.js';
+      fs.onerror=()=>{ window._mbxWait=999; };
+      document.head.appendChild(fs);
+      const fc=document.createElement('link');
+      fc.id='mbxFallbackCss';
+      fc.rel='stylesheet'; fc.href='https://cdn.jsdelivr.net/npm/mapbox-gl@3.6.0/dist/mapbox-gl.css';
+      document.head.appendChild(fc);
+    }
+    if(window._mbxWait<=50){
+      el.innerHTML='<div style="padding:40px;text-align:center;color:var(--sub);font-size:12px">Loading satellite map…</div>';
+      setTimeout(renderMap,150);
+      return;
+    }
+    el.innerHTML=mapFallback('Map engine could not load. A network filter or ad-blocker may be blocking Mapbox — try another network, then retry.');
+    return;
+  }
+  if(!window._mbxToken){
+    el.innerHTML=mapFallback('Map token not set — add the MAPBOX_TOKEN secret, then retry.');
+    return;
+  }
+  if(!mapboxSupported()){
+    el.innerHTML=mapFallback('Your browser has WebGL turned off, which the 3D map needs. Enable hardware acceleration in your browser settings, then retry.');
     return;
   }
   if(mapboxMap){ mapboxMap.resize(); return; }
   mapboxgl.accessToken=window._mbxToken;
-  mapboxMap=new mapboxgl.Map({
-    container:'saMap',
-    style:'mapbox://styles/mapbox/satellite-streets-v12',
-    center:[24.5,-29.5],
-    zoom:4.5,
-    pitch:0,
-    bearing:0,
-    attributionControl:false,
-    cooperativeGestures:false,
-    antialias:true
-  });
+  try{
+    mapboxMap=new mapboxgl.Map({
+      container:'saMap',
+      style:'mapbox://styles/mapbox/satellite-streets-v12',
+      center:[24.5,-29.5],
+      zoom:4.5,
+      pitch:0,
+      bearing:0,
+      attributionControl:false,
+      cooperativeGestures:false,
+      antialias:true
+    });
+  }catch(err){
+    el.innerHTML=mapFallback('Map failed to start: '+((err&&err.message)||err));
+    return;
+  }
   mapboxMap.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
   // Keep the map correctly sized/positioned whenever its container changes size
   if(window.ResizeObserver && !window._mapRO){
@@ -3247,7 +3281,33 @@ async function renderMap(){
     setTimeout(()=>mapboxMap && mapboxMap.resize(), 100);
     setTimeout(()=>mapboxMap && mapboxMap.resize(), 600);
   });
-  mapboxMap.on('error',e=>console.error('Mapbox error:',e&&e.error));
+  mapboxMap.on('error',e=>{
+    const msg=(e&&e.error&&e.error.message)||'';
+    const status=(e&&e.error&&e.error.status)||0;
+    console.error('Mapbox error:',e&&e.error);
+    // Fatal token/auth failures: tear down so Retry can rebuild cleanly
+    if(status===401||status===403||/401|403|unauthorized|forbidden|access token|not authorized/i.test(msg)){
+      try{ mapboxMap && mapboxMap.remove(); }catch(_){}
+      mapboxMap=null;
+      const elx=document.getElementById('saMap');
+      if(elx) elx.innerHTML=mapFallback('Map token was rejected by Mapbox ('+esc(msg)+'). Check the MAPBOX_TOKEN value, then retry.');
+    }
+  });
+}
+// WebGL is required by Mapbox GL — detect when it is unavailable
+function mapboxSupported(){
+  try{
+    const c=document.createElement('canvas');
+    return !!(window.WebGLRenderingContext && (c.getContext('webgl')||c.getContext('experimental-webgl')));
+  }catch(_){ return false; }
+}
+// Friendly, actionable fallback card with a Retry button
+function mapFallback(msg){
+  return '<div style="padding:32px 24px;text-align:center;color:var(--sub);font-size:12px;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;height:100%;min-height:200px">'
+    +'<div style="font-size:28px">🛰️</div>'
+    +'<div style="max-width:300px;line-height:1.55">'+esc(msg)+'</div>'
+    +'<button onclick="window._mbxWait=0;window._mbxFallbackTried=false;renderMap()" style="background:var(--green);color:#03130a;border:none;padding:8px 18px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer">↻ Retry</button>'
+    +'</div>';
 }
 
 const farmMarkers=[];

@@ -1,3 +1,4 @@
 - [Auth Supabase dead-URL fallback](auth-supabase-fallback.md) — demo login must work via local HMAC token even when SUPABASE_URL DNS fails (ENOTFOUND).
 - [AI Advisor resilience (no-leak fallback)](ai-advisor-resilience.md) — /api/ai & WA bot never leak provider/secret errors; fall back to simulatedReply() at HTTP 200.
 - [Dashboard KPI tie-out](dashboard-kpi-tieout.md) — KPI row must render after, and re-render in lockstep with, the solar/carbon modules it summarizes, or figures drift.
+- [Mapbox map diagnosis](mapbox-map-diagnosis.md) — server-side curl can't detect URL-restricted/browser-only Mapbox failures; fallback must show the real cause, not a generic "add token".
