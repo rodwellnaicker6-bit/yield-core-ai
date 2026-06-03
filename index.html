@@ -1830,6 +1830,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         <span>🥬 Bio-Inputs</span><span>🌍 Carbon</span>
       </div>
     </div>
+    <form id="loginForm" onsubmit="doLogin();return false;">
     <div id="authNameWrap" style="display:none">
       <label class="lbl">Full Name</label>
       <input class="inp" id="loginName" type="text" placeholder="Your name"/>
@@ -1837,9 +1838,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
     <label class="lbl">Email Address</label>
     <input class="inp" id="loginEmail" type="email" placeholder="you@farm.co.za" autocomplete="email"/>
     <label class="lbl">Password</label>
-    <input class="inp" id="loginPass" type="password" placeholder="Password (min 8 characters)" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <input class="inp" id="loginPass" type="password" placeholder="Password (min 8 characters)" autocomplete="current-password"/>
     <div class="login-err" id="loginErr">Invalid credentials.</div>
-    <button class="btn-login" id="authBtn" onclick="doLogin()">Sign In →</button>
+    <button class="btn-login" type="submit" id="authBtn">Sign In →</button>
+    </form>
     <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--sub)">
       <span id="authToggleText">New here?</span>
       <a href="#" id="authToggle" onclick="toggleAuthMode();return false" style="color:var(--green);font-weight:700;text-decoration:none">Create account</a>
@@ -2144,7 +2146,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
           <div>
             <div class="pilot-name">Opal Game Growers · KwaZulu-Natal</div>
             <div class="pilot-detail">Game reserve pilot · 1,850 ha · Carbon + Wildlife</div>
-            <div class="pilot-result">890t CO₂ verified · R5.2M carbon revenue</div>
+            <div class="pilot-result">888t CO₂e verified · R303k carbon revenue</div>
           </div>
         </div>
       </div>
@@ -2348,7 +2350,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         <div class="panel">
           <div class="sec-hdr">
             <div class="sec-title">🐛 Pest Identification <span>AI-powered · Drone imagery</span><span class="sec-ts live-sec-ts"></span></div>
-            <div style="font-size:11px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--orange);box-shadow:0 0 6px var(--orange);width:7px;height:7px;border-radius:50%"></div>4 detections</div>
+            <div style="font-size:11px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:5px"><div class="dot-live" style="background:var(--orange);box-shadow:0 0 6px var(--orange);width:7px;height:7px;border-radius:50%"></div><span id="pestCount">8</span> detections</div>
           </div>
           <div class="pest-grid" id="pestGrid"></div>
           <div style="font-size:11px;color:var(--sub);padding:8px 10px;background:var(--bg4);border-radius:8px;border:1px solid var(--border2)">
@@ -3625,10 +3627,12 @@ function renderIrrigation(){
     </div>`;
   }).join('');
   const totalFlow=irrigFarms.reduce((a,f)=>a+f.flow,0);
+  const lowCount=irrigFarms.filter(f=>f.status==='LOW').length;
+  const okCount=irrigFarms.length-lowCount;
   document.getElementById('irrigSummary').innerHTML=`
     <div><div class="irrig-sum-val">${totalFlow.toFixed(0)} L/s</div><div class="irrig-sum-label">Total Flow Rate</div></div>
-    <div><div class="irrig-sum-val" style="color:#f87171">2</div><div class="irrig-sum-label">Low Moisture Alerts</div></div>
-    <div><div class="irrig-sum-val" style="color:#22c55e">3</div><div class="irrig-sum-label">Systems Optimal</div></div>
+    <div><div class="irrig-sum-val" style="color:#f87171">${lowCount}</div><div class="irrig-sum-label">Low Moisture Alerts</div></div>
+    <div><div class="irrig-sum-val" style="color:#22c55e">${okCount}</div><div class="irrig-sum-label">Systems Optimal</div></div>
   `;
 }
 
@@ -3841,6 +3845,7 @@ function renderPests(){
       ${p.severity!=='NONE'?`<button class="pest-wa-btn" onclick="sendPestAlert(${i})">📲 Alert via WhatsApp</button>`:''}
     </div>
   `).join('');
+  const pc=document.getElementById('pestCount'); if(pc) pc.textContent=pestData.length;
 }
 window.sendPestAlert=async function(i){
   const p=pestData[i];
@@ -4675,7 +4680,7 @@ function startSystemClock(){
 function updateNotificationBadge(){
   const badge=document.querySelector('.tb-badge');
   if(badge){
-    const critCount=4;
+    const critCount=alertsData.length; // ties to the Active Alerts KPI instead of a hardcoded literal
     badge.textContent=critCount;
     badge.style.display=critCount>0?'block':'none';
   }
