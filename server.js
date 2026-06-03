@@ -462,22 +462,19 @@ function botRouter(text) {
   const t = (text||'').trim().toLowerCase();
   if (!t) return null;
   if (/^(hi|hello|hey|start|menu|help|hola|sawubona|molo)\b/.test(t))
-    return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — pricing tiers\n• *DRONE* — drone services\n• *ABOUT* — what YieldCore does\n• *DEMO* — book a free demo\n• *PAY* — pricing & payment page\n• *SHARE* — invite a farmer friend\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
+    return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — what each tier includes\n• *DRONE* — drone services\n• *ABOUT* — what YieldCore does\n• *DEMO* — book a free demo\n• *PAY* — explore capabilities\n• *SHARE* — invite a farmer friend\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
   if (/(pay|checkout|order|subscribe|sign up|signup|activate)/.test(t))
-    return `💳 *Pay & Activate YieldCore*\n\nOpen our secure payment page to:\n• Pick your tier (R95–R200/ha)\n• Auto-calc your monthly + annual price\n• Pay via WhatsApp / EFT / Card\n• Get 10% off when paying annually\n\n👉 ${LIVE_URL}/pay\n\nOr reply with your *farm hectares* (e.g. "120 ha") and I'll send a custom quote here.`;
+    return `🚀 *Get Started with YieldCore*\n\nSee everything YieldCore delivers for your farm:\n• 🛰️ Satellite NDVI crop vitality\n• 🚁 Drone fly-overs & precision spraying\n• 💧 Smart irrigation control\n• 📡 IoT soil & weather sensors\n• 🤖 AI crop advisor\n• 📲 WhatsApp alerts\n\n👉 Explore capabilities: ${LIVE_URL}/pay\n\nReply *DEMO* and our team will set up a live walkthrough on your own fields.`;
   const haMatch = t.match(/(\d{1,5})\s*(ha|hectare|hectares|hect)/);
   if (haMatch) {
     const ha = Math.max(1, parseInt(haMatch[1]));
     const tier = autoTier(ha);
-    const monthly = ha * tier.pricePerHa;
-    const annual = monthly * 12;
-    const annualNet = annual - Math.round(annual*0.10);
-    return `💰 *Quote for ${ha} ha*\n\nTier: *${tier.name}* (${tier.range})\nRate: R${tier.pricePerHa}/ha\n\n💵 Monthly: *R ${monthly.toLocaleString('en-ZA')}*\n📅 Annual NET (10% off): *R ${annualNet.toLocaleString('en-ZA')}*\n${tier.perks?'\n'+tier.perks+'\n':''}\n👉 Activate now: ${LIVE_URL}/pay\nOr reply *PAY* for payment options.`;
+    return `🌿 *YieldCore for ${ha} ha*\n\nRecommended tier: *${tier.name}* (${tier.range})\n${tier.perks?'\n'+tier.perks+'\n':''}\nYou'd get satellite NDVI, drone fly-overs, smart irrigation, IoT sensors, AI advisor and WhatsApp alerts — tailored to your scale.\n\n👉 See capabilities: ${LIVE_URL}/pay\nReply *DEMO* for a live walkthrough on your fields.`;
   }
   if (/(price|pricing|cost|tier|plan)/.test(t))
-    return `💰 *YieldCore Pricing (per hectare)*\n\n• Starter (1–49 ha): R200/ha\n• Growth (50–199 ha): R165/ha\n• Pro (200–499 ha): R130/ha\n• Enterprise (500+ ha): R110/ha 🎁 *FREE on-site install*\n• Co-op (1000+ ha): R95/ha\n\nReply *DEMO* for free trial.`;
+    return `🌿 *YieldCore Tiers — what you get*\n\n• Starter (1–49 ha): dashboard, NDVI, AI advisor, alerts\n• Growth (50–199 ha): + IoT stations, monthly drone, smart irrigation\n• Pro (200–499 ha): + bi-weekly drone, remote agronomist\n• Enterprise (500+ ha): 🎁 *on-site install*, LoRa mesh, training\n• Co-op (1000+ ha): custom drone fleet, ESG, API\n\nReply *DEMO* for a free walkthrough.`;
   if (/(drone|spray)/.test(t))
-    return `🚁 *Drone Services*\n\n• Multispectral mapping: R85/ha\n• Precision spraying: R145/ha\n• Plant counting: R65/ha\n• Crop scouting: R95/ha\n\n💡 Free with Enterprise (500+ ha) plan.\nReply *DEMO* to book.`;
+    return `🚁 *Drone Services*\n\n• Multispectral NDVI mapping\n• Precision spraying\n• Plant counting & stand assessment\n• Crop scouting & thermal\n\n💡 Included from the Enterprise tier (on-site install).\nReply *DEMO* to book a walkthrough.`;
   if (/(weather|temperature|rain|wind)/.test(t))
     return `🌦️ Send me your 📍 *location pin* (WhatsApp → 📎 → Location → Send) and I'll give you live weather + farm guidance for that exact spot.`;
   if (/(irrigat|water)/.test(t))

@@ -1,1 +1,2 @@
 - [Auth Supabase dead-URL fallback](auth-supabase-fallback.md) — demo login must work via local HMAC token even when SUPABASE_URL DNS fails (ENOTFOUND).
+- [AI Advisor resilience (no-leak fallback)](ai-advisor-resilience.md) — /api/ai & WA bot never leak provider/secret errors; fall back to simulatedReply() at HTTP 200.

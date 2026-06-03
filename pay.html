@@ -91,16 +91,16 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 40%,#
   <div class="hero-banner"><img src="/public/yieldcore-hero.jpg" alt="YieldCore AI" loading="eager" /><div class="hero-banner-grad"></div></div>
 
   <div class="hero">
-    <h1>Transparent Pricing.<br>Pay per hectare.</h1>
-    <p>Choose your tier, enter your hectares, and confirm via WhatsApp or EFT. Activation in under 24 hours.</p>
-    <div class="stats"><span><b>+18%</b> yield</span><span><b>−32%</b> water</span><span><b>−40%</b> chemicals</span><span><b>+R3,200/ha</b> profit</span></div>
+    <h1>Built for every farm.<br>Smallholding to mega-farm.</h1>
+    <p>See exactly what YieldCore delivers at your scale — satellite NDVI, drone fly-overs, smart irrigation, IoT sensors, AI advisor and WhatsApp alerts. Tell us about your farm and we'll set up a live demo on your own fields.</p>
+    <div class="stats"><span><b>+18%</b> yield</span><span><b>−32%</b> water</span><span><b>−40%</b> chemicals</span><span><b>10</b> farms live</span></div>
   </div>
 
   <div class="tiers" id="tiers"></div>
 
   <div class="calc">
-    <h2>📊 Calculate your price</h2>
-    <div class="sub">We'll auto-pick the best tier for your farm size.</div>
+    <h2>📲 Request a live demo</h2>
+    <div class="sub">Tell us your farm size and we'll show you exactly which capabilities fit.</div>
 
     <div class="row">
       <div class="field"><label>YOUR NAME</label><input id="fName" placeholder="Rodwell M." /></div>
@@ -119,40 +119,23 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 40%,#
     </div>
 
     <div class="summary">
-      <div class="sum-row"><span>Selected tier</span><span id="sumTier">Growth (50–199 ha)</span></div>
-      <div class="sum-row"><span>Rate</span><span id="sumRate">R165/ha</span></div>
-      <div class="sum-row"><span>Hectares</span><span id="sumHa">120 ha</span></div>
-      <div class="sum-row big"><span>Monthly subscription</span><span><b id="sumMonthly">R 19,800</b></span></div>
-      <div class="sum-row disc"><span>Annual saving (10%)</span><b id="sumDisc">−R 23,760</b></div>
-      <div class="sum-row big"><span>Annual NET</span><span><b id="sumAnnual">R 213,840</b></span></div>
+      <div class="sum-row"><span>Recommended tier</span><span id="sumTier">Growth (50–199 ha)</span></div>
+      <div class="sum-row"><span>Your farm size</span><span id="sumHa">120 ha</span></div>
+      <div class="sum-row big"><span>What you get</span></div>
+      <div id="sumFeats" style="font-size:12.5px;color:#d4e8d8;line-height:1.7"></div>
     </div>
 
     <div class="pay-btns">
-      <button class="pay-btn pay-wa" onclick="payWhatsApp()">💬 Pay via WhatsApp</button>
-      <button class="pay-btn pay-eft" onclick="showEft()">🏦 Pay via EFT</button>
+      <button class="pay-btn pay-wa" onclick="requestDemo()">💬 Request demo on WhatsApp</button>
+      <button class="pay-btn pay-eft" onclick="talkToTeam()">📞 Talk to our team</button>
     </div>
   </div>
 
   <div class="methods">
-    <div class="method"><div class="method-ic">💬</div><div><div class="method-t">WhatsApp Order</div><div class="method-d">Confirm in 30s, pay any way</div></div></div>
-    <div class="method"><div class="method-ic">🏦</div><div><div class="method-t">EFT / Bank Transfer</div><div class="method-d">SA banks · Instant proof</div></div></div>
-    <div class="method"><div class="method-ic">💳</div><div><div class="method-t">Card Payment</div><div class="method-d">Coming soon · Stripe</div></div></div>
-    <div class="method"><div class="method-ic">📜</div><div><div class="method-t">Invoice / PO</div><div class="method-d">Enterprise & co-ops</div></div></div>
-  </div>
-</div>
-
-<div id="eftModal" class="eft-modal">
-  <div class="eft-card">
-    <div class="eft-close" onclick="hideEft()">×</div>
-    <h3>🏦 EFT Payment Details</h3>
-    <div class="eft-row"><span>Bank</span><span>Standard Bank ZA</span></div>
-    <div class="eft-row"><span>Account name</span><span>YieldCore AI (Pty) Ltd</span></div>
-    <div class="eft-row"><span>Account no.</span><span>123 456 7890</span></div>
-    <div class="eft-row"><span>Branch code</span><span>051001</span></div>
-    <div class="eft-row"><span>Reference</span><span id="eftRef">YC-XXXX</span></div>
-    <div class="eft-row"><span>Amount due</span><span id="eftAmt">R 0</span></div>
-    <div class="eft-note"><b>📲 After payment:</b> Send proof to WhatsApp <b>+27 82 517 2688</b> with your reference. Activation within 24h.</div>
-    <a class="eft-cta" id="eftWa" target="_blank">💬 Send Proof on WhatsApp</a>
+    <div class="method"><div class="method-ic">💬</div><div><div class="method-t">WhatsApp</div><div class="method-d">Fastest way to reach us</div></div></div>
+    <div class="method"><div class="method-ic">📞</div><div><div class="method-t">Call us</div><div class="method-d">082 517 2688</div></div></div>
+    <div class="method"><div class="method-ic">📧</div><div><div class="method-t">Email</div><div class="method-d">hello@yieldcore.ai</div></div></div>
+    <div class="method"><div class="method-ic">🚁</div><div><div class="method-t">On-site demo</div><div class="method-d">We come to your farm</div></div></div>
   </div>
 </div>
 
@@ -160,18 +143,22 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a1410 0%,#1a2e1d 40%,#
 
 <script>
 const TIERS = [
-  {key:'starter',    name:'Starter',    range:'1–49 ha',     rate:200, c:'#4ade80'},
-  {key:'growth',     name:'Growth',     range:'50–199 ha',   rate:165, c:'#22c55e'},
-  {key:'pro',        name:'Pro',        range:'200–499 ha',  rate:130, c:'#facc15'},
-  {key:'enterprise', name:'Enterprise', range:'500–999 ha',  rate:110, c:'#fb923c', perk:'🎁 FREE on-site install'},
-  {key:'coop',       name:'Co-op',      range:'1000+ ha',    rate:95,  c:'#f472b6', perk:'🤝 Dedicated success manager'},
+  {key:'starter',    name:'Starter',    range:'1–49 ha',     c:'#4ade80',
+   feats:['Full dashboard access','Satellite NDVI weekly','AI crop advisor','WhatsApp alerts','Weather + market data','Self-install soil probe']},
+  {key:'growth',     name:'Growth',     range:'50–199 ha',   c:'#22c55e',
+   feats:['Everything in Starter','3 IoT soil + weather stations','Monthly drone fly-over','Smart irrigation control','Bio-input ordering','Carbon credit enrolment']},
+  {key:'pro',        name:'Pro',        range:'200–499 ha',  c:'#facc15',
+   feats:['Everything in Growth','8 IoT stations + LoRa gateway','Bi-weekly drone NDVI + thermal','Dedicated agronomist (remote)','Solar-on-roof feasibility','Quarterly on-site review']},
+  {key:'enterprise', name:'Enterprise', range:'500–999 ha',  c:'#fb923c', perk:'🎁 FREE on-site install',
+   feats:['Team flies to your farm','On-site drone + sensor install','Full LoRa mesh + 15 stations','Resident agronomist setup','Staff training & certification','24/7 priority WhatsApp line']},
+  {key:'coop',       name:'Co-op',      range:'1000+ ha',    c:'#f472b6', perk:'🤝 Dedicated success manager',
+   feats:['Custom drone fleet (DJI Agras)','Variable-rate prescriptions','Carbon-credit certification','ESG reporting & compliance','API + data warehouse','SLA + success team']},
 ];
 const tiersEl = document.getElementById('tiers');
 TIERS.forEach(t=>{
   const el = document.createElement('div');
   el.className='tier'; el.dataset.k=t.key; el.style.setProperty('--c',t.c);
-  el.innerHTML=`<div class="tier-name">${t.name}</div><div class="tier-range">${t.range}</div><div class="tier-price">R${t.rate}<small>per hectare / month</small></div>${t.perk?`<div class="tier-perk">${t.perk}</div>`:''}`;
-  el.onclick=()=>{ const mid = Math.min(2000, Math.round((Math.max(1,t.key==='coop'?1200:0) + parseInt(t.range)) || 100)); /* nudge */ };
+  el.innerHTML=`<div class="tier-name">${t.name}</div><div class="tier-range">${t.range}</div>${t.perk?`<div class="tier-perk">${t.perk}</div>`:''}`;
   tiersEl.appendChild(el);
 });
 
@@ -182,11 +169,9 @@ function tierFor(ha){
   if(ha<1000) return TIERS[3];
   return TIERS[4];
 }
-function fmt(n){ return 'R '+Math.round(n).toLocaleString('en-ZA'); }
 
 const haInput = document.getElementById('fHa');
 const haRange = document.getElementById('fHaRange');
-let lastQuote = null;
 
 function recalc(){
   let ha = Math.max(1, parseInt(haInput.value)||1);
@@ -194,47 +179,30 @@ function recalc(){
   haRange.value = Math.min(2000, ha);
   const t = tierFor(ha);
   document.querySelectorAll('.tier').forEach(el=>el.classList.toggle('active', el.dataset.k===t.key));
-  const monthly = ha*t.rate;
-  const annual = monthly*12;
-  const disc = Math.round(annual*0.10);
-  const net = annual-disc;
   document.getElementById('sumTier').textContent = `${t.name} (${t.range})`;
-  document.getElementById('sumRate').textContent = `R${t.rate}/ha`;
   document.getElementById('sumHa').textContent = `${ha} ha`;
-  document.getElementById('sumMonthly').textContent = fmt(monthly);
-  document.getElementById('sumDisc').textContent = '−'+fmt(disc);
-  document.getElementById('sumAnnual').textContent = fmt(net);
+  document.getElementById('sumFeats').innerHTML = t.feats.map(f=>`✓ ${f}`).join('<br>');
 }
 haInput.addEventListener('input', recalc);
 haRange.addEventListener('input', ()=>{ haInput.value=haRange.value; recalc(); });
 recalc();
 
-async function getQuote(){
-  const body = {
-    hectares: parseInt(haInput.value)||1,
-    name: document.getElementById('fName').value,
-    farmName: document.getElementById('fFarm').value,
-    email: document.getElementById('fEmail').value
-  };
-  const r = await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  lastQuote = await r.json();
-  return lastQuote;
+function buildMsg(){
+  const ha = parseInt(haInput.value)||1;
+  const t = tierFor(ha);
+  const name = document.getElementById('fName').value.trim();
+  const farm = document.getElementById('fFarm').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  return `🌿 *YieldCore AI — Demo Request*\n\n${name?`Name: ${name}\n`:''}${farm?`Farm: ${farm}\n`:''}${email?`Email: ${email}\n`:''}Farm size: ${ha} ha\nRecommended tier: ${t.name} (${t.range})\n\nI'd like a live demo of YieldCore on my own fields. Please get in touch.`;
 }
-async function payWhatsApp(){
-  const q = await getQuote();
-  window.open(q.waLink, '_blank');
+function requestDemo(){
+  window.open('https://wa.me/27825172688?text='+encodeURIComponent(buildMsg()), '_blank');
   toast('Opening WhatsApp…');
 }
-async function showEft(){
-  const q = await getQuote();
-  document.getElementById('eftRef').textContent = q.ref;
-  document.getElementById('eftAmt').textContent = fmt(q.monthly) + ' /month';
-  const proofMsg = `🏦 Hi, I made an EFT for YieldCore AI.\n\nRef: ${q.ref}\nAmount: ${fmt(q.monthly)}\nHectares: ${q.ha}\nTier: ${q.tier.name}\n\nProof attached.`;
-  document.getElementById('eftWa').href = 'https://wa.me/27825172688?text='+encodeURIComponent(proofMsg);
-  document.getElementById('eftModal').classList.add('show');
+function talkToTeam(){
+  window.open('https://wa.me/27825172688?text='+encodeURIComponent(buildMsg()), '_blank');
+  toast('Opening WhatsApp…');
 }
-function hideEft(){ document.getElementById('eftModal').classList.remove('show'); }
-document.addEventListener('click',e=>{ if(e.target.id==='eftModal') hideEft(); });
 function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),1800); }
 </script>
 </body>

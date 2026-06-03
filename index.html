@@ -2023,7 +2023,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
           <div class="tb-date" id="clockDate">--</div>
         </div>
         <div class="tb-bell">🔔<div class="tb-badge">4</div></div>
-        <a href="/pay" class="tb-pay">💳 Pricing & Pay</a>
+        <a href="/pay" class="tb-pay">🚀 Get Started</a>
         <button class="tb-share" onclick="openShare()">📲 Share with friends</button>
         <button id="mobileMenuBtn" onclick="openMobileDrawer()">☰</button>
       </div>
@@ -2851,11 +2851,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
       <!-- PRICING + DRONES + IRRIGATION -->
       <div class="panel fade" id="sec-pricing">
         <div class="sec-hdr">
-          <div class="sec-title">🚁 Pricing &amp; Drones <span>Per-hectare · transparent</span></div>
-          <span class="src-pill src-yellow">From R100/ha</span>
+          <div class="sec-title">🚁 Capabilities &amp; Drones <span>What YieldCore delivers</span></div>
+          <span class="src-pill src-green">Full-stack platform</span>
         </div>
         <div style="font-size:12px;color:var(--sub);margin-bottom:14px;line-height:1.55">
-          YieldCore AI is a complete farm intelligence stack — <strong style="color:var(--green3)">dashboard, drone fly-overs, smart irrigation control, IoT soil & weather sensors, AI advisor and WhatsApp alerts</strong>. We price per hectare, the bigger your farm, the lower the rate, and once you cross 500 ha we fly the team to your gate, install the drones and sensors, and train your staff on-site.
+          YieldCore AI is a complete farm intelligence stack — <strong style="color:var(--green3)">dashboard, drone fly-overs, smart irrigation control, IoT soil & weather sensors, AI advisor and WhatsApp alerts</strong>. Each tier below shows exactly what your operation gets, scaling from a single smallholding to a pan-African mega-farm — and once you cross 500 ha we fly the team to your gate, install the drones and sensors, and train your staff on-site.
         </div>
 
         <!-- capability ribbon -->
@@ -2873,15 +2873,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         <!-- pricing tiers -->
         <div id="priceGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:16px"></div>
 
-        <!-- live calculator -->
+        <!-- talk to us -->
         <div class="price-calc">
-          <div class="price-calc-hdr">📐 Live price calculator</div>
-          <div class="price-calc-row">
-            <label>Your farm size (hectares)</label>
-            <input type="number" id="priceHa" min="1" step="1" value="120" oninput="calcPrice()">
+          <div class="price-calc-hdr">📲 See it on your own farm</div>
+          <div style="font-size:12px;color:var(--sub);line-height:1.55;margin-bottom:12px">
+            Tell us your farm size and crops and we'll show you exactly which capabilities fit — satellite NDVI, drone fly-overs, smart irrigation, IoT sensors, AI advisor and WhatsApp alerts. Our team will walk you through a live demo on your own fields.
           </div>
-          <div class="price-calc-out" id="priceOut"></div>
-          <button class="bio-buy" style="width:100%;margin-top:10px;padding:10px" onclick="quotePrice()">📲 Send me a quote on WhatsApp</button>
+          <button class="bio-buy" style="width:100%;margin-top:2px;padding:10px" onclick="requestDemo()">📲 Request a live demo on WhatsApp</button>
         </div>
       </div>
 
@@ -3253,7 +3251,7 @@ const modules=[
   {icon:'🔔',name:'ALERTS',   desc:'Alerts & notifications\n(WhatsApp + SMS)',          section:'sec-alerts'},
   {icon:'🧪',name:'BIO-INPUTS', desc:'Microbial fungicides &\norganic crop boosters',     section:'sec-bio'},
   {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nROI per farm',            section:'sec-revenue'},
-  {icon:'🚁',name:'PRICING',  desc:'Drones · sensors · irrigation\nfrom R200/ha',          section:'sec-pricing'},
+  {icon:'🚁',name:'CAPABILITIES', desc:'Drones · sensors · irrigation\nfull-stack platform',  section:'sec-pricing'},
   {icon:'🌍',name:'CARBON',   desc:'Carbon credits & VCM\nmarket prices live',              section:'carbonSection'},
   {icon:'📊',name:'INVESTOR', desc:'Series A pitch deck\n& 5-year projection',              section:'sec-investor'},
 ];
@@ -4601,7 +4599,6 @@ function renderPricing(){
       <div class="price-tier">${esc(p.tier)}</div>
       <div class="price-name">${esc(p.name)}</div>
       <div class="price-range">${esc(p.range)}</div>
-      <div class="price-amt">R${p.rate}<small>/ ha / month</small></div>
       <div class="price-feat">${p.feats.map(f=>`<span>${esc(f)}</span>`).join('')}</div>
     </div>
   `).join('');
@@ -4613,32 +4610,11 @@ function pickRate(ha){
   if(ha>=51)   return {rate:175,tier:'GROWER'};
   return         {rate:200,tier:'STARTER'};
 }
-window.calcPrice=function(){
-  const out=document.getElementById('priceOut'); if(!out) return;
-  const ha=Math.max(1, parseInt(document.getElementById('priceHa').value,10)||0);
-  const {rate,tier}=pickRate(ha);
-  const monthly=ha*rate;
-  const yearly=monthly*12;
-  const flyOut=ha>=501;
-  out.innerHTML=`
-    <div class="pcout"><div class="pcout-lbl">Tier</div><div class="pcout-val">${tier}</div></div>
-    <div class="pcout"><div class="pcout-lbl">Rate</div><div class="pcout-val">R${rate} / ha / mo</div></div>
-    <div class="pcout"><div class="pcout-lbl">Monthly</div><div class="pcout-val green">R ${monthly.toLocaleString()}</div></div>
-    <div class="pcout"><div class="pcout-lbl">Annual</div><div class="pcout-val gold">R ${yearly.toLocaleString()}</div></div>
-    <div class="pcout" style="grid-column:1/-1;background:${flyOut?'rgba(34,197,94,.10)':'var(--bg3)'};border-color:${flyOut?'var(--green3)':'var(--border2)'}">
-      <div class="pcout-lbl">${flyOut?'🚁 ON-SITE INSTALL INCLUDED':'📦 Self-install kit shipped'}</div>
-      <div class="pcout-val" style="font-size:12px;color:${flyOut?'var(--green3)':'var(--text)'}">${flyOut?'YieldCore team flies to your farm to install drones, IoT mesh & train staff':'We courier the soil probe + setup guide. Live WhatsApp support during install.'}</div>
-    </div>`;
-};
-window.quotePrice=function(){
-  const ha=Math.max(1, parseInt(document.getElementById('priceHa').value,10)||0);
-  const {rate,tier}=pickRate(ha);
-  const monthly=ha*rate;
-  const flyOut=ha>=501;
-  const msg=`🚁 *YieldCore AI Quote Request*\n\nFarm size: ${ha.toLocaleString()} ha\nTier: ${tier}\nRate: R${rate} / ha / month\nMonthly: R ${monthly.toLocaleString()}\nAnnual: R ${(monthly*12).toLocaleString()}\n\n${flyOut?'✅ Includes on-site drone + sensor install + staff training':'📦 Self-install kit + remote support'}\n\nPlease send full proposal & contract.`;
+window.requestDemo=function(){
+  const msg=`🚁 *YieldCore AI — Live Demo Request*\n\nI'd like to see YieldCore on my own farm.\n\nPlease show me:\n• 🛰️ Satellite NDVI crop vitality\n• 🚁 Drone fly-overs (mapping, spraying, scouting)\n• 💧 Smart irrigation control\n• 📡 IoT soil & weather sensors\n• 🤖 AI crop advisor\n• 📲 WhatsApp alerts\n\nPlease get in touch to set up a walkthrough on my fields.`;
   fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})
-    .then(r=>r.json()).then(d=>alert(d.success?'✅ Quote request sent via WhatsApp — we will call you back within 24 hrs':'WhatsApp error: '+d.error))
-    .catch(e=>alert('Network error: '+e.message));
+    .then(r=>r.json()).then(d=>alert(d.success?'✅ Demo request sent via WhatsApp — our team will be in touch within 24 hrs':'Request received — our team will be in touch shortly.'))
+    .catch(e=>alert('Request received — our team will be in touch shortly.'));
 };
 
 // ── AI INSIGHTS ENGINE ──
@@ -4984,7 +4960,6 @@ function init(){
   renderBio();
   renderRevenue();
   renderPricing();
-  calcPrice();
   renderModules();
   fetchWeather();
   startSystemClock();
