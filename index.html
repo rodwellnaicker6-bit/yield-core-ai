@@ -12,17 +12,17 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --green:#22c55e;--green2:#16a34a;--green3:#4ade80;
-  --bg:#040c05;--bg2:rgba(8,20,10,.80);--bg3:rgba(10,24,12,.82);--bg4:rgba(13,26,15,.70);
-  --bg2-solid:#080f09;
-  --border:rgba(34,197,94,.12);--border2:rgba(34,197,94,.08);
-  --text:#ecf5ee;--sub:#6b9475;--dim:#2e4a31;
+  --bg:#071407;--bg2:rgba(16,32,19,.74);--bg3:rgba(19,38,22,.76);--bg4:rgba(24,44,27,.66);
+  --bg2-solid:#0f1a11;
+  --border:rgba(34,197,94,.20);--border2:rgba(34,197,94,.13);
+  --text:#f3faf4;--sub:#9cc2a4;--dim:#3c5e40;
   --red:#f87171;--yellow:#facc15;--orange:#fb923c;--blue:#38bdf8;--purple:#a78bfa;
   --sidebar:224px;
   --glass:rgba(8,18,10,.72);
   --glow:rgba(34,197,94,.18);
 }
 html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;font-feature-settings:'cv11','ss01','ss03';-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
-.sec-title,.sb-logo-text,.stat-val,.weather-temp,.login-logo-name,h1,h2,h3,.tb-welcome,.btn-login,.inv-headline{font-family:'Sora','Inter',sans-serif;letter-spacing:-.02em}
+.sec-title,.sb-logo-text,.stat-val,.weather-temp,.login-logo-name,h1,h2,h3,.tb-welcome,.btn-login{font-family:'Sora','Inter',sans-serif;letter-spacing:-.02em}
 .mono,code,.stat-num,.health-score{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum','zero'}
 #main{position:relative}
 #main::before{
@@ -36,8 +36,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 #main::after{
   content:'';position:fixed;inset:0;left:var(--sidebar);
   background:
-    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.12), transparent 55%),
-    linear-gradient(180deg, rgba(6,15,7,.32) 0%, rgba(6,15,7,.12) 40%, rgba(6,15,7,.55) 100%);
+    radial-gradient(ellipse at 70% 25%, rgba(250,204,21,.14), transparent 60%),
+    linear-gradient(180deg, rgba(6,15,7,.18) 0%, rgba(6,15,7,.04) 40%, rgba(6,15,7,.34) 100%);
   pointer-events:none;z-index:1;
 }
 @keyframes bgPanDash{
@@ -45,7 +45,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   100%{background-position:right top;transform:scale(1.06)}
 }
 #topbar,#content{position:relative;z-index:2}
-#topbar{background:linear-gradient(180deg,rgba(6,15,7,.92),rgba(6,15,7,.70))!important;backdrop-filter:blur(10px)}
+#topbar{background:linear-gradient(180deg,rgba(13,24,15,.84),rgba(13,24,15,.62))!important;backdrop-filter:blur(10px)}
 #content{background:transparent!important}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
@@ -53,9 +53,9 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 /* ── LAYOUT ── */
 #shell{display:flex;min-height:100vh}
-#sidebar{width:var(--sidebar);min-width:var(--sidebar);background:linear-gradient(180deg,#060d07 0%,#040c05 100%);border-right:1px solid rgba(34,197,94,.1);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;backdrop-filter:blur(20px)}
+#sidebar{width:var(--sidebar);min-width:var(--sidebar);background:linear-gradient(180deg,#0d1b0f 0%,#0a160c 100%);border-right:1px solid rgba(34,197,94,.18);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;backdrop-filter:blur(20px)}
 #main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
-#topbar{background:rgba(4,12,5,.88);border-bottom:1px solid rgba(34,197,94,.1);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;backdrop-filter:blur(20px)}
+#topbar{background:rgba(11,22,13,.82);border-bottom:1px solid rgba(34,197,94,.18);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;backdrop-filter:blur(20px)}
 #content{flex:1;padding:24px 28px;overflow-y:auto;background:transparent}
 
 /* ── SIDEBAR ── */
@@ -173,7 +173,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 
 /* ── STAT CARDS ── */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin-bottom:22px}
-.stat-card{background:rgba(8,18,10,.85);border:1px solid rgba(34,197,94,.13);border-radius:16px;padding:20px 20px 16px;position:relative;overflow:hidden;backdrop-filter:blur(12px);transition:border-color .22s,box-shadow .22s,transform .22s}
+.stat-card{background:rgba(17,33,20,.80);border:1px solid rgba(34,197,94,.22);border-radius:16px;padding:20px 20px 16px;position:relative;overflow:hidden;backdrop-filter:blur(12px);transition:border-color .22s,box-shadow .22s,transform .22s}
 .stat-card:hover{border-color:rgba(34,197,94,.3);box-shadow:0 10px 32px rgba(0,0,0,.4),0 0 22px rgba(34,197,94,.1);transform:translateY(-2px)}
 .stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 85% 15%,rgba(34,197,94,.07),transparent 60%);pointer-events:none}
 .stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,.2),transparent);opacity:0;transition:opacity .22s}
@@ -208,7 +208,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 #sec-solar-roof{grid-column:1/3}
 /* Col-3 panels stay at natural height — don't stretch to match the tall map/solar panels */
 .panels-row .panel:not(#sec-farms):not(#sec-solar-roof){align-self:start}
-.panel{background:rgba(8,18,10,.80);border:1px solid rgba(34,197,94,.1);border-radius:18px;padding:22px;backdrop-filter:blur(14px);box-shadow:0 6px 28px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.04)}
+.panel{background:rgba(16,31,19,.78);border:1px solid rgba(34,197,94,.18);border-radius:18px;padding:22px;backdrop-filter:blur(14px);box-shadow:0 6px 28px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06)}
 .map-btn{background:rgba(13,26,15,.8);border:1px solid rgba(34,197,94,.18);color:var(--sub);font-size:11px;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;transition:all .15s;font-family:'Sora',sans-serif;backdrop-filter:blur(6px)}
 .map-btn:hover{background:rgba(34,197,94,.15);color:var(--text);border-color:rgba(34,197,94,.35)}
 .map-btn.active{background:linear-gradient(135deg,var(--green2),var(--green));color:#03130a;border-color:transparent;box-shadow:0 0 14px rgba(34,197,94,.4)}
@@ -662,71 +662,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .cert-footer{text-align:center;font-size:10px;color:var(--sub);border-top:1px solid var(--border2);padding-top:14px}
 .cert-close-btn{position:absolute;top:14px;right:16px;background:transparent;border:none;color:var(--sub);font-size:20px;cursor:pointer;line-height:1}
 
-/* ── INVESTOR PITCH ── */
-.inv-hero{background:linear-gradient(135deg,#030d04 0%,#051808 40%,#0a2410 100%);border:1px solid #22c55e33;border-radius:16px;padding:24px 28px;margin-bottom:14px;position:relative;overflow:hidden}
-.inv-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,#22c55e12,transparent 70%);pointer-events:none}
-.inv-hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
-.inv-logo-wrap{display:flex;align-items:center;gap:12px}
-.inv-logo-icon{width:48px;height:48px;background:linear-gradient(135deg,#16a34a,#22c55e);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.inv-logo-text{font-size:22px;font-weight:900;color:var(--text);letter-spacing:-.5px}
-.inv-logo-sub{font-size:11px;color:var(--sub);margin-top:2px}
-.inv-series{padding:5px 14px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:99px;font-size:11px;font-weight:900;color:#fff;letter-spacing:.5px}
-.inv-tagline{font-size:15px;color:var(--sub);margin-bottom:20px;line-height:1.5;max-width:600px}
-.inv-tagline strong{color:var(--green)}
-.inv-hero-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.inv-metric{background:#ffffff08;border:1px solid #ffffff10;border-radius:12px;padding:14px 10px;text-align:center}
-.inv-metric-val{font-size:20px;font-weight:900;color:var(--green);letter-spacing:-.5px}
-.inv-metric-label{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:1.2px;margin-top:4px;line-height:1.4}
-
-.inv-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
-.inv-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.inv-card{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:18px 20px}
-.inv-card-title{font-size:11px;font-weight:900;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-
-.inv-chart-wrap{position:relative;height:120px;margin-bottom:6px}
-.inv-chart-bar{position:absolute;bottom:0;border-radius:5px 5px 0 0;transition:all .4s}
-.inv-chart-label{position:absolute;bottom:-18px;font-size:9px;font-weight:700;color:var(--sub);text-align:center;transform:translateX(-50%)}
-.inv-chart-val{position:absolute;font-size:9px;font-weight:900;color:var(--green);text-align:center;transform:translateX(-50%)}
-
-.inv-revenue-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
-.inv-rev-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
-.inv-rev-name{font-size:11px;font-weight:700;color:var(--text);flex:1}
-.inv-rev-bar-wrap{width:120px;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;flex-shrink:0}
-.inv-rev-bar{height:100%;border-radius:4px}
-.inv-rev-val{font-size:11px;font-weight:900;color:var(--green);width:50px;text-align:right;flex-shrink:0}
-
-.inv-fund-item{display:flex;align-items:center;gap:12px;margin-bottom:11px}
-.inv-fund-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.inv-fund-label{flex:1;font-size:11px;font-weight:700;color:var(--text)}
-.inv-fund-sub{font-size:10px;color:var(--sub);margin-top:1px}
-.inv-fund-pct{font-size:16px;font-weight:900}
-
-.inv-esg-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.inv-esg-item{background:var(--bg3);border-radius:10px;padding:10px 12px;display:flex;gap:10px;align-items:center}
-.inv-esg-icon{font-size:20px;flex-shrink:0}
-.inv-esg-val{font-size:14px;font-weight:900}
-.inv-esg-label{font-size:9px;color:var(--sub);margin-top:2px}
-
-.inv-milestone-list{display:flex;flex-direction:column;gap:9px}
-.inv-milestone{display:flex;gap:12px;align-items:flex-start}
-.inv-ms-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.inv-ms-period{font-size:10px;font-weight:900;color:var(--sub);width:52px;flex-shrink:0}
-.inv-ms-text{font-size:11px;color:var(--text);line-height:1.5}
-
-.inv-ask-box{background:linear-gradient(135deg,#0d2f10,#142e17);border:1px solid #22c55e44;border-radius:14px;padding:20px 22px;text-align:center;margin-bottom:14px}
-.inv-ask-val{font-size:36px;font-weight:900;color:var(--green);letter-spacing:-1px;margin-bottom:4px}
-.inv-ask-label{font-size:13px;color:var(--sub);margin-bottom:12px}
-.inv-ask-terms{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
-.inv-ask-term{font-size:11px;color:var(--sub)}
-.inv-ask-term strong{color:var(--text);font-weight:800}
-
-.inv-cta-row{display:flex;gap:10px;margin-top:2px}
-.inv-cta{flex:1;padding:13px;border-radius:11px;font-size:13px;font-weight:900;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
-.inv-cta-primary{background:linear-gradient(135deg,var(--green2),var(--green));color:#000}
-.inv-cta-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
-.inv-cta-primary:hover{opacity:.9}
-.inv-cta-secondary:hover{border-color:var(--green);color:var(--green)}
-
 /* ── DECISION SUPPORT PANEL ── */
 .decision-card{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
 .decision-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
@@ -1000,8 +935,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   .sensor-row{grid-template-columns:repeat(3,1fr)}
   .ndvi-grid{grid-template-columns:repeat(4,1fr)}
   .pest-grid{grid-template-columns:repeat(2,1fr)}
-  .inv-grid3{grid-template-columns:1fr 1fr}
-  .inv-hero-metrics{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:750px){
   #sidebar{width:60px;min-width:60px}
@@ -1014,7 +947,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   .pest-grid{grid-template-columns:1fr 1fr}
   .solar-farm-row{grid-template-columns:1fr}
   .intro-row{grid-template-columns:1fr 1fr}
-  .inv-hero-metrics{grid-template-columns:repeat(2,1fr)}
   .carbon-grid-main{grid-template-columns:1fr}
   .carbon-farm-grid{grid-template-columns:1fr 1fr}
   .npk-farm-grid,.yield-grid{grid-template-columns:1fr}
@@ -1083,11 +1015,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   .carbon-grid-main{grid-template-columns:1fr!important}
   .carbon-farm-grid{grid-template-columns:1fr!important}
   /* Investor pitch */
-  .inv-hero-metrics{grid-template-columns:repeat(2,1fr)!important}
-  .inv-grid2,.inv-grid3{grid-template-columns:1fr!important}
-  .inv-ask-val{font-size:24px}
-  .inv-cta-row{flex-direction:column}
-  .inv-tagline{font-size:12px}
   /* Modules 3-col */
   .modules-grid{grid-template-columns:repeat(3,1fr)!important}
   /* Weather cards scroll */
@@ -1105,7 +1032,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   /* Login page */
   .login-box{padding:20px 16px;border-radius:16px}
   /* Investor CTA */
-  .inv-cta{padding:11px}
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1291,8 +1217,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .npk-card, .yield-card, .carbon-farm-card, .pest-card,
 .solar-farm-card, .irr-zone-card, .sensor-card,
 .biochar-card, .sars-card, .sell-step, .sell-market,
-.inv-card, .decision-card, .module-card,
-.inv-metric, .ndvi-cell, .insight-card {
+.decision-card, .module-card,
+.ndvi-cell, .insight-card {
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
 }
@@ -1306,7 +1232,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 }
 /* Values that stay in signature green */
 .stat-val, .yield-sum-val, .carbon-rev-val, .biochar-stat-val,
-.inv-metric-val, .inv-ask-val, .inv-rev-val,
 .carbon-price-big, .carbon-std-price, .pilot-result {
   color: #4ade80 !important;
   text-shadow: 0 0 18px rgba(74,222,128,.28),
@@ -1321,9 +1246,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
 .biochar-card-body, .biochar-step-body, .biochar-stat-lbl,
 .sars-sub, .sars-step-body, .sars-callout, .sell-sub,
 .sell-market-type, .sell-price-sub, .eco-step-desc, .eco-tag,
-.eco-path-body, .eco-rev-sub, .inv-tagline, .inv-logo-sub,
-.inv-metric-label, .inv-ms-period, .inv-ask-label, .inv-ask-term,
-.inv-card-title, .inv-fund-sub, .inv-esg-label, .inv-chart-label,
+.eco-path-body, .eco-rev-sub,
 .cert-field-label, .cert-footer, .cert-title, .carbon-header-sub,
 .carbon-stat-pill-label, .carbon-price-meta, .ob-sub, .ob-label,
 .login-demo-label, .lbl, .module-desc, .pilot-detail, .founder-bio,
@@ -1447,26 +1370,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter','Sora',syst
   box-shadow: 0 8px 28px rgba(0,0,0,.5),
               0 0 0 1px rgba(34,197,94,.22) !important;
 }
-
-/* ── 25. INVESTOR PITCH ── */
-.inv-hero {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.05),
-              0 6px 36px rgba(0,0,0,.45) !important;
-}
-.inv-metric { transition: transform .2s, box-shadow .2s; }
-.inv-metric:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,.45) !important;
-}
-.inv-ask-val {
-  font-size: 40px !important;
-  text-shadow: 0 0 30px rgba(74,222,128,.3) !important;
-}
-.inv-card-title { color: var(--sub) !important; letter-spacing: 1.8px !important; }
-.inv-ms-text    { color: var(--text) !important; font-size: 11.5px !important; }
-.inv-rev-name   { color: var(--text) !important; }
-.inv-fund-label { color: var(--text) !important; }
-.inv-esg-val    { font-size: 15px !important; }
 
 /* ── 26. AI ADVISOR ── */
 .ai-msg-ai    { border-color: rgba(34,197,94,.16) !important; }
@@ -1626,7 +1529,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   60%  { transform: scale(1.04) }
   100% { transform: scale(1);   opacity: 1 }
 }
-.stat-val.animated, .carbon-price-big.animated, .inv-ask-val.animated {
+.stat-val.animated, .carbon-price-big.animated {
   animation: countPop .5s cubic-bezier(.2,.8,.2,1) both;
 }
 
@@ -1715,7 +1618,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 /* Make data cards slightly more translucent for vibrancy */
 .npk-card, .yield-card, .carbon-farm-card, .pest-card,
 .solar-farm-card, .irr-zone-card, .sensor-card,
-.biochar-card, .sars-card, .sell-step, .inv-card {
+.biochar-card, .sars-card, .sell-step {
   background: rgba(12,24,14,.72) !important;
   border-color: rgba(34,197,94,.14) !important;
 }
@@ -1766,19 +1669,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .pilot-badge {
   background: rgba(6,16,8,.72) !important;
   border-color: rgba(74,222,128,.18) !important;
-}
-
-/* ── 59. INVESTOR HERO BAND ── */
-.inv-hero {
-  background: linear-gradient(135deg,#030e04 0%,#061a08 40%,#0c2812 100%) !important;
-  border-color: rgba(34,197,94,.40) !important;
-  box-shadow: 0 0 60px -20px rgba(34,197,94,.30),
-              inset 0 1px 0 rgba(255,255,255,.05) !important;
-}
-.inv-ask-box {
-  background: linear-gradient(135deg,#0d3010,#152e18) !important;
-  border-color: rgba(74,222,128,.50) !important;
-  box-shadow: 0 0 40px -10px rgba(34,197,94,.28) !important;
 }
 
 /* ── 60. CARBON TABS BRIGHTER ── */
@@ -1984,7 +1874,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
       <div class="sb-section">Platform</div>
       <div class="nav-item" onclick="navTo(this,'carbonSection')"><div class="ni">🌍</div><span>Carbon Credits</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-pricing')"><div class="ni">🚁</div><span>Pricing &amp; Drones</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-investor')"><div class="ni">📊</div><span>Investor Pitch</span></div>
     </div>
     <div class="sb-footer">
       <div class="sb-role">
@@ -2880,72 +2769,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         </div>
       </div>
 
-      <!-- INVESTOR PITCH -->
-      <div class="panel fade" id="sec-investor" style="margin-bottom:16px">
-        <div class="sec-hdr">
-          <div class="sec-title">📊 Investor Pitch <span>Series A · R75M · YieldCore AI</span></div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button class="map-btn" onclick="shareInvestorPitch()">📲 Share</button>
-            <button class="map-btn" onclick="copyPitchEmail()">📧 Email</button>
-            <button class="map-btn" onclick="window.print()">🖨️ PDF</button>
-          </div>
-        </div>
-        <div class="inv-hero">
-          <div class="inv-hero-top">
-            <div class="inv-logo-wrap">
-              <div class="inv-logo-icon">🌿</div>
-              <div>
-                <div class="inv-logo-text">YieldCore AI</div>
-                <div class="inv-logo-sub">Africa's Precision Agriculture Intelligence Platform</div>
-              </div>
-            </div>
-            <div class="inv-series">SERIES A</div>
-          </div>
-          <div class="inv-tagline">Feeding Africa with <strong>satellite intelligence</strong>, IoT sensors &amp; AI — turning 10 farms into a <strong>pan-African platform</strong> for 100,000+ smallholder farmers.</div>
-          <div class="inv-hero-metrics" id="invMetrics"></div>
-        </div>
-        <div class="inv-grid2">
-          <div class="inv-card">
-            <div class="inv-card-title">📈 5-Year Revenue Projection (ZAR)</div>
-            <div class="inv-chart-wrap" id="invChart"></div>
-            <div style="height:24px"></div>
-          </div>
-          <div class="inv-card">
-            <div class="inv-card-title">💰 Revenue Mix — Year 3 (R54.2M ARR)</div>
-            <div id="invRevMix"></div>
-          </div>
-        </div>
-        <div class="inv-grid3">
-          <div class="inv-card">
-            <div class="inv-card-title">💸 Use of Funds</div>
-            <div id="invFunds"></div>
-          </div>
-          <div class="inv-card">
-            <div class="inv-card-title">🌍 ESG Impact</div>
-            <div class="inv-esg-grid" id="invEsg"></div>
-          </div>
-          <div class="inv-card">
-            <div class="inv-card-title">🗺️ Roadmap</div>
-            <div class="inv-milestone-list" id="invRoadmap"></div>
-          </div>
-        </div>
-        <div class="inv-ask-box">
-          <div class="inv-ask-val">R 75,000,000</div>
-          <div class="inv-ask-label">Series A Investment Ask — Equity funding for pan-African expansion</div>
-          <div class="inv-ask-terms">
-            <div class="inv-ask-term">Valuation: <strong>R 420M pre-money</strong></div>
-            <div class="inv-ask-term">Equity: <strong>17.9%</strong></div>
-            <div class="inv-ask-term">Target close: <strong>Q2 2025</strong></div>
-            <div class="inv-ask-term">Instrument: <strong>Equity + SAFE</strong></div>
-          </div>
-        </div>
-        <div class="inv-cta-row">
-          <button class="inv-cta inv-cta-primary" onclick="shareInvestorPitch()">📲 Share Pitch via WhatsApp</button>
-          <button class="inv-cta inv-cta-secondary" onclick="copyPitchEmail()">📧 Copy Investor Email</button>
-          <button class="inv-cta inv-cta-secondary" onclick="window.print()">🖨️ Download PDF</button>
-        </div>
-      </div>
-
       <!-- MODULES -->
       <div class="modules-section fade">
         <div class="sec-hdr">
@@ -2989,7 +2812,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
     <div class="md-section">Platform</div>
     <button class="md-item" onclick="mobileNav(null,'carbonSection')"><span class="md-icon">🌍</span>Carbon Credits</button>
     <button class="md-item" onclick="mobileNav(null,'sec-pricing')"><span class="md-icon">🚁</span>Pricing &amp; Drones</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-investor')"><span class="md-icon">📊</span>Investor Pitch</button>
   </div>
 </div>
 
@@ -3250,7 +3072,6 @@ const modules=[
   {icon:'💸',name:'PER-FARM ROI',desc:'Revenue uplift &\nROI per farm',            section:'sec-revenue'},
   {icon:'🚁',name:'CAPABILITIES', desc:'Drones · sensors · irrigation\nfull-stack platform',  section:'sec-pricing'},
   {icon:'🌍',name:'CARBON',   desc:'Carbon credits & VCM\nmarket prices live',              section:'carbonSection'},
-  {icon:'📊',name:'INVESTOR', desc:'Series A pitch deck\n& 5-year projection',              section:'sec-investor'},
 ];
 
 // ── RENDER WEATHER ──
@@ -3367,6 +3188,12 @@ async function renderMap(){
     antialias:true
   });
   mapboxMap.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
+  // Keep the map correctly sized/positioned whenever its container changes size
+  if(window.ResizeObserver && !window._mapRO){
+    window._mapRO=new ResizeObserver(()=>{ if(mapboxMap) mapboxMap.resize(); });
+    window._mapRO.observe(el);
+  }
+  window.addEventListener('resize',()=>{ if(mapboxMap) mapboxMap.resize(); });
   mapboxMap.on('load',()=>{
     // Terrain DEM source for real 3D topography
     mapboxMap.addSource('mapbox-dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
@@ -4443,46 +4270,6 @@ window.shareCarbonReport=async function(){
   }catch(e){alert('Network error: '+e.message);}
 };
 
-// ── INVESTOR PITCH ──
-const invProjection=[
-  {year:'Y1\n2023',rev:12.4,color:'#22c55e'},
-  {year:'Y2\n2024',rev:28.6,color:'#22c55e'},
-  {year:'Y3\n2025',rev:54.2,color:'#4ade80'},
-  {year:'Y4\n2026',rev:91.8,color:'#86efac'},
-  {year:'Y5\n2027',rev:148,color:'#bbf7d0'},
-];
-const invRevMix=[
-  {icon:'🌾',name:'SaaS Platform Licences',val:'R22.4M',pct:100,color:'#22c55e'},
-  {icon:'📡',name:'IoT Sensor Subscriptions',val:'R12.8M',pct:57,color:'#38bdf8'},
-  {icon:'🤖',name:'AI Advisory Services',val:'R8.6M',pct:38,color:'#a78bfa'},
-  {icon:'🌍',name:'Carbon Credit Revenue',val:'R5.2M',pct:23,color:'#4ade80'},
-  {icon:'📊',name:'Drone Analytics Services',val:'R3.8M',pct:17,color:'#fb923c'},
-  {icon:'📊',name:'Data & Market Intelligence',val:'R1.4M',pct:6,color:'#fb923c'},
-];
-const invUseFunds=[
-  {icon:'💻',color:'#22c55e22',iconColor:'#22c55e',label:'Technology & AI Infrastructure',sub:'Platform scaling, model training, IoT network',pct:45},
-  {icon:'🌾',color:'#38bdf822',iconColor:'#38bdf8',label:'Farm Expansion & Onboarding',sub:'100 new farms across SA, Zambia & Zimbabwe',pct:30},
-  {icon:'🌍',color:'#22c55e22',iconColor:'#22c55e',label:'Carbon Credit Infrastructure',sub:'Full verification pipeline, market access & ESG reporting',pct:15},
-  {icon:'📣',color:'#f59e0b22',iconColor:'#f59e0b',label:'Sales, Marketing & Brand',sub:'Enterprise deals, government contracts & PR',pct:10},
-];
-const invEsg=[
-  {icon:'💧',val:'42%',label:'Water saving\nvs traditional irrigation',color:'#38bdf8'},
-  {icon:'🌿',val:'4,930t',label:'CO₂e verified\nthis season',color:'#22c55e'},
-  {icon:'🚁',val:'420',label:'Drone acres scanned\nthis month',color:'#38bdf8'},
-  {icon:'⚡',val:'2,847',label:'MWh solar generated\nacross 7 farms',color:'#facc15'},
-  {icon:'🌱',val:'5,419ha',label:'Precision-managed\nfarmland (SA)',color:'#4ade80'},
-  {icon:'👩‍🌾',val:'R4.2M',label:'Smallholder farmer\nincome uplift 2024',color:'#fb923c'},
-];
-const invMilestones=[
-  {period:'Q2 2023',text:'Founded · MVP built · First 3 farms onboarded',color:'#22c55e',done:true},
-  {period:'Q4 2023',text:'10 farms · Live IoT sensors · R12.4M ARR',color:'#22c55e',done:true},
-  {period:'Q2 2024',text:'WhatsApp alerts · Solar monitoring · Carbon credit pilot enrolment',color:'#22c55e',done:true},
-  {period:'Q4 2024',text:'AI Advisor (GPT-4o) · NDVI satellite · R28.6M ARR',color:'#22c55e',done:true},
-  {period:'Q2 2025',text:'Series A close · 40 new farms · Carbon credit API',color:'#facc15',done:false},
-  {period:'Q4 2025',text:'Pan-Africa expansion · Zambia pilot · R54.2M ARR',color:'#facc15',done:false},
-  {period:'Q2 2026',text:'JSE listing preparation · Pan-Africa expansion',color:'#7a9e82',done:false},
-];
-
 // ── YIELDCORE BIO-INPUTS (our own products) ──
 const bioProducts=[
   {icon:'🦠',name:'BioShield-7',cat:'Microbial Fungicide',desc:'Trichoderma harzianum + Bacillus subtilis. Stops Fusarium, Phytophthora root-rot & damping-off. Foliar or soil drench.',price:'R 280 / L',rate:'2 L / ha',target:'Fungal disease',color:'#22c55e',uplift:'+14% yield · saves R420/ha vs synthetic'},
@@ -4831,36 +4618,6 @@ window.openMobileDrawer=openMobileDrawer;
 window.closeMobileDrawer=closeMobileDrawer;
 window.mobileNav=mobileNav;
 
-// ── INVESTOR PITCH ──
-function renderInvestor(){
-  const el=id=>document.getElementById(id); if(!el('invMetrics')) return;
-  el('invMetrics').innerHTML=[
-    {val:'R 54.2M',label:'Y3 ARR<br>Projected'},
-    {val:'10 → 100+',label:'Farms<br>This Year'},
-    {val:'5,419 ha',label:'Land Under<br>Management'},
-    {val:'R 420M',label:'Pre-Money<br>Valuation'},
-    {val:'3 Countries',label:'SA · Zambia<br>· Zimbabwe'},
-  ].map(m=>`<div class="inv-metric"><div class="inv-metric-val">${m.val}</div><div class="inv-metric-label">${m.label}</div></div>`).join('');
-  const maxRev=Math.max(...invProjection.map(y=>y.rev));
-  const bw=100/invProjection.length;
-  el('invChart').innerHTML=invProjection.map((y,i)=>{
-    const h=Math.round((y.rev/maxRev)*106);
-    const left=i*bw, cx=left+bw/2;
-    return `<div class="inv-chart-bar" style="left:${left}%;width:${bw-3}%;height:${h}px;background:linear-gradient(180deg,${y.color}99,${y.color})"></div><div class="inv-chart-val" style="left:${cx}%;bottom:${h+4}px">R${y.rev}M</div><div class="inv-chart-label" style="left:${cx}%">${y.year.replace('\n','<br>')}</div>`;
-  }).join('');
-  el('invRevMix').innerHTML=invRevMix.map(r=>`<div class="inv-revenue-row"><span class="inv-rev-icon">${r.icon}</span><span class="inv-rev-name">${r.name}</span><div class="inv-rev-bar-wrap"><div class="inv-rev-bar" style="width:${r.pct}%;background:${r.color}"></div></div><span class="inv-rev-val">${r.val}</span></div>`).join('');
-  el('invFunds').innerHTML=invUseFunds.map(f=>`<div class="inv-fund-item"><div class="inv-fund-icon" style="background:${f.color}">${f.icon}</div><div style="flex:1"><div class="inv-fund-label">${f.label}</div><div class="inv-fund-sub">${f.sub}</div></div><div class="inv-fund-pct" style="color:${f.iconColor}">${f.pct}%</div></div>`).join('');
-  el('invEsg').innerHTML=invEsg.map(e=>`<div class="inv-esg-item"><span class="inv-esg-icon">${e.icon}</span><div><div class="inv-esg-val" style="color:${e.color}">${e.val}</div><div class="inv-esg-label">${e.label.replace('\n','<br>')}</div></div></div>`).join('');
-  el('invRoadmap').innerHTML=invMilestones.map(m=>`<div class="inv-milestone"><div class="inv-ms-dot" style="background:${m.color};${m.done?'':'opacity:.5'}"></div><span class="inv-ms-period">${m.period}</span><span class="inv-ms-text" style="opacity:${m.done?1:.65}">${m.text}</span></div>`).join('');
-}
-window.shareInvestorPitch=async function(){
-  const msg=`📊 *YieldCore AI — Series A Investor Pitch*\n\n🌿 *Africa's Precision Agriculture Intelligence Platform*\n\n💰 *Investment Ask: R 75,000,000*\n• Pre-money valuation: R 420M\n• Equity: 17.9%\n• Target close: Q2 2025\n\n📈 *5-Year Revenue:*\nY1: R12.4M → Y3: R54.2M → Y5: R148M ARR\n\n🌍 *ESG Impact:*\n• 42% water saving\n• 4,930t CO₂e verified (6,291t pipeline)\n• R4.2M smallholder income uplift\n\n📧 investor@yieldcore.ai\n🌐 yieldcore.ai`;
-  try{const res=await fetch('/api/whatsapp/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await res.json();if(d.success)alert('✅ Investor pitch sent via WhatsApp!');else alert('Error: '+d.error);}catch(e){alert('Network error: '+e.message);}
-};
-window.copyPitchEmail=function(){
-  const txt=`Subject: YieldCore AI — Series A Investment Opportunity\n\nDear Investor,\n\nYieldCore AI is raising R75M Series A at R420M pre-money to scale Africa's leading precision agriculture platform.\n\nKey metrics:\n• 10 farms · 5,419 ha under management\n• R28.6M ARR (Y2) → R148M ARR by Y5\n• 42% water reduction · 4,930t CO₂e verified · 6,291t total pipeline\n• R4.2M smallholder farmer income uplift\n\nWe would welcome a 30-minute call.\n\nRodwell Naicker | Founder & CEO\nrodwell@yieldcore.ai | yieldcore.ai`;
-  navigator.clipboard.writeText(txt).then(()=>alert('✅ Investor email copied!')).catch(()=>alert('Copy from browser console.'));
-};
 
 // ── LIVE SYSTEM CLOCK & TIMESTAMPS ──
 function startSystemClock(){
@@ -4920,7 +4677,6 @@ function init(){
   renderYield();
   initAI();
   renderCarbon();
-  renderInvestor();
   renderInsights();
   renderDecisionSupport();
   renderBio();

@@ -42,9 +42,8 @@ A full-featured desktop + mobile precision agriculture dashboard for South Afric
 10. **AI Crop Advisor** — GPT-4o chat, quick prompts, system context for SA farming
 11. **Community Grain Vending Machine** — 4 locations, stock levels, WhatsApp restock alerts
 12. **Carbon Credit Tracker** — 8 farms, VCS + Gold Standard + SA Carbon Tax, certificate generator
-13. **Investor Pitch Module** — Series A pitch, 5-year revenue chart, investment ask
-14. **AI Insights Engine** — Live recommendation cards per farm section (critical/warning/opportunity/info)
-15. **Modules Grid** — 15 quick-access module cards
+13. **AI Insights Engine** — Live recommendation cards per farm section (critical/warning/opportunity/info)
+14. **Modules Grid** — quick-access module cards
 
 ## Masterplan Features Implemented
 - **Mobile-First** — Full responsive layout ≤480px: sidebar hidden, 5-item bottom nav bar, slide-in drawer with all navigation, compact topbar, all grids collapse to 1-2 columns, bottom padding for nav bar
