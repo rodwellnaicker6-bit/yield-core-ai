@@ -1850,6 +1850,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
       <span id="authToggleText">New here?</span>
       <a href="#" id="authToggle" onclick="toggleAuthMode();return false" style="color:var(--green);font-weight:700;text-decoration:none">Create account</a>
     </div>
+    <div style="display:flex;align-items:center;gap:10px;margin:16px 0 6px;color:var(--sub);font-size:10px;letter-spacing:1px;font-weight:700">
+      <span style="flex:1;height:1px;background:var(--border)"></span>OR<span style="flex:1;height:1px;background:var(--border)"></span>
+    </div>
+    <button type="button" id="demoBtn" onclick="demoLogin()" style="width:100%;padding:13px;border-radius:11px;border:1px solid rgba(74,222,128,.45);background:rgba(8,18,12,.55);color:#d4e8d8;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;transition:background .2s">👀 Explore the live demo — no sign-in needed</button>
   </div>
 </div>
 
@@ -2886,6 +2890,25 @@ async function doLogin(){
     showAuthError('Network error. Please try again.');
   } finally {
     btn.disabled = false; btn.textContent = oldText;
+  }
+}
+// One-tap demo access — signs in with the shared demo account so no credentials are needed
+async function demoLogin(){
+  const btn = document.getElementById('demoBtn');
+  const old = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Opening demo…';
+  document.getElementById('loginErr').style.display = 'none';
+  try {
+    const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email:'demo@yieldcore.ai', password:'yield2025' }) });
+    const j = await r.json().catch(()=>({}));
+    if (!r.ok || !j.ok) { showAuthError(j.error || 'Could not open the demo. Please try again.'); return; }
+    localStorage.setItem('yc_token', j.token);
+    localStorage.setItem('yc_user', JSON.stringify(j.user||{}));
+    enterApp();
+  } catch(err){
+    showAuthError('Network error. Please try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = old;
   }
 }
 function doLogout(){
