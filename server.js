@@ -363,7 +363,7 @@ app.post('/api/whatsapp/alert', writeLimiter, async (req, res) => {
 });
 
 // ── SHARE CONFIG ──
-const LIVE_URL = process.env.LIVE_URL || 'https://yieldcore.replit.app';
+const LIVE_URL = process.env.LIVE_URL || 'https://yield-core-ai--syaloamukelani.replit.app';
 const SANDBOX_CODE = process.env.SANDBOX_JOIN_CODE || 'your-join-code';
 const SANDBOX_NUMBER = '+14155238886';
 const FOOTER = `\n\n━━━━━━━━━━━━━━\n🌐 Open your live command center:\n${LIVE_URL}\n\n👥 Invite a farmer friend → reply *SHARE*`;
