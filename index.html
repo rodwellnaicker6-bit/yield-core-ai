@@ -1939,36 +1939,38 @@ body.investor-mode #sec-roi,body.investor-mode #sec-command,body.investor-mode #
       </div>
     </div>
     <div class="sb-nav">
-      <div class="sb-section">Enterprise</div>
+      <div class="sb-section">Executive</div>
+      <div class="nav-item active" onclick="navTo(this,'top')"><div class="ni">🏠</div><span>Overview</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-roi')"><div class="ni">📊</div><span>ROI Dashboard</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-command')"><div class="ni">🛰️</div><span>Command Center</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-kpi')"><div class="ni">🎯</div><span>Enterprise KPIs</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-actionfeed')"><div class="ni">⚡</div><span>Action Feed</span></div>
+
+      <div class="sb-section">Intelligence</div>
+      <div class="nav-item" onclick="navTo(this,'sec-ai')"><div class="ni">🤖</div><span>AI Advisor</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-alerts')"><div class="ni">🔔</div><span>Alerts</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-yield')"><div class="ni">📈</div><span>Forecasting</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-insights')"><div class="ni">💡</div><span>Recommendations</span></div>
+
+      <div class="sb-section">Farm Monitoring</div>
+      <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">🌾</div><span>Farm Health</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-ndvi')"><div class="ni">🛰️</div><span>NDVI Zones</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-nutrients')"><div class="ni">💊</div><span>Nutrients</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-solar')"><div class="ni">☀️</div><span>Solar</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-irrigation')"><div class="ni">💧</div><span>Water</span></div>
+
+      <div class="sb-section">Operations</div>
       <div class="nav-item" onclick="navTo(this,'sec-inventory')"><div class="ni">📦</div><span>Inventory</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-procurement')"><div class="ni">🤝</div><span>Procurement</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-assets')"><div class="ni">🚜</div><span>Assets</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-benchmark')"><div class="ni">📐</div><span>Benchmarking</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-reports')"><div class="ni">📄</div><span>Reports</span></div>
 
-      <div class="sb-section">Intelligence</div>
-      <div class="nav-item active" onclick="navTo(this,'top')"><div class="ni">🏠</div><span>Dashboard</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-ai')"><div class="ni">🤖</div><span>AI Advisor</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-alerts')"><div class="ni">🔔</div><span>Alerts</span></div>
-
-      <div class="sb-section">Farm Monitoring</div>
-      <div class="nav-item" onclick="navTo(this,'sec-farms')"><div class="ni">🌾</div><span>Farm Health</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-solar')"><div class="ni">☀️</div><span>Solar</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-ndvi')"><div class="ni">🛰️</div><span>NDVI Zones</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-nutrients')"><div class="ni">💊</div><span>Nutrients</span></div>
-
-      <div class="sb-section">Operations</div>
-      <div class="nav-item" onclick="navTo(this,'sec-yield')"><div class="ni">📈</div><span>Yield &amp; Profit</span></div>
+      <div class="sb-section">Carbon &amp; Finance</div>
+      <div class="nav-item" onclick="navTo(this,'carbonSection')"><div class="ni">🌍</div><span>Carbon Credits</span></div>
+      <div class="nav-item" onclick="navTo(this,'carbonSection');carbonTab('sars')"><div class="ni">🏛️</div><span>Carbon Tax</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-revenue')"><div class="ni">💸</div><span>Revenue Uplift</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-bio')"><div class="ni">🧪</div><span>Bio-Inputs</span></div>
-
-      <div class="sb-section">Platform</div>
-      <div class="nav-item" onclick="navTo(this,'carbonSection')"><div class="ni">🌍</div><span>Carbon Credits</span></div>
-      <div class="nav-item" onclick="navTo(this,'sec-pricing')"><div class="ni">🚁</div><span>Pricing &amp; Drones</span></div>
     </div>
     <div class="sb-footer">
       <div class="sb-role">
@@ -3002,32 +3004,34 @@ body.investor-mode #sec-roi,body.investor-mode #sec-command,body.investor-mode #
     <button class="md-close" onclick="closeMobileDrawer()">×</button>
   </div>
   <div class="md-nav">
-    <div class="md-section">Enterprise</div>
+    <div class="md-section">Executive</div>
+    <button class="md-item" onclick="mobileNav(null,'top')"><span class="md-icon">🏠</span>Overview</button>
     <button class="md-item" onclick="mobileNav(null,'sec-roi')"><span class="md-icon">📊</span>ROI Dashboard</button>
     <button class="md-item" onclick="mobileNav(null,'sec-command')"><span class="md-icon">🛰️</span>Command Center</button>
     <button class="md-item" onclick="mobileNav(null,'sec-kpi')"><span class="md-icon">🎯</span>Enterprise KPIs</button>
     <button class="md-item" onclick="mobileNav(null,'sec-actionfeed')"><span class="md-icon">⚡</span>Action Feed</button>
+    <div class="md-section">Intelligence</div>
+    <button class="md-item" onclick="mobileNav(null,'sec-ai')"><span class="md-icon">🤖</span>AI Advisor</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-alerts')"><span class="md-icon">🔔</span>Alerts</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-yield')"><span class="md-icon">📈</span>Forecasting</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-insights')"><span class="md-icon">💡</span>Recommendations</button>
+    <div class="md-section">Farm Monitoring</div>
+    <button class="md-item" onclick="mobileNav(null,'sec-farms')"><span class="md-icon">🌾</span>Farm Health</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-ndvi')"><span class="md-icon">🛰️</span>NDVI Zones</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-nutrients')"><span class="md-icon">💊</span>Nutrients</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-solar')"><span class="md-icon">☀️</span>Solar</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-irrigation')"><span class="md-icon">💧</span>Water</button>
+    <div class="md-section">Operations</div>
     <button class="md-item" onclick="mobileNav(null,'sec-inventory')"><span class="md-icon">📦</span>Inventory</button>
     <button class="md-item" onclick="mobileNav(null,'sec-procurement')"><span class="md-icon">🤝</span>Procurement</button>
     <button class="md-item" onclick="mobileNav(null,'sec-assets')"><span class="md-icon">🚜</span>Assets</button>
     <button class="md-item" onclick="mobileNav(null,'sec-benchmark')"><span class="md-icon">📐</span>Benchmarking</button>
     <button class="md-item" onclick="mobileNav(null,'sec-reports')"><span class="md-icon">📄</span>Reports</button>
-    <div class="md-section">Intelligence</div>
-    <button class="md-item" onclick="mobileNav(null,'top')"><span class="md-icon">🏠</span>Dashboard</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-ai')"><span class="md-icon">🤖</span>AI Advisor</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-alerts')"><span class="md-icon">🔔</span>Alerts</button>
-    <div class="md-section">Farm Monitoring</div>
-    <button class="md-item" onclick="mobileNav(null,'sec-farms')"><span class="md-icon">🌾</span>Farm Health</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-solar')"><span class="md-icon">☀️</span>Solar</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-ndvi')"><span class="md-icon">🛰️</span>NDVI Zones</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-nutrients')"><span class="md-icon">💊</span>Nutrients</button>
-    <div class="md-section">Operations</div>
-    <button class="md-item" onclick="mobileNav(null,'sec-yield')"><span class="md-icon">📈</span>Yield &amp; Profit</button>
+    <div class="md-section">Carbon &amp; Finance</div>
+    <button class="md-item" onclick="mobileNav(null,'carbonSection')"><span class="md-icon">🌍</span>Carbon Credits</button>
+    <button class="md-item" onclick="mobileNav(null,'carbonSection');carbonTab('sars')"><span class="md-icon">🏛️</span>Carbon Tax</button>
     <button class="md-item" onclick="mobileNav(null,'sec-revenue')"><span class="md-icon">💸</span>Revenue Uplift</button>
     <button class="md-item" onclick="mobileNav(null,'sec-bio')"><span class="md-icon">🧪</span>Bio-Inputs</button>
-    <div class="md-section">Platform</div>
-    <button class="md-item" onclick="mobileNav(null,'carbonSection')"><span class="md-icon">🌍</span>Carbon Credits</button>
-    <button class="md-item" onclick="mobileNav(null,'sec-pricing')"><span class="md-icon">🚁</span>Pricing &amp; Drones</button>
   </div>
 </div>
 
