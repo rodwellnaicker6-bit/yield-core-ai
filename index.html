@@ -2219,7 +2219,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
           </div>
           <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
             <div class="sec-link" onclick="navToSection('sec-solar-roof')">View solar potential per roof →</div>
-            <div style="font-size:10px;color:var(--sub)">Powered by Mapbox · Open-Meteo</div>
+            <div style="font-size:10px;color:var(--sub)">⌘/Ctrl + scroll to zoom · drag to move · Powered by Mapbox · Open-Meteo</div>
           </div>
         </div>
 
@@ -3268,7 +3268,7 @@ async function renderMap(){
       pitch:0,
       bearing:0,
       attributionControl:false,
-      cooperativeGestures:false,
+      cooperativeGestures:true,
       antialias:true
     });
   }catch(err){
@@ -3276,6 +3276,11 @@ async function renderMap(){
     return;
   }
   mapboxMap.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
+  // Calm, controllable interaction — Mac trackpads zoom far too fast by default
+  try{
+    mapboxMap.scrollZoom.setWheelZoomRate(1/900);
+    mapboxMap.scrollZoom.setZoomRate(1/300);
+  }catch(_){}
   // Keep the map correctly sized/positioned whenever its container changes size
   if(window.ResizeObserver && !window._mapRO){
     window._mapRO=new ResizeObserver(()=>{ if(mapboxMap) mapboxMap.resize(); });
