@@ -1803,6 +1803,40 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   .eco-pillar-tx{ font-size:10px; }
 }
 
+/* ── ENTERPRISE SUITE ── */
+.ent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.ent-tile{background:var(--bg4);border:1px solid var(--border2);border-radius:13px;padding:14px;position:relative;overflow:hidden;transition:transform .18s,border-color .18s}
+.ent-tile:hover{transform:translateY(-3px);border-color:rgba(34,197,94,.4)}
+.ent-tile .et-ic{font-size:20px}
+.ent-tile .et-val{font-size:23px;font-weight:900;margin-top:6px;letter-spacing:-.02em;color:var(--text)}
+.ent-tile .et-lbl{font-size:11px;color:var(--sub);font-weight:700;margin-top:3px}
+.ent-tile .et-sub{font-size:10px;color:var(--sub);margin-top:4px}
+.ent-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;margin-top:8px}
+.st-ok{background:rgba(34,197,94,.14);color:#4ade80}
+.st-warn{background:rgba(250,204,21,.14);color:#facc15}
+.st-crit{background:rgba(248,113,113,.14);color:#f87171}
+.ent-table{width:100%;border-collapse:collapse;font-size:12px}
+.ent-table th{text-align:left;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--sub);font-weight:800;padding:8px 10px;border-bottom:1px solid var(--border2)}
+.ent-table td{padding:9px 10px;border-bottom:1px solid var(--border2);color:var(--text)}
+.ent-table tr:hover td{background:rgba(34,197,94,.04)}
+.ent-bar{height:6px;border-radius:3px;background:var(--border2);overflow:hidden;min-width:60px}
+.ent-bar>span{display:block;height:100%;border-radius:3px}
+.ent-pill{font-size:10px;font-weight:800;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.roi-hero{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:20px;border-radius:16px;background:linear-gradient(135deg,rgba(34,197,94,.16),rgba(250,204,21,.08));border:1px solid rgba(74,222,128,.3);margin-bottom:14px}
+.roi-big{font-size:46px;font-weight:900;color:#4ade80;letter-spacing:-.03em;line-height:1}
+.report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.report-btn{display:flex;align-items:center;gap:12px;text-align:left;padding:14px 16px;border-radius:12px;background:var(--bg4);border:1px solid var(--border2);color:var(--text);cursor:pointer;font-family:inherit;transition:all .18s;width:100%}
+.report-btn:hover{border-color:rgba(34,197,94,.45);transform:translateY(-2px)}
+.report-btn .rb-ic{font-size:22px}
+.report-btn .rb-t{font-weight:800;font-size:13px}
+.report-btn .rb-s{font-size:10px;color:var(--sub);margin-top:1px}
+.report-btn .rb-dl{margin-left:auto;display:flex;gap:6px}
+.report-btn .rb-dl span{font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;background:rgba(34,197,94,.14);color:#4ade80}
+#demoBanner{display:none;position:sticky;top:72px;z-index:50;margin:0 0 16px;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,#facc15,#fbbf24);color:#0a0f0a;font-weight:800;font-size:13px;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 8px 30px rgba(250,204,21,.35)}
+#demoBanner.on{display:flex}
+body.investor-mode #sec-roi,body.investor-mode #sec-command,body.investor-mode #sec-kpi,body.investor-mode #sec-benchmark{box-shadow:0 0 0 2px rgba(250,204,21,.45),0 14px 40px rgba(0,0,0,.4)}
+@media(max-width:480px){.roi-big{font-size:36px}.ent-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+
 /* ── END PREMIUM OVERHAUL ── */
 </style>
 </head>
@@ -1872,6 +1906,17 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
       </div>
     </div>
     <div class="sb-nav">
+      <div class="sb-section">Enterprise</div>
+      <div class="nav-item" onclick="navTo(this,'sec-roi')"><div class="ni">📊</div><span>ROI Dashboard</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-command')"><div class="ni">🛰️</div><span>Command Center</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-kpi')"><div class="ni">🎯</div><span>Enterprise KPIs</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-actionfeed')"><div class="ni">⚡</div><span>Action Feed</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-inventory')"><div class="ni">📦</div><span>Inventory</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-procurement')"><div class="ni">🤝</div><span>Procurement</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-assets')"><div class="ni">🚜</div><span>Assets</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-benchmark')"><div class="ni">📐</div><span>Benchmarking</span></div>
+      <div class="nav-item" onclick="navTo(this,'sec-reports')"><div class="ni">📄</div><span>Reports</span></div>
+
       <div class="sb-section">Intelligence</div>
       <div class="nav-item active" onclick="navTo(this,'top')"><div class="ni">🏠</div><span>Dashboard</span></div>
       <div class="nav-item" onclick="navTo(this,'sec-ai')"><div class="ni">🤖</div><span>AI Advisor</span></div>
@@ -1929,6 +1974,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
           <div class="tb-date" id="clockDate">--</div>
         </div>
         <div class="tb-bell">🔔<div class="tb-badge">4</div></div>
+        <button class="tb-pay" style="background:linear-gradient(135deg,#facc15,#fde047)" onclick="toggleInvestorMode()">🎬 Investor Mode</button>
         <a href="/pay" class="tb-pay">🚀 Get Started</a>
         <button class="tb-share" onclick="openShare()">📲 Share with friends</button>
         <button id="mobileMenuBtn" onclick="openMobileDrawer()">☰</button>
@@ -2078,6 +2124,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 
     <!-- CONTENT -->
     <div id="content">
+
+      <div id="demoBanner">
+        <span>🎬 Investor Demo Mode — Revenue impact, ROI, sustainability &amp; operational intelligence at a glance</span>
+        <button onclick="toggleInvestorMode()" style="background:#0a0f0a;color:#facc15;border:none;border-radius:8px;padding:6px 12px;font-weight:800;cursor:pointer;font-size:12px">Exit</button>
+      </div>
 
       <!-- WHO WE ARE -->
       <div class="intro-card fade">
@@ -2797,6 +2848,96 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
         <div class="modules-grid" id="modulesGrid"></div>
       </div>
 
+      <!-- ════════ ENTERPRISE SUITE ════════ -->
+
+      <!-- ROI DASHBOARD (flagship) -->
+      <div class="panel" id="sec-roi">
+        <div class="sec-hdr">
+          <div class="sec-title">📊 ROI Dashboard <span>Investor view · portfolio return on investment</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Flagship · Live model</span>
+        </div>
+        <div id="roiBody"></div>
+      </div>
+
+      <!-- OPERATIONAL COMMAND CENTER -->
+      <div class="panel" id="sec-command">
+        <div class="sec-hdr">
+          <div class="sec-title">🛰️ Operational Command Center <span>Single executive view · all systems</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">● LIVE</span>
+        </div>
+        <div id="commandGrid" class="ent-grid"></div>
+      </div>
+
+      <!-- ENTERPRISE KPI CENTER -->
+      <div class="panel" id="sec-kpi">
+        <div class="sec-hdr">
+          <div class="sec-title">🎯 Enterprise KPI Center <span>Board-level performance metrics</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Live</span>
+        </div>
+        <div id="kpiCenterGrid" class="ent-grid"></div>
+      </div>
+
+      <!-- EXECUTIVE ACTION FEED -->
+      <div class="panel" id="sec-actionfeed">
+        <div class="sec-hdr">
+          <div class="sec-title">⚡ Executive Action Feed <span>Prioritised, AI-ranked actions</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Auto-refresh</span>
+        </div>
+        <div id="actionFeedList"></div>
+      </div>
+
+      <!-- INVENTORY INTELLIGENCE -->
+      <div class="panel" id="sec-inventory">
+        <div class="sec-hdr">
+          <div class="sec-title">📦 Inventory Intelligence <span>Fertiliser · chemicals · seed · fuel · spares</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Tracked</span>
+        </div>
+        <div id="inventoryBody"></div>
+      </div>
+
+      <!-- PROCUREMENT CENTER -->
+      <div class="panel" id="sec-procurement">
+        <div class="sec-hdr">
+          <div class="sec-title">🤝 Procurement Center <span>Suppliers · vendor scoring · bulk-buy optimisation</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Live</span>
+        </div>
+        <div id="procurementBody"></div>
+      </div>
+
+      <!-- ASSET MANAGEMENT -->
+      <div class="panel" id="sec-assets">
+        <div class="sec-hdr">
+          <div class="sec-title">🚜 Asset Management <span>Tractors · harvesters · irrigation · drones · solar</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Live</span>
+        </div>
+        <div id="assetsBody"></div>
+      </div>
+
+      <!-- BENCHMARKING -->
+      <div class="panel" id="sec-benchmark">
+        <div class="sec-hdr">
+          <div class="sec-title">📐 Benchmarking <span>Farm vs farm · region vs region · vs industry</span><span class="sec-ts live-sec-ts"></span></div>
+          <span class="src-pill src-green">Comparative</span>
+        </div>
+        <div id="benchmarkBody"></div>
+      </div>
+
+      <!-- EXECUTIVE REPORTING -->
+      <div class="panel" id="sec-reports">
+        <div class="sec-hdr">
+          <div class="sec-title">📄 Executive Reporting <span>Generate PDF &amp; Excel reports</span></div>
+          <span class="src-pill src-green">Export</span>
+        </div>
+        <div class="report-grid">
+          <button class="report-btn" onclick="printReport('exec')"><span class="rb-ic">📈</span><div><div class="rb-t">Executive Summary</div><div class="rb-s">Portfolio KPIs &amp; ROI</div></div><div class="rb-dl"><span onclick="event.stopPropagation();printReport('exec')">PDF</span><span onclick="event.stopPropagation();exportReportCSV('exec')">XLS</span></div></button>
+          <button class="report-btn" onclick="printReport('farm')"><span class="rb-ic">🌾</span><div><div class="rb-t">Farm Performance</div><div class="rb-s">Health, grade &amp; hectares</div></div><div class="rb-dl"><span onclick="event.stopPropagation();printReport('farm')">PDF</span><span onclick="event.stopPropagation();exportReportCSV('farm')">XLS</span></div></button>
+          <button class="report-btn" onclick="printReport('revenue')"><span class="rb-ic">💰</span><div><div class="rb-t">Revenue Report</div><div class="rb-s">Yield &amp; gross revenue</div></div><div class="rb-dl"><span onclick="event.stopPropagation();printReport('revenue')">PDF</span><span onclick="event.stopPropagation();exportReportCSV('revenue')">XLS</span></div></button>
+          <button class="report-btn" onclick="printReport('carbon')"><span class="rb-ic">🌍</span><div><div class="rb-t">Carbon Portfolio</div><div class="rb-s">Verified &amp; pending credits</div></div><div class="rb-dl"><span onclick="event.stopPropagation();printReport('carbon')">PDF</span><span onclick="event.stopPropagation();exportReportCSV('carbon')">XLS</span></div></button>
+          <button class="report-btn" onclick="printReport('sustain')"><span class="rb-ic">♻️</span><div><div class="rb-t">Sustainability Report</div><div class="rb-s">Carbon, water &amp; energy</div></div><div class="rb-dl"><span onclick="event.stopPropagation();printReport('sustain')">PDF</span><span onclick="event.stopPropagation();exportReportCSV('sustain')">XLS</span></div></button>
+          <button class="report-btn" onclick="printReport('water')"><span class="rb-ic">💧</span><div><div class="rb-t">Water Efficiency</div><div class="rb-s">Moisture &amp; flow per farm</div></div><div class="rb-dl"><span onclick="event.stopPropagation();printReport('water')">PDF</span><span onclick="event.stopPropagation();exportReportCSV('water')">XLS</span></div></button>
+        </div>
+      </div>
+
     </div><!-- end content -->
   </div><!-- end main -->
 </div><!-- end shell -->
@@ -2816,6 +2957,16 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
     <button class="md-close" onclick="closeMobileDrawer()">×</button>
   </div>
   <div class="md-nav">
+    <div class="md-section">Enterprise</div>
+    <button class="md-item" onclick="mobileNav(null,'sec-roi')"><span class="md-icon">📊</span>ROI Dashboard</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-command')"><span class="md-icon">🛰️</span>Command Center</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-kpi')"><span class="md-icon">🎯</span>Enterprise KPIs</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-actionfeed')"><span class="md-icon">⚡</span>Action Feed</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-inventory')"><span class="md-icon">📦</span>Inventory</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-procurement')"><span class="md-icon">🤝</span>Procurement</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-assets')"><span class="md-icon">🚜</span>Assets</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-benchmark')"><span class="md-icon">📐</span>Benchmarking</button>
+    <button class="md-item" onclick="mobileNav(null,'sec-reports')"><span class="md-icon">📄</span>Reports</button>
     <div class="md-section">Intelligence</div>
     <button class="md-item" onclick="mobileNav(null,'top')"><span class="md-icon">🏠</span>Dashboard</button>
     <button class="md-item" onclick="mobileNav(null,'sec-ai')"><span class="md-icon">🤖</span>AI Advisor</button>
@@ -4823,6 +4974,302 @@ function updateNotificationBadge(){
   }
 }
 
+// ════════════════ ENTERPRISE SUITE ════════════════
+const PLATFORM_FEE_HA_MO=65; // YieldCore platform fee assumption (R/ha/month)
+const inventory=[
+  {item:'Urea (46% N)',cat:'Fertiliser',qty:42,unit:'t',value:42*11500,reorder:30,max:120,status:'ok'},
+  {item:'MAP',cat:'Fertiliser',qty:18,unit:'t',value:18*13800,reorder:25,max:90,status:'low'},
+  {item:'KCl (Potash)',cat:'Fertiliser',qty:22,unit:'t',value:22*10200,reorder:20,max:80,status:'ok'},
+  {item:'Glyphosate',cat:'Chemical',qty:280,unit:'L',value:280*95,reorder:200,max:1000,status:'ok'},
+  {item:'Lambda-cyhalothrin',cat:'Chemical',qty:34,unit:'L',value:34*420,reorder:60,max:300,status:'low'},
+  {item:'Maize seed (hybrid)',cat:'Seed',qty:9.5,unit:'t',value:9.5*48000,reorder:6,max:30,status:'ok'},
+  {item:'Soybean seed',cat:'Seed',qty:14,unit:'t',value:14*22000,reorder:8,max:40,status:'over'},
+  {item:'Diesel',cat:'Fuel',qty:6200,unit:'L',value:6200*22.4,reorder:4000,max:20000,status:'ok'},
+  {item:'Tractor filters & spares',cat:'Spares',qty:46,unit:'units',value:46*640,reorder:30,max:150,status:'ok'},
+  {item:'Drip line & fittings',cat:'Irrigation',qty:3.2,unit:'km',value:3200*38,reorder:5,max:20,status:'low'},
+];
+const suppliers=[
+  {name:'Omnia Nutriology',cat:'Fertiliser',score:92,onTime:96,priceIdx:101,spend:2.84,lead:5},
+  {name:'Kynoch Fertilizer',cat:'Fertiliser',score:88,onTime:91,priceIdx:98,spend:1.97,lead:7},
+  {name:'Bayer Crop Science',cat:'Chemical',score:90,onTime:94,priceIdx:104,spend:1.42,lead:6},
+  {name:'Syngenta SA',cat:'Chemical',score:86,onTime:88,priceIdx:99,spend:1.11,lead:9},
+  {name:'Pannar Seed',cat:'Seed',score:94,onTime:97,priceIdx:102,spend:2.20,lead:4},
+  {name:'Engen Fuels',cat:'Fuel',score:83,onTime:99,priceIdx:100,spend:1.66,lead:2},
+  {name:'Netafim SA',cat:'Irrigation',score:91,onTime:90,priceIdx:103,spend:0.88,lead:8},
+];
+const assets=[
+  {name:'John Deere 6155M',type:'Tractor',util:78,status:'active',nextService:'12 days',downtime:2.4},
+  {name:'Case IH Axial-Flow',type:'Harvester',util:64,status:'active',nextService:'5 days',downtime:4.1},
+  {name:'Netafim Pivot ×6',type:'Irrigation',util:88,status:'active',nextService:'21 days',downtime:1.2},
+  {name:'DJI Agras T40 ×3',type:'Drone',util:55,status:'active',nextService:'8 days',downtime:0.6},
+  {name:'Toyota Land Cruiser ×4',type:'Vehicle',util:71,status:'active',nextService:'service due',downtime:3.0},
+  {name:'Solar array 1.2 MW',type:'Solar',util:93,status:'active',nextService:'45 days',downtime:0.4},
+  {name:'Bell Front Loader',type:'Equipment',util:41,status:'idle',nextService:'overdue',downtime:9.2},
+];
+function entToast(msg){let t=document.getElementById('entToast');if(!t){t=document.createElement('div');t.id='entToast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#22c55e,#4ade80);color:#03130a;font-weight:800;font-size:13px;padding:12px 20px;border-radius:12px;z-index:99999;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:opacity .3s;max-width:90vw;text-align:center';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';clearTimeout(window._entToastT);window._entToastT=setTimeout(()=>{t.style.opacity='0';},2600);}
+
+function entMetrics(){
+  const totalHa=farmHealth.reduce((a,f)=>a+(f.ha||0),0);
+  const totalFarms=farmHealth.length;
+  const revR=yieldFarms.reduce((a,f)=>a+f.yieldT*f.ha*f.priceR,0);
+  const cVerified=carbonFarms.reduce((a,f)=>a+f.verified,0);
+  const cPending=carbonFarms.reduce((a,f)=>a+f.pending,0);
+  const carbonRevR=cVerified*carbonVCMPrice*ZAR_PER_USD;
+  const solarToday=Math.round((typeof solarLive!=='undefined'?solarLive:[]||[]).reduce((a,f)=>a+(f.kwh||0),0));
+  const solarSaveR=Math.round(solarToday*3.2*365);
+  const yieldUpliftPct=18, waterSavedPct=32, chemSavedPct=40, profitUpliftHa=3200;
+  const profitUpliftR=profitUpliftHa*totalHa;
+  const revIncreaseR=revR*(yieldUpliftPct/100)/(1+yieldUpliftPct/100);
+  const inputSaveR=Math.round(revR*0.06);
+  const invValue=inventory.reduce((a,i)=>a+i.value,0);
+  const lowStock=inventory.filter(i=>i.status==='low').length;
+  const overStock=inventory.filter(i=>i.status==='over').length;
+  const procSaveR=Math.round(suppliers.reduce((a,s)=>a+s.spend*1e6,0)*0.084);
+  const assetUtil=Math.round(assets.reduce((a,x)=>a+x.util,0)/assets.length);
+  const invEff=Math.round(100-((lowStock+overStock)/inventory.length)*100);
+  const costSaveR=inputSaveR+procSaveR;
+  // Net gain = exactly the sum of the four ZAR component tiles shown in the ROI module (revenue uplift + cost savings + carbon + solar) so the headline ties out to what's displayed
+  const netGainR=revIncreaseR+costSaveR+carbonRevR+solarSaveR;
+  const feeR=PLATFORM_FEE_HA_MO*12*totalHa;
+  const roiPct=Math.round(((netGainR-feeR)/feeR)*100);
+  const roiX=netGainR/feeR;
+  return {totalHa,totalFarms,revR,cVerified,cPending,carbonRevR,solarToday,solarSaveR,yieldUpliftPct,waterSavedPct,chemSavedPct,profitUpliftR,revIncreaseR,inputSaveR,invValue,lowStock,overStock,procSaveR,assetUtil,invEff,netGainR,feeR,roiPct,roiX};
+}
+
+function renderROI(){
+  const el=document.getElementById('roiBody');if(!el)return;
+  const m=entMetrics();
+  const metrics=[
+    {ic:'🌽',lbl:'Yield Increase',val:'+'+m.yieldUpliftPct+'%',sub:'vs conventional baseline',color:'#facc15'},
+    {ic:'💰',lbl:'Revenue Increase',val:_fmtR(m.revIncreaseR),sub:'attributable to yield uplift',color:'#22c55e'},
+    {ic:'✂️',lbl:'Cost Savings',val:_fmtR(m.inputSaveR+m.procSaveR),sub:'inputs −'+m.chemSavedPct+'% · bulk procurement',color:'#4ade80'},
+    {ic:'💧',lbl:'Water Savings',val:'−'+m.waterSavedPct+'%',sub:'precision irrigation',color:'#38bdf8'},
+    {ic:'🌍',lbl:'Carbon Revenue',val:_fmtR(m.carbonRevR),sub:m.cVerified.toLocaleString()+' t CO₂e verified',color:'#34d399'},
+    {ic:'☀️',lbl:'Solar Savings',val:_fmtR(m.solarSaveR),sub:'grid offset / yr',color:'#facc15'},
+    {ic:'📈',lbl:'Net Profit Increase',val:_fmtR(m.netGainR),sub:'across '+m.totalHa.toLocaleString()+' ha / yr',color:'#22c55e'},
+  ];
+  el.innerHTML=`
+    <div class="roi-hero">
+      <div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:var(--sub);text-transform:uppercase">Portfolio Return on Investment</div>
+        <div class="roi-big">${m.roiPct.toLocaleString()}%</div>
+        <div style="font-size:12px;color:var(--text);margin-top:6px;font-weight:700">Every R1 invested returns <b style="color:#4ade80">R${m.roiX.toFixed(1)}</b> in farmer value</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--sub);font-weight:700">Annual net gain</div>
+        <div style="font-size:30px;font-weight:900;color:#4ade80">${_fmtR(m.netGainR)}</div>
+        <div style="font-size:11px;color:var(--sub);margin-top:2px">Platform fee ${_fmtR(m.feeR)}/yr · R${PLATFORM_FEE_HA_MO}/ha/mo</div>
+      </div>
+    </div>
+    <div class="ent-grid">${metrics.map(x=>`
+      <div class="ent-tile"><div class="et-ic">${x.ic}</div><div class="et-val" style="color:${x.color}">${x.val}</div><div class="et-lbl">${x.lbl}</div><div class="et-sub">${x.sub}</div></div>`).join('')}</div>`;
+}
+
+function renderCommand(){
+  const el=document.getElementById('commandGrid');if(!el)return;
+  const m=entMetrics();
+  const avgHealth=Math.round(farmHealth.reduce((a,f)=>a+f.score,0)/farmHealth.length);
+  const crit=alertsData.filter(a=>a.type==='critical').length;
+  const dryFarms=irrigFarms.filter(f=>f.moist<f.target-8).length;
+  const pestHigh=(typeof pestData!=='undefined')?pestData.filter(p=>p.severity==='HIGH').length:0;
+  const tiles=[
+    {ic:'🌿',lbl:'Farm Health',val:avgHealth+'/100',st:avgHealth>=80?'ok':avgHealth>=65?'warn':'crit',msg:avgHealth>=80?'Healthy':'Needs attention'},
+    {ic:'🔔',lbl:'Alerts',val:alertsData.length,st:crit?'crit':alertsData.length?'warn':'ok',msg:crit+' critical'},
+    {ic:'📦',lbl:'Inventory',val:m.lowStock?m.lowStock+' low':'Stocked',st:m.lowStock?'warn':'ok',msg:_fmtR(m.invValue)+' on hand'},
+    {ic:'💧',lbl:'Water',val:dryFarms?dryFarms+' dry':'Optimal',st:dryFarms?'warn':'ok',msg:'−'+m.waterSavedPct+'% usage'},
+    {ic:'🌍',lbl:'Carbon',val:m.cVerified.toLocaleString()+' t',st:'ok',msg:_fmtR(m.carbonRevR)+'/yr'},
+    {ic:'💰',lbl:'Revenue',val:_fmtR(m.revR),st:'ok',msg:'+'+m.yieldUpliftPct+'% uplift'},
+    {ic:'🐛',lbl:'Pest Risk',val:pestHigh?pestHigh+' high':'Low',st:pestHigh?'crit':'ok',msg:pestHigh?'Treat now':'Under control'},
+    {ic:'⚡',lbl:'Energy',val:m.solarToday.toLocaleString()+' kWh',st:'ok',msg:_fmtR(m.solarSaveR)+'/yr saved'},
+  ];
+  el.innerHTML=tiles.map(t=>`
+    <div class="ent-tile"><div class="et-ic">${t.ic}</div><div class="et-val" style="font-size:20px">${t.val}</div><div class="et-lbl">${t.lbl}</div><div class="ent-status st-${t.st}">●&nbsp;${t.msg}</div></div>`).join('');
+}
+
+function renderKPICenter(){
+  const el=document.getElementById('kpiCenterGrid');if(!el)return;
+  const m=entMetrics();
+  const k=[
+    {ic:'💰',lbl:'Revenue Impact',val:_fmtR(m.revIncreaseR),color:'#22c55e'},
+    {ic:'🌽',lbl:'Yield Improvement',val:'+'+m.yieldUpliftPct+'%',color:'#facc15'},
+    {ic:'💧',lbl:'Water Saved',val:'−'+m.waterSavedPct+'%',color:'#38bdf8'},
+    {ic:'🌍',lbl:'Carbon Credits',val:m.cVerified.toLocaleString()+' t',color:'#34d399'},
+    {ic:'☀️',lbl:'Solar Savings',val:_fmtR(m.solarSaveR),color:'#facc15'},
+    {ic:'✂️',lbl:'Cost Reduction',val:_fmtR(m.inputSaveR+m.procSaveR),color:'#4ade80'},
+    {ic:'📦',lbl:'Inventory Efficiency',val:m.invEff+'%',color:'#22c55e'},
+    {ic:'🚜',lbl:'Asset Utilisation',val:m.assetUtil+'%',color:'#4ade80'},
+  ];
+  el.innerHTML=k.map(x=>`<div class="ent-tile"><div class="et-ic">${x.ic}</div><div class="et-val" style="color:${x.color}">${x.val}</div><div class="et-lbl">${x.lbl}</div></div>`).join('');
+}
+
+function renderActionFeed(){
+  const el=document.getElementById('actionFeedList');if(!el)return;
+  const acts=[];
+  irrigFarms.forEach(f=>{ if(f.moist<35) acts.push({p:0,ic:'💧',t:`Irrigate ${f.name}`,d:`Soil ${f.moist}% — ${f.target-f.moist}% below target`,tag:'IRRIGATION',color:'#38bdf8'}); else if(f.moist>f.target+10) acts.push({p:2,ic:'💧',t:`Reduce irrigation at ${f.name}`,d:`Soil ${f.moist}% — above target, save water`,tag:'IRRIGATION',color:'#38bdf8'}); });
+  inventory.filter(i=>i.status==='low').forEach(i=>acts.push({p:1,ic:'📦',t:`Reorder ${i.item}`,d:`${i.qty}${i.unit} left — below reorder point ${i.reorder}${i.unit}`,tag:'PROCUREMENT',color:'#facc15'}));
+  if(typeof pestData!=='undefined') pestData.filter(p=>p.severity==='HIGH').slice(0,2).forEach(p=>acts.push({p:0,ic:p.icon||'🐛',t:`Treat ${p.name} at ${p.farm}`,d:`${p.confidence}% AI confidence · ${p.field}`,tag:'PEST',color:'#f87171'}));
+  assets.filter(a=>/due|overdue/.test(a.nextService)).forEach(a=>acts.push({p:/overdue/.test(a.nextService)?0:1,ic:'🔧',t:`Schedule maintenance — ${a.name}`,d:`Service ${a.nextService} · ${a.downtime}% downtime`,tag:'ASSETS',color:'#fb923c'}));
+  solarFarms.filter(f=>f.pct<55).slice(0,2).forEach(f=>acts.push({p:1,ic:'☀️',t:`Optimise solar at ${f.name}`,d:`Efficiency ${Math.round(f.pct)}% — clean panels to recover output`,tag:'ENERGY',color:'#facc15'}));
+  carbonFarms.filter(f=>f.status==='none'&&f.ha>500).slice(0,1).forEach(f=>acts.push({p:2,ic:'🌍',t:`Enrol ${f.name} in carbon programme`,d:`${f.ha} ha eligible · zero upfront cost`,tag:'CARBON',color:'#34d399'}));
+  acts.sort((a,b)=>a.p-b.p);
+  const pr=['DO NOW','THIS WEEK','OPPORTUNITY'];
+  el.innerHTML=acts.slice(0,8).map(a=>`
+    <div class="decision-card" style="border-left:3px solid ${a.color}">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:22px">${a.ic}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:800;color:var(--text)">${esc(a.t)}</div>
+          <div style="font-size:11px;color:var(--sub);margin-top:2px">${esc(a.d)}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <span class="ent-pill" style="background:${a.color}22;color:${a.color}">${a.tag}</span>
+          <div style="font-size:9px;color:var(--sub);margin-top:4px;font-weight:800">${pr[a.p]}</div>
+        </div>
+      </div>
+    </div>`).join('') || '<div style="color:var(--sub);font-size:12px;padding:14px">✓ All clear — no priority actions right now.</div>';
+}
+
+function renderInventory(){
+  const el=document.getElementById('inventoryBody');if(!el)return;
+  const total=inventory.reduce((a,i)=>a+i.value,0);
+  const low=inventory.filter(i=>i.status==='low');
+  const procSave=Math.round(suppliers.reduce((a,s)=>a+s.spend*1e6,0)*0.084);
+  const sCol={ok:'#4ade80',low:'#f87171',over:'#facc15'};
+  const sLbl={ok:'In stock',low:'LOW',over:'OVERSTOCK'};
+  el.innerHTML=`
+    <div class="ent-grid" style="margin-bottom:14px">
+      <div class="ent-tile"><div class="et-ic">📦</div><div class="et-val">${_fmtR(total)}</div><div class="et-lbl">Inventory Value</div></div>
+      <div class="ent-tile"><div class="et-ic">🔄</div><div class="et-val">4.2×</div><div class="et-lbl">Annual Turnover</div></div>
+      <div class="ent-tile"><div class="et-ic">⚠️</div><div class="et-val" style="color:#f87171">${low.length}</div><div class="et-lbl">Low-stock Alerts</div></div>
+      <div class="ent-tile"><div class="et-ic">💸</div><div class="et-val" style="color:#4ade80">${_fmtR(procSave)}</div><div class="et-lbl">Procurement Savings</div></div>
+    </div>
+    <div style="overflow-x:auto"><table class="ent-table"><thead><tr><th>Item</th><th>Category</th><th>On hand</th><th>Stock level</th><th>Value</th><th>Status</th></tr></thead><tbody>
+    ${inventory.map(i=>{const pct=Math.min(100,Math.round(i.qty/i.max*100));return `<tr>
+      <td style="font-weight:700">${esc(i.item)}</td><td style="color:var(--sub)">${esc(i.cat)}</td>
+      <td>${i.qty} ${i.unit}</td>
+      <td><div class="ent-bar"><span style="width:${pct}%;background:${sCol[i.status]}"></span></div></td>
+      <td>${_fmtR(i.value)}</td>
+      <td><span class="ent-pill" style="background:${sCol[i.status]}22;color:${sCol[i.status]}">${sLbl[i.status]}</span></td></tr>`;}).join('')}
+    </tbody></table></div>
+    ${low.length?`<div class="decision-card" style="margin-top:12px;border-left:3px solid #facc15"><div style="font-size:12px;font-weight:800;color:#facc15">🤖 AI Re-order Recommendation</div><div style="font-size:11px;color:var(--sub);margin-top:4px">Re-order ${low.map(i=>esc(i.item)).join(', ')} now — forecast 30-day demand exceeds on-hand stock. Bulk-ordering through Omnia + Kynoch captures ~8.4% (${_fmtR(procSave)}/yr) in savings.</div></div>`:''}`;
+}
+
+function renderProcurement(){
+  const el=document.getElementById('procurementBody');if(!el)return;
+  const totalSpend=suppliers.reduce((a,s)=>a+s.spend,0);
+  const best=[...suppliers].sort((a,b)=>b.score-a.score)[0];
+  const save=Math.round(totalSpend*1e6*0.084);
+  el.innerHTML=`
+    <div class="ent-grid" style="margin-bottom:14px">
+      <div class="ent-tile"><div class="et-ic">🤝</div><div class="et-val">${suppliers.length}</div><div class="et-lbl">Active Suppliers</div></div>
+      <div class="ent-tile"><div class="et-ic">💳</div><div class="et-val">R${totalSpend.toFixed(1)}M</div><div class="et-lbl">Annual Spend</div></div>
+      <div class="ent-tile"><div class="et-ic">⭐</div><div class="et-val" style="color:#4ade80">${best.score}</div><div class="et-lbl">Top: ${esc(best.name)}</div></div>
+      <div class="ent-tile"><div class="et-ic">💸</div><div class="et-val" style="color:#4ade80">${_fmtR(save)}</div><div class="et-lbl">Bulk-buy Savings</div></div>
+    </div>
+    <div style="overflow-x:auto"><table class="ent-table"><thead><tr><th>Supplier</th><th>Category</th><th>Vendor score</th><th>On-time</th><th>Price index</th><th>Lead</th><th>Spend</th></tr></thead><tbody>
+    ${[...suppliers].sort((a,b)=>b.score-a.score).map(s=>{const sc=s.score>=90?'#4ade80':s.score>=85?'#facc15':'#fb923c';return `<tr>
+      <td style="font-weight:700">${esc(s.name)}</td><td style="color:var(--sub)">${esc(s.cat)}</td>
+      <td><b style="color:${sc}">${s.score}</b></td><td>${s.onTime}%</td>
+      <td><span style="color:${s.priceIdx<=100?'#4ade80':'#f87171'}">${s.priceIdx}</span></td>
+      <td>${s.lead}d</td><td>R${s.spend.toFixed(2)}M</td></tr>`;}).join('')}
+    </tbody></table></div>
+    <div class="decision-card" style="margin-top:12px;border-left:3px solid #22c55e"><div style="font-size:12px;font-weight:800;color:#4ade80">🤖 AI Supplier Recommendation</div><div style="font-size:11px;color:var(--sub);margin-top:4px">Consolidate fertiliser orders with <b>${esc(best.name)}</b> (score ${best.score}, ${best.onTime}% on-time). Shift 20% of chemical spend to the lowest price-index vendor and pre-season bulk-buy seed to capture ${_fmtR(save)} in annual savings.</div></div>`;
+}
+
+function renderAssets(){
+  const el=document.getElementById('assetsBody');if(!el)return;
+  const avgUtil=Math.round(assets.reduce((a,x)=>a+x.util,0)/assets.length);
+  const dueCount=assets.filter(a=>/due|overdue/.test(a.nextService)).length;
+  const avgDown=(assets.reduce((a,x)=>a+x.downtime,0)/assets.length).toFixed(1);
+  el.innerHTML=`
+    <div class="ent-grid" style="margin-bottom:14px">
+      <div class="ent-tile"><div class="et-ic">🚜</div><div class="et-val">${assets.length}</div><div class="et-lbl">Tracked Assets</div></div>
+      <div class="ent-tile"><div class="et-ic">📊</div><div class="et-val" style="color:#4ade80">${avgUtil}%</div><div class="et-lbl">Avg Utilisation</div></div>
+      <div class="ent-tile"><div class="et-ic">🔧</div><div class="et-val" style="color:${dueCount?'#f87171':'#4ade80'}">${dueCount}</div><div class="et-lbl">Service Due</div></div>
+      <div class="ent-tile"><div class="et-ic">⏱️</div><div class="et-val">${avgDown}%</div><div class="et-lbl">Avg Downtime</div></div>
+    </div>
+    <div style="overflow-x:auto"><table class="ent-table"><thead><tr><th>Asset</th><th>Type</th><th>Utilisation</th><th>Next service</th><th>Downtime</th><th>Status</th></tr></thead><tbody>
+    ${assets.map(a=>{const uc=a.util>=75?'#4ade80':a.util>=50?'#facc15':'#fb923c';const overdue=/overdue/.test(a.nextService),due=/due/.test(a.nextService);const stc=overdue?'#f87171':a.status==='idle'?'#facc15':'#4ade80';return `<tr>
+      <td style="font-weight:700">${esc(a.name)}</td><td style="color:var(--sub)">${esc(a.type)}</td>
+      <td><div style="display:flex;align-items:center;gap:8px"><div class="ent-bar"><span style="width:${a.util}%;background:${uc}"></span></div><span style="font-size:11px">${a.util}%</span></div></td>
+      <td style="color:${overdue?'#f87171':due?'#facc15':'var(--text)'}">${esc(a.nextService)}</td>
+      <td>${a.downtime}%</td>
+      <td><span class="ent-pill" style="background:${stc}22;color:${stc}">${overdue?'SERVICE':a.status.toUpperCase()}</span></td></tr>`;}).join('')}
+    </tbody></table></div>`;
+}
+
+function renderBenchmark(){
+  const el=document.getElementById('benchmarkBody');if(!el)return;
+  const ranked=[...farmHealth].sort((a,b)=>b.score-a.score);
+  const prov={};
+  farmHealth.forEach(f=>{(prov[f.province]=prov[f.province]||[]).push(f.score);});
+  const regions=Object.entries(prov).map(([p,arr])=>({p,avg:Math.round(arr.reduce((a,b)=>a+b,0)/arr.length),n:arr.length})).sort((a,b)=>b.avg-a.avg);
+  const fleetAvg=Math.round(farmHealth.reduce((a,f)=>a+f.score,0)/farmHealth.length);
+  const industryAvg=68;
+  const maxR=Math.max(...regions.map(r=>r.avg),1);
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+      <div>
+        <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:10px">🏆 Farm vs Farm — health score</div>
+        ${ranked.map((f,i)=>{const c=f.score>=80?'#4ade80':f.score>=65?'#facc15':'#fb923c';return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px"><div style="width:18px;font-size:11px;color:var(--sub);font-weight:800">${i+1}</div><div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(f.name)}</div><div class="ent-bar" style="margin-top:3px"><span style="width:${f.score}%;background:${c}"></span></div></div><div style="font-size:12px;font-weight:800;color:${c};width:30px;text-align:right">${f.score}</div></div>`;}).join('')}
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:10px">🗺️ Region vs Region — avg score</div>
+        ${regions.map(r=>{const c=r.avg>=80?'#4ade80':r.avg>=65?'#facc15':'#fb923c';return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--text);font-weight:600">${esc(r.p)} <span style="color:var(--sub)">· ${r.n} farm${r.n>1?'s':''}</span></div><div class="ent-bar" style="margin-top:3px"><span style="width:${Math.round(r.avg/maxR*100)}%;background:${c}"></span></div></div><div style="font-size:12px;font-weight:800;color:${c};width:30px;text-align:right">${r.avg}</div></div>`;}).join('')}
+        <div style="margin-top:18px;padding:14px;border-radius:12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25)">
+          <div style="font-size:11px;font-weight:800;color:var(--sub);text-transform:uppercase;letter-spacing:.5px">YieldCore clients vs industry</div>
+          <div style="display:flex;align-items:flex-end;gap:18px;margin-top:10px">
+            <div><div style="font-size:30px;font-weight:900;color:#4ade80">${fleetAvg}</div><div style="font-size:10px;color:var(--sub)">YieldCore avg</div></div>
+            <div style="font-size:20px;color:var(--sub);padding-bottom:6px">vs</div>
+            <div><div style="font-size:30px;font-weight:900;color:var(--sub)">${industryAvg}</div><div style="font-size:10px;color:var(--sub)">Industry avg</div></div>
+            <div style="margin-left:auto;text-align:right"><div style="font-size:20px;font-weight:900;color:#4ade80">+${Math.round((fleetAvg-industryAvg)/industryAvg*100)}%</div><div style="font-size:10px;color:var(--sub)">outperformance</div></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderEnterprise(){
+  try{renderROI();renderCommand();renderKPICenter();renderActionFeed();renderInventory();renderProcurement();renderAssets();renderBenchmark();}catch(e){console.warn('renderEnterprise',e);}
+}
+
+// ── Executive Reporting ──
+function _csv(rows){const safe=c=>{c=String(c==null?'':c);if(/^[=+\-@\t\r]/.test(c))c="'"+c;return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;};return rows.map(r=>r.map(safe).join(',')).join('\n');}
+function _downloadFile(name,content,mime){const b=new Blob([content],{type:mime});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);}
+function _reportRows(type){
+  const m=entMetrics();
+  if(type==='exec') return {name:'Executive_Summary',rows:[['Metric','Value'],['Total farms',m.totalFarms],['Total hectares',m.totalHa],['Revenue forecast',_fmtR(m.revR)],['Net profit increase / yr',_fmtR(m.netGainR)],['Return on investment',m.roiPct+'%'],['Carbon verified (t CO2e)',m.cVerified],['Water saved',m.waterSavedPct+'%'],['Avg asset utilisation',m.assetUtil+'%'],['Inventory efficiency',m.invEff+'%']]};
+  if(type==='farm') return {name:'Farm_Performance',rows:[['Farm','Province','Crop','Health score','Grade','Hectares'],...farmHealth.map(f=>[f.name,f.province,f.crop,f.score,f.grade,f.ha])]};
+  if(type==='revenue') return {name:'Revenue_Report',rows:[['Farm','Crop','Hectares','Yield t/ha','Price R/t','Gross R'],...yieldFarms.map(y=>[y.farm,y.crop,y.ha,y.yieldT,y.priceR,Math.round(y.yieldT*y.ha*y.priceR)])]};
+  if(type==='carbon') return {name:'Carbon_Portfolio',rows:[['Farm','Crop','Hectares','Rate t/ha','Verified t','Pending t','Status'],...carbonFarms.map(c=>[c.name,c.crop,c.ha,c.rate,c.verified,c.pending,c.status])]};
+  if(type==='sustain') return {name:'Sustainability_Report',rows:[['Metric','Value'],['Carbon verified (t CO2e)',m.cVerified],['Carbon pending (t)',m.cPending],['Carbon revenue / yr',_fmtR(m.carbonRevR)],['Water saved',m.waterSavedPct+'%'],['Chemical reduction',m.chemSavedPct+'%'],['Solar generated today (kWh)',m.solarToday],['Solar savings / yr',_fmtR(m.solarSaveR)]]};
+  if(type==='water') return {name:'Water_Efficiency',rows:[['Farm','Soil moisture %','Target %','Flow','Status'],...irrigFarms.map(i=>[i.name,i.moist,i.target,i.flow,i.status])]};
+  return {name:'Report',rows:[['No data']]};
+}
+function exportReportCSV(type){const r=_reportRows(type);_downloadFile('YieldCore_'+r.name+'_'+new Date().toISOString().slice(0,10)+'.csv',_csv(r.rows),'text/csv;charset=utf-8;');entToast('📊 '+r.name.replace(/_/g,' ')+' exported (Excel/CSV)');}
+function printReport(type){
+  const r=_reportRows(type);
+  const w=window.open('','_blank');
+  if(!w){alert('Allow pop-ups to generate the PDF report.');return;}
+  const body=r.rows.map((row,i)=>i===0?'<tr>'+row.map(c=>`<th>${esc(String(c))}</th>`).join('')+'</tr>':'<tr>'+row.map(c=>`<td>${esc(String(c))}</td>`).join('')+'</tr>').join('');
+  w.document.write(`<html><head><title>YieldCore — ${r.name.replace(/_/g,' ')}</title><meta charset="utf-8"><style>body{font-family:Arial,Helvetica,sans-serif;color:#0a2010;padding:40px;max-width:900px;margin:auto}h1{color:#15803d;margin-bottom:2px}.sub{color:#666;font-size:13px;margin-bottom:24px}table{width:100%;border-collapse:collapse;font-size:13px}th{background:#15803d;color:#fff;text-align:left;padding:9px 11px}td{padding:8px 11px;border-bottom:1px solid #ddd}tr:nth-child(even) td{background:#f3faf4}.ft{margin-top:30px;font-size:11px;color:#888;border-top:1px solid #ddd;padding-top:12px}@media print{body{padding:0}}</style></head><body><h1>🌿 YieldCore AI — ${r.name.replace(/_/g,' ')}</h1><div class="sub">Generated ${new Date().toLocaleString('en-ZA')} · Agricultural Intelligence Operating System</div><table>${body}</table><div class="ft">Confidential · YieldCore AI · South Africa · Figures derived from live platform data.</div><scr`+`ipt>setTimeout(function(){window.print();},400);<\/scr`+`ipt></body></html>`);
+  w.document.close();
+  entToast('📄 '+r.name.replace(/_/g,' ')+' ready — print or save as PDF');
+}
+
+function toggleInvestorMode(){
+  const on=!document.body.classList.contains('investor-mode');
+  document.body.classList.toggle('investor-mode',on);
+  const b=document.getElementById('demoBanner');
+  if(b)b.classList.toggle('on',on);
+  if(on){
+    renderEnterprise();
+    const t=document.getElementById('sec-roi');
+    if(t){const y=t.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:y,behavior:'smooth'});}
+    entToast('🎬 Investor Demo Mode on — showing ROI, KPIs & impact');
+  } else entToast('Investor Demo Mode off');
+}
+
 function init(){
   renderWeather();
   renderFarmHealth();
@@ -4846,6 +5293,7 @@ function init(){
   renderBio();
   renderRevenue();
   renderModules();
+  renderEnterprise();
   fetchWeather();
   startSystemClock();
   updateNotificationBadge();
@@ -4853,7 +5301,7 @@ function init(){
   setInterval(()=>{renderSolar();renderIrrigation();renderStats(false);}, 5000);
   setInterval(fetchLiveSensors, 10*60*1000);
   setInterval(()=>{renderCarbon();renderStats(false);}, 30000);
-  setInterval(()=>{renderInsights();renderDecisionSupport();}, 60000);
+  setInterval(()=>{renderInsights();renderDecisionSupport();renderEnterprise();}, 60000);
   setTimeout(obShow, 1800);
 }
 window.setNav=setNav;
