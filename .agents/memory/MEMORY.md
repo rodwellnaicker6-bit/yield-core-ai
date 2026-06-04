@@ -4,3 +4,4 @@
 - [Mapbox map diagnosis](mapbox-map-diagnosis.md) — server-side curl can't detect URL-restricted/browser-only Mapbox failures; fallback must show the real cause, not a generic "add token".
 - [Production URL vs hardcoded share URL](production-url.md) — real live URL comes from getDeploymentInfo(); the hardcoded yieldcore.replit.app is dead. LIVE_URL drives all share/registration links.
 - [Enterprise ROI tie-out](enterprise-roi-tieout.md) — ROI headline netGain must equal the sum of its displayed component tiles; CSV export escapes formula-injection.
+- [app_preview captures from top](screenshot-below-fold.md) — JS-scrolling can't frame below-fold UI in a screenshot; elevate/isolate the section or rely on parse+review instead.
