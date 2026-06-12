@@ -1,3 +1,5 @@
+require('dotenv').config({ override: true });
+
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -73,6 +75,7 @@ app.use(
       if (!origin) return cb(null, true); // server-to-server, curl, mobile WAs
       const allowed = [
         process.env.LIVE_URL,
+        /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/,
         "https://yield-core-ai.replit.app",
         /\.replit\.dev$/,
         /\.repl\.co$/,
@@ -164,6 +167,7 @@ function requireAdmin(req, res, next) {
       .json({ error: "Admin endpoint disabled (no ADMIN_TOKEN set)" });
   if (
     !tok ||
+    tok.length !== expected.length ||
     !crypto.timingSafeEqual(Buffer.from(tok), Buffer.from(expected))
   ) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -493,7 +497,6 @@ async function ensureDemoUser() {
     });
   } catch {}
 }
-console.log("DEMO ROUTE LOADED");
 
 app.post("/api/auth/demo", async (req, res) => {
   return res.json({
@@ -809,8 +812,9 @@ app.post("/api/whatsapp/inbound", validateTwilio, async (req, res) => {
     } else {
       reply = botRouter(msgBody);
     }
+    const hasReply = !!reply;
     if (!reply) reply = `Send 📍 a location or *MENU* for help.`;
-    if (!reply.includes(LIVE_URL)) reply += FOOTER;
+    if (hasReply && !reply.includes(LIVE_URL)) reply += FOOTER;
 
     res.set("Content-Type", "text/xml");
     res.send(
@@ -1049,11 +1053,19 @@ Respond concisely, practically, and in a friendly tone. Use South African contex
 });
 
 // ── 📲 INBOUND WHATSAPP WEBHOOK (Twilio → AI reply) ──
-const waSessions = new Map(); // from -> [{role, content}, ...]
+const waSessions = new Map(); // from -> [{role, content}, ...]  (.lastSeen on array)
 function waHistory(from) {
   if (!waSessions.has(from)) waSessions.set(from, []);
-  return waSessions.get(from);
+  const h = waSessions.get(from);
+  h.lastSeen = Date.now();
+  return h;
 }
+setInterval(() => {
+  const cutoff = Date.now() - 2 * 60 * 60 * 1000;
+  for (const [k, h] of waSessions) {
+    if ((h.lastSeen || 0) < cutoff) waSessions.delete(k);
+  }
+}, 30 * 60 * 1000).unref();
 function xmlEscape(s) {
   return (s || "").replace(
     /[&<>'"]/g,
@@ -1701,7 +1713,9 @@ ${rows.length ? cards : '<div class="empty"><h2>No farmers yet</h2><p>Share your
 
 const PORT = 5000;
 app.listen(PORT, "0.0.0.0", () => {
+  const LOCAL = `http://localhost:${PORT}`;
   console.log(`YieldCore AI server running on port ${PORT}`);
-  console.log(`📝 Registration: ${LIVE_URL}/register`);
-  console.log(`👨‍🌾 Owner view:   ${LIVE_URL}/farmers?t=YOUR_ADMIN_TOKEN`);
+  console.log(`🌐 App:          ${LOCAL}`);
+  console.log(`📝 Registration: ${LOCAL}/register`);
+  console.log(`👨‍🌾 Farmers view: ${LOCAL}/farmers?t=<ADMIN_TOKEN>`);
 });
