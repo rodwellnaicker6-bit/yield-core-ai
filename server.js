@@ -50,9 +50,13 @@ app.use(cors({
     const allowed = [
       process.env.LIVE_URL,
       'https://yield-core-ai.replit.app',
+      'http://localhost:5000',
+      'http://127.0.0.1:5000',
       /\.replit\.dev$/,
       /\.repl\.co$/,
-      /\.replit\.app$/
+      /\.replit\.app$/,
+      /^http:\/\/localhost(:\d+)?$/,
+      /^http:\/\/127\.0\.0\.1(:\d+)?$/,
     ].filter(Boolean);
     const ok = allowed.some(a => a instanceof RegExp ? a.test(origin) : a === origin);
     cb(ok ? null : new Error('CORS blocked'), ok);
