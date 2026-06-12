@@ -3111,7 +3111,7 @@ function toggleAuthMode(){
   document.getElementById('authToggleText').textContent = isReg ? 'Already have an account?' : 'New here?';
   document.getElementById('authToggle').textContent = isReg ? 'Sign in' : 'Create account';
   document.getElementById('loginPass').setAttribute('autocomplete', isReg ? 'new-password' : 'current-password');
-  document.getElementById('loginErr').style.display = 'none';
+ document.getElementById('loginErr').style.display = 'none';
 }
 function showAuthError(msg){
   const el = document.getElementById('loginErr');
@@ -3119,6 +3119,7 @@ function showAuthError(msg){
   el.style.display = 'block';
 }
 function enterApp(){
+  alert('ENTER APP');
   document.getElementById('loginOverlay').style.display='none';
   document.getElementById('shell').style.display='flex';
   requestAnimationFrame(()=>requestAnimationFrame(()=>init()));

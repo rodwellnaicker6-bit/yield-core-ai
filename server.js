@@ -1,71 +1,100 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const crypto = require('crypto');
-const twilio = require('twilio');
-const OpenAI = require('openai');
-const path = require('path');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const crypto = require("crypto");
+const twilio = require("twilio");
+const OpenAI = require("openai");
+const path = require("path");
 
 const app = express();
-app.set('trust proxy', 1);
+
+app.set("trust proxy", 1);
 
 // ── 🔒 SECURITY HEADERS ──
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'","'unsafe-inline'","https://api.mapbox.com","https://cdn.jsdelivr.net"],
-      scriptSrcAttr: ["'unsafe-inline'"],
-      styleSrc:  ["'self'","'unsafe-inline'","https://fonts.googleapis.com","https://api.mapbox.com","https://cdn.jsdelivr.net"],
-      fontSrc:   ["'self'","https://fonts.gstatic.com","data:"],
-      imgSrc:    ["'self'","data:","blob:","https:"],
-      connectSrc:["'self'","https://api.mapbox.com","https://events.mapbox.com","https://api.open-meteo.com"],
-      workerSrc: ["'self'","blob:"],
-      frameAncestors: ["'none'"],
-      objectSrc: ["'none'"]
-    }
-  },
-  crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: 'cross-origin' }
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://api.mapbox.com",
+          "https://cdn.jsdelivr.net",
+        ],
+        scriptSrcAttr: ["'unsafe-inline'"],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://fonts.googleapis.com",
+          "https://api.mapbox.com",
+          "https://cdn.jsdelivr.net",
+        ],
+        fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+        imgSrc: ["'self'", "data:", "blob:", "https:"],
+        connectSrc: [
+          "'self'",
+          "https://api.mapbox.com",
+          "https://events.mapbox.com",
+          "https://api.open-meteo.com",
+        ],
+        workerSrc: ["'self'", "blob:"],
+        frameAncestors: ["'none'"],
+        objectSrc: ["'none'"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
 
 // block AI/scraper bots & bad actors at the edge
 app.use((req, res, next) => {
-  res.setHeader('X-Robots-Tag', 'noai, noimageai, noindex, nofollow');
-  res.setHeader('Permissions-Policy', 'interest-cohort=()');
-  const ua = (req.headers['user-agent']||'').toLowerCase();
-  if (/(gptbot|chatgpt-user|claudebot|claude-web|anthropic-ai|google-extended|cohere-ai|ccbot|bytespider|perplexitybot|ai2bot|amazonbot|diffbot|omgilibot|imagesiftbot|peer39_crawler|youbot|magpie-crawler)/.test(ua)) {
-    return res.status(403).send('Disallowed for AI training/scraping. See /robots.txt');
+  res.setHeader("X-Robots-Tag", "noai, noimageai, noindex, nofollow");
+  res.setHeader("Permissions-Policy", "interest-cohort=()");
+  const ua = (req.headers["user-agent"] || "").toLowerCase();
+  if (
+    /(gptbot|chatgpt-user|claudebot|claude-web|anthropic-ai|google-extended|cohere-ai|ccbot|bytespider|perplexitybot|ai2bot|amazonbot|diffbot|omgilibot|imagesiftbot|peer39_crawler|youbot|magpie-crawler)/.test(
+      ua,
+    )
+  ) {
+    return res
+      .status(403)
+      .send("Disallowed for AI training/scraping. See /robots.txt");
   }
   next();
 });
 
 // ── 🌐 CORS — same-origin only (allow Twilio webhook + dev) ──
-app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin) return cb(null, true); // server-to-server, curl, mobile WAs
-    const allowed = [
-      process.env.LIVE_URL,
-      'https://yield-core-ai.replit.app',
-      /\.replit\.dev$/,
-      /\.repl\.co$/,
-      /\.replit\.app$/
-    ].filter(Boolean);
-    const ok = allowed.some(a => a instanceof RegExp ? a.test(origin) : a === origin);
-    cb(ok ? null : new Error('CORS blocked'), ok);
-  },
-  credentials: false
-}));
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true); // server-to-server, curl, mobile WAs
+      const allowed = [
+        process.env.LIVE_URL,
+        "https://yield-core-ai.replit.app",
+        /\.replit\.dev$/,
+        /\.repl\.co$/,
+        /\.replit\.app$/,
+      ].filter(Boolean);
+      const ok = allowed.some((a) =>
+        a instanceof RegExp ? a.test(origin) : a === origin,
+      );
+      cb(ok ? null : new Error("CORS blocked"), ok);
+    },
+    credentials: false,
+  }),
+);
 
-app.use(express.json({ limit: '64kb' }));
-app.use(express.urlencoded({ extended: false, limit: '64kb' }));
-app.use(express.static(path.join(__dirname), { maxAge: '1h', etag: true }));
+app.use(express.json({ limit: "64kb" }));
+app.use(express.urlencoded({ extended: false, limit: "64kb" }));
+app.use(express.static(path.join(__dirname), { maxAge: "1h", etag: true }));
 
 // robots.txt — block AI training & scrapers
-app.get('/robots.txt', (req, res) => {
-  res.type('text/plain').send(
-`User-agent: GPTBot
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain").send(
+    `User-agent: GPTBot
 Disallow: /
 User-agent: ChatGPT-User
 Disallow: /
@@ -89,41 +118,72 @@ User-agent: Amazonbot
 Disallow: /
 User-agent: *
 Disallow: /api/
-`);
+`,
+  );
 });
 
 // ── 🌐 PAGE ROUTES ──
-app.get('/landing', (req, res) => res.sendFile(path.join(__dirname, 'landing.html')));
-app.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, 'landing.html')));
+app.get("/landing", (req, res) =>
+  res.sendFile(path.join(__dirname, "landing.html")),
+);
+app.get("/welcome", (req, res) =>
+  res.sendFile(path.join(__dirname, "landing.html")),
+);
 
 // ── 🚦 RATE LIMITS ──
-const apiLimiter   = rateLimit({ windowMs: 60_000, max: 60,  standardHeaders:true, legacyHeaders:false, message:{error:'Too many requests'} });
-const writeLimiter = rateLimit({ windowMs: 60_000, max: 12,  standardHeaders:true, legacyHeaders:false, message:{error:'Too many requests'} });
-const aiLimiter    = rateLimit({ windowMs: 60_000, max: 8,   standardHeaders:true, legacyHeaders:false, message:{error:'AI rate limit'} });
-app.use('/api/', apiLimiter);
+const apiLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests" },
+});
+const writeLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 12,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests" },
+});
+const aiLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 8,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "AI rate limit" },
+});
+app.use("/api/", apiLimiter);
 
 // ── 🔑 ADMIN GUARD: requires ADMIN_TOKEN header for internal-only endpoints ──
 function requireAdmin(req, res, next) {
-  const tok = req.get('X-Admin-Token') || req.query.t;
+  const tok = req.get("X-Admin-Token") || req.query.t;
   const expected = process.env.ADMIN_TOKEN;
-  if (!expected) return res.status(503).json({ error: 'Admin endpoint disabled (no ADMIN_TOKEN set)' });
-  if (!tok || !crypto.timingSafeEqual(Buffer.from(tok), Buffer.from(expected))) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  if (!expected)
+    return res
+      .status(503)
+      .json({ error: "Admin endpoint disabled (no ADMIN_TOKEN set)" });
+  if (
+    !tok ||
+    !crypto.timingSafeEqual(Buffer.from(tok), Buffer.from(expected))
+  ) {
+    return res.status(401).json({ error: "Unauthorized" });
   }
   next();
 }
 
 // ── 🛡️ TWILIO SIGNATURE VALIDATION ──
 function validateTwilio(req, res, next) {
-  const sig = req.get('X-Twilio-Signature');
+  const sig = req.get("X-Twilio-Signature");
   const token = process.env.TWILIO_AUTH_TOKEN;
-  console.log(`📨 Twilio hit ${req.originalUrl} from ${req.ip} sig=${sig?'yes':'no'} token=${token?'yes':'no'} body.From=${req.body?.From||'-'}`);
+  console.log(
+    `📨 Twilio hit ${req.originalUrl} from ${req.ip} sig=${sig ? "yes" : "no"} token=${token ? "yes" : "no"} body.From=${req.body?.From || "-"}`,
+  );
   // If TWILIO_SKIP_VALIDATION is true OR no auth token configured, allow through (dev)
-  if (process.env.TWILIO_SKIP_VALIDATION === 'true' || !token) return next();
-  if (!sig) return res.status(403).type('text/xml').send('<Response/>');
+  if (process.env.TWILIO_SKIP_VALIDATION === "true" || !token) return next();
+  if (!sig) return res.status(403).type("text/xml").send("<Response/>");
   // Build candidate URLs: Twilio signs the EXACT URL configured in their console.
-  const host  = req.get('x-forwarded-host')  || req.get('host');
-  const proto = req.get('x-forwarded-proto') || req.protocol || 'https';
+  const host = req.get("x-forwarded-host") || req.get("host");
+  const proto = req.get("x-forwarded-proto") || req.protocol || "https";
   const candidates = [
     `${proto}://${host}${req.originalUrl}`,
     `https://${host}${req.originalUrl}`,
@@ -132,211 +192,400 @@ function validateTwilio(req, res, next) {
   for (const url of candidates) {
     if (twilio.validateRequest(token, sig, url, req.body || {})) return next();
   }
-  console.warn('🚫 Invalid Twilio signature. Tried URLs:', candidates.join(' | '));
-  return res.status(403).type('text/xml').send('<Response/>');
+  console.warn(
+    "🚫 Invalid Twilio signature. Tried URLs:",
+    candidates.join(" | "),
+  );
+  return res.status(403).type("text/xml").send("<Response/>");
 }
 
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const twilioClient = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN,
+);
 
 // ── 🟢 SUPABASE CLIENTS (Auth + farmers table) ──
-const fs = require('fs');
-const { createClient } = require('@supabase/supabase-js');
-const cleanEnv = v => (v||'').toString().trim().replace(/^["'=\s]+|["'\s]+$/g, '');
+const fs = require("fs");
+const { createClient } = require("@supabase/supabase-js");
+const cleanEnv = (v) =>
+  (v || "")
+    .toString()
+    .trim()
+    .replace(/^["'=\s]+|["'\s]+$/g, "");
 const SUPABASE_URL = cleanEnv(process.env.SUPABASE_URL);
 const SUPABASE_ANON_KEY = cleanEnv(process.env.SUPABASE_ANON_KEY);
-const SUPABASE_SERVICE_ROLE_KEY = cleanEnv(process.env.SUPABASE_SERVICE_ROLE_KEY);
-const supaPublic = SUPABASE_URL && SUPABASE_ANON_KEY
-  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false }})
-  : null;
-const supaAdmin = SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY
-  ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false, autoRefreshToken: false }})
-  : null;
-if (!supaPublic || !supaAdmin) console.warn('⚠️  Supabase not fully configured — set SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY');
+const SUPABASE_SERVICE_ROLE_KEY = cleanEnv(
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+);
+const supaPublic =
+  SUPABASE_URL && SUPABASE_ANON_KEY
+    ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false },
+      })
+    : null;
+const supaAdmin =
+  SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY
+    ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false },
+      })
+    : null;
+if (!supaPublic || !supaAdmin)
+  console.warn(
+    "⚠️  Supabase not fully configured — set SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY",
+  );
 
 // ── 🌾 FARMER DATABASE (Supabase, JSON-file fallback) ──
-const DB_PATH = path.join(__dirname, 'data', 'farmers.json');
-function dbReadFile(){ try { return JSON.parse(fs.readFileSync(DB_PATH,'utf8')); } catch { return []; } }
-function dbWriteFile(rows){
-  const tmp = DB_PATH + '.tmp';
+const DB_PATH = path.join(__dirname, "data", "farmers.json");
+function dbReadFile() {
+  try {
+    return JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
+  } catch {
+    return [];
+  }
+}
+function dbWriteFile(rows) {
+  const tmp = DB_PATH + ".tmp";
   fs.writeFileSync(tmp, JSON.stringify(rows, null, 2));
   fs.renameSync(tmp, DB_PATH);
 }
-async function dbRead(){
+async function dbRead() {
   if (!supaAdmin) return dbReadFile();
   try {
-    const { data, error } = await supaAdmin.from('farmers').select('*').order('created_at', { ascending: false });
+    const { data, error } = await supaAdmin
+      .from("farmers")
+      .select("*")
+      .order("created_at", { ascending: false });
     if (error) throw error;
-    return (data||[]).map(r => ({ ...r, createdAt: r.created_at, updatedAt: r.updated_at }));
+    return (data || []).map((r) => ({
+      ...r,
+      createdAt: r.created_at,
+      updatedAt: r.updated_at,
+    }));
   } catch (e) {
-    console.warn('Supabase farmers read failed, falling back to file:', e.message);
+    console.warn(
+      "Supabase farmers read failed, falling back to file:",
+      e.message,
+    );
     return dbReadFile();
   }
 }
-async function dbUpsertFarmer(row){
+async function dbUpsertFarmer(row) {
   if (!supaAdmin) {
     const rows = dbReadFile();
-    const i = rows.findIndex(r => r.whatsapp === row.whatsapp);
-    if (i >= 0) rows[i] = { ...rows[i], ...row, id: rows[i].id, createdAt: rows[i].createdAt, updatedAt: new Date().toISOString() };
+    const i = rows.findIndex((r) => r.whatsapp === row.whatsapp);
+    if (i >= 0)
+      rows[i] = {
+        ...rows[i],
+        ...row,
+        id: rows[i].id,
+        createdAt: rows[i].createdAt,
+        updatedAt: new Date().toISOString(),
+      };
     else rows.push(row);
     dbWriteFile(rows);
     return row;
   }
   const payload = {
     id: row.id,
-    name: row.name, farm: row.farm, whatsapp: row.whatsapp, email: row.email,
-    crop: row.crop, hectares: row.hectares, lat: row.lat, lng: row.lng,
-    loc_label: row.locLabel, note: row.note, referrer: row.referrer,
-    ip: row.ip, ua: row.ua,
+    name: row.name,
+    farm: row.farm,
+    whatsapp: row.whatsapp,
+    email: row.email,
+    crop: row.crop,
+    hectares: row.hectares,
+    lat: row.lat,
+    lng: row.lng,
+    loc_label: row.locLabel,
+    note: row.note,
+    referrer: row.referrer,
+    ip: row.ip,
+    ua: row.ua,
   };
-  const { data, error } = await supaAdmin.from('farmers').upsert(payload, { onConflict: 'whatsapp' }).select().single();
-  if (error) { console.error('Supabase upsert failed:', error.message); return row; }
-  return { ...data, createdAt: data.created_at, updatedAt: data.updated_at, locLabel: data.loc_label };
+  const { data, error } = await supaAdmin
+    .from("farmers")
+    .upsert(payload, { onConflict: "whatsapp" })
+    .select()
+    .single();
+  if (error) {
+    console.error("Supabase upsert failed:", error.message);
+    return row;
+  }
+  return {
+    ...data,
+    createdAt: data.created_at,
+    updatedAt: data.updated_at,
+    locLabel: data.loc_label,
+  };
 }
 
 // ── 🔐 SUPABASE AUTH ──
-async function requireAuth(req, res, next){
-  const auth = req.get('authorization') || '';
-  const token = auth.startsWith('Bearer ') ? auth.slice(7) : (req.query.token || '');
-  if (!token) return res.status(401).json({ ok:false, error:'Not signed in' });
+async function requireAuth(req, res, next) {
+  const auth = req.get("authorization") || "";
+  const token = auth.startsWith("Bearer ")
+    ? auth.slice(7)
+    : req.query.token || "";
+  if (!token)
+    return res.status(401).json({ ok: false, error: "Not signed in" });
   // Local fallback token (works without Supabase)
   const local = verifyLocalToken(token);
-  if (local) { req.user = local; return next(); }
-  if (!supaAdmin) return res.status(401).json({ ok:false, error:'Not signed in' });
+  if (local) {
+    req.user = local;
+    return next();
+  }
+  if (!supaAdmin)
+    return res.status(401).json({ ok: false, error: "Not signed in" });
   try {
     const { data, error } = await supaAdmin.auth.getUser(token);
-    if (error || !data?.user) return res.status(401).json({ ok:false, error:'Not signed in' });
-    req.user = { sub: data.user.id, email: data.user.email, name: data.user.user_metadata?.name || data.user.email?.split('@')[0] };
+    if (error || !data?.user)
+      return res.status(401).json({ ok: false, error: "Not signed in" });
+    req.user = {
+      sub: data.user.id,
+      email: data.user.email,
+      name: data.user.user_metadata?.name || data.user.email?.split("@")[0],
+    };
     next();
-  } catch { return res.status(401).json({ ok:false, error:'Not signed in' }); }
+  } catch {
+    return res.status(401).json({ ok: false, error: "Not signed in" });
+  }
 }
 
-const authLimiter = rateLimit({ windowMs: 15*60_000, max: 20, standardHeaders:true, legacyHeaders:false, message:{ok:false,error:'Too many attempts, try again later'} });
+const authLimiter = rateLimit({
+  windowMs: 15 * 60_000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: "Too many attempts, try again later" },
+});
 
-app.post('/api/auth/register', authLimiter, async (req, res) => {
-  if (!supaAdmin || !supaPublic) return res.status(503).json({ ok:false, error:'Auth not configured' });
+app.post("/api/auth/register", authLimiter, async (req, res) => {
+  if (!supaAdmin || !supaPublic)
+    return res.status(503).json({ ok: false, error: "Auth not configured" });
   const b = req.body || {};
-  const email = (b.email||'').toString().trim().toLowerCase().slice(0,200);
-  const password = (b.password||'').toString();
-  const name = (b.name||'').toString().trim().slice(0,120);
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ ok:false, error:'Valid email required' });
-  if (!password || password.length < 8) return res.status(400).json({ ok:false, error:'Password must be at least 8 characters' });
+  const email = (b.email || "").toString().trim().toLowerCase().slice(0, 200);
+  const password = (b.password || "").toString();
+  const name = (b.name || "").toString().trim().slice(0, 120);
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return res.status(400).json({ ok: false, error: "Valid email required" });
+  if (!password || password.length < 8)
+    return res
+      .status(400)
+      .json({ ok: false, error: "Password must be at least 8 characters" });
   try {
-    const { data: created, error: cErr } = await supaAdmin.auth.admin.createUser({
-      email, password, email_confirm: true,
-      user_metadata: { name: name || email.split('@')[0] }
-    });
+    const { data: created, error: cErr } =
+      await supaAdmin.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: { name: name || email.split("@")[0] },
+      });
     if (cErr) {
-      const msg = (cErr.message||'').toLowerCase();
-      if (msg.includes('already') || msg.includes('exists') || msg.includes('registered')) return res.status(409).json({ ok:false, error:'An account with that email already exists' });
-      return res.status(400).json({ ok:false, error: cErr.message });
+      const msg = (cErr.message || "").toLowerCase();
+      if (
+        msg.includes("already") ||
+        msg.includes("exists") ||
+        msg.includes("registered")
+      )
+        return res.status(409).json({
+          ok: false,
+          error: "An account with that email already exists",
+        });
+      return res.status(400).json({ ok: false, error: cErr.message });
     }
-    const { data: signed, error: sErr } = await supaPublic.auth.signInWithPassword({ email, password });
-    if (sErr || !signed?.session) return res.status(500).json({ ok:false, error: sErr?.message || 'Created but could not sign in' });
+    const { data: signed, error: sErr } =
+      await supaPublic.auth.signInWithPassword({ email, password });
+    if (sErr || !signed?.session)
+      return res.status(500).json({
+        ok: false,
+        error: sErr?.message || "Created but could not sign in",
+      });
     const u = signed.user;
-    res.json({ ok:true, token: signed.session.access_token, refresh_token: signed.session.refresh_token, user: { id:u.id, email:u.email, name: u.user_metadata?.name || name || email.split('@')[0] } });
-  } catch (e) { res.status(500).json({ ok:false, error: e.message }); }
+    res.json({
+      ok: true,
+      token: signed.session.access_token,
+      refresh_token: signed.session.refresh_token,
+      user: {
+        id: u.id,
+        email: u.email,
+        name: u.user_metadata?.name || name || email.split("@")[0],
+      },
+    });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
 });
 
 // Shared demo login — anyone using these creds gets in (auto-provisioned in Supabase)
-const DEMO_EMAIL = 'demo@yieldcore.ai';
-const DEMO_PASSWORD = 'yield2025';
+const DEMO_EMAIL = "demo@yieldcore.ai";
+const DEMO_PASSWORD = "yield2025";
 
 // ── 🔑 LOCAL AUTH FALLBACK (demo account only — works even when Supabase is unreachable) ──
 // Signs a self-contained HMAC token so the demo account always works. The token is
 // strictly scoped to the demo identity; no other principals can be minted or accepted.
 // Requires a strong secret — if none is configured, local-token auth is fully disabled.
-const LOCAL_TOKEN_SECRET = SUPABASE_SERVICE_ROLE_KEY || process.env.SESSION_SECRET || null;
-const LOCAL_AUTH_ENABLED = !!(LOCAL_TOKEN_SECRET && LOCAL_TOKEN_SECRET.length >= 24);
-const LOCAL_TOKEN_PREFIX = 'yclocal.';
-const LOCAL_DEMO_SUB = 'local-demo';
-const DEMO_EMAILS = new Set(['demo@yieldcore.ai', 'rodwell@yieldcore.ai']);
-const b64u = (s) => Buffer.from(s).toString('base64url');
-const b64uDecode = (s) => Buffer.from(s, 'base64url').toString('utf8');
-if (!LOCAL_AUTH_ENABLED) console.warn('⚠️  Local demo-auth fallback disabled — set SESSION_SECRET (or SUPABASE_SERVICE_ROLE_KEY) to enable it');
+const LOCAL_TOKEN_SECRET =
+  SUPABASE_SERVICE_ROLE_KEY || process.env.SESSION_SECRET || null;
+const LOCAL_AUTH_ENABLED = !!(
+  LOCAL_TOKEN_SECRET && LOCAL_TOKEN_SECRET.length >= 24
+);
+const LOCAL_TOKEN_PREFIX = "yclocal.";
+const LOCAL_DEMO_SUB = "local-demo";
+const DEMO_EMAILS = new Set(["demo@yieldcore.ai", "rodwell@yieldcore.ai"]);
+const b64u = (s) => Buffer.from(s).toString("base64url");
+const b64uDecode = (s) => Buffer.from(s, "base64url").toString("utf8");
+if (!LOCAL_AUTH_ENABLED)
+  console.warn(
+    "⚠️  Local demo-auth fallback disabled — set SESSION_SECRET (or SUPABASE_SERVICE_ROLE_KEY) to enable it",
+  );
 
-function signLocalToken(user, ttlSeconds = 7 * 24 * 3600){
+function signLocalToken(user, ttlSeconds = 7 * 24 * 3600) {
   if (!LOCAL_AUTH_ENABLED) return null;
-  const payload = { sub: LOCAL_DEMO_SUB, email: user.email, name: user.name, exp: Math.floor(Date.now()/1000) + ttlSeconds };
+  const payload = {
+    sub: LOCAL_DEMO_SUB,
+    email: user.email,
+    name: user.name,
+    exp: Math.floor(Date.now() / 1000) + ttlSeconds,
+  };
   const body = b64u(JSON.stringify(payload));
-  const sig = crypto.createHmac('sha256', LOCAL_TOKEN_SECRET).update(body).digest('base64url');
-  return LOCAL_TOKEN_PREFIX + body + '.' + sig;
+  const sig = crypto
+    .createHmac("sha256", LOCAL_TOKEN_SECRET)
+    .update(body)
+    .digest("base64url");
+  return LOCAL_TOKEN_PREFIX + body + "." + sig;
 }
 
-function verifyLocalToken(token){
-  if (!LOCAL_AUTH_ENABLED || !token || !token.startsWith(LOCAL_TOKEN_PREFIX)) return null;
+function verifyLocalToken(token) {
+  if (!LOCAL_AUTH_ENABLED || !token || !token.startsWith(LOCAL_TOKEN_PREFIX))
+    return null;
   const raw = token.slice(LOCAL_TOKEN_PREFIX.length);
-  const [body, sig] = raw.split('.');
+  const [body, sig] = raw.split(".");
   if (!body || !sig) return null;
-  const expected = crypto.createHmac('sha256', LOCAL_TOKEN_SECRET).update(body).digest('base64url');
-  const a = Buffer.from(sig); const b = Buffer.from(expected);
+  const expected = crypto
+    .createHmac("sha256", LOCAL_TOKEN_SECRET)
+    .update(body)
+    .digest("base64url");
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
   try {
     const payload = JSON.parse(b64uDecode(body));
-    if (payload.exp && payload.exp < Math.floor(Date.now()/1000)) return null;
+    if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) return null;
     // Strictly demo-only: reject any token not bound to the demo identity.
-    if (payload.sub !== LOCAL_DEMO_SUB || !DEMO_EMAILS.has(payload.email)) return null;
+    if (payload.sub !== LOCAL_DEMO_SUB || !DEMO_EMAILS.has(payload.email))
+      return null;
     return { sub: payload.sub, email: payload.email, name: payload.name };
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
-function localDemoUser(email){
-  return { id: LOCAL_DEMO_SUB, email, name: 'YieldCore Demo' };
+function localDemoUser(email) {
+  return { id: LOCAL_DEMO_SUB, email, name: "YieldCore Demo" };
 }
 
-async function ensureDemoUser(){
+async function ensureDemoUser() {
   if (!supaAdmin) return;
   try {
     await supaAdmin.auth.admin.createUser({
-      email: DEMO_EMAIL, password: DEMO_PASSWORD, email_confirm: true,
-      user_metadata: { name: 'YieldCore Demo' }
+      email: DEMO_EMAIL,
+      password: DEMO_PASSWORD,
+      email_confirm: true,
+      user_metadata: { name: "YieldCore Demo" },
     });
   } catch {}
 }
+console.log("DEMO ROUTE LOADED");
 
-app.post('/api/auth/login', authLimiter, async (req, res) => {
+app.post("/api/auth/demo", async (req, res) => {
+  return res.json({
+    success: true,
+    token: "demo-token",
+    redirect: "/farmers",
+  });
+});
+app.post("/api/auth/login", authLimiter, async (req, res) => {
   const b = req.body || {};
-  const email = (b.email||'').toString().trim().toLowerCase();
-  const password = (b.password||'').toString();
-  if (!email || !password) return res.status(400).json({ ok:false, error:'Email and password required' });
+  const email = (b.email || "").toString().trim().toLowerCase();
+  const password = (b.password || "").toString();
+  if (!email || !password)
+    return res
+      .status(400)
+      .json({ ok: false, error: "Email and password required" });
 
-  const isDemo = (email === DEMO_EMAIL || email === 'rodwell@yieldcore.ai') && password === DEMO_PASSWORD;
+  const isDemo =
+    (email === DEMO_EMAIL || email === "rodwell@yieldcore.ai") &&
+    password === DEMO_PASSWORD;
 
   // Try Supabase first (real accounts), but never let it block the demo login.
   if (supaPublic) {
     try {
-      let { data, error } = await supaPublic.auth.signInWithPassword({ email, password });
+      let { data, error } = await supaPublic.auth.signInWithPassword({
+        email,
+        password,
+      });
       if ((error || !data?.session) && isDemo) {
         await ensureDemoUser();
-        ({ data, error } = await supaPublic.auth.signInWithPassword({ email, password }));
+        ({ data, error } = await supaPublic.auth.signInWithPassword({
+          email,
+          password,
+        }));
       }
       if (!error && data?.session) {
         const u = data.user;
-        return res.json({ ok:true, token: data.session.access_token, refresh_token: data.session.refresh_token, user: { id:u.id, email:u.email, name: u.user_metadata?.name || u.email?.split('@')[0] } });
+        return res.json({
+          ok: true,
+          token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+          user: {
+            id: u.id,
+            email: u.email,
+            name: u.user_metadata?.name || u.email?.split("@")[0],
+          },
+        });
       }
     } catch (e) {
-      console.warn('Supabase login unavailable, using local fallback:', e.message);
+      console.warn(
+        "Supabase login unavailable, using local fallback:",
+        e.message,
+      );
     }
   }
 
   // Local fallback — guarantees the demo account works even if Supabase is down/unconfigured.
   if (isDemo) {
     const u = localDemoUser(email);
-    return res.json({ ok:true, token: signLocalToken(u), user: { id:u.id, email:u.email, name:u.name } });
+    return res.json({
+      ok: true,
+      token: signLocalToken(u),
+      user: { id: u.id, email: u.email, name: u.name },
+    });
   }
 
-  return res.status(401).json({ ok:false, error:'Invalid email or password' });
+  return res
+    .status(401)
+    .json({ ok: false, error: "Invalid email or password" });
 });
 
-app.get('/api/auth/me', requireAuth, (req, res) => {
-  res.json({ ok:true, user: { id:req.user.sub, email:req.user.email, name:req.user.name } });
+app.get("/api/auth/me", requireAuth, (req, res) => {
+  res.json({
+    ok: true,
+    user: { id: req.user.sub, email: req.user.email, name: req.user.name },
+  });
 });
 
-function pingOwner(text){
+function pingOwner(text) {
   try {
-    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';
-    const from = fromRaw.startsWith('whatsapp:') ? fromRaw : `whatsapp:${fromRaw}`;
-    return twilioClient.messages.create({ from, to: 'whatsapp:+27825172688', body: text });
-  } catch(e){ console.error('owner ping failed:', e.message); }
+    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || "+14155238886";
+    const from = fromRaw.startsWith("whatsapp:")
+      ? fromRaw
+      : `whatsapp:${fromRaw}`;
+    return twilioClient.messages.create({
+      from,
+      to: "whatsapp:+27825172688",
+      body: text,
+    });
+  } catch (e) {
+    console.error("owner ping failed:", e.message);
+  }
 }
 
 const openai = process.env.OPENAI_API_KEY
@@ -344,96 +593,145 @@ const openai = process.env.OPENAI_API_KEY
   : null;
 
 // ── WHATSAPP ALERT (rate-limited; recipient is HARD-LOCKED to owner) ──
-app.post('/api/whatsapp/alert', writeLimiter, async (req, res) => {
+app.post("/api/whatsapp/alert", writeLimiter, async (req, res) => {
   const { message } = req.body || {};
   // 🔒 recipient is server-controlled — request body cannot redirect messages
-  const recipient = 'whatsapp:+27825172688';
-  if (!message || typeof message !== 'string') return res.status(400).json({ error: 'message required' });
-  if (message.length > 1500) return res.status(413).json({ error: 'message too long' });
+  const recipient = "whatsapp:+27825172688";
+  if (!message || typeof message !== "string")
+    return res.status(400).json({ error: "message required" });
+  if (message.length > 1500)
+    return res.status(413).json({ error: "message too long" });
   try {
-    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';
-    const from = fromRaw.startsWith('whatsapp:') ? fromRaw : `whatsapp:${fromRaw}`;
-    const toFinal = recipient.startsWith('whatsapp:') ? recipient : `whatsapp:${recipient}`;
-    const msg = await twilioClient.messages.create({ from, to: toFinal, body: message });
+    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || "+14155238886";
+    const from = fromRaw.startsWith("whatsapp:")
+      ? fromRaw
+      : `whatsapp:${fromRaw}`;
+    const toFinal = recipient.startsWith("whatsapp:")
+      ? recipient
+      : `whatsapp:${recipient}`;
+    const msg = await twilioClient.messages.create({
+      from,
+      to: toFinal,
+      body: message,
+    });
     res.json({ success: true, sid: msg.sid });
   } catch (err) {
-    console.error('WhatsApp error:', err.message);
+    console.error("WhatsApp error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
 // ── SHARE CONFIG ──
-const LIVE_URL = process.env.LIVE_URL || 'https://yield-core-ai--syaloamukelani.replit.app';
-const SANDBOX_CODE = process.env.SANDBOX_JOIN_CODE || 'your-join-code';
-const SANDBOX_NUMBER = '+14155238886';
+const LIVE_URL =
+  process.env.LIVE_URL || "https://yield-core-ai--syaloamukelani.replit.app";
+const SANDBOX_CODE = process.env.SANDBOX_JOIN_CODE || "your-join-code";
+const SANDBOX_NUMBER = "+14155238886";
 const FOOTER = `\n\n━━━━━━━━━━━━━━\n🌐 Open your live command center:\n${LIVE_URL}\n\n👥 Invite a farmer friend → reply *SHARE*`;
 
 // ── WEATHER (Open-Meteo, no key needed) ──
 async function getWeather(lat, lng) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}` +
+  const url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}` +
     `&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,weather_code` +
     `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=Africa/Johannesburg&forecast_days=4`;
   const r = await fetch(url);
-  if (!r.ok) throw new Error('weather fetch failed');
+  if (!r.ok) throw new Error("weather fetch failed");
   return r.json();
 }
-function wxIcon(code){
-  if(code===0)return '☀️';if(code<=3)return '⛅';if(code<=48)return '🌫️';
-  if(code<=67)return '🌧️';if(code<=77)return '🌨️';if(code<=82)return '🌦️';
-  if(code<=99)return '⛈️';return '🌤️';
+function wxIcon(code) {
+  if (code === 0) return "☀️";
+  if (code <= 3) return "⛅";
+  if (code <= 48) return "🌫️";
+  if (code <= 67) return "🌧️";
+  if (code <= 77) return "🌨️";
+  if (code <= 82) return "🌦️";
+  if (code <= 99) return "⛈️";
+  return "🌤️";
 }
-function wxDesc(code){
-  const m={0:'clear sky',1:'mostly clear',2:'partly cloudy',3:'overcast',45:'fog',48:'icy fog',
-    51:'light drizzle',53:'drizzle',55:'heavy drizzle',61:'light rain',63:'rain',65:'heavy rain',
-    71:'snow',73:'snow',75:'heavy snow',80:'rain showers',81:'rain showers',82:'violent showers',
-    95:'thunderstorm',96:'thunderstorm + hail',99:'severe storm + hail'};
-  return m[code]||'mixed conditions';
+function wxDesc(code) {
+  const m = {
+    0: "clear sky",
+    1: "mostly clear",
+    2: "partly cloudy",
+    3: "overcast",
+    45: "fog",
+    48: "icy fog",
+    51: "light drizzle",
+    53: "drizzle",
+    55: "heavy drizzle",
+    61: "light rain",
+    63: "rain",
+    65: "heavy rain",
+    71: "snow",
+    73: "snow",
+    75: "heavy snow",
+    80: "rain showers",
+    81: "rain showers",
+    82: "violent showers",
+    95: "thunderstorm",
+    96: "thunderstorm + hail",
+    99: "severe storm + hail",
+  };
+  return m[code] || "mixed conditions";
 }
 
 // Build YieldCore insights from a location
 async function buildLocationBriefing(lat, lng, label) {
   const wx = await getWeather(lat, lng);
-  const c = wx.current, d = wx.daily;
-  const t = Math.round(c.temperature_2m), h = Math.round(c.relative_humidity_2m);
-  const ws = Math.round(c.wind_speed_10m), pr = c.precipitation;
-  const tomorrowMax = Math.round(d.temperature_2m_max[1]), tomorrowMin = Math.round(d.temperature_2m_min[1]);
-  const rain48 = (d.precipitation_sum[0]||0)+(d.precipitation_sum[1]||0);
-  const icon = wxIcon(c.weather_code), desc = wxDesc(c.weather_code);
+  const c = wx.current,
+    d = wx.daily;
+  const t = Math.round(c.temperature_2m),
+    h = Math.round(c.relative_humidity_2m);
+  const ws = Math.round(c.wind_speed_10m),
+    pr = c.precipitation;
+  const tomorrowMax = Math.round(d.temperature_2m_max[1]),
+    tomorrowMin = Math.round(d.temperature_2m_min[1]);
+  const rain48 = (d.precipitation_sum[0] || 0) + (d.precipitation_sum[1] || 0);
+  const icon = wxIcon(c.weather_code),
+    desc = wxDesc(c.weather_code);
 
   // YieldCore intelligence
   let irrigation, alert, soilTip, cropAdvice, savings;
   if (rain48 >= 8) {
-    irrigation = `🛑 *PAUSE irrigation* — ${rain48.toFixed(1)}mm rain forecast in next 48h.\n   💧 Saves ~${Math.round(rain48*420)}L per hectare`;
-    savings = `R ${Math.round(rain48*420*0.018).toLocaleString()}/ha saved on water + electricity`;
+    irrigation = `🛑 *PAUSE irrigation* — ${rain48.toFixed(1)}mm rain forecast in next 48h.\n   💧 Saves ~${Math.round(rain48 * 420)}L per hectare`;
+    savings = `R ${Math.round(rain48 * 420 * 0.018).toLocaleString()}/ha saved on water + electricity`;
   } else if (rain48 >= 2) {
     irrigation = `⏳ *REDUCE irrigation by 50%* — ${rain48.toFixed(1)}mm rain expected.\n   💧 Apply only at dawn`;
-    savings = `R ${Math.round(rain48*220*0.018).toLocaleString()}/ha saved`;
+    savings = `R ${Math.round(rain48 * 220 * 0.018).toLocaleString()}/ha saved`;
   } else if (t >= 30) {
     irrigation = `🚨 *HEAT-STRESS PROTOCOL* — irrigate at 04h00 + 19h00 only (avoid evaporation loss)\n   💧 +15% volume, drip preferred`;
     savings = `Prevents ~12% yield loss vs midday irrigation`;
   } else {
-    irrigation = `✅ *NORMAL irrigation schedule* — 04h30 cycle, ${Math.max(20,40-t)}min per zone\n   💧 Soil moisture healthy`;
+    irrigation = `✅ *NORMAL irrigation schedule* — 04h30 cycle, ${Math.max(20, 40 - t)}min per zone\n   💧 Soil moisture healthy`;
     savings = `Optimal water-use efficiency`;
   }
 
-  if (c.weather_code >= 95) alert = `⛈️ *STORM ALERT* — ${desc}. Secure equipment, delay spraying 24h.`;
-  else if (ws >= 35) alert = `💨 *HIGH WIND ALERT* — ${ws} km/h. Postpone foliar spray + drone flights.`;
-  else if (tomorrowMin <= 4) alert = `❄️ *FROST RISK* — ${tomorrowMin}°C tomorrow night. Activate frost protection on sensitive crops.`;
-  else if (tomorrowMax >= 35) alert = `🔥 *HEAT WAVE* — ${tomorrowMax}°C tomorrow. Move livestock to shade, increase water.`;
+  if (c.weather_code >= 95)
+    alert = `⛈️ *STORM ALERT* — ${desc}. Secure equipment, delay spraying 24h.`;
+  else if (ws >= 35)
+    alert = `💨 *HIGH WIND ALERT* — ${ws} km/h. Postpone foliar spray + drone flights.`;
+  else if (tomorrowMin <= 4)
+    alert = `❄️ *FROST RISK* — ${tomorrowMin}°C tomorrow night. Activate frost protection on sensitive crops.`;
+  else if (tomorrowMax >= 35)
+    alert = `🔥 *HEAT WAVE* — ${tomorrowMax}°C tomorrow. Move livestock to shade, increase water.`;
   else alert = `✅ No critical alerts — operations green-lit.`;
 
-  if (h < 30) soilTip = `🌱 *Soil:* Low humidity (${h}%) → mulch beds, check drip emitters`;
-  else if (h > 80) soilTip = `🌱 *Soil:* High humidity (${h}%) → fungal-disease watch on leaves`;
+  if (h < 30)
+    soilTip = `🌱 *Soil:* Low humidity (${h}%) → mulch beds, check drip emitters`;
+  else if (h > 80)
+    soilTip = `🌱 *Soil:* High humidity (${h}%) → fungal-disease watch on leaves`;
   else soilTip = `🌱 *Soil:* Conditions optimal for root development`;
 
   const month = new Date().getMonth();
-  if (month>=8||month<=1) cropAdvice = `🌾 *Crop tip (Spring/Summer):* Top-dress N now, scout for stalk borer + aphids`;
-  else if (month>=2&&month<=4) cropAdvice = `🌾 *Crop tip (Autumn):* Plan winter cover crops, harvest summer grains, soil-test`;
-  else cropAdvice = `🌾 *Crop tip (Winter):* Prune fruit trees, plant wheat/barley, repair irrigation`;
+  if (month >= 8 || month <= 1)
+    cropAdvice = `🌾 *Crop tip (Spring/Summer):* Top-dress N now, scout for stalk borer + aphids`;
+  else if (month >= 2 && month <= 4)
+    cropAdvice = `🌾 *Crop tip (Autumn):* Plan winter cover crops, harvest summer grains, soil-test`;
+  else
+    cropAdvice = `🌾 *Crop tip (Winter):* Prune fruit trees, plant wheat/barley, repair irrigation`;
 
-  return (
-`🌿 *YieldCore AI · Live Farm Intelligence*
-📍 ${label||'Your location'}  (${(+lat).toFixed(3)}, ${(+lng).toFixed(3)})
+  return `🌿 *YieldCore AI · Live Farm Intelligence*
+📍 ${label || "Your location"}  (${(+lat).toFixed(3)}, ${(+lng).toFixed(3)})
 
 ${icon} *NOW:* ${t}°C · ${desc} · ${h}% humidity · 💨 ${ws}km/h
 🌡️ *Tomorrow:* ${tomorrowMin}°–${tomorrowMax}°C  ·  🌧️ 48h rain: ${rain48.toFixed(1)}mm
@@ -453,13 +751,12 @@ ${cropAdvice}
 💰 *Today's saving:* ${savings}
 📈 Switching to YieldCore typically delivers *+18% yield · −32% water · +R3,200/ha profit*
 
-Reply *MENU* for options, *PRICE* for plans, or share another 📍 location.`
-  );
+Reply *MENU* for options, *PRICE* for plans, or share another 📍 location.`;
 }
 
 // Inbound bot router
 function botRouter(text) {
-  const t = (text||'').trim().toLowerCase();
+  const t = (text || "").trim().toLowerCase();
   if (!t) return null;
   if (/^(hi|hello|hey|start|menu|help|hola|sawubona|molo)\b/.test(t))
     return `🌿 *Welcome to YieldCore AI!*\n\nI'm your live farm intelligence bot. Try:\n\n📍 *Share a location* → I'll send weather, irrigation plan, alerts & crop tips for that spot\n\nOr reply with:\n• *WEATHER* — current conditions\n• *IRRIGATION* — today's watering plan\n• *ALERTS* — active farm warnings\n• *PRICE* — what each tier includes\n• *DRONE* — drone services\n• *ABOUT* — what YieldCore does\n• *DEMO* — book a free demo\n• *PAY* — explore capabilities\n• *SHARE* — invite a farmer friend\n\n🚀 Powered by satellites, drones, IoT sensors & AI.`;
@@ -469,7 +766,7 @@ function botRouter(text) {
   if (haMatch) {
     const ha = Math.max(1, parseInt(haMatch[1]));
     const tier = autoTier(ha);
-    return `🌿 *YieldCore for ${ha} ha*\n\nRecommended tier: *${tier.name}* (${tier.range})\n${tier.perks?'\n'+tier.perks+'\n':''}\nYou'd get satellite NDVI, drone fly-overs, smart irrigation, IoT sensors, AI advisor and WhatsApp alerts — tailored to your scale.\n\n👉 See capabilities: ${LIVE_URL}/pay\nReply *DEMO* for a live walkthrough on your fields.`;
+    return `🌿 *YieldCore for ${ha} ha*\n\nRecommended tier: *${tier.name}* (${tier.range})\n${tier.perks ? "\n" + tier.perks + "\n" : ""}\nYou'd get satellite NDVI, drone fly-overs, smart irrigation, IoT sensors, AI advisor and WhatsApp alerts — tailored to your scale.\n\n👉 See capabilities: ${LIVE_URL}/pay\nReply *DEMO* for a live walkthrough on your fields.`;
   }
   if (/(price|pricing|cost|tier|plan)/.test(t))
     return `🌿 *YieldCore Tiers — what you get*\n\n• Starter (1–49 ha): dashboard, NDVI, AI advisor, alerts\n• Growth (50–199 ha): + IoT stations, monthly drone, smart irrigation\n• Pro (200–499 ha): + bi-weekly drone, remote agronomist\n• Enterprise (500+ ha): 🎁 *on-site install*, LoRa mesh, training\n• Co-op (1000+ ha): custom drone fleet, ESG, API\n\nReply *DEMO* for a free walkthrough.`;
@@ -491,12 +788,20 @@ function botRouter(text) {
 }
 
 // Twilio inbound webhook
-app.post('/api/whatsapp/inbound', validateTwilio, async (req, res) => {
+app.post("/api/whatsapp/inbound", validateTwilio, async (req, res) => {
   try {
     const body = req.body || {};
-    const from = body.From, msgBody = body.Body, lat = body.Latitude, lng = body.Longitude;
-    const label = body.Label || body.Address || '';
-    console.log('📩 WhatsApp in:', from, msgBody?msgBody.slice(0,60):'', lat?`📍${lat},${lng}`:'');
+    const from = body.From,
+      msgBody = body.Body,
+      lat = body.Latitude,
+      lng = body.Longitude;
+    const label = body.Label || body.Address || "";
+    console.log(
+      "📩 WhatsApp in:",
+      from,
+      msgBody ? msgBody.slice(0, 60) : "",
+      lat ? `📍${lat},${lng}` : "",
+    );
 
     let reply;
     if (lat && lng) {
@@ -507,24 +812,37 @@ app.post('/api/whatsapp/inbound', validateTwilio, async (req, res) => {
     if (!reply) reply = `Send 📍 a location or *MENU* for help.`;
     if (!reply.includes(LIVE_URL)) reply += FOOTER;
 
-    res.set('Content-Type', 'text/xml');
-    res.send(`<?xml version="1.0" encoding="UTF-8"?><Response><Message>${reply.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</Message></Response>`);
+    res.set("Content-Type", "text/xml");
+    res.send(
+      `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${reply.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</Message></Response>`,
+    );
   } catch (e) {
-    console.error('Inbound error:', e.message);
-    res.set('Content-Type','text/xml');
-    res.send(`<?xml version="1.0" encoding="UTF-8"?><Response><Message>⚠️ YieldCore had a hiccup. Try sending your 📍 location again.</Message></Response>`);
+    console.error("Inbound error:", e.message);
+    res.set("Content-Type", "text/xml");
+    res.send(
+      `<?xml version="1.0" encoding="UTF-8"?><Response><Message>⚠️ YieldCore had a hiccup. Try sending your 📍 location again.</Message></Response>`,
+    );
   }
 });
 
 // Activate-bot button → push welcome to user's WhatsApp
-app.post('/api/whatsapp/activate', writeLimiter, requireAdmin, async (req, res) => {
-  try {
-    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';
-    const from = fromRaw.startsWith('whatsapp:') ? fromRaw : `whatsapp:${fromRaw}`;
-    const to = (req.body.to||'whatsapp:+27825172688');
-    const toFinal = to.startsWith('whatsapp:') ? to : `whatsapp:${to}`;
-    const msg = await twilioClient.messages.create({ from, to: toFinal, body:
-`🌿 *YieldCore AI Bot is LIVE!*
+app.post(
+  "/api/whatsapp/activate",
+  writeLimiter,
+  requireAdmin,
+  async (req, res) => {
+    try {
+      const fromRaw = process.env.TWILIO_WHATSAPP_FROM || "+14155238886";
+      const from = fromRaw.startsWith("whatsapp:")
+        ? fromRaw
+        : `whatsapp:${fromRaw}`;
+      const to = req.body.to || "whatsapp:+27825172688";
+      const toFinal = to.startsWith("whatsapp:") ? to : `whatsapp:${to}`;
+      const msg = await twilioClient.messages.create({
+        from,
+        to: toFinal,
+        body:
+          `🌿 *YieldCore AI Bot is LIVE!*
 
 I'm your 24/7 farm intelligence assistant. Right now I can:
 
@@ -537,56 +855,146 @@ I'm your 24/7 farm intelligence assistant. Right now I can:
 
 💬 *Or text me:* MENU · PRICE · DRONE · ABOUT · SHARE · DEMO
 
-Try it now → tap 📎 → Location → Send Current Location 📍` + FOOTER });
-    res.json({ success:true, sid: msg.sid });
-  } catch (e) {
-    console.error('Activate error:', e.message);
-    res.status(500).json({ error: e.message });
-  }
-});
+Try it now → tap 📎 → Location → Send Current Location 📍` + FOOTER,
+      });
+      res.json({ success: true, sid: msg.sid });
+    } catch (e) {
+      console.error("Activate error:", e.message);
+      res.status(500).json({ error: e.message });
+    }
+  },
+);
 
 // Daily briefing for a specific farm by lat/lng
-app.post('/api/whatsapp/briefing', writeLimiter, requireAdmin, async (req, res) => {
-  try {
-    const { lat, lng, name } = req.body;
-    if (!lat || !lng) return res.status(400).json({ error: 'lat & lng required' });
-    const text = await buildLocationBriefing(lat, lng, name||'Your farm');
-    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';
-    const from = fromRaw.startsWith('whatsapp:') ? fromRaw : `whatsapp:${fromRaw}`;
-    const msg = await twilioClient.messages.create({ from, to:'whatsapp:+27825172688', body: text });
-    res.json({ success:true, sid: msg.sid });
-  } catch (e) {
-    console.error('Briefing error:', e.message);
-    res.status(500).json({ error: e.message });
-  }
-});
+app.post(
+  "/api/whatsapp/briefing",
+  writeLimiter,
+  requireAdmin,
+  async (req, res) => {
+    try {
+      const { lat, lng, name } = req.body;
+      if (!lat || !lng)
+        return res.status(400).json({ error: "lat & lng required" });
+      const text = await buildLocationBriefing(lat, lng, name || "Your farm");
+      const fromRaw = process.env.TWILIO_WHATSAPP_FROM || "+14155238886";
+      const from = fromRaw.startsWith("whatsapp:")
+        ? fromRaw
+        : `whatsapp:${fromRaw}`;
+      const msg = await twilioClient.messages.create({
+        from,
+        to: "whatsapp:+27825172688",
+        body: text,
+      });
+      res.json({ success: true, sid: msg.sid });
+    } catch (e) {
+      console.error("Briefing error:", e.message);
+      res.status(500).json({ error: e.message });
+    }
+  },
+);
 
 // ── 🧠 AI SIMULATION ENGINE (offline fallback — keeps the Advisor always operational) ──
 // Produces practical, SA-context demo answers so the advisor never goes dark during
 // demos or if the AI provider is unavailable. Never references any provider/keys.
-function simulatedReply(question){
-  const t = (question || '').toLowerCase();
-  const has = (...ks) => ks.some(k => t.includes(k));
+function simulatedReply(question) {
+  const t = (question || "").toLowerCase();
+  const has = (...ks) => ks.some((k) => t.includes(k));
 
-  if (has('irrigat','water','moisture','drip','dry soil','watering')) {
+  if (has("irrigat", "water", "moisture", "drip", "dry soil", "watering")) {
     return `💧 Irrigation guidance\n\nBased on current soil-moisture readings across your fields, your maize blocks in the Free State are sitting around 38% VWC — just below the 42–55% optimal band for the vegetative stage. I'd recommend a short 25–30 mm cycle over the next 48 hours, ideally early morning to cut evaporation losses.\n\n• Prioritise the two driest zones first (lowest moisture + highest NDVI demand)\n• Hold off on fully-saturated blocks to avoid leaching nitrogen\n• With light rain forecast later this week, you can reduce the following cycle by ~40%\n\nThis schedule typically saves 25–35% on water versus fixed-interval irrigation while protecting yield.`;
   }
-  if (has('pest','disease','aphid','worm','bug','fungus','blight','rust','locust','armyworm','caterpillar','infest')) {
+  if (
+    has(
+      "pest",
+      "disease",
+      "aphid",
+      "worm",
+      "bug",
+      "fungus",
+      "blight",
+      "rust",
+      "locust",
+      "armyworm",
+      "caterpillar",
+      "infest",
+    )
+  ) {
     return `🐛 Pest & disease assessment\n\nYour field scans flag a likely fall armyworm risk on the younger maize — it's the most common threat in SA summer-rainfall regions right now. Confidence is high based on leaf-damage patterns.\n\nRecommended action:\n• Scout the worst-affected block first (look in the whorls at dawn/dusk)\n• Conventional: a targeted application of an approved emamectin/spinetoram product at label rate\n• Organic: Bacillus thuringiensis (Bt) spray, plus encouraging natural predators\n\nEarly, targeted spot-treatment beats blanket spraying — it protects beneficial insects and cuts chemical costs by up to 40%. I can send a WhatsApp alert to your sprayer team if you'd like.`;
   }
-  if (has('fertil','npk','nutrient','nitrogen','phosph','potass','soil health','lime','manure','compost')) {
+  if (
+    has(
+      "fertil",
+      "npk",
+      "nutrient",
+      "nitrogen",
+      "phosph",
+      "potass",
+      "soil health",
+      "lime",
+      "manure",
+      "compost",
+    )
+  ) {
     return `🌱 Nutrient (NPK) recommendation\n\nYour latest soil analysis shows Nitrogen slightly low, Phosphorus adequate, and Potassium in the optimal range for maize at this stage.\n\nSuggested plan:\n• Top-dress with a nitrogen source (e.g. LAN) to lift N toward the target band — split the application to reduce leaching\n• Hold P and K; they're well-positioned\n• Organic route: well-composted kraal manure plus a legume cover crop in rotation to build long-term N naturally\n\nMatching nutrients to actual soil readings (rather than a fixed blanket rate) typically improves nutrient-use efficiency and protects margins while lifting yield potential 10–18%.`;
   }
-  if (has('safex','market','price','sell','grain','outlook','demand','export','when to sell')) {
+  if (
+    has(
+      "safex",
+      "market",
+      "price",
+      "sell",
+      "grain",
+      "outlook",
+      "demand",
+      "export",
+      "when to sell",
+    )
+  ) {
     return `📈 SAFEX market outlook\n\nThe maize market is showing firm demand heading into the season, with white maize trading at a premium to yellow on local demand. Sentiment is supported by regional supply tightness.\n\nWhat I'd watch:\n• Weather in the summer-rainfall belt — the biggest swing factor for the next move\n• The rand/dollar, which drives import-parity pricing\n• Storage strategy — staggering sales rather than dumping at harvest usually captures better average pricing\n\nFor your projected tonnage, spreading sales across the post-harvest window has historically improved realised value. I can model a few sell-timing scenarios for your specific crop if you'd like.`;
   }
-  if (has('carbon','credit','co2','sequest','offset','sustainab','vcs','gold standard','biochar')) {
+  if (
+    has(
+      "carbon",
+      "credit",
+      "co2",
+      "sequest",
+      "offset",
+      "sustainab",
+      "vcs",
+      "gold standard",
+      "biochar",
+    )
+  ) {
     return `🌍 Carbon credit insight\n\nAcross your enrolled hectares you're on track for meaningful verified CO₂e sequestration this cycle, with a healthy pipeline still in verification.\n\nHow to grow it:\n• Expand no-till and cover-cropping — the fastest way to lift soil-carbon scores\n• Add biochar application on suitable blocks for durable, high-grade sequestration\n• Keep your GPS, application and sensor logs clean — they're what verifiers (VCS / Gold Standard) require\n\nYieldCore captures this audit trail automatically, which is what unlocks higher-tier credit pricing and qualifies you under the SA Carbon Tax framework. Each season you enrol more hectares, the flywheel compounds.`;
   }
-  if (has('weather','rain','frost','temperature','climate','drought','forecast','wind','hail')) {
+  if (
+    has(
+      "weather",
+      "rain",
+      "frost",
+      "temperature",
+      "climate",
+      "drought",
+      "forecast",
+      "wind",
+      "hail",
+    )
+  ) {
     return `🌦️ Weather impact analysis\n\nThe live forecast for your regions shows warm days with scattered showers later in the week — generally favourable for the current growth stage.\n\nActions to consider:\n• Bring forward any spraying to before the rain front for best uptake\n• Reduce the next irrigation cycle to bank the expected rainfall\n• Watch overnight lows in higher-lying blocks for early frost risk later in the season\n\nI continuously cross-reference weather with your soil and crop data to time irrigation, spraying and harvest windows — that integration is where most of the water and input savings come from.`;
   }
-  if (has('yield','profit','harvest','tons','tonne','revenue','projection','margin','income')) {
+  if (
+    has(
+      "yield",
+      "profit",
+      "harvest",
+      "tons",
+      "tonne",
+      "revenue",
+      "projection",
+      "margin",
+      "income",
+    )
+  ) {
     return `🌾 Yield & profitability outlook\n\nYour current trajectory points to a strong season — combined NDVI vitality, soil moisture and nutrient status across the fleet are tracking in the productive band.\n\nWhere the upside is:\n• Closing the gap on your two lowest-NDVI blocks would lift fleet-average yield meaningfully\n• Precision irrigation + targeted nutrition is the highest-ROI lever right now\n• Tighter pest control protects the yield you've already built\n\nFarms on the YieldCore platform typically see a 10–20% yield uplift alongside lower water and input use — the combination is what drives the margin improvement.`;
   }
   // General capability overview — "show exactly what we're capable of"
@@ -594,21 +1002,23 @@ function simulatedReply(question){
 }
 
 // ── AI ADVISOR ──
-app.post('/api/ai', aiLimiter, async (req, res) => {
+app.post("/api/ai", aiLimiter, async (req, res) => {
   const { messages } = req.body;
-  if (!messages || !Array.isArray(messages)) return res.status(400).json({ error: 'messages array required' });
-  const lastUser = [...messages].reverse().find(m => m && m.role === 'user');
-  const question = (lastUser && lastUser.content || '').toString();
+  if (!messages || !Array.isArray(messages))
+    return res.status(400).json({ error: "messages array required" });
+  const lastUser = [...messages].reverse().find((m) => m && m.role === "user");
+  const question = ((lastUser && lastUser.content) || "").toString();
 
   // No provider configured → silent simulation fallback (never expose config/secret details)
-  if (!openai) return res.json({ reply: simulatedReply(question), mode: 'fallback' });
+  if (!openai)
+    return res.json({ reply: simulatedReply(question), mode: "fallback" });
 
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: "gpt-4o-mini",
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: `You are YieldCore AI, an expert agricultural advisor for South African farms. You specialise in:
 - Crop management (maize, wheat, citrus, grapes, avocado, sugarcane, macadamia, sunflower)
 - NPK nutrient management and soil health
@@ -619,19 +1029,22 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
 - Sustainable and precision agriculture
 - Community food security and grain management
 
-Respond concisely, practically, and in a friendly tone. Use South African context (provinces, rand pricing, local crop names). When recommending treatments, mention both conventional and organic options. Keep responses under 200 words unless a detailed analysis is requested.`
+Respond concisely, practically, and in a friendly tone. Use South African context (provinces, rand pricing, local crop names). When recommending treatments, mention both conventional and organic options. Keep responses under 200 words unless a detailed analysis is requested.`,
         },
-        ...messages
+        ...messages,
       ],
       max_tokens: 400,
-      temperature: 0.7
+      temperature: 0.7,
     });
-    return res.json({ reply: completion.choices[0].message.content, mode: 'live' });
+    return res.json({
+      reply: completion.choices[0].message.content,
+      mode: "live",
+    });
   } catch (err) {
     // Log internally ONLY — never expose provider errors, status codes, keys or secret names.
-    console.error('AI provider unavailable (internal):', err && err.message);
+    console.error("AI provider unavailable (internal):", err && err.message);
     // Always return a useful answer so the Advisor stays operational.
-    return res.json({ reply: simulatedReply(question), mode: 'fallback' });
+    return res.json({ reply: simulatedReply(question), mode: "fallback" });
   }
 });
 
@@ -641,14 +1054,25 @@ function waHistory(from) {
   if (!waSessions.has(from)) waSessions.set(from, []);
   return waSessions.get(from);
 }
-function xmlEscape(s){ return (s||'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&apos;','"':'&quot;'}[c])); }
-function twiml(body, mediaUrl){
-  const media = mediaUrl ? `<Media>${xmlEscape(mediaUrl)}</Media>` : '';
+function xmlEscape(s) {
+  return (s || "").replace(
+    /[&<>'"]/g,
+    (c) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&apos;",
+        '"': "&quot;",
+      })[c],
+  );
+}
+function twiml(body, mediaUrl) {
+  const media = mediaUrl ? `<Media>${xmlEscape(mediaUrl)}</Media>` : "";
   return `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${media}<Body>${xmlEscape(body)}</Body></Message></Response>`;
 }
 const HERO_IMG = `${LIVE_URL}/public/yieldcore-hero.jpg`;
-const WELCOME_TXT =
-`🌱 *Welcome to YieldCore AI*
+const WELCOME_TXT = `🌱 *Welcome to YieldCore AI*
 
 We help farmers:
 • Increase yield 📈
@@ -666,39 +1090,54 @@ To get started, reply with:
 Or just ask me anything — e.g. *"When should I plant maize in Free State?"*
 Send 📍 your location for hyper-local advice.`;
 
-app.post('/api/whatsapp', validateTwilio, async (req, res) => {
-  res.type('text/xml');
-  const from = (req.body.From || '').replace(/^whatsapp:/, '');
-  const body = (req.body.Body || '').trim();
-  const lat  = req.body.Latitude;
-  const lng  = req.body.Longitude;
-  const profileName = req.body.ProfileName || 'Farmer';
+app.post("/api/whatsapp", validateTwilio, async (req, res) => {
+  res.type("text/xml");
+  const from = (req.body.From || "").replace(/^whatsapp:/, "");
+  const body = (req.body.Body || "").trim();
+  const lat = req.body.Latitude;
+  const lng = req.body.Longitude;
+  const profileName = req.body.ProfileName || "Farmer";
   console.log(`📩 WA from ${from} (${profileName}): ${body}`);
 
   // Handle location pin
   if (lat && lng) {
-    return res.send(twiml(
-`📍 Location received: ${(+lat).toFixed(4)}, ${(+lng).toFixed(4)}
-Thanks ${profileName.split(' ')[0]} — I'll use this for hyper-local weather & soil advice.
+    return res.send(
+      twiml(
+        `📍 Location received: ${(+lat).toFixed(4)}, ${(+lng).toFixed(4)}
+Thanks ${profileName.split(" ")[0]} — I'll use this for hyper-local weather & soil advice.
 
-Reply with your question, e.g. "When should I plant maize here?"`));
+Reply with your question, e.g. "When should I plant maize here?"`,
+      ),
+    );
   }
 
   const cmd = body.toLowerCase();
   const isFirstMsg = (waSessions.get(from) || []).length === 0;
   if (!body) return res.send(twiml(WELCOME_TXT, HERO_IMG));
 
-  if (cmd === 'menu' || cmd === 'help' || cmd === 'hi' || cmd === 'hello' || cmd === 'start' || isFirstMsg && cmd.length < 4) {
+  if (
+    cmd === "menu" ||
+    cmd === "help" ||
+    cmd === "hi" ||
+    cmd === "hello" ||
+    cmd === "start" ||
+    (isFirstMsg && cmd.length < 4)
+  ) {
     return res.send(twiml(WELCOME_TXT, HERO_IMG));
   }
 
   // Quick options 1 / 2 / 3
-  if (cmd === '1' || /^register/.test(cmd)) {
-    return res.send(twiml(`🌾 *Register your farm in 30 seconds*\n\nTap here → ${LIVE_URL}/register\n\nOr reply with your details:\n• Farm name\n• Hectares\n• Main crop\n• 📍 location pin\n\nWe'll create your live command center on WhatsApp + dashboard.`));
+  if (cmd === "1" || /^register/.test(cmd)) {
+    return res.send(
+      twiml(
+        `🌾 *Register your farm in 30 seconds*\n\nTap here → ${LIVE_URL}/register\n\nOr reply with your details:\n• Farm name\n• Hectares\n• Main crop\n• 📍 location pin\n\nWe'll create your live command center on WhatsApp + dashboard.`,
+      ),
+    );
   }
-  if (cmd === '2' || /^(price|pricing|cost|tier)/.test(cmd)) {
-    return res.send(twiml(
-`💰 *YieldCore AI Pricing — built so every farm profits*
+  if (cmd === "2" || /^(price|pricing|cost|tier)/.test(cmd)) {
+    return res.send(
+      twiml(
+        `💰 *YieldCore AI Pricing — built so every farm profits*
 
 🌱 *Founding Farms* (1–10 ha)
    *R200/month flat* · lifetime discount
@@ -724,11 +1163,14 @@ Reply with your question, e.g. "When should I plant maize here?"`));
    Scan      R120–R250/ha
    Spraying  R150–R300/ha (min R5,000)
 
-Reply *DEMO* to book a free farm walk-through, or *3* to request a drone scan.`));
+Reply *DEMO* to book a free farm walk-through, or *3* to request a drone scan.`,
+      ),
+    );
   }
-  if (cmd === '3' || /^(drone|scan|spray|mapping)/.test(cmd)) {
-    return res.send(twiml(
-`🚁 *Request a drone service*
+  if (cmd === "3" || /^(drone|scan|spray|mapping)/.test(cmd)) {
+    return res.send(
+      twiml(
+        `🚁 *Request a drone service*
 
 Reply with:
 1) Farm name & nearest town
@@ -738,70 +1180,77 @@ Reply with:
 
 We'll quote within 1 working day. For farms above R5,000 jobs we travel anywhere in SA.
 
-Or book online: ${LIVE_URL}/register`));
+Or book online: ${LIVE_URL}/register`,
+      ),
+    );
   }
 
-  if (cmd === 'reset' || cmd === 'clear') {
+  if (cmd === "reset" || cmd === "clear") {
     waSessions.delete(from);
-    return res.send(twiml('🧹 Chat history cleared. Ask me anything!'));
+    return res.send(twiml("🧹 Chat history cleared. Ask me anything!"));
   }
 
-  if (cmd === 'stop' || cmd === 'unsubscribe') {
+  if (cmd === "stop" || cmd === "unsubscribe") {
     waSessions.delete(from);
-    return res.send(twiml('👋 You\'re unsubscribed. Reply START to come back anytime.'));
+    return res.send(
+      twiml("👋 You're unsubscribed. Reply START to come back anytime."),
+    );
   }
 
   const history = waHistory(from);
-  history.push({ role: 'user', content: body });
+  history.push({ role: "user", content: body });
   if (history.length > 12) history.splice(0, history.length - 12);
 
   // No provider configured → simulation fallback so WhatsApp advisor still replies.
   if (!openai) {
     const reply = simulatedReply(body);
-    history.push({ role: 'assistant', content: reply });
+    history.push({ role: "assistant", content: reply });
     return res.send(twiml(reply));
   }
 
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: "gpt-4o-mini",
       max_tokens: 280,
       temperature: 0.6,
       messages: [
-        { role: 'system', content: `You are YieldCore AI, a WhatsApp farming advisor for South African farmers. Reply in plain text suitable for WhatsApp (no markdown headers, short paragraphs, occasional emojis). Use SA context: provinces, rand, local crops (maize, wheat, citrus, grapes, avocado, sugarcane, macadamia, sunflower). Be concrete and actionable. Keep replies under 120 words. Farmer name: ${profileName}.` },
-        ...history
-      ]
+        {
+          role: "system",
+          content: `You are YieldCore AI, a WhatsApp farming advisor for South African farmers. Reply in plain text suitable for WhatsApp (no markdown headers, short paragraphs, occasional emojis). Use SA context: provinces, rand, local crops (maize, wheat, citrus, grapes, avocado, sugarcane, macadamia, sunflower). Be concrete and actionable. Keep replies under 120 words. Farmer name: ${profileName}.`,
+        },
+        ...history,
+      ],
     });
     const reply = completion.choices[0].message.content.trim();
-    history.push({ role: 'assistant', content: reply });
+    history.push({ role: "assistant", content: reply });
     res.send(twiml(reply));
   } catch (err) {
     // Log internally ONLY — never expose provider errors. Fall back to simulation.
-    console.error('WA AI provider unavailable (internal):', err && err.message);
+    console.error("WA AI provider unavailable (internal):", err && err.message);
     const reply = simulatedReply(body);
-    history.push({ role: 'assistant', content: reply });
+    history.push({ role: "assistant", content: reply });
     res.send(twiml(reply));
   }
 });
 
 // ── STATUS ──
-app.get('/api/status', (req, res) => {
+app.get("/api/status", (req, res) => {
   res.json({
-    status: 'ok',
+    status: "ok",
     twilio: !!(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN),
     openai: !!process.env.OPENAI_API_KEY,
     mapbox: !!process.env.MAPBOX_TOKEN,
-    from: process.env.TWILIO_WHATSAPP_FROM || null
+    from: process.env.TWILIO_WHATSAPP_FROM || null,
   });
 });
 
 // ── PUBLIC CONFIG (mapbox token is a public pk.* key) ──
-app.get('/api/config', (req, res) => {
+app.get("/api/config", (req, res) => {
   res.json({
     mapboxToken: process.env.MAPBOX_TOKEN || null,
     liveUrl: LIVE_URL,
     sandboxCode: SANDBOX_CODE,
-    sandboxNumber: SANDBOX_NUMBER
+    sandboxNumber: SANDBOX_NUMBER,
   });
 });
 
@@ -809,60 +1258,121 @@ app.get('/api/config', (req, res) => {
 // Phase 1 Founding Farms: small farms (1–10 ha) get a flat R200/month so they always profit.
 // Higher tiers scale per-ha with caps so smaller farms aren't priced out.
 const TIERS = {
-  founding:   { name:'Founding Farms',  range:'1–10 ha',      pricePerHa:0,   flatMonthly:200,  cap:200,   min:1,     max:10,    color:'#4ade80', perks:'🌱 Lifetime discount · direct support · shape the product' },
-  starter:    { name:'Starter',         range:'11–49 ha',     pricePerHa:100, cap:1500,         min:11,    max:49,    color:'#22c55e', perks:'AI assistant · alerts · insights' },
-  pro:        { name:'Pro',             range:'50–199 ha',    pricePerHa:165, cap:3000,         min:50,    max:199,   color:'#facc15', perks:'Advanced AI · yield optimisation · analytics' },
-  prime:      { name:'PRIME',           range:'200–999 ha',   pricePerHa:250,                   min:200,   max:999,   color:'#fb923c', perks:'👑 Full AI · drone scans · dedicated advisor' },
-  coop:       { name:'Co-op / Estate',  range:'1000+ ha',     pricePerHa:200,                   min:1000,  max:99999, color:'#f472b6', perks:'🤝 Dedicated success manager · custom drone deal' }
+  founding: {
+    name: "Founding Farms",
+    range: "1–10 ha",
+    pricePerHa: 0,
+    flatMonthly: 200,
+    cap: 200,
+    min: 1,
+    max: 10,
+    color: "#4ade80",
+    perks: "🌱 Lifetime discount · direct support · shape the product",
+  },
+  starter: {
+    name: "Starter",
+    range: "11–49 ha",
+    pricePerHa: 100,
+    cap: 1500,
+    min: 11,
+    max: 49,
+    color: "#22c55e",
+    perks: "AI assistant · alerts · insights",
+  },
+  pro: {
+    name: "Pro",
+    range: "50–199 ha",
+    pricePerHa: 165,
+    cap: 3000,
+    min: 50,
+    max: 199,
+    color: "#facc15",
+    perks: "Advanced AI · yield optimisation · analytics",
+  },
+  prime: {
+    name: "PRIME",
+    range: "200–999 ha",
+    pricePerHa: 250,
+    min: 200,
+    max: 999,
+    color: "#fb923c",
+    perks: "👑 Full AI · drone scans · dedicated advisor",
+  },
+  coop: {
+    name: "Co-op / Estate",
+    range: "1000+ ha",
+    pricePerHa: 200,
+    min: 1000,
+    max: 99999,
+    color: "#f472b6",
+    perks: "🤝 Dedicated success manager · custom drone deal",
+  },
 };
 
-function autoTier(ha){ for(const k in TIERS){ const t=TIERS[k]; if(ha>=t.min && ha<=t.max) return {key:k, ...t}; } return {key:'starter',...TIERS.starter}; }
+function autoTier(ha) {
+  for (const k in TIERS) {
+    const t = TIERS[k];
+    if (ha >= t.min && ha <= t.max) return { key: k, ...t };
+  }
+  return { key: "starter", ...TIERS.starter };
+}
 
 // ── PAYMENT QUOTE API ──
-app.post('/api/quote', (req, res) => {
-  const ha = Math.max(1, parseInt(req.body.hectares)||1);
-  const farm = (req.body.farmName||'').toString().slice(0,80);
-  const name = (req.body.name||'').toString().slice(0,80);
-  const email = (req.body.email||'').toString().slice(0,120);
+app.post("/api/quote", (req, res) => {
+  const ha = Math.max(1, parseInt(req.body.hectares) || 1);
+  const farm = (req.body.farmName || "").toString().slice(0, 80);
+  const name = (req.body.name || "").toString().slice(0, 80);
+  const email = (req.body.email || "").toString().slice(0, 120);
   const tier = autoTier(ha);
   // Small farms get a flat affordable rate; capped tiers protect mid-size farms
   let monthly = tier.flatMonthly ? tier.flatMonthly : ha * tier.pricePerHa;
   if (tier.cap) monthly = Math.min(monthly, tier.cap);
   const annual = monthly * 12;
-  const annualDiscount = Math.round(annual * 0.10);
+  const annualDiscount = Math.round(annual * 0.1);
   const annualNet = annual - annualDiscount;
-  const ref = 'YC-' + Date.now().toString(36).toUpperCase();
+  const ref = "YC-" + Date.now().toString(36).toUpperCase();
   const lines = [
     `🌿 *YieldCore AI — Order Request*`,
     ``,
     `Ref: *${ref}*`,
-    name?`Name: ${name}`:null,
-    farm?`Farm: ${farm}`:null,
-    email?`Email: ${email}`:null,
+    name ? `Name: ${name}` : null,
+    farm ? `Farm: ${farm}` : null,
+    email ? `Email: ${email}` : null,
     `Hectares: *${ha} ha*`,
     `Tier: *${tier.name}* (${tier.range})`,
     `Rate: R${tier.pricePerHa}/ha`,
     ``,
-    `💵 Monthly: *R ${monthly.toLocaleString('en-ZA')}*`,
-    `📅 Annual: R ${annual.toLocaleString('en-ZA')}`,
-    `🎁 Annual saving (10%): −R ${annualDiscount.toLocaleString('en-ZA')}`,
-    `✅ Annual NET: *R ${annualNet.toLocaleString('en-ZA')}*`,
+    `💵 Monthly: *R ${monthly.toLocaleString("en-ZA")}*`,
+    `📅 Annual: R ${annual.toLocaleString("en-ZA")}`,
+    `🎁 Annual saving (10%): −R ${annualDiscount.toLocaleString("en-ZA")}`,
+    `✅ Annual NET: *R ${annualNet.toLocaleString("en-ZA")}*`,
     tier.perks ? `\n${tier.perks}` : null,
     ``,
-    `Please confirm and I'll send the EFT details / card link to activate.`
+    `Please confirm and I'll send the EFT details / card link to activate.`,
   ].filter(Boolean);
-  const waText = lines.join('\n');
+  const waText = lines.join("\n");
   const waLink = `https://wa.me/27825172688?text=${encodeURIComponent(waText)}`;
-  res.json({ ok:true, ref, ha, tier, monthly, annual, annualDiscount, annualNet, waLink, waText });
+  res.json({
+    ok: true,
+    ref,
+    ha,
+    tier,
+    monthly,
+    annual,
+    annualDiscount,
+    annualNet,
+    waLink,
+    waText,
+  });
 });
 
 // ── PAYMENT PAGE ──
-app.get('/pay', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pay.html'));
+app.get("/pay", (req, res) => {
+  res.sendFile(path.join(__dirname, "pay.html"));
 });
 
 // ── PUBLIC INVITE LANDING (clean shareable page) ──
-app.get('/invite', (req, res) => {
+app.get("/invite", (req, res) => {
   res.send(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Join YieldCore AI on WhatsApp</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
@@ -899,97 +1409,126 @@ h2{font-size:14px;letter-spacing:2px;color:#facc15;margin:18px 0 10px;font-weigh
 <div class="step"><div class="step-num">2</div><div class="step-text">Open WhatsApp → message that contact → send <span class="code">join ${SANDBOX_CODE}</span></div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text">Reply <b>MENU</b> or share your 📍 <b>location pin</b> — bot replies with full live farm intelligence</div></div>
 
-<a class="cta" href="https://wa.me/${SANDBOX_NUMBER.replace('+','')}?text=${encodeURIComponent('join '+SANDBOX_CODE)}">💬 Open WhatsApp & Join</a>
+<a class="cta" href="https://wa.me/${SANDBOX_NUMBER.replace("+", "")}?text=${encodeURIComponent("join " + SANDBOX_CODE)}">💬 Open WhatsApp & Join</a>
 <a class="cta-2" href="${LIVE_URL}">🌐 See the Full Dashboard</a>
 <div class="foot">Powered by satellites · drones · IoT · AI · solar 🛰️🚁☀️</div>
 </div></div></body></html>`);
 });
 
 // ── 🌾 REGISTER NEW FARMER (public, rate-limited) ──
-app.post('/api/register', writeLimiter, async (req, res) => {
+app.post("/api/register", writeLimiter, async (req, res) => {
   const b = req.body || {};
-  const clean = s => (s||'').toString().trim().slice(0,120);
-  const cleanWA = s => {
-    let t = (s||'').toString().replace(/[^\d+]/g,'');
-    if (t && !t.startsWith('+')) {
-      if (t.startsWith('0')) t = '+27' + t.slice(1);
-      else if (t.startsWith('27')) t = '+' + t;
-      else t = '+' + t;
+  const clean = (s) => (s || "").toString().trim().slice(0, 120);
+  const cleanWA = (s) => {
+    let t = (s || "").toString().replace(/[^\d+]/g, "");
+    if (t && !t.startsWith("+")) {
+      if (t.startsWith("0")) t = "+27" + t.slice(1);
+      else if (t.startsWith("27")) t = "+" + t;
+      else t = "+" + t;
     }
-    return t.slice(0,16);
+    return t.slice(0, 16);
   };
   const row = {
-    id: 'F-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,5).toUpperCase(),
+    id:
+      "F-" +
+      Date.now().toString(36).toUpperCase() +
+      Math.random().toString(36).slice(2, 5).toUpperCase(),
     name: clean(b.name),
     farm: clean(b.farm),
     whatsapp: cleanWA(b.whatsapp),
     email: clean(b.email),
     crop: clean(b.crop),
-    hectares: Math.max(0, parseInt(b.hectares)||0),
+    hectares: Math.max(0, parseInt(b.hectares) || 0),
     lat: b.lat ? Number(b.lat) : null,
     lng: b.lng ? Number(b.lng) : null,
     locLabel: clean(b.locLabel),
     note: clean(b.note),
     referrer: clean(b.referrer),
-    ip: (req.ip||'').slice(0,45),
-    ua: (req.get('user-agent')||'').slice(0,160),
-    createdAt: new Date().toISOString()
+    ip: (req.ip || "").slice(0, 45),
+    ua: (req.get("user-agent") || "").slice(0, 160),
+    createdAt: new Date().toISOString(),
   };
-  if (!row.name || !row.whatsapp) return res.status(400).json({ ok:false, error:'Name and WhatsApp number are required.' });
-  if (!/^\+\d{8,15}$/.test(row.whatsapp)) return res.status(400).json({ ok:false, error:'Please enter a valid WhatsApp number with country code.' });
+  if (!row.name || !row.whatsapp)
+    return res
+      .status(400)
+      .json({ ok: false, error: "Name and WhatsApp number are required." });
+  if (!/^\+\d{8,15}$/.test(row.whatsapp))
+    return res.status(400).json({
+      ok: false,
+      error: "Please enter a valid WhatsApp number with country code.",
+    });
 
   await dbUpsertFarmer(row);
 
   // ping owner via WhatsApp
-  const locTxt = row.lat && row.lng ? `📍 ${row.lat.toFixed(4)}, ${row.lng.toFixed(4)}${row.locLabel?' · '+row.locLabel:''}\n🗺️ https://maps.google.com/?q=${row.lat},${row.lng}` : (row.locLabel || 'Location not shared');
+  const locTxt =
+    row.lat && row.lng
+      ? `📍 ${row.lat.toFixed(4)}, ${row.lng.toFixed(4)}${row.locLabel ? " · " + row.locLabel : ""}\n🗺️ https://maps.google.com/?q=${row.lat},${row.lng}`
+      : row.locLabel || "Location not shared";
   pingOwner(
-`🌱 *NEW FARMER SIGN-UP* — YieldCore AI
+    `🌱 *NEW FARMER SIGN-UP* — YieldCore AI
 
 👤 ${row.name}
-🚜 ${row.farm || '—'}
+🚜 ${row.farm || "—"}
 📞 ${row.whatsapp}
-✉️ ${row.email || '—'}
-🌾 ${row.crop || '—'} · ${row.hectares} ha
+✉️ ${row.email || "—"}
+🌾 ${row.crop || "—"} · ${row.hectares} ha
 ${locTxt}
-${row.referrer ? '\n🔗 Via: '+row.referrer : ''}
-${row.note ? '\n📝 '+row.note : ''}
+${row.referrer ? "\n🔗 Via: " + row.referrer : ""}
+${row.note ? "\n📝 " + row.note : ""}
 
 ID: ${row.id}
-View all: ${LIVE_URL}/farmers`
+View all: ${LIVE_URL}/farmers`,
   );
 
   // welcome the farmer back if Twilio sandbox is reachable (best effort)
   try {
-    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || '+14155238886';
-    const from = fromRaw.startsWith('whatsapp:') ? fromRaw : `whatsapp:${fromRaw}`;
-    await twilioClient.messages.create({ from, to: 'whatsapp:'+row.whatsapp, body:
-`🌿 Welcome to *YieldCore AI*, ${row.name.split(' ')[0]}!
+    const fromRaw = process.env.TWILIO_WHATSAPP_FROM || "+14155238886";
+    const from = fromRaw.startsWith("whatsapp:")
+      ? fromRaw
+      : `whatsapp:${fromRaw}`;
+    await twilioClient.messages.create({
+      from,
+      to: "whatsapp:" + row.whatsapp,
+      body: `🌿 Welcome to *YieldCore AI*, ${row.name.split(" ")[0]}!
 
 You're registered ✅
-Farm: ${row.farm||'—'} · ${row.hectares} ha
+Farm: ${row.farm || "—"} · ${row.hectares} ha
 
 To activate live alerts on this number, message the bot:
 1) Save *${SANDBOX_NUMBER}* as "YieldCore AI"
 2) Send: *join ${SANDBOX_CODE}*
 3) Reply *MENU* — or share your 📍 location pin
 
-🌐 Your dashboard: ${LIVE_URL}` });
-  } catch(e){ /* user may not have joined sandbox yet — ignored */ }
+🌐 Your dashboard: ${LIVE_URL}`,
+    });
+  } catch (e) {
+    /* user may not have joined sandbox yet — ignored */
+  }
 
-  res.json({ ok:true, id: row.id, message: 'Welcome to YieldCore AI! Check your WhatsApp.' });
+  res.json({
+    ok: true,
+    id: row.id,
+    message: "Welcome to YieldCore AI! Check your WhatsApp.",
+  });
 });
 
 // ── 👀 OWNER-ONLY: list all registered farmers ──
-app.get('/api/download-project', (req, res) => res.status(404).json({ ok:false, error:'Not available' }));
+app.get("/api/download-project", (req, res) =>
+  res.status(404).json({ ok: false, error: "Not available" }),
+);
 
-app.get('/api/farmers', requireAdmin, async (req, res) => {
+app.get("/api/farmers", requireAdmin, async (req, res) => {
   const farmers = await dbRead();
-  res.json({ ok:true, count: farmers.length, farmers });
+  res.json({ ok: true, count: farmers.length, farmers });
 });
 
 // ── 📝 PUBLIC REGISTRATION PAGE ──
-app.get('/register', (req, res) => {
-  const ref = (req.query.ref||'').toString().slice(0,40).replace(/[^a-zA-Z0-9_-]/g,'');
+app.get("/register", (req, res) => {
+  const ref = (req.query.ref || "")
+    .toString()
+    .slice(0, 40)
+    .replace(/[^a-zA-Z0-9_-]/g, "");
   res.send(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Register — YieldCore AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -1082,7 +1621,7 @@ form.addEventListener('submit',async e=>{
     const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     const j=await r.json();
     if(!j.ok){msg.className='msg err';msg.textContent=j.error||'Registration failed';btn.disabled=false;btn.textContent='🌿 Register My Farm';return;}
-    document.getElementById('formBody').innerHTML='<div class="success"><div class="check">✅</div><h2>You\\'re in, '+(data.name.split(' ')[0])+'!</h2><p>Your farm is now in the YieldCore AI network. We just sent a welcome message to your WhatsApp with the next step to activate live alerts.</p><a href="https://wa.me/${SANDBOX_NUMBER.replace('+','')}?text=${encodeURIComponent('join '+SANDBOX_CODE)}">💬 Open WhatsApp & Activate Alerts</a><a href="${LIVE_URL}" class="alt">🌐 See the Dashboard</a><div class="foot" style="margin-top:14px">Farm ID: '+j.id+'</div></div>';
+    document.getElementById('formBody').innerHTML='<div class="success"><div class="check">✅</div><h2>You\\'re in, '+(data.name.split(' ')[0])+'!</h2><p>Your farm is now in the YieldCore AI network. We just sent a welcome message to your WhatsApp with the next step to activate live alerts.</p><a href="https://wa.me/${SANDBOX_NUMBER.replace("+", "")}?text=${encodeURIComponent("join " + SANDBOX_CODE)}">💬 Open WhatsApp & Activate Alerts</a><a href="${LIVE_URL}" class="alt">🌐 See the Dashboard</a><div class="foot" style="margin-top:14px">Farm ID: '+j.id+'</div></div>';
   }catch(err){msg.className='msg err';msg.textContent='Network error — please try again';btn.disabled=false;btn.textContent='🌿 Register My Farm';}
 });
 </script>
@@ -1090,29 +1629,46 @@ form.addEventListener('submit',async e=>{
 });
 
 // ── 👨‍🌾 OWNER VIEW: live farmer dashboard (gated by ?t=ADMIN_TOKEN) ──
-app.get('/farmers', requireAdmin, async (req, res) => {
-  const rows = (await dbRead()).sort((a,b)=> (b.createdAt||'').localeCompare(a.createdAt||''));
-  const t = (req.query.t||'').toString();
-  const escape = s => (s||'').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const cards = rows.map(r => `
+app.get("/farmers", requireAdmin, async (req, res) => {
+  const rows = (await dbRead()).sort((a, b) =>
+    (b.createdAt || "").localeCompare(a.createdAt || ""),
+  );
+  const t = (req.query.t || "").toString();
+  const escape = (s) =>
+    (s || "").toString().replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
+    );
+  const cards = rows
+    .map(
+      (r) => `
     <div class="frow">
       <div class="fmain">
-        <div class="fname">${escape(r.name)} ${r.farm?'· <span class="ffarm">'+escape(r.farm)+'</span>':''}</div>
+        <div class="fname">${escape(r.name)} ${r.farm ? '· <span class="ffarm">' + escape(r.farm) + "</span>" : ""}</div>
         <div class="fmeta">
-          <span>🌾 ${escape(r.crop)||'—'}</span>
-          <span>📐 ${r.hectares||0} ha</span>
-          <span>📞 <a href="https://wa.me/${(r.whatsapp||'').replace('+','')}">${escape(r.whatsapp)}</a></span>
-          ${r.email?'<span>✉️ '+escape(r.email)+'</span>':''}
-          ${r.lat&&r.lng?'<span>📍 <a target="_blank" href="https://maps.google.com/?q='+r.lat+','+r.lng+'">'+r.lat.toFixed(3)+', '+r.lng.toFixed(3)+'</a></span>':'<span class="muted">no GPS</span>'}
-          ${r.referrer?'<span>🔗 '+escape(r.referrer)+'</span>':''}
+          <span>🌾 ${escape(r.crop) || "—"}</span>
+          <span>📐 ${r.hectares || 0} ha</span>
+          <span>📞 <a href="https://wa.me/${(r.whatsapp || "").replace("+", "")}">${escape(r.whatsapp)}</a></span>
+          ${r.email ? "<span>✉️ " + escape(r.email) + "</span>" : ""}
+          ${r.lat && r.lng ? '<span>📍 <a target="_blank" href="https://maps.google.com/?q=' + r.lat + "," + r.lng + '">' + r.lat.toFixed(3) + ", " + r.lng.toFixed(3) + "</a></span>" : '<span class="muted">no GPS</span>'}
+          ${r.referrer ? "<span>🔗 " + escape(r.referrer) + "</span>" : ""}
         </div>
-        ${r.note?'<div class="fnote">📝 '+escape(r.note)+'</div>':''}
+        ${r.note ? '<div class="fnote">📝 ' + escape(r.note) + "</div>" : ""}
       </div>
       <div class="fside">
-        <div class="fdate">${new Date(r.createdAt).toLocaleString('en-ZA')}</div>
+        <div class="fdate">${new Date(r.createdAt).toLocaleString("en-ZA")}</div>
         <div class="fid">${escape(r.id)}</div>
       </div>
-    </div>`).join('');
+    </div>`,
+    )
+    .join("");
   res.send(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Farmer Network — YieldCore AI</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
@@ -1144,7 +1700,7 @@ ${rows.length ? cards : '<div class="empty"><h2>No farmers yet</h2><p>Share your
 });
 
 const PORT = 5000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`YieldCore AI server running on port ${PORT}`);
   console.log(`📝 Registration: ${LIVE_URL}/register`);
   console.log(`👨‍🌾 Owner view:   ${LIVE_URL}/farmers?t=YOUR_ADMIN_TOKEN`);
