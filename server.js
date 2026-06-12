@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -107,7 +109,7 @@ function requireAdmin(req, res, next) {
   const tok = req.get('X-Admin-Token') || req.query.t;
   const expected = process.env.ADMIN_TOKEN;
   if (!expected) return res.status(503).json({ error: 'Admin endpoint disabled (no ADMIN_TOKEN set)' });
-  if (!tok || !crypto.timingSafeEqual(Buffer.from(tok), Buffer.from(expected))) {
+  if (!tok || tok.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(tok), Buffer.from(expected))) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   next();
@@ -239,7 +241,7 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
 
 // Shared demo login — anyone using these creds gets in (auto-provisioned in Supabase)
 const DEMO_EMAIL = 'demo@yieldcore.ai';
-const DEMO_PASSWORD = 'yield2025';
+const DEMO_PASSWORD = 'yield2026';
 
 // ── 🔑 LOCAL AUTH FALLBACK (demo account only — works even when Supabase is unreachable) ──
 // Signs a self-contained HMAC token so the demo account always works. The token is
@@ -426,7 +428,7 @@ async function buildLocationBriefing(lat, lng, label) {
   else if (h > 80) soilTip = `🌱 *Soil:* High humidity (${h}%) → fungal-disease watch on leaves`;
   else soilTip = `🌱 *Soil:* Conditions optimal for root development`;
 
-  const month = new Date().getMonth();
+  const month = parseInt(d.time[0].slice(5, 7), 10) - 1; // 0-indexed month in farm's timezone
   if (month>=8||month<=1) cropAdvice = `🌾 *Crop tip (Spring/Summer):* Top-dress N now, scout for stalk borer + aphids`;
   else if (month>=2&&month<=4) cropAdvice = `🌾 *Crop tip (Autumn):* Plan winter cover crops, harvest summer grains, soil-test`;
   else cropAdvice = `🌾 *Crop tip (Winter):* Prune fruit trees, plant wheat/barley, repair irrigation`;
@@ -504,8 +506,9 @@ app.post('/api/whatsapp/inbound', validateTwilio, async (req, res) => {
     } else {
       reply = botRouter(msgBody);
     }
+    const hasReply = !!reply;
     if (!reply) reply = `Send 📍 a location or *MENU* for help.`;
-    if (!reply.includes(LIVE_URL)) reply += FOOTER;
+    if (hasReply && !reply.includes(LIVE_URL)) reply += FOOTER;
 
     res.set('Content-Type', 'text/xml');
     res.send(`<?xml version="1.0" encoding="UTF-8"?><Response><Message>${reply.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</Message></Response>`);
@@ -636,11 +639,20 @@ Respond concisely, practically, and in a friendly tone. Use South African contex
 });
 
 // ── 📲 INBOUND WHATSAPP WEBHOOK (Twilio → AI reply) ──
-const waSessions = new Map(); // from -> [{role, content}, ...]
+const waSessions = new Map(); // from -> [{role, content}, ...]  (.lastSeen timestamp on array)
 function waHistory(from) {
   if (!waSessions.has(from)) waSessions.set(from, []);
-  return waSessions.get(from);
+  const h = waSessions.get(from);
+  h.lastSeen = Date.now();
+  return h;
 }
+// Evict sessions idle for more than 2 hours to prevent unbounded memory growth
+setInterval(() => {
+  const cutoff = Date.now() - 2 * 60 * 60 * 1000;
+  for (const [k, h] of waSessions) {
+    if ((h.lastSeen || 0) < cutoff) waSessions.delete(k);
+  }
+}, 30 * 60 * 1000).unref();
 function xmlEscape(s){ return (s||'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&apos;','"':'&quot;'}[c])); }
 function twiml(body, mediaUrl){
   const media = mediaUrl ? `<Media>${xmlEscape(mediaUrl)}</Media>` : '';
@@ -675,13 +687,16 @@ app.post('/api/whatsapp', validateTwilio, async (req, res) => {
   const profileName = req.body.ProfileName || 'Farmer';
   console.log(`📩 WA from ${from} (${profileName}): ${body}`);
 
-  // Handle location pin
+  // Handle location pin — full farm intelligence briefing
   if (lat && lng) {
-    return res.send(twiml(
-`📍 Location received: ${(+lat).toFixed(4)}, ${(+lng).toFixed(4)}
-Thanks ${profileName.split(' ')[0]} — I'll use this for hyper-local weather & soil advice.
-
-Reply with your question, e.g. "When should I plant maize here?"`));
+    try {
+      const label = req.body.Label || req.body.Address || '';
+      const briefing = await buildLocationBriefing(lat, lng, label);
+      return res.send(twiml(briefing));
+    } catch (e) {
+      console.error('Location briefing error (/api/whatsapp):', e.message);
+      return res.send(twiml('⚠️ YieldCore had a hiccup. Try sending your 📍 location again.'));
+    }
   }
 
   const cmd = body.toLowerCase();
@@ -1083,7 +1098,13 @@ form.addEventListener('submit',async e=>{
     const j=await r.json();
     if(!j.ok){msg.className='msg err';msg.textContent=j.error||'Registration failed';btn.disabled=false;btn.textContent='🌿 Register My Farm';return;}
     document.getElementById('formBody').innerHTML='<div class="success"><div class="check">✅</div><h2>You\\'re in, '+(data.name.split(' ')[0])+'!</h2><p>Your farm is now in the YieldCore AI network. We just sent a welcome message to your WhatsApp with the next step to activate live alerts.</p><a href="https://wa.me/${SANDBOX_NUMBER.replace('+','')}?text=${encodeURIComponent('join '+SANDBOX_CODE)}">💬 Open WhatsApp & Activate Alerts</a><a href="${LIVE_URL}" class="alt">🌐 See the Dashboard</a><div class="foot" style="margin-top:14px">Farm ID: '+j.id+'</div></div>';
-  }catch(err){msg.className='msg err';msg.textContent='Network error — please try again';btn.disabled=false;btn.textContent='🌿 Register My Farm';}
+  } catch(err) {
+    console.error('REGISTER ERROR:', err);
+    msg.className='msg err';
+    msg.textContent='Network error — please try again';
+    btn.disabled=false;
+    btn.textContent='🌿 Register My Farm';
+  }}
 });
 </script>
 </body></html>`);
