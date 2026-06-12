@@ -12,6 +12,8 @@ const path = require('path');
 const app = express();
 app.set('trust proxy', 1);
 
+const IS_PROD = !!(process.env.LIVE_URL && process.env.LIVE_URL.startsWith('https'));
+
 // ── 🔒 SECURITY HEADERS ──
 app.use(helmet({
   contentSecurityPolicy: {
@@ -25,9 +27,13 @@ app.use(helmet({
       connectSrc:["'self'","https://api.mapbox.com","https://events.mapbox.com","https://api.open-meteo.com"],
       workerSrc: ["'self'","blob:"],
       frameAncestors: ["'none'"],
-      objectSrc: ["'none'"]
+      objectSrc: ["'none'"],
+      // null removes the directive entirely; Helmet's default adds it, which breaks HTTP dev
+      upgradeInsecureRequests: IS_PROD ? [] : null
     }
   },
+  // HSTS must not be sent over plain HTTP — Safari caches it and forces HTTPS on localhost
+  strictTransportSecurity: IS_PROD ? { maxAge: 31536000, includeSubDomains: true } : false,
   crossOriginEmbedderPolicy: false,
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
@@ -50,9 +56,13 @@ app.use(cors({
     const allowed = [
       process.env.LIVE_URL,
       'https://yield-core-ai.replit.app',
+      'http://localhost:5000',
+      'http://127.0.0.1:5000',
       /\.replit\.dev$/,
       /\.repl\.co$/,
-      /\.replit\.app$/
+      /\.replit\.app$/,
+      /^http:\/\/localhost(:\d+)?$/,
+      /^http:\/\/127\.0\.0\.1(:\d+)?$/,
     ].filter(Boolean);
     const ok = allowed.some(a => a instanceof RegExp ? a.test(origin) : a === origin);
     cb(ok ? null : new Error('CORS blocked'), ok);
