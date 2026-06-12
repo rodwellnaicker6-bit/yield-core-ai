@@ -3156,7 +3156,7 @@ async function demoLogin(){
     const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email:'demo@yieldcore.ai', password:'yield2026' }) });
     const j = await r.json().catch(()=>({}));
     if (!r.ok || !j.ok) { showAuthError(j.error || 'Could not open the demo. Please try again.'); return; }
-    try { localStorage.setItem('yc_token', j.token); localStorage.setItem('yc_user', JSON.stringify(j.user||{})); } catch(_){}
+    try { localStorage.setItem('yc_token', j.token); localStorage.setItem('yc_user', JSON.stringify(j.user||{})); localStorage.setItem('yc_onboarded','1'); } catch(_){}
     enterApp();
   } catch(err){
     showAuthError('Network error. Please try again.');
@@ -3171,12 +3171,12 @@ function doLogout(){
 }
 // Auto-resume if already signed in
 (async function(){
-  const token = localStorage.getItem('yc_token');
+  let token; try { token = localStorage.getItem('yc_token'); } catch(_){}
   if (!token) return;
   try {
     const r = await fetch('/api/auth/me', { headers:{ Authorization:'Bearer '+token } });
     if (r.ok) enterApp();
-    else { localStorage.removeItem('yc_token'); localStorage.removeItem('yc_user'); }
+    else { try { localStorage.removeItem('yc_token'); localStorage.removeItem('yc_user'); } catch(_){} }
   } catch {}
 })();
 
@@ -5108,7 +5108,7 @@ window.sendBiocharEnquiry=function(){
 // ── ONBOARDING WIZARD ──
 let _obStep=0;
 function obShow(){
-  try { if(localStorage.getItem('yc_onboarded')==='1') return; } catch(_){ return; }
+  try { if(localStorage.getItem('yc_onboarded')==='1') return; localStorage.setItem('_ob_test','1'); localStorage.removeItem('_ob_test'); } catch(_){ return; }
   const ov=document.getElementById('onboardOverlay');if(!ov)return;
   ov.classList.add('show');
   const jc=document.getElementById('obJoinCode');
