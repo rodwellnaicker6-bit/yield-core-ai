@@ -3154,7 +3154,7 @@ async function demoLogin(){
   btn.disabled = true; btn.textContent = 'Opening demo…';
   document.getElementById('loginErr').style.display = 'none';
   try {
-    const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email:'demo@yieldcore.ai', password:'yield2025' }) });
+    const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email:'demo@yieldcore.ai', password:'yield2026' }) });
     const j = await r.json().catch(()=>({}));
     if (!r.ok || !j.ok) { showAuthError(j.error || 'Could not open the demo. Please try again.'); return; }
     localStorage.setItem('yc_token', j.token);
