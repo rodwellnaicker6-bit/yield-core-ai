@@ -3138,8 +3138,7 @@ async function doLogin(){
     const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
     const j = await r.json().catch(()=>({}));
     if (!r.ok || !j.ok) { showAuthError(j.error || 'Sign-in failed.'); return; }
-    localStorage.setItem('yc_token', j.token);
-    localStorage.setItem('yc_user', JSON.stringify(j.user||{}));
+    try { localStorage.setItem('yc_token', j.token); localStorage.setItem('yc_user', JSON.stringify(j.user||{})); } catch(_){}
     enterApp();
   } catch(err){
     showAuthError('Network error. Please try again.');
@@ -3157,8 +3156,7 @@ async function demoLogin(){
     const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email:'demo@yieldcore.ai', password:'yield2026' }) });
     const j = await r.json().catch(()=>({}));
     if (!r.ok || !j.ok) { showAuthError(j.error || 'Could not open the demo. Please try again.'); return; }
-    localStorage.setItem('yc_token', j.token);
-    localStorage.setItem('yc_user', JSON.stringify(j.user||{}));
+    try { localStorage.setItem('yc_token', j.token); localStorage.setItem('yc_user', JSON.stringify(j.user||{})); } catch(_){}
     enterApp();
   } catch(err){
     showAuthError('Network error. Please try again.');
@@ -5110,7 +5108,7 @@ window.sendBiocharEnquiry=function(){
 // ── ONBOARDING WIZARD ──
 let _obStep=0;
 function obShow(){
-  if(localStorage.getItem('yc_onboarded')==='1') return;
+  try { if(localStorage.getItem('yc_onboarded')==='1') return; } catch(_){ return; }
   const ov=document.getElementById('onboardOverlay');if(!ov)return;
   ov.classList.add('show');
   const jc=document.getElementById('obJoinCode');
@@ -5125,9 +5123,9 @@ function obSetStep(n){
 function obNext(){obSetStep(_obStep+1);}
 function obBack(){obSetStep(_obStep-1);}
 function obFinish(){
-  localStorage.setItem('yc_onboarded','1');
+  try { localStorage.setItem('yc_onboarded','1');
   const farm={name:document.getElementById('obFarmName')?.value,province:document.getElementById('obProvince')?.value,ha:document.getElementById('obHa')?.value,crop:document.getElementById('obCrop')?.value};
-  if(Object.values(farm).some(v=>v)) localStorage.setItem('yc_farm',JSON.stringify(farm));
+  if(Object.values(farm).some(v=>v)) localStorage.setItem('yc_farm',JSON.stringify(farm)); } catch(_){}
   document.getElementById('onboardOverlay').classList.remove('show');
 }
 window.obNext=obNext;window.obBack=obBack;window.obFinish=obFinish;
